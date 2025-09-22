@@ -1,0 +1,34 @@
+name: Conventional Commits Validation
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+    types: [opened, synchronize, reopened, edited]
+
+jobs:
+  validate-conventional-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate PR Title and Commits
+        uses: Namchee/conventional-pr@v0.6.0
+        with:
+          access_token: ${{ secrets.GITHUB_TOKEN }}
+
+  commitlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Validate commit messages
+        run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose

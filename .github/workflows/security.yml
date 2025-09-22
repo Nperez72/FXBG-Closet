@@ -1,0 +1,39 @@
+name: Security Scan
+
+on:
+  schedule:
+    - cron: '0 0 * * 0' # Weekly on Sunday
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+    
+    - name: Scan for hardcoded secrets
+      run: |
+        echo "Scanning for potential secrets..."
+        # Check for common patterns that might indicate secrets
+        grep -r -n -i "password\s*=\s*['\"][^'\"]*['\"]" --include="*.php" . | head -5 || true
+        grep -r -n -i "api_key\s*=\s*['\"][^'\"]*['\"]" --include="*.php" . | head -5 || true
+        grep -r -n -i "secret\s*=\s*['\"][^'\"]*['\"]" --include="*.php" . | head -5 || true
+    
+    - name: Check for SQL injection patterns
+      run: |
+        echo "Checking for potential SQL injection vulnerabilities..."
+        grep -r -n "\$_[A-Z]*\[.*\].*['\"].*SELECT\|UPDATE\|DELETE\|INSERT" --include="*.php" . | head -5 || true
+    
+    - name: Check file permissions
+      run: |
+        echo "Checking file permissions..."
+        find . -type f -perm /o+w -not -path "./.git/*" | head -10 || true
