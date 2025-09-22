@@ -1,0 +1,86 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  php-tests:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        php-versions: ['7.4', '8.0', '8.1']
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-versions }}
+        extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, mysql
+        coverage: xdebug
+    
+    - name: Validate composer.json and composer.lock
+      run: |
+        if [ -f composer.json ]; then
+          composer validate --strict
+        else
+          echo "No composer.json found, skipping validation"
+        fi
+    
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v3
+      with:
+        path: vendor
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
+    
+    - name: Install dependencies
+      run: |
+        if [ -f composer.json ]; then
+          composer install --prefer-dist --no-progress
+        else
+          echo "No composer.json found, skipping dependency installation"
+        fi
+    
+    - name: Run PHP syntax check
+      run: find . -name "*.php" -not -path "./vendor/*" -print0 | xargs -0 -n1 php -l
+    
+    - name: Run PHPUnit tests
+      run: |
+        if [ -f phpunit.xml ] || [ -f phpunit.xml.dist ]; then
+          ./vendor/bin/phpunit
+        else
+          echo "No PHPUnit configuration found, skipping tests"
+        fi
+
+  code-quality:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+        extensions: mbstring, xml, ctype, iconv, intl
+    
+    - name: Check for security vulnerabilities
+      run: |
+        if [ -f composer.lock ]; then
+          curl -H "Accept: text/plain" https://security.symfony.com/check_lock -F lock=@composer.lock
+        else
+          echo "No composer.lock found, skipping security check"
+        fi
+    
+    - name: Check file permissions
+      run: |
+        echo "Checking for files with incorrect permissions..."
+        find . -type f -name "*.php" -perm /111 -not -path "./vendor/*" | head -10
