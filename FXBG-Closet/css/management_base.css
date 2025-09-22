@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	body {
+		@apply bg-gray-100 min-h-screen flex flex-col;
+	}
+	p {
+		@apply text-lg leading-relaxed;
+	}
+	h1 {
+		@apply text-3xl font-bold mb-4;
+	}
+	main {
+		@apply flex-grow flex items-start justify-center p-6 -mt-12 relative z-10;
+	}
+	button {
+		@apply flex justify-center relative bg-white border-2 border-gray-300 rounded-2xl shadow-xs hover:shadow-md cursor-pointer hover:border-blue-900 p-6 transition-all duration-200 text-xl font-medium text-gray-700 hover:bg-gray-100;
+	}
+}
+
+@layer components {
+	.hero-header {
+		@apply h-40 w-full bg-auto bg-center relative z-0;
+		background-image: url('../images/login_background.jpg');
+	}
+	.sections {
+		@apply flex flex-col lg:flex-row gap-12 w-full max-w-6xl;
+	}
+	.button-section {
+		@apply grid grid-cols-1 gap-6 w-full md:grid-cols-2 lg:w-2/3 lg:grid-cols-1;
+	}
+	.button-left-gray {
+		@apply absolute top-0 left-0 w-[80px] h-full bg-gray-200 rounded-l-2xl pointer-events-none z-0;
+	}
+	.button-icon {
+		@apply absolute left-3 top-1/2 -translate-y-1/2 p-[2px];
+	}
+	.text-section {
+		@apply flex flex-col justify-center w-full lg:w-1/2 text-gray-700;
+	}
+	.div-blue {
+		@apply h-px bg-blue-900 w-full;
+	}
+	.return-button {
+		@apply bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600;
+	}
+	
+}
