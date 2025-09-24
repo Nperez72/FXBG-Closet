@@ -368,7 +368,7 @@ h3:not(:first-of-type) {
     background-color: var(--happy-toast-background-color);
     color: var(--happy-toast-font-color);
     padding: 1rem;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     margin-bottom: 1rem;
     /*thomas*/
     text-align: center;
@@ -580,7 +580,7 @@ main.dashboard > p {
 .dashboard-item:hover {
     background-color: var(--accent-color);
     cursor: pointer;
-    /* text-shadow: 0px 0px .25rem black; */
+    text-shadow: 0px 0px .25rem black;
 }
 
 .dashboard-item > img {
