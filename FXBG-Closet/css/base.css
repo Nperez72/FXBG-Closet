@@ -61,7 +61,7 @@ table, td, tr, th, form, fieldset, em, button, a {
 
     --shadow-and-border-color: #e8e8e8;
 
-    --main-color: #294877; /* Changed to Fred SPCA Navy */
+    --main-color: #ad1071; /* Changed to Fred SPCA Navy */
 
     --accent-color: #c52e81;
  
@@ -140,6 +140,7 @@ nav img {
 
 nav ul li a {
     color: var(--main-color);
+    font-size: 2.5rem;
     font-weight: 500;
     text-decoration: none;
     transition: color .3s;
@@ -147,6 +148,7 @@ nav ul li a {
 
 nav ul li a:hover {
     color: var(--accent-color);
+    font-size: 1.1rem;
 }
 
 span.logo {
@@ -275,7 +277,7 @@ input[type=submit]:hover, button:hover, .button:hover {
 } */
 
 label {
-    color: var(--main-color);
+    color: #0066cc;
     font-weight: 600;
     width: 100%;
     text-align: left;
@@ -311,7 +313,7 @@ h1 {
     font-size: 1.5rem;
     font-weight: 500;
     margin-bottom: 2rem;
-    background-color: var(--main-color);
+    background-color: #ffcc00;
     color: var(--page-background-color);
     width: 100%;
     text-align: center;
@@ -334,7 +336,7 @@ h3:not(:first-of-type) {
 
 @media only screen and (max-width: 1079px) {
     :root {
-        font-size: 16px;
+        font-size: 24px;
     }
 
     h1 {
@@ -368,7 +370,7 @@ h3:not(:first-of-type) {
     background-color: var(--happy-toast-background-color);
     color: var(--happy-toast-font-color);
     padding: 1rem;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     margin-bottom: 1rem;
     /*thomas*/
     text-align: center;
@@ -541,7 +543,7 @@ button.cancel:hover, a.cancel:hover {
 
 /* Dashboard */
 main.dashboard {
-    padding: 0 8rem 4rem 8rem;
+    padding: 2rem;
 }
 
 main.dashboard > p {
@@ -580,7 +582,7 @@ main.dashboard > p {
 .dashboard-item:hover {
     background-color: var(--accent-color);
     cursor: pointer;
-    /* text-shadow: 0px 0px .25rem black; */
+    text-shadow: 0px 0px .25rem black;
 }
 
 .dashboard-item > img {
@@ -625,7 +627,7 @@ form.signup-form .section-box {
     border-radius: 5px;
     padding: 15px;
     margin-bottom: 20px;
-    background-color: #fafafa;
+    background-color: #e0f7fa;
 }
 /**/
 
