@@ -140,6 +140,7 @@ nav img {
 
 nav ul li a {
     color: var(--main-color);
+    font-size: 2.5rem;
     font-weight: 500;
     text-decoration: none;
     transition: color .3s;
@@ -147,6 +148,7 @@ nav ul li a {
 
 nav ul li a:hover {
     color: var(--accent-color);
+    font-size: 1.1rem;
 }
 
 span.logo {
