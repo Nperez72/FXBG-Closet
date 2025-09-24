@@ -61,7 +61,7 @@ table, td, tr, th, form, fieldset, em, button, a {
 
     --shadow-and-border-color: #e8e8e8;
 
-    --main-color: #294877; /* Changed to Fred SPCA Navy */
+    --main-color: #ad1071; /* Changed to Fred SPCA Navy */
 
     --accent-color: #c52e81;
  
@@ -313,7 +313,7 @@ h1 {
     font-size: 1.5rem;
     font-weight: 500;
     margin-bottom: 2rem;
-    background-color: var(--main-color);
+    background-color: #ffcc00;
     color: var(--page-background-color);
     width: 100%;
     text-align: center;
