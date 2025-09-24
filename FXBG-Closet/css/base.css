@@ -541,7 +541,7 @@ button.cancel:hover, a.cancel:hover {
 
 /* Dashboard */
 main.dashboard {
-    padding: 0 8rem 4rem 8rem;
+    padding: 2rem;
 }
 
 main.dashboard > p {
@@ -625,7 +625,7 @@ form.signup-form .section-box {
     border-radius: 5px;
     padding: 15px;
     margin-bottom: 20px;
-    background-color: #fafafa;
+    background-color: #e0f7fa;
 }
 /**/
 
