@@ -734,6 +734,12 @@ if (date("H:i:s") > "18:19:59") {
     <span>View Check-Ins</span>
   </div>
 </a>
+<a href="trackActivities.php" style="text-decoration: none;">
+  <div class="in-nav">
+    <img src="images/clipboard-regular.svg">
+    <span>Track Activities</span>
+  </div>
+</a>
 			
                     </div>
                 </div>
@@ -848,6 +854,12 @@ if (date("H:i:s") > "18:19:59") {
   <div class="in-nav">
     <img src="images/clock-regular.svg">
     <span>Edit Hours</span>
+  </div>
+</a>
+<a href="trackActivities.php" style="text-decoration: none;">
+  <div class="in-nav">
+    <img src="images/clipboard-regular.svg">
+    <span>Track Activities</span>
   </div>
 </a>
                    </div>
