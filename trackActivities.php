@@ -21,6 +21,9 @@ require_once('header.php');
     .dropdown {
         padding-right: 50px;
     }
+    #activity_description {
+    width: 100%;
+    }
 </style>
 </head>
 <body class="relative">
