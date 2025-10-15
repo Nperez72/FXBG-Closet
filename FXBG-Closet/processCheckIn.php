@@ -19,7 +19,7 @@ function showSuccessMessage($message, $redirectUrl = null, $shift_id=null) {
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f4f4f4;
+            background-color: var(--bg-color, #f9f6f3);
             font-family: Quicksand, sans-serif;
         }
         .success-container {
@@ -29,7 +29,7 @@ function showSuccessMessage($message, $redirectUrl = null, $shift_id=null) {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background-color: #007bff;
+            background-color: var(--main-color, #e8c4b8);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -91,11 +91,11 @@ if ($existingShift) {
                     justify-content: center;
                     align-items: center;
                     height: 100vh;
-                    background-color: #f4f4f4;
+                    background-color: var(--bg-color, #f9f6f3);
                     font-family: Quicksand, sans-serif;
                 }
                 .checkout-container {
-                    background: white;
+                    background: var(--card-bg, #ffffff);
                     padding: 20px;
                     border-radius: 10px;
                     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -118,11 +118,11 @@ if ($existingShift) {
                     transition: border-color 0.3s ease-in-out;
                 }
                 textarea:focus {
-                    border-color: #294877;
+                    border-color: var(--main-color, #e8c4b8);
                     outline: none;
                 }
                 button {
-                    background-color: #294877;
+                    background-color: var(--main-color, #e8c4b8);
                     color: white;
                     border: none;
                     padding: 10px 15px;
@@ -133,7 +133,7 @@ if ($existingShift) {
                     transition: background 0.3s;
                 }
                 button:hover {
-                    background-color: #0056b3;
+                    background-color: var(--accent-color, #d4af37);
                 }
             </style>
         </head>
