@@ -35,10 +35,10 @@ $groups = get_groups_from_user($userID);
             text-decoration: none;
             color: white;
             border-radius: 3px;
-            background-color: #4CAF50;
+            background-color: var(--main-color, #e8c4b8);
         }
         .btn-edit:hover {
-            background-color: #45a049;
+            background-color: var(--accent-color, #d4af37);
         }
         table {
             width: 100%;
@@ -52,13 +52,13 @@ $groups = get_groups_from_user($userID);
             border: 1px solid #ddd;
         }
         th {
-            background-color: #e2e8f0;
+            background-color: var(--nav-item-active-bg, #f4ede9);
         }
         tr:nth-child(even) {
-            background-color: #f8fafc;
+            background-color: var(--bg-color, #f9f6f3);
         }
         tr:hover {
-            background-color: #e0f2fe;
+            background-color: var(--dropdown-hover, rgba(232, 196, 184, 0.1));
         }
         .btn {
             padding: 8px 16px;
@@ -66,12 +66,12 @@ $groups = get_groups_from_user($userID);
             text-decoration: none;
             border-radius: 4px;
             font-weight: bold;
-            background-color: #3b82f6;
+            background-color: var(--main-color, #e8c4b8);
             color: white;
             display: inline-block;
         }
         .btn:hover {
-            background-color: #2563eb;
+            background-color: var(--accent-color, #d4af37);
         }
     </style>
     <title>STEPVA | Your Groups</title>
