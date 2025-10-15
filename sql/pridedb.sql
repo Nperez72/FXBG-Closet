@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 08, 2025 at 07:03 PM
+-- Generation Time: Oct 15, 2025 at 06:35 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,8 +29,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `dbaccounts` (
   `username` varchar(256) NOT NULL,
-  `password` varchar(256) NOT NULL,
-  `type` int(10) NOT NULL
+  `password` text NOT NULL,
+  `type` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -106,7 +106,7 @@ INSERT INTO `dbdiscussions` (`author_id`, `title`, `body`, `time`) VALUES
 
 CREATE TABLE `dbeventmedia` (
   `id` int(11) NOT NULL,
-  `eventID` int(11) NOT NULL,
+  `activity_ID` int(11) NOT NULL,
   `file_name` text NOT NULL,
   `type` text NOT NULL,
   `file_format` text NOT NULL,
@@ -533,34 +533,36 @@ INSERT INTO `dbpersonhours` (`personID`, `eventID`, `start_time`, `end_time`) VA
 --
 
 CREATE TABLE `dbpersons` (
-  `id` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` int(11) NOT NULL,
+  `role_type` int(5) NOT NULL,
+  `role_name` varchar(256) DEFAULT NULL,
   `start_date` text DEFAULT NULL,
   `first_name` text NOT NULL,
-  `last_name` text DEFAULT NULL,
+  `last_name` text NOT NULL,
   `street_address` text DEFAULT NULL,
   `city` text DEFAULT NULL,
   `state` varchar(2) DEFAULT NULL,
   `zip_code` text DEFAULT NULL,
-  `phone1` varchar(12) NOT NULL,
+  `phone1` varchar(12) DEFAULT NULL,
   `phone1type` text DEFAULT NULL,
   `emergency_contact_phone` varchar(12) DEFAULT NULL,
   `emergency_contact_phone_type` text DEFAULT NULL,
   `birthday` text DEFAULT NULL,
-  `email` text DEFAULT NULL,
-  `emergency_contact_first_name` text NOT NULL,
-  `contact_num` varchar(255) DEFAULT 'n/a',
-  `emergency_contact_relation` text NOT NULL,
+  `email` text NOT NULL,
+  `emergency_contact_first_name` text DEFAULT NULL,
+  `contact_num` varchar(255) DEFAULT NULL,
+  `emergency_contact_relation` text DEFAULT NULL,
   `contact_method` text DEFAULT NULL,
   `type` text DEFAULT NULL,
   `status` text DEFAULT NULL,
   `notes` text DEFAULT NULL,
   `password` text DEFAULT NULL,
-  `skills` text NOT NULL,
-  `interests` text NOT NULL,
-  `archived` tinyint(1) NOT NULL,
-  `emergency_contact_last_name` text NOT NULL,
-  `is_new_volunteer` tinyint(1) NOT NULL DEFAULT 1,
-  `is_community_service_volunteer` tinyint(1) NOT NULL DEFAULT 0,
+  `skills` text DEFAULT NULL,
+  `interests` text DEFAULT NULL,
+  `archived` tinyint(1) DEFAULT NULL,
+  `emergency_contact_last_name` text DEFAULT NULL,
+  `is_new_volunteer` tinyint(1) DEFAULT 1,
+  `is_community_service_volunteer` tinyint(1) DEFAULT 0,
   `total_hours_volunteered` decimal(5,2) DEFAULT 0.00,
   `volunteer_of_the_month` tinyint(1) DEFAULT 0,
   `votm_awarded_month` date DEFAULT NULL,
@@ -571,17 +573,17 @@ CREATE TABLE `dbpersons` (
 -- Dumping data for table `dbpersons`
 --
 
-INSERT INTO `dbpersons` (`id`, `start_date`, `first_name`, `last_name`, `street_address`, `city`, `state`, `zip_code`, `phone1`, `phone1type`, `emergency_contact_phone`, `emergency_contact_phone_type`, `birthday`, `email`, `emergency_contact_first_name`, `contact_num`, `emergency_contact_relation`, `contact_method`, `type`, `status`, `notes`, `password`, `skills`, `interests`, `archived`, `emergency_contact_last_name`, `is_new_volunteer`, `is_community_service_volunteer`, `total_hours_volunteered`, `volunteer_of_the_month`, `votm_awarded_month`, `training_level`) VALUES
-('ameyer123', '2025-05-01', 'Aidan', 'Meyer', '1541 Surry Hill Court', 'Charlottesville', 'VA', '22901', '4344222910', 'home', '4344222910', 'home', '2003-08-17', 'aidanmeyer32@gmail.com', 'Aidan', 'n/a', 'Father', NULL, 'participant', 'Inactive', NULL, '$2y$10$2VDZjrW0EacO0VA5hIYIl.fKqPC5wUdSSQ1lXXRSgC0eWxVslPcOC', 'a', 'a', 0, 'Meyer', 0, 0, 0.00, 0, NULL, 'None'),
-('ameyer3', '2025-03-26', 'Aidan', 'Meyer', '1541 Surry Hill Court', 'Charlottesville', 'VA', '22901', '4344222910', 'home', '4344222910', 'home', '2003-08-17', 'aidanmeyer32@gmail.com', 'Aidan', 'n/a', 'Father', NULL, 'volunteer', 'Active', NULL, '$2y$10$0R5pX4uTxS0JZ4rc7dGprOK4c/d1NEs0rnnaEmnW4sz8JIQVyNdBC', 'a', 'a', 0, 'Meyer', 0, 0, 70.00, 1, '2025-09-10', NULL),
-('BobVolunteer', '2025-04-29', 'Bob', 'SPCA', '123 Dog Ave', 'Dogville', 'VA', '54321', '9806761234', 'home', '1234567788', 'home', '2020-03-03', 'fred54321@gmail.com', 'Luke', 'n/a', 'Bff', NULL, 'volunteer', 'Active', NULL, '$2y$10$4wUwAW0yoizxi5UFy1/OZu.yfYY7rzUsuYcZCdvfplLj95r7OknvG', 'No epic skills', 'No interests', 0, 'Blair', 0, 0, 70.00, 0, NULL, 'None'),
-('lukeg', '2025-04-29', 'Luke', 'Gibson', '22 N Ave', 'Fredericksburg', 'VA', '22401', '1234567890', 'cellphone', '1234567890', 'cellphone', '2025-04-28', 'volunteer@volunteer.com', 'NoName', 'n/a', 'Brother', NULL, 'volunteer', 'Active', NULL, '$2y$10$KsNVJYhvO5D287GpKYsIPuci9FnL.Eng9R6lBpaetu2Y0yVJ7Uuiq', 'reading', 'none', 0, 'YesName', 0, 0, 0.00, 0, NULL, 'None'),
-('maddiev', '2025-04-28', 'maddie', 'van buren', '123 Blue st', 'fred', 'VA', '12343', '1234567890', 'cellphone', '1234567819', 'cellphone', '2003-05-17', 'mvanbure@mail.umw.edu', 'mommy', 'n/a', 'mom', NULL, 'volunteer', 'Active', NULL, '$2y$10$0mv3.e6gjqoIg.HfT5qVXOsI.Ca5E93DAy8BnT124W1PvMDxpfoxy', 'coding', 'yoga', 0, 'van buren', 0, 0, -8.98, 0, NULL, 'None'),
-('michael_smith', '2025-03-16', 'Michael', 'Smith', '789 Pine Street', 'Charlottesville', 'VA', '22903', '4345559876', 'mobile', '4345553322', 'work', '1995-08-22', 'michaelsmith@email.com', 'Sarah', '4345553322', 'Sister', 'email', 'volunteer', 'Active', '', '$2y$10$XYZ789xyz456LMN123DEF', 'Cooking, Basketball', 'Homeless Shelter Assistance', 0, 'Smith', 0, 1, 0.00, 0, NULL, NULL),
-('michellevb', '2025-04-29', 'Michelle', 'Van Buren', '1234 Red St', 'Freddy', 'VA', '22401', '1234567890', 'cellphone', '0987654321', 'cellphone', '1980-08-18', 'michelle.vb@gmail.com', 'Madison', 'n/a', 'daughter', NULL, 'volunteer', 'Active', NULL, '$2y$10$bkqOWUdIJoSa6kZoRo5KH.cerZkBQf74RYsponUUgefJxNc8ExppK', 'programming', 'doggies', 0, 'Van Buren', 0, 0, 60.00, 0, NULL, 'None'),
-('test_acc', '2025-04-29', 'test', 'test', 'test', 'test', 'VA', '22405', '5555555555', 'cellphone', '5555555555', 'cellphone', '2003-03-03', 'test@gmail.com', 'test', 'n/a', 't', NULL, 'volunteer', 'Active', NULL, '$2y$10$kpVA41EXvoJyv896uDBEF.fHCPmSlkVSaXjHojBl7DqbRnEm//kxy', '', '', 0, 'test', 0, 0, -4.99, 0, NULL, 'None'),
-('vmsroot', NULL, 'vmsroot', '', 'N/A', 'N/A', 'VA', 'N/A', '', 'N/A', 'N/A', 'N/A', NULL, '', 'vmsroot', 'N/A', 'N/A', 'email', 'superadmin', 'Active', 'System root user account', '$2y$10$.3p8xvmUqmxNztEzMJQRBesLDwdiRU3xnt/HOcJtsglwsbUk88VTO', 'N/A', 'N/A', 0, 'vmsroot', 0, 0, 0.00, 0, NULL, NULL),
-('Volunteer25', '2025-04-30', 'Volley', 'McTear', '123 Dog St', 'Dogville', 'VA', '56748', '9887765543', 'home', '6565651122', 'home', '2025-04-29', 'volly@gmail.com', 'Holly', 'n/a', 'Besty', NULL, 'volunteer', 'Active', NULL, '$2y$10$45gKdbjW78pNKX/5ROtb7eU9OykSCsP/QCyTAvqBtord4J7V3Ywga', 'None', 'None', 0, 'McTear', 0, 0, 10.00, 0, NULL, 'None');
+INSERT INTO `dbpersons` (`id`, `role_type`, `role_name`, `start_date`, `first_name`, `last_name`, `street_address`, `city`, `state`, `zip_code`, `phone1`, `phone1type`, `emergency_contact_phone`, `emergency_contact_phone_type`, `birthday`, `email`, `emergency_contact_first_name`, `contact_num`, `emergency_contact_relation`, `contact_method`, `type`, `status`, `notes`, `password`, `skills`, `interests`, `archived`, `emergency_contact_last_name`, `is_new_volunteer`, `is_community_service_volunteer`, `total_hours_volunteered`, `volunteer_of_the_month`, `votm_awarded_month`, `training_level`) VALUES
+(1, 0, NULL, '2025-05-01', 'Aidan', 'Meyer', '1541 Surry Hill Court', 'Charlottesville', 'VA', '22901', '4344222910', 'home', '4344222910', 'home', '2003-08-17', 'aidanmeyer32@gmail.com', 'Aidan', 'n/a', 'Father', NULL, 'participant', 'Inactive', NULL, '$2y$10$2VDZjrW0EacO0VA5hIYIl.fKqPC5wUdSSQ1lXXRSgC0eWxVslPcOC', 'a', 'a', 0, 'Meyer', 0, 0, 0.00, 0, NULL, 'None'),
+(2, 0, NULL, '2025-03-26', 'Aidan', 'Meyer', '1541 Surry Hill Court', 'Charlottesville', 'VA', '22901', '4344222910', 'home', '4344222910', 'home', '2003-08-17', 'aidanmeyer32@gmail.com', 'Aidan', 'n/a', 'Father', NULL, 'volunteer', 'Active', NULL, '$2y$10$0R5pX4uTxS0JZ4rc7dGprOK4c/d1NEs0rnnaEmnW4sz8JIQVyNdBC', 'a', 'a', 0, 'Meyer', 0, 0, 70.00, 1, '2025-09-10', NULL),
+(3, 0, NULL, '2025-04-29', 'Bob', 'SPCA', '123 Dog Ave', 'Dogville', 'VA', '54321', '9806761234', 'home', '1234567788', 'home', '2020-03-03', 'fred54321@gmail.com', 'Luke', 'n/a', 'Bff', NULL, 'volunteer', 'Active', NULL, '$2y$10$4wUwAW0yoizxi5UFy1/OZu.yfYY7rzUsuYcZCdvfplLj95r7OknvG', 'No epic skills', 'No interests', 0, 'Blair', 0, 0, 70.00, 0, NULL, 'None'),
+(4, 0, NULL, '2025-04-29', 'Luke', 'Gibson', '22 N Ave', 'Fredericksburg', 'VA', '22401', '1234567890', 'cellphone', '1234567890', 'cellphone', '2025-04-28', 'volunteer@volunteer.com', 'NoName', 'n/a', 'Brother', NULL, 'volunteer', 'Active', NULL, '$2y$10$KsNVJYhvO5D287GpKYsIPuci9FnL.Eng9R6lBpaetu2Y0yVJ7Uuiq', 'reading', 'none', 0, 'YesName', 0, 0, 0.00, 0, NULL, 'None'),
+(5, 0, NULL, '2025-04-28', 'maddie', 'van buren', '123 Blue st', 'fred', 'VA', '12343', '1234567890', 'cellphone', '1234567819', 'cellphone', '2003-05-17', 'mvanbure@mail.umw.edu', 'mommy', 'n/a', 'mom', NULL, 'volunteer', 'Active', NULL, '$2y$10$0mv3.e6gjqoIg.HfT5qVXOsI.Ca5E93DAy8BnT124W1PvMDxpfoxy', 'coding', 'yoga', 0, 'van buren', 0, 0, -8.98, 0, NULL, 'None'),
+(6, 0, NULL, '2025-03-16', 'Michael', 'Smith', '789 Pine Street', 'Charlottesville', 'VA', '22903', '4345559876', 'mobile', '4345553322', 'work', '1995-08-22', 'michaelsmith@email.com', 'Sarah', '4345553322', 'Sister', 'email', 'volunteer', 'Active', '', '$2y$10$XYZ789xyz456LMN123DEF', 'Cooking, Basketball', 'Homeless Shelter Assistance', 0, 'Smith', 0, 1, 0.00, 0, NULL, NULL),
+(7, 0, NULL, '2025-04-29', 'Michelle', 'Van Buren', '1234 Red St', 'Freddy', 'VA', '22401', '1234567890', 'cellphone', '0987654321', 'cellphone', '1980-08-18', 'michelle.vb@gmail.com', 'Madison', 'n/a', 'daughter', NULL, 'volunteer', 'Active', NULL, '$2y$10$bkqOWUdIJoSa6kZoRo5KH.cerZkBQf74RYsponUUgefJxNc8ExppK', 'programming', 'doggies', 0, 'Van Buren', 0, 0, 60.00, 0, NULL, 'None'),
+(8, 0, NULL, '2025-04-29', 'test', 'test', 'test', 'test', 'VA', '22405', '5555555555', 'cellphone', '5555555555', 'cellphone', '2003-03-03', 'test@gmail.com', 'test', 'n/a', 't', NULL, 'volunteer', 'Active', NULL, '$2y$10$kpVA41EXvoJyv896uDBEF.fHCPmSlkVSaXjHojBl7DqbRnEm//kxy', '', '', 0, 'test', 0, 0, -4.99, 0, NULL, 'None'),
+(9, 0, NULL, NULL, 'vmsroot', '', 'N/A', 'N/A', 'VA', 'N/A', '', 'N/A', 'N/A', 'N/A', NULL, '', 'vmsroot', 'N/A', 'N/A', 'email', 'superadmin', 'Active', 'System root user account', '$2y$10$.3p8xvmUqmxNztEzMJQRBesLDwdiRU3xnt/HOcJtsglwsbUk88VTO', 'N/A', 'N/A', 0, 'vmsroot', 0, 0, 0.00, 0, NULL, NULL),
+(10, 0, NULL, '2025-04-30', 'Volley', 'McTear', '123 Dog St', 'Dogville', 'VA', '56748', '9887765543', 'home', '6565651122', 'home', '2025-04-29', 'volly@gmail.com', 'Holly', 'n/a', 'Besty', NULL, 'volunteer', 'Active', NULL, '$2y$10$45gKdbjW78pNKX/5ROtb7eU9OykSCsP/QCyTAvqBtord4J7V3Ywga', 'None', 'None', 0, 'McTear', 0, 0, 10.00, 0, NULL, 'None');
 
 -- --------------------------------------------------------
 
@@ -625,6 +627,23 @@ INSERT INTO `dbshifts` (`shift_id`, `person_id`, `date`, `startTime`, `endTime`,
 (32, 'lukeg', '2025-07-09', '10:57:46', '10:57:57', 0.00, 'Laundry'),
 (33, 'lukeg', '2025-07-09', '11:04:46', NULL, NULL, NULL),
 (34, 'vmsroot', '2025-09-10', '11:36:05', NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dbvolunteeractivity`
+--
+
+CREATE TABLE `dbvolunteeractivity` (
+  `activity_id` int(11) NOT NULL,
+  `person_id` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `start_time` time NOT NULL,
+  `end_time` time NOT NULL,
+  `event_name` text NOT NULL,
+  `interactions` text DEFAULT NULL,
+  `photo_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -769,6 +788,12 @@ ALTER TABLE `dbshifts`
   ADD PRIMARY KEY (`shift_id`);
 
 --
+-- Indexes for table `dbvolunteeractivity`
+--
+ALTER TABLE `dbvolunteeractivity`
+  ADD PRIMARY KEY (`activity_id`);
+
+--
 -- Indexes for table `discussion_replies`
 --
 ALTER TABLE `discussion_replies`
@@ -806,10 +831,22 @@ ALTER TABLE `dbmessages`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=429;
 
 --
+-- AUTO_INCREMENT for table `dbpersons`
+--
+ALTER TABLE `dbpersons`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT for table `dbshifts`
 --
 ALTER TABLE `dbshifts`
   MODIFY `shift_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+
+--
+-- AUTO_INCREMENT for table `dbvolunteeractivity`
+--
+ALTER TABLE `dbvolunteeractivity`
+  MODIFY `activity_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `discussion_replies`
