@@ -16,7 +16,26 @@
         // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
         $accessLevel = $_SESSION['access_level'];
         $userID = $_SESSION['_id'];
+        error_log("User ID = " . $userID);
+
     }
+
+    require_once('database/dbAccounts.php');
+    $isAdmin = false;
+    if($loggedIn) {
+        // impliment in dbAccounts.php
+        $accountType = get_account_type($userID);
+        // 0: volunteer, 1: coordinator/board memeber, 2: admin
+        if ($accountType !== null && intval($accountType >= 2)) {
+            $isAdmin = true;
+        }
+    }
+
+    if(!$isAdmin) {
+        header('Location: login.php');
+        die();
+    }
+
     $forced = false;
     if (isset($_SESSION['change-password']) && $_SESSION['change-password']) {
         $forced = true;
