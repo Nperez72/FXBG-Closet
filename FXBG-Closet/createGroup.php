@@ -31,7 +31,7 @@ require_once('header.php');
 ?>
 <style>
         .date-box {
-            background: #274471;
+            background: var(--date-box-bg, #e8c4b8);
             padding: 7px 30px;
             border-radius: 50px;
             box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.25) inset;
