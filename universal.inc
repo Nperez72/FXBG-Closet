@@ -12,4 +12,4 @@
         <script src="css/header.js"></script>
         
 
-        <link rel="icon" type="image/x-icon" href="images/Cropped-Logo-FredSPCA.png">
+        <link rel="icon" type="image/x-icon" href="images/FXBG-PrideLogo.png">
