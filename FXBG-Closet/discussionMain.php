@@ -29,7 +29,7 @@
   <?php require_once('header.php') ?>
   <style>
         .date-box {
-            background: #274471;
+            background: var(--date-box-bg, #e8c4b8);
             padding: 7px 30px;
             border-radius: 50px;
             box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.25) inset;
@@ -48,7 +48,7 @@
 
 
   <!-- Larger Hero Section -->
-  <header class="h-40 w-full bg-auto bg-center relative z-0" style="background-image: url('https://images.thdstatic.com/productImages/7c22c2c6-a12a-404c-bdd6-d56779e7a66f/svn/chesapeake-wallpaper-rolls-3122-10402-64_600.jpg');"></header>
+  <header class="h-40 w-full relative z-0" style="background-color: var(--main-color, #e8c4b8);"></header>
 
 
   <!-- Main Content -->
@@ -57,14 +57,14 @@
 
       <!-- Buttons Section -->
       <div class="grid grid-cols-1 gap-6 w-full md:grid-cols-2 lg:w-2/3 lg:grid-cols-1">
-        <button class="flex justify-center relative bg-white border-2 border-gray-300 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover:border-blue-900 p-6 transition-all duration-200 text-xl font-medium text-gray-700 hover:bg-gray-100" onclick="window.location.href='viewDiscussions.php';">
+        <button class="flex justify-center relative bg-white border-2 border-gray-300 rounded-2xl shadow-sm hover:shadow-md cursor-pointer p-6 transition-all duration-200 text-xl font-medium text-gray-700 hover:bg-gray-100" style="border-color: var(--card-border, #e8c4b8);" onmouseover="this.style.borderColor='var(--accent-color, #d4af37)'" onmouseout="this.style.borderColor='var(--card-border, #e8c4b8)'" onclick="window.location.href='viewDiscussions.php';">
 	  <div class="absolute top-0 left-0 w-[80px] h-full bg-gray-200 rounded-l-2xl pointer-events-none z-0"></div>
 	  <div>View Discussions</div>
 	  <img class="w-14 h-14 absolute left-3 top-1/2 -translate-y-1/2 p-[2px]" src="images/group.svg" alt="Calendar Icon">
         </button>
 
 <?php if ($accessLevel >= 2): ?>
-        <button class="flex justify-center relative bg-white border-2 border-gray-300 rounded-2xl shadow-sm hover:shadow-md cursor-pointer hover:border-blue-900 p-6 transition-all duration-200 text-xl font-medium text-gray-700 hover:bg-gray-100" onclick="window.location.href='createDiscussion.php';">
+        <button class="flex justify-center relative bg-white border-2 border-gray-300 rounded-2xl shadow-sm hover:shadow-md cursor-pointer p-6 transition-all duration-200 text-xl font-medium text-gray-700 hover:bg-gray-100" style="border-color: var(--card-border, #e8c4b8);" onmouseover="this.style.borderColor='var(--accent-color, #d4af37)'" onmouseout="this.style.borderColor='var(--card-border, #e8c4b8)'" onclick="window.location.href='createDiscussion.php';">
 	  <div class="absolute top-0 left-0 w-[80px] h-full bg-gray-200 rounded-l-2xl pointer-events-none z-0"></div>
 	  <div>Create Discussion</div>
 	  <img class="w-14 h-14 absolute left-3 top-1/2 -translate-y-1/2 p-[2px]" src="images/creategroup.svg" alt="Calendar Icon">
@@ -75,7 +75,7 @@
       <!-- Text Section -->
       <div class="flex flex-col justify-center w-full lg:w-1/2 text-gray-700">
         <h1 class="text-3xl font-bold mb-4 mt-6">Discussions</h1>
-        <div class="h-px bg-blue-900 w-full"></div>
+        <div class="h-px w-full" style="background-color: var(--main-color, #e8c4b8);"></div>
         <p class="text-lg leading-relaxed">
           Welcome to the management hub. Use the controls on the left to manage users, content, access, and view important analytics and logs. Everything you need to control and configure your platform is just a click away.
         </p>
