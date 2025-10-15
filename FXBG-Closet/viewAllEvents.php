@@ -109,7 +109,7 @@
                                     // Display Sign Up or Cancel button based on user sign-up status
                                         if ($user_training_level != $training_level_required) {
                                             echo "
-                                            <td><a class='button sign-up' style='background-color:#c73d06'>Training Not Met!</a></td>";
+                                            <td><a class='button sign-up' style='background-color: var(--error-color, #d4635a);'>Training Not Met!</a></td>";
                                         }
                                         elseif ($isSignedUp) {
                                             echo "
@@ -118,7 +118,7 @@
                                             </td>";
                                         } elseif($numSignups >= $capacity) {
                                             echo "
-                                                <td><a class='button sign-up' style='background-color:#c73d06'>Sign Ups Closed!</a></td>";
+                                                <td><a class='button sign-up' style='background-color: var(--error-color, #d4635a);'>Sign Ups Closed!</a></td>";
                                         } else {
                                         echo "<td><a class='button sign-up' href='eventSignUp.php?event_name=" . urlencode($title) . "&restricted=" . urlencode($restricted_signup) . "'>Sign Up</a></td>";
                                         }
@@ -157,7 +157,7 @@
                                             <td><a href='event.php?id=$eventID'>$title</a></td>
                                             <td>$date</td>
                                             <td>$numSignups / $capacity</td>
-                                            <td><a class='button sign-up' style='background-color:#c73d06'>Sign Ups Closed!</a></td>
+                                            <td><a class='button sign-up' style='background-color: var(--error-color, #d4635a);'>Sign Ups Closed!</a></td>
                                         </tr>";*/
                                     //}
                                     
