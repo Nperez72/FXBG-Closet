@@ -225,8 +225,8 @@
     text-decoration: none;      /* default for Tailwind links */
     display: inline-block;      /* ensures padding applies correctly */
   "
-  onmouseover="this.style.backgroundColor='var(--inactive-background-color, #f4ede9)';'"
-  onmouseout="this.style.backgroundColor='var(--cancel-button-background-color, #8a8280)';'"
+  onmouseover="this.style.backgroundColor='var(--inactive-background-color, #f4ede9)';"
+  onmouseout="this.style.backgroundColor='var(--cancel-button-background-color, #8a8280)';"
   >
     Return to Dashboard
   </a>
