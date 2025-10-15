@@ -90,7 +90,7 @@ header {
 body {
     background-color: var(--page-background-color);
     color: var(--page-font-color);
-    font-family: Montserrat;
+    font-family: 'Quicksand', sans-serif;
 }
 
 header > img {

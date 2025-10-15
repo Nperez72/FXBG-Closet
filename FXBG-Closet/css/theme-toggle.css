@@ -412,7 +412,7 @@ label {
 }
 
 body {
-    font-family: Quicksand, sans-serif;
+    font-family: 'Quicksand', sans-serif;
     padding-top: 70px;
     background-color: var(--bg-color);
     color: var(--text-color);
@@ -422,9 +422,18 @@ body {
     flex-direction: column;
 }
 
+* {
+    font-family: 'Quicksand', sans-serif;
+}
+
 /* Ensure content grows to push footer down */
 body > *:not(.modern-navbar):not(.footer) {
     flex: 1 0 auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
 }
 
 h2 {
@@ -1476,4 +1485,244 @@ h2 {
 [data-theme="dark"] .content-box img,
 [data-theme="dark"] .content-box-sub img {
     filter: none;
+}
+
+/* ============================================
+   MOBILE BOTTOM NAVIGATION (PWA)
+   ============================================ */
+
+.mobile-bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 65px;
+    background: var(--navbar-bg);
+    border-top: 1px solid var(--border-color);
+    z-index: 1000;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.mobile-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    flex: 1;
+    max-width: 80px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-nav-item svg {
+    width: 24px;
+    height: 24px;
+    stroke-width: 2;
+    transition: all 0.3s ease;
+}
+
+.mobile-nav-item span {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.mobile-nav-item:active {
+    transform: scale(0.95);
+}
+
+.mobile-nav-item.active {
+    color: var(--accent-color);
+}
+
+.mobile-nav-item.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 32px;
+    height: 3px;
+    background: var(--accent-color);
+    border-radius: 0 0 3px 3px;
+}
+
+.mobile-nav-item.active svg {
+    stroke: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+/* Mobile More Menu Overlay */
+.mobile-more-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.mobile-more-menu.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.mobile-more-menu.active .mobile-more-header,
+.mobile-more-menu.active .mobile-more-content {
+    transform: translateY(0);
+}
+
+.mobile-more-header {
+    background: var(--navbar-bg);
+    padding: 20px 20px 15px;
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mobile-more-header h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.mobile-more-close {
+    background: var(--nav-item-active-bg);
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-more-close svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--text-color);
+}
+
+.mobile-more-close:active {
+    transform: scale(0.9);
+    background: var(--accent-color);
+}
+
+.mobile-more-close:active svg {
+    stroke: var(--button-text);
+}
+
+.mobile-more-content {
+    background: var(--navbar-bg);
+    max-height: 60vh;
+    overflow-y: auto;
+    padding: 10px 10px calc(env(safe-area-inset-bottom) + 10px);
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.05s;
+}
+
+.mobile-more-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    margin-bottom: 6px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-more-item svg {
+    width: 22px;
+    height: 22px;
+    stroke: var(--accent-color);
+    flex-shrink: 0;
+}
+
+.mobile-more-item:active {
+    transform: scale(0.98);
+    background: var(--nav-item-active-bg);
+}
+
+.mobile-more-item-logout {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1));
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #ef4444;
+}
+
+.mobile-more-item-logout svg {
+    stroke: #ef4444;
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+    /* Hide desktop navbar on mobile */
+    .modern-navbar {
+        display: none !important;
+    }
+    
+    .mobile-bottom-nav {
+        display: flex;
+    }
+    
+    body {
+        padding-top: 0 !important;
+        padding-bottom: calc(65px + env(safe-area-inset-bottom));
+    }
+    
+    .footer {
+        margin-bottom: calc(65px + env(safe-area-inset-bottom));
+    }
+    
+    .full-width-bar,
+    .full-width-bar-sub {
+        padding: 17px 3%;
+    }
+    
+    .content-box,
+    .content-box-test {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
 }

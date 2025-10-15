@@ -9,19 +9,8 @@ but no code was taken from there. All of the code below is original code.
 **/
 
 
-/* Create variable fonts for standard and italics versions of the fontface used by the org (Montserrat by Google) */
-@font-face {
-    font-family: 'Montserrat';
-    src: url('../fonts/Montserrat-VariableFont_wght.ttf') format("truetype-variations");
-    font-weight: 100 900;
-}
-
-@font-face {
-    font-family: 'Montserrat';
-    src: url('../fonts/Montserrat-Italic-VariableFont_wght.ttf') format("truetype-variations");
-    font-weight: 100 900;
-    font-style: italic;
-}
+/* Using Google Fonts Quicksand - loaded via CDN in header.php */
+/* Quicksand is a modern, rounded geometric sans-serif font */
 
 /* Reset rules (spacing, font override) */
 html, body, header, main, footer, div, span, 
@@ -80,7 +69,7 @@ table, td, tr, th, form, fieldset, em, button, a {
 
     /* Global rules */
     font-size: 18px;
-    font-family: Montserrat;
+    font-family: 'Quicksand', sans-serif;
     font-weight: 300;
 }
 
@@ -96,7 +85,7 @@ header {
 body {
     background-color: var(--page-background-color);
     color: var(--page-font-color);
-    font-family: Montserrat;
+    font-family: 'Quicksand', sans-serif;
 }
 
 header > img {
