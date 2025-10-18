@@ -33,7 +33,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/theme-toggle.css">
-    <title>Frederickburg SPCA Volunteer Management | Dashboard</title>
+    <title>Fredericksburg SPCA Volunteer Management | Dashboard</title>
     <style>
         * {
             box-sizing: border-box;
