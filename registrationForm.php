@@ -20,7 +20,6 @@
 
             <h3 class="mt-2">Personal Information</h3>
             <p class="mb-2">The following information will help us identify you within our system.</p>
-	    <div class="blue-div"></div>
 
             <label for="first_name"><em>* </em>First Name</label>
             <input type="text" id="first_name" name="first_name" required placeholder="Enter your first name">
@@ -100,7 +99,6 @@
         <fieldset class="section-box mb-4">
             <h3>Contact Information</h3>
             <p class="mb-2">The following information will help us determine the best way to contact you regarding event coordination.</p>
-	    <div class="blue-div"></div>
 
             <label for="email"><em>* </em>E-mail</label>
             <input type="email" id="email" name="email" required placeholder="Enter your e-mail address">
@@ -126,7 +124,6 @@
         <fieldset class="section-box mb-4">
             <h3>Emergency Contact</h3>
             <p class="mb-2">Please provide us with someone to contact on your behalf in case of an emergency.</p>
-	    <div class="blue-div"></div>
 
             <label for="emergency_contact_first_name" required><em>* </em>Contact First Name</label>
             <input type="text" id="emergency_contact_first_name" name="emergency_contact_first_name" required placeholder="Enter emergency contact first name">
@@ -156,7 +153,6 @@
 
         <fieldset class="section-box mb-4">
             <h3 class="mb-2">Other Required Information</h3>
-	    <div class="blue-div"></div>
             
            <!-- fix this area is buggy -->
             
@@ -214,7 +210,6 @@
         <fieldset class="section-box mb-4">
             <h3>Login Credentials</h3>
             <p class="mb-2">You will use the following information to log in to the system.</p>
-	    <div class="blue-div"></div>
 
             <label for="username"><em>* </em>Username</label>
             <input type="text" id="username" name="username" required placeholder="Enter a username">

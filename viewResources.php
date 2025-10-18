@@ -62,11 +62,11 @@ $pdfFiles = listPDFFiles($resource_dir);
                 border: 1px solid #ddd;
             }
             th {
-                background-color: #f4f4f4;
+                background-color: var(--nav-item-active-bg, #f4ede9);
                 border-bottom: 1px solid #ddd;
             }
             tr:nth-child(even) {
-                background-color: #ece8e8;
+                background-color: var(--dropdown-hover, rgba(232, 196, 184, 0.1));
             }
         </style>
     </head>

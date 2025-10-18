@@ -39,16 +39,16 @@ if ($accessLevel > 1) {
         }
 
         th {
-            background-color: #f4f4f4;
+            background-color: var(--nav-item-active-bg, #f4ede9);
             font-weight: 600;
         }
 
         tr:hover {
-            background-color: #f1f1f1;
+            background-color: var(--dropdown-hover, rgba(232, 196, 184, 0.1));
         }
 
         .main-content-box {
-            background: #ffffff;
+            background: var(--card-bg, #ffffff);
             border-radius: 10px;
             padding: 2rem;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
@@ -63,13 +63,13 @@ if ($accessLevel > 1) {
             text-decoration: none;
             border-radius: 4px;
             font-weight: bold;
-            background-color: #3b82f6;
+            background-color: var(--main-color, #e8c4b8);
             color: white;
             display: inline-block;
         }
 
         .btn:hover {
-            background-color: #2563eb;
+            background-color: var(--accent-color, #d4af37);
         }
     </style>
 </head>

@@ -53,7 +53,7 @@ include 'infoBox.php';
 
             <div class="overflow-x-auto">
                 <table class="w-full" id="results-table">
-                    <thead class="bg-blue-400 text-white">
+                    <thead class="text-white" style="background-color: var(--main-color, #e8c4b8);">
                         <tr>
                             <th class="text-left p-2">Username</th>
                             <th class="text-left p-2">Action</th>

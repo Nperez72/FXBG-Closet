@@ -57,7 +57,7 @@
     --drop-shadow-md: 0 3px 3px rgb(0 0 0 / 0.12);
     --default-transition-duration: 150ms;
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    --default-font-family: var(--font-sans);
+    --default-font-family: 'Quicksand', var(--font-sans);
     --default-mono-font-family: var(--font-mono);
   }
 }
@@ -76,6 +76,7 @@
     font-feature-settings: var(--default-font-feature-settings, normal);
     font-variation-settings: var(--default-font-variation-settings, normal);
     -webkit-tap-highlight-color: transparent;
+    height: 100%;
   }
   hr {
     height: 0;
@@ -558,7 +559,7 @@
     border-bottom-width: 4px;
   }
   .border-blue-900 {
-    border-color: var(--color-blue-900);
+    border-color: var(--main-color, #e8c4b8);
   }
   .border-gray-300 {
     border-color: var(--color-gray-300);
@@ -567,10 +568,10 @@
     background-color: #345284;
   }
   .bg-blue-400 {
-    background-color: var(--color-blue-400);
+    background-color: var(--nav-item-active-bg, #f4ede9);
   }
   .bg-blue-900 {
-    background-color: var(--color-blue-900);
+    background-color: var(--main-color, #e8c4b8);
   }
   .bg-gray-100 {
     background-color: var(--color-gray-100);
@@ -692,25 +693,25 @@
     color: var(--color-black);
   }
   .text-blue-500 {
-    color: var(--color-blue-500);
+    color: var(--accent-color, #d4af37);
   }
   .text-blue-700 {
-    color: var(--color-blue-700);
+    color: var(--accent-color, #d4af37);
   }
   .text-blue-900 {
-    color: var(--color-blue-900);
+    color: var(--text-color, #363434);
   }
   .text-gray-500 {
-    color: var(--color-gray-500);
+    color: var(--text-muted, #8a8280);
   }
   .text-gray-700 {
-    color: var(--color-gray-700);
+    color: var(--text-secondary, #5a5856);
   }
   .text-gray-800 {
-    color: var(--color-gray-800);
+    color: var(--text-color, #363434);
   }
   .text-gray-900 {
-    color: var(--color-gray-900);
+    color: var(--text-color, #363434);
   }
   .text-white {
     color: var(--color-white);
@@ -791,28 +792,28 @@
   .hover\:border-blue-700 {
     &:hover {
       @media (hover: hover) {
-        border-color: var(--color-blue-700);
+        border-color: var(--accent-color, #d4af37);
       }
     }
   }
   .hover\:border-blue-900 {
     &:hover {
       @media (hover: hover) {
-        border-color: var(--color-blue-900);
+        border-color: var(--accent-color, #d4af37);
       }
     }
   }
   .hover\:bg-blue-600 {
     &:hover {
       @media (hover: hover) {
-        background-color: var(--color-blue-600);
+        background-color: var(--accent-color, #d4af37);
       }
     }
   }
   .hover\:bg-blue-700 {
     &:hover {
       @media (hover: hover) {
-        background-color: var(--color-blue-700);
+        background-color: var(--accent-color, #d4af37);
       }
     }
   }
@@ -846,7 +847,7 @@
   }
   .focus\:ring-blue-400 {
     &:focus {
-      --tw-ring-color: var(--color-blue-400);
+      --tw-ring-color: var(--accent-color, #d4af37);
     }
   }
   .focus\:outline-none {
@@ -909,9 +910,9 @@
 @layer base {
   body {
     display: flex;
-    min-height: 100vh;
+    min-height: 100%;
     flex-direction: column;
-    background-color: var(--color-gray-100);
+    background-color: var(--bg-color, var(--color-gray-100));
   }
   h1 {
     width: 100%;
@@ -922,7 +923,7 @@
     line-height: var(--tw-leading, var(--text-2xl--line-height));
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
-    color: var(--color-white);
+    color: var(--button-text, #363434);
     --tw-drop-shadow-size: drop-shadow(0 3px 3px var(--tw-drop-shadow-color, rgb(0 0 0 / 0.12)));
     --tw-drop-shadow: drop-shadow(var(--drop-shadow-md));
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
@@ -938,10 +939,10 @@
     border-width: 1px;
     border-style: var(--tw-border-style);
     border-width: 2px;
-    border-color: var(--color-gray-300);
+    border-color: var(--card-border, #e8c4b8);
     font-size: var(--text-lg);
     line-height: var(--tw-leading, var(--text-lg--line-height));
-    color: var(--color-gray-700);
+    color: var(--text-secondary, #5a5856);
   }
   tr {
     border-bottom-style: var(--tw-border-style);
@@ -959,10 +960,10 @@
     padding-block: calc(var(--spacing) * 4);
   }
   thead {
-    background-color: var(--color-blue-100);
+    background-color: var(--nav-item-active-bg, #f4ede9);
   }
   th {
-    background-color: var(--color-blue-100);
+    background-color: var(--nav-item-active-bg, #f4ede9);
     padding-inline: calc(var(--spacing) * 6);
     padding-block: calc(var(--spacing) * 4);
     text-align: left;
@@ -974,7 +975,7 @@
     line-height: var(--tw-leading, var(--text-2xl--line-height));
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
-    color: var(--color-gray-800);
+    color: var(--text-color, #363434);
   }
   h3 {
     margin-top: calc(var(--spacing) * 6);
@@ -982,7 +983,7 @@
     line-height: var(--tw-leading, var(--text-xl--line-height));
     --tw-font-weight: var(--font-weight-semibold);
     font-weight: var(--font-weight-semibold);
-    color: var(--color-gray-800);
+    color: var(--text-color, #363434);
   }
   main {
     position: relative;
@@ -1002,7 +1003,7 @@
     line-height: var(--tw-leading, var(--text-lg--line-height));
     --tw-font-weight: var(--font-weight-semibold);
     font-weight: var(--font-weight-semibold);
-    color: var(--color-blue-900);
+    color: var(--text-color, #363434);
   }
   input:not([type="radio"]), select {
     margin-bottom: calc(var(--spacing) * 2);
@@ -1010,15 +1011,15 @@
     border-radius: var(--radius-md);
     border-style: var(--tw-border-style);
     border-width: 2px;
-    border-color: var(--color-gray-300);
+    border-color: var(--card-border, #e8c4b8);
     padding: calc(var(--spacing) * 2);
     --tw-shadow: 0 1px 2px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.05));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
     &:focus {
-      border-color: var(--color-blue-500);
+      border-color: var(--accent-color, #d4af37);
     }
     &:focus {
-      --tw-ring-color: var(--color-blue-500);
+      --tw-ring-color: var(--accent-color, #d4af37);
     }
   }
   em {
@@ -1031,7 +1032,7 @@
     z-index: 0;
     height: calc(var(--spacing) * 52);
     width: 100%;
-    background-color: #294877;
+    background-color: var(--main-color, #e8c4b8);
     background-position: center;
   }
   .center-header {
@@ -1068,13 +1069,13 @@
   .blue-button {
     cursor: pointer;
     border-radius: var(--radius-lg);
-    background-color: var(--color-blue-900);
+    background-color: var(--main-color, #e8c4b8);
     padding-inline: calc(var(--spacing) * 6);
     padding-block: calc(var(--spacing) * 2);
-    color: var(--color-white);
+    color: var(--button-text, #363434);
     &:hover {
       @media (hover: hover) {
-        background-color: var(--color-blue-700);
+        background-color: var(--accent-color, #d4af37);
       }
     }
   }
@@ -1094,12 +1095,12 @@
     margin-top: calc(var(--spacing) * 10);
     max-width: var(--container-4xl);
     text-align: center;
-    color: var(--color-gray-700);
+    color: var(--text-secondary, #5a5856);
   }
   .blue-div {
     margin-bottom: calc(var(--spacing) * 4);
     height: 1px;
-    background-color: var(--color-blue-900);
+    background-color: var(--main-color, #e8c4b8);
   }
   .info-text {
     font-size: var(--text-lg);
@@ -1111,7 +1112,7 @@
     margin-top: calc(var(--spacing) * 1);
     --tw-font-weight: var(--font-weight-semibold);
     font-weight: var(--font-weight-semibold);
-    color: var(--color-blue-700);
+    color: var(--text-color, #363434);
   }
   .error-block {
     margin-bottom: calc(var(--spacing) * 2);
@@ -1137,6 +1138,19 @@
       margin-inline-start: calc(calc(var(--spacing) * 2) * var(--tw-space-x-reverse));
       margin-inline-end: calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-x-reverse)));
     }
+  }
+  .date-box {
+    background: var(--date-box-bg, #e8c4b8);
+    padding: 7px 30px;
+    border-radius: 50px;
+    box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.25) inset;
+    color: var(--date-box-text, #363434);
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+  }
+  .dropdown {
+    padding-right: 50px;
   }
 }
 @property --tw-translate-x {

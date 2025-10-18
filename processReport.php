@@ -126,23 +126,23 @@ echo "<html><head><meta charset='UTF-8'></head><body>";
 echo "<table border='1' style='border-collapse: collapse; font-family: Arial, sans-serif; text-align: center;'>";
 
 // Report Title
-echo "<tr><th colspan='7' style='font-size: 18px; background-color: #004488; color: white; padding: 10px;'>Volunteer Report - " . ucfirst($reportType) . " FY{$fiscalYearEnd}</th></tr>";
+echo "<tr><th colspan='7' style='font-size: 18px; background-color: var(--main-color, #e8c4b8); color: var(--button-text, #363434); padding: 10px;'>Volunteer Report - " . ucfirst($reportType) . " FY{$fiscalYearEnd}</th></tr>";
 
 // Column Headers
 echo "<tr>
-        <th style='background-color: #88CCEE; padding: 5px;'>Month</th>
-        <th style='background-color: #AA4499; padding: 5px;'>Total Volunteers</th>
-        <th style='background-color: #DDCC77; padding: 5px;'>New Volunteers</th>
-        <th style='background-color: #88CCEE; padding: 5px;'>New Dog Walkers</th>
-        <th style='background-color: #AA4499; padding: 5px;'>Group Volunteers</th>
-        <th style='background-color: #DDCC77; padding: 5px;'>Community Service Volunteers</th>
-        <th style='background-color: #88CCEE; padding: 5px;'>Total Volunteer Hours</th>
+        <th style='background-color: var(--nav-item-active-bg, #f4ede9); padding: 5px;'>Month</th>
+        <th style='background-color: var(--accent-color, #d4af37); padding: 5px;'>Total Volunteers</th>
+        <th style='background-color: var(--nav-item-active-bg, #f4ede9); padding: 5px;'>New Volunteers</th>
+        <th style='background-color: var(--accent-color, #d4af37); padding: 5px;'>New Dog Walkers</th>
+        <th style='background-color: var(--nav-item-active-bg, #f4ede9); padding: 5px;'>Group Volunteers</th>
+        <th style='background-color: var(--accent-color, #d4af37); padding: 5px;'>Community Service Volunteers</th>
+        <th style='background-color: var(--nav-item-active-bg, #f4ede9); padding: 5px;'>Total Volunteer Hours</th>
       </tr>";
 
 // Data Rows
 foreach ($reportData as $month => $data) {
     echo "<tr>
-            <td style='background-color: #EAEAEA; padding: 5px; text-align: center;'>$month</td>
+            <td style='background-color: var(--dropdown-hover, rgba(232, 196, 184, 0.1)); padding: 5px; text-align: center;'>$month</td>
             <td style='padding: 5px;'>{$data["total_volunteers"]}</td>
             <td style='padding: 5px;'>{$data["new_volunteers"]}</td>
             <td style='padding: 5px;'>{$data["new_dog_walkers"]}</td>
