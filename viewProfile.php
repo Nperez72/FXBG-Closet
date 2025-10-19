@@ -131,7 +131,7 @@
 
 <body class="bg-gray-100">
   <!-- Hero Section -->
-  <div class="h-48 relative" style="background-image: url('https://images.thdstatic.com/productImages/7c22c2c6-a12a-404c-bdd6-d56779e7a66f/svn/chesapeake-wallpaper-rolls-3122-10402-64_600.jpg');">
+  <div class="h-48 relative hero-header">
   </div>
 
   <!-- Profile Content -->

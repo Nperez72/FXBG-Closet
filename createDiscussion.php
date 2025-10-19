@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php require('header.php'); ?>
     <style>
         .main-content-box {
-            background: #ffffff;
+            background: var(--card-bg, #ffffff);
             border-radius: 10px;
             padding: 2rem;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 10px;
             margin-top: 0.25rem;
             border-radius: 5px;
-            border: 1px solid #ccc;
+            border: 1px solid var(--card-border, #e8c4b8);
         }
 
         textarea {
@@ -96,19 +96,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         .btn-submit {
-            background-color: #4CAF50;
+            background-color: var(--main-color, #e8c4b8);
         }
 
         .btn-submit:hover {
-            background-color: #45a049;
+            background-color: var(--accent-color, #d4af37);
         }
 
         .btn-back {
-            background-color: #6c757d;
+            background-color: var(--cancel-button-background-color, #8a8280);
         }
 
         .btn-back:hover {
-            background-color: #5a6268;
+            background-color: var(--inactive-background-color, #f4ede9);
         }
 
         .success {

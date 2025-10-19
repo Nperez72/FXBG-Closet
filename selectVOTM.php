@@ -77,8 +77,8 @@ if ($isAdmin && !empty($topVolunteers)) {
             max-width: 800px;
             margin: 80px auto;
             padding: 20px;
-            background-color: #ffffff;
-            border: 1px solid #ddd;
+            background-color: var(--card-bg, #ffffff);
+            border: 1px solid var(--card-border, #e8c4b8);
             border-radius: 8px;
         }
         .votm-table {
@@ -87,27 +87,27 @@ if ($isAdmin && !empty($topVolunteers)) {
             margin-top: 20px;
         }
         .votm-table th, .votm-table td {
-            border: 1px solid #ccc;
+            border: 1px solid var(--card-border, #e8c4b8);
             padding: 10px;
         }
         .votm-table th {
-            background-color: #f2f2f2;
+            background-color: var(--nav-item-active-bg, #f4ede9);
         }
         .winner-highlight {
-            background-color: #fff9c4;
+            background-color: var(--dropdown-hover, rgba(232, 196, 184, 0.1));
             font-weight: bold;
         }
         .back-button {
             display: inline-block;
             margin-top: 30px;
             padding: 10px 20px;
-            background-color: #004f71;
+            background-color: var(--main-color, #e8c4b8);
             color: white;
             text-decoration: none;
             border-radius: 5px;
         }
         .back-button:hover {
-            background-color: #00374f;
+            background-color: var(--accent-color, #d4af37);
         }
     </style>
 </head>
@@ -124,7 +124,7 @@ if ($isAdmin && !empty($topVolunteers)) {
                 </p>
             </div>
         <?php else: ?>
-            <div class="error" style="margin-bottom: 20px; color: red;">
+            <div class="error" style="margin-bottom: 20px; color: var(--error-color, #d4635a);">
                 ⚠️ No Volunteer of the Month has been selected yet.
             </div>
         <?php endif; ?>
