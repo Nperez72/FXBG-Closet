@@ -34,9 +34,10 @@ CREATE TABLE `dbaccounts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `dbaccounts` (`username`, `password`, `type`) VALUES
-('vol', '123', 0),   -- Volunteer
-('coord', '456', 1), -- Coordinator
-('admin', '789', 2);    -- Admin
+('volunteer', '1', 0),   -- Volunteer
+('coordinator', '1', 1), -- Coordinator
+('admin', '1', 2),    -- Admin
+('vmsroot', '1', 2);
 
 -- --------------------------------------------------------
 
