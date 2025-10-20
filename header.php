@@ -83,7 +83,6 @@ if (date("H:i:s") > "18:19:59") {
             die();
         }
 
-			
         // ADMIN NAVBAR
         if ($_SESSION['access_level'] >= 2) {
             echo('
@@ -108,7 +107,6 @@ if (date("H:i:s") > "18:19:59") {
                             </svg>
                             <span>Check In/Out</span>
                         </a>
-
 
                         <div class="nav-dropdown">
                             <button class="nav-link">
@@ -146,14 +144,7 @@ if (date("H:i:s") > "18:19:59") {
                                     </svg>
                                     View Check-Ins
                                 </a>
-                            <a href="trackActivities.php" class="dropdown-item">
-                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M9 11l3 3L22 4"></path>
-                                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                                    </svg>
-                                    Track Activities
-                                </a>
-</div>
+                            </div>
                         </div>
 
                         <div class="nav-dropdown">
@@ -370,57 +361,8 @@ if (date("H:i:s") > "18:19:59") {
                                     Edit Hours
                                 </a>
                             </div>
-			</div>
-		</div>
-</div>
-</div>
-</div>');
-}
-        // VOLUNTEER ONLY HEADER
-        if ($_SESSION['access_level'] <= 1) {
-		echo('<div class="navbar">
-        <!-- Left Section: Logo & Nav Links -->
-        <div class="left-section">
-            <div class="logo-container">
-                <a href="index.php"><img src="images/actual_log.png" alt="Logo"></a>
-            </div>
-            <div class="nav-links">
-                <div class="nav-item">Events
-                    <div class="dropdown">
-<a href="viewMyUpcomingEvents.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/list-solid.svg">
-    <span>My Upcoming</span>
-  </div>
-</a>
-<a href="viewAllEvents.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/new-event.svg">
-    <span>Sign-Up</span>
-  </div>
-</a>
-<a href="editHours.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/clock-regular.svg">
-    <span>Edit Hours</span>
-  </div>
-</a>
-<a href="trackActivities.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/clipboard-regular.svg">
-    <span>Track Activities</span>
-  </div>
-</a>
-                   </div>
-                </div>
-                <div class="nav-item">Groups
-                    <div class="dropdown">
-<a href="volunteerViewGroup.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/group.svg">
-    <span>My Groups</span>
-  </div>
-</a>
+                        </div>
+
                         <div class="nav-dropdown">
                             <button class="nav-link">
                                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
