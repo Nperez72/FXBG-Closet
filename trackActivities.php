@@ -89,24 +89,12 @@ require_once('header.php');
 ?>
 
 <?php if ($showPopup): ?>
-<div id="popupMessage" class="absolute left-[40%] top-[20%] z-50 <?php echo $popupType === 'success' ? 'bg-green-600' : 'bg-red-800'; ?> p-4 text-white rounded-xl text-xl shadow-lg">
+<div id="popupMessage" class="absolute left-[40%] top-[20%] z-50 <?php echo $popupType === 'success' ? 'bg-green-600' : 'bg-red-800'; ?> p-4 text-green rounded-xl text-xl shadow-lg">
     <?php echo htmlspecialchars($popupMessage); ?>
 </div>
 <?php endif; ?>
 
 <script>
-window.addEventListener('DOMContentLoaded', () => {
-    const popup = document.getElementById('popupMessage');
-    if (popup) {
-        popup.style.transition = 'opacity 0.5s ease';
-        setTimeout(() => {
-            popup.style.opacity = '0';
-            setTimeout(() => {
-                popup.style.display = 'none';
-            }, 500);
-        }, 4000);
-    }
-});
 </script>
 
 </body>
