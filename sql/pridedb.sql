@@ -34,10 +34,10 @@ CREATE TABLE `dbaccounts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `dbaccounts` (`username`, `password`, `type`) VALUES
-('volunteer', '1', 0),   -- Volunteer
-('coordinator', '1', 1), -- Coordinator
-('admin', '1', 2),    -- Admin
-('vmsroot', '1', 2);
+('volunteer', '$2y$10$w8VWUHueVa4y8mizksOV4eexntKRXqcrQJlxyGovBktjUYLhZTrqm', 0),   -- Volunteer
+('coordinator', '$2y$10$c.yLEZABvoKZESzN7FhWSOaxK0L0iv2oFfTEuuo/F8YNKTGnb5Ekq', 1), -- Coordinator
+('admin', '$2y$10$JkAz3mBongMc4rwCz3h8/e/7g1O3anZJxY4wUrGfa8jxba1IQAMGi', 2),    -- Admin
+('vmsroot', '$2y$10$M3Nxy9o5Bw/mMB5qWpXka.y4vF6Rhm7R1pzB3RNyC0piO2WKpNsMa', 2);
 
 -- --------------------------------------------------------
 
