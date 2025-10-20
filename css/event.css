@@ -34,7 +34,7 @@ header {
 body {
     background-color: var(--page-background-color);
     color: var(--page-font-color);
-    font-family: Montserrat;
+    font-family: 'Quicksand', sans-serif;
 }
 
 header > img {
@@ -392,7 +392,7 @@ td.label {
 .event-info {
     margin: 0 auto;
     max-width: 600px;
-    font-family: Arial, sans-serif;
+    font-family: 'Quicksand', sans-serif;
 }
 
 h1 {
@@ -542,7 +542,7 @@ html, body {
     margin: 0;
     padding: 0;
     height: 100%; /* Ensures full height */
-    font-family: Arial, sans-serif;
+    font-family: 'Quicksand', sans-serif;
     display: flex;
     flex-direction: column; /* Allow stacking of header and main content */
 }

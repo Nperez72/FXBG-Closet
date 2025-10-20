@@ -16,7 +16,7 @@
             font-family: Quicksand;
         }
         .info-box {
-            background: white;
+            background: var(--card-bg, #ffffff);
 	    max-width: 800px;
             padding: 40px;
             border-radius: 10px;
@@ -30,7 +30,7 @@
             top: -20px;
             left: 50%;
             transform: translateX(-50%);
-            background: #007bff;
+            background: var(--main-color, #e8c4b8);
             color: white;
             border-radius: 50%;
             width: 40px;

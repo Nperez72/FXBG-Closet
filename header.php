@@ -1,18 +1,17 @@
-<!-- This looks really, really great!  -Thomas -->
+<!-- Modern Header Navigation -->
 <?php
-date_default_timezone_set('America/New_York');
-/*
- * Copyright 2013 by Allen Tucker. 
- * This program is part of RMHP-Homebase, which is free software.  It comes with 
- * absolutely no warranty. You can redistribute and/or modify it under the terms 
- * of the GNU General Public License as published by the Free Software Foundation
- * (see <http://www.gnu.org/licenses/ for more information).
- * 
+date_default_timezone_set('America/New_York');/*
+* Copyright 2013 by Allen Tucker. 
+* This program is part of RMHP-Homebase, which is free software.  It comes with 
+* absolutely no warranty. You can redistribute and/or modify it under the terms 
+* of the GNU General Public License as published by the Free Software Foundation
+* (see <http://www.gnu.org/licenses/ for more information).
+* 
 if (date("H:i:s") > "18:19:59") {
-	require_once 'database/dbShifts.php';
-	auto_checkout_missing_shifts();
+ require_once 'database/dbShifts.php';
+ auto_checkout_missing_shifts();
 }
- */
+*/
 
 // check if we are in locked mode, if so,
 // user cannot access anything else without 
@@ -21,942 +20,812 @@ if (date("H:i:s") > "18:19:59") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>
-<?php if (empty($tailwind_mode)): ?>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-<?php endif; ?>
-        body {
-            font-family: Quicksand, sans-serif;
-            padding-top: 96px;
-        }
-        h2 {
-        	font-weight: normal;
-            font-size: 30px;
-        }
-
-/*BEGIN STYLE TEST*/
-         .extra-info {
-            max-height: 0px;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            font-size: 14px;
-            color: #444;
-            margin-top: 5px;
-        }
-       .content-box-test{
-            flex: 1 1 370px; /* Adjusts width dynamically */
-            max-width: 470px;
-            padding: 10px 10px; /* Altered padding to make closer */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            cursor: pointer;
-            border: 0.1px solid black;
-            transition: border 0.3s;
-            border-radius: 10px;
-            border-bottom-right-radius: 50px;
-        }
-         .content-box-test:hover {
-            border: 4px solid #007BFF;
-        }
-/*END STYLE TEST*/
-
-        .full-width-bar {
-            width: 100%;
-            background: #294877;
-            padding: 17px 5%;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-        }
-        .full-width-bar-sub {
-            width: 100%;
-            background: white;
-            padding: 17px 5%;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .content-box {
-            flex: 1 1 280px; /* Adjusts width dynamically */
-            max-width: 375px;
-            padding: 10px 2px; /* Altered padding to make closer */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            position: relative;
-        }
-
-        .content-box-sub {
-            flex: 1 1 300px; /* Adjusts width dynamically */
-            max-width: 470px;
-            padding: 10px 10px; /* Altered padding to make closer */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            position: relative;
-        }
-
-        .content-box img {
-            width: 100%;
-            height: auto;
-            background: white;
-            border-radius: 5px;
-            border-bottom-right-radius: 50px;
-            border: 0.5px solid #828282;
-        }
-
-        .content-box-sub img {
-            width: 105%;
-            height: auto;
-            background: white;
-            border-radius: 5px;
-            border-bottom-right-radius: 50px;
-            border: 1px solid #828282;
-        }
-
-        .small-text {
-            position: absolute;
-            top: 20px;
-            left: 30px;
-            font-size: 14px;
-            font-weight: 700;
-            color: #294877;
-        }
-
-        .large-text {
-            position: absolute;
-            top: 40px;
-            left: 30px;
-            font-size: 22px;
-            font-weight: 700;
-            color: black;
-            max-width: 90%;
-        }
-
-        .large-text-sub {
-            position: absolute;
-            /*top: 120px;*/
-            top: 60%;
-            left: 10%;
-            font-size: 22px;
-            font-weight: 700;
-            color: black;
-            max-width: 90%;
-        }
-
-        .graph-text {
-            position: absolute;
-            top: 75%;
-            left: 10%;
-            font-size: 14px;
-            font-weight: 700;
-            color: #294877;
-            max-width: 90%;
-        }
-
-        /* Navbar Container */
-        .navbar {
-	    gap: 10px;
-            width: 100%;
-            height: 95px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background: white;
-            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25);
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            z-index: 1000;
-        }
-
-        /* Left Section: Logo & Nav Links */
-        .left-section {
-            display: flex;
-            align-items: center;
-            gap: 20px; /* Space between logo and links */
-        }
-
-        /* Logo */
-        .logo-container {
-            background: #294877;
-            padding: 10px 20px;
-            border-radius: 50px;
-            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) inset;
-        }
-
-        .logo-container img {
-            width: 128px;
-            height: 52px;
-            display: block;
-        }
-
-        /* Navigation Links */
-        .nav-links {
-            display: flex;
-            gap: 20px;
-        }
-
-        .nav-links div {
-            font-size: 24px;
-            font-weight: 700;
-            color: black;
-            cursor: pointer;
-        }
-
-        /* Right Section: Date & Icon */
-        .right-section {
-            margin-left: auto; /* Pushes right section to the end */
-            display: flex;
-            align-items: center;
-            gap: 20px;
-	}
-
-        /* Dropdown Control */
-        .nav-item {
-            position: relative;
-            cursor: pointer;
-            padding: 0px;
-            transition: color 0.3s, outline 0.3s;
-        }
-
-
-        .dropdown {
-            display: none;
-            position: absolute;
-            top: 150%;
-            left: -10%;
-            background-color: white;
-            border: 1px solid #ccc;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-            min-width: 150px;
-            padding: 10px;
-        }
-        .dropdown div {
-            padding: 8px;
-            white-space: nowrap;
-            transition: background 0.3s;
-        }
-        .dropdown div:hover {
-            background: rgba(0, 0, 0, 0.1);
-        }
-
-        .nav-item:hover, .nav-item.active {
-            color: #7aacf5;
-            outline: 1px solid #7aacf5;
-            outline-offset: 7px;
-        }
-
-        .date-box {
-            background: #274471;
-            padding: 10px 30px;
-            border-radius: 50px;
-            box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.25) inset;
-            color: white;
-            font-size: 24px;
-            font-weight: 700;
-            text-align: center;
-        }
-
-        .icon {
-            width: 47px;
-            height: 47px;
-            /*background: #292D32;*/
-            border-radius: 50%;
-
-        }
-.nav-buttons {
-    position: absolute;
-    bottom: 10%; /* Adjust as needed */
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    width: 100%;
-}
-
-/* Button Styling */
-.nav-button {
-    background: #274471;
-    border: none;
-    color: white;
-    font-size: 20px;
-    font-family: 'Quicksand', sans-serif;
-    font-weight: 600;
-    border-radius: 20px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: all 0.4s ease-in-out;
-    backdrop-filter: blur(8px);
-    padding: 6px 8px;
-    padding-top: 10px;
-    width: 55px; /* Initially a circle */
-    overflow: hidden;
-    white-space: nowrap;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Expand button on hover */
-.nav-button:hover {
-    width: 160px;
-    padding: 6px 8px;
-    padding-top: 10px
-}
-
-.nav-button .text {
-    opacity: 0;
-    transform: translateX(-10px);
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-}
-
-.nav-button:hover .text {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-.nav-button .arrow {
-    display: inline-block;
-    transition: transform 0.3s ease;
-}
-
-.nav-button:hover .arrow {
-    transform: translateX(5px);
-}
-       /* Button Control */
-        .arrow-button {
-            position: absolute;
-            bottom: 30px;
-            right: 30px;
-            background: transparent;
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .arrow-button:hover {
-            transform: translateX(5px); /* Moves the arrow slightly on hover */
-        }
-
-        /* Footer */
-        .footer {
-            width: 100%;
-            background: #294877;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            padding: 30px 50px;
-            flex-wrap: wrap;
-        }
-
-        /* Left Section */
-        .footer-left {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .footer-logo {
-            width: 150px; /* Adjust logo size */
-            margin-bottom: 15px;
-        }
-
-        /* Social Media Icons */
-        .social-icons {
-            display: flex;
-            gap: 15px;
-        }
-
-        .social-icons a {
-            color: white;
-            font-size: 20px;
-            transition: color 0.3s ease;
-        }
-
-        .social-icons a:hover {
-            color: #dcdcdc;
-        }
-
-        /* Right Section */
-        .footer-right {
-            display: flex;
-            gap: 50px;
-            flex-wrap: wrap;
-        }
-
-        .footer-section {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            color: white;
-            font-family: Inter, sans-serif;
-            font-size: 16px;
-            font-weight: 500;
-        }
-
-        .footer-topic {
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .footer a {
-            color: white;
-            text-decoration: none;
-            transition: background 0.2s ease, color 0.2s ease;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-
-        .footer a:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: #dcdcdc;
-        }
-
-        /* Icon Overlay */
-        .background-image {
-            width: 100%;
-            border-radius: 17px;
-        }
-
-        .icon-overlay {
-            position: absolute;
-            top: 40px; /* Adjust as needed */
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.8); /* Optional background for better visibility */
-            padding: 10px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .icon-overlay img {
-            width: 40px; /* Adjust size as needed */
-            height: 40px;
-            opacity: 0.9;
-        }
-
-        .nav-item img {
-            border-radius: 15px;
-            transition: filter 0.3s, background-color 0.3s;
-        }
-
-        .nav-item:hover img, .nav-item.active img {
-            filter: none;
-            background-color: #cbe0ff;
-        }
-       
-        .icon .dropdown{
-            top: 130%;
-            left: -415%;
-        }
-
-        .in-nav {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-	.in-nav span {
-	    font-size:24px;
-	}
-
-	.in-nav img {
-            width: 40px;
-            height: 40px;
-            border-radius: 5px;
-            border-bottom-right-radius: 20px;
-        }
-
-/* for calendar */
-    .icon-butt svg {
-        transition: transform 0.2s ease, fill 0.2s ease;
-        cursor: pointer;
-    }
-
-    .icon-butt:hover svg {
-        transform: scale(1.1) rotate(5deg); /* Slight enlarge & tilt effect */
-        fill: #7aacf5; /* Changes to a blue shade */
-    }
-
-    .font-change {
-	font-size: 30px;
-	font-family: Quicksand;
-    }
-
-
-
-        /* Responsive Design */
-	@media (max-width: 0px) {
-	   .content-box-test {
-		flex: 1 1 300px;
-	    }
-	}
-
-        @media (max-width: 900px) {
-           .footer {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-            .footer-right {
-                flex-direction: column;
-                align-items: center;
-                gap: 30px;
-                margin-top: 20px;
-            }
-
-        }
-    </style>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            document.querySelectorAll(".nav-item").forEach(item => {
-                item.addEventListener("click", function(event) {
-                    event.stopPropagation();
-                    document.querySelectorAll(".nav-item").forEach(nav => {
-                        if (nav !== item) {
-                            nav.classList.remove("active");
-                            nav.querySelector(".dropdown").style.display = "none";
-                        }
-                    });
-                    this.classList.toggle("active");
-                    let dropdown = this.querySelector(".dropdown");
-                    if (dropdown) {
-                        dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-                    }
-                });
-            });
-            document.addEventListener("click", function() {
-                document.querySelectorAll(".nav-item").forEach(nav => {
-                    nav.classList.remove("active");
-                    nav.querySelector(".dropdown").style.display = "none";
-                });
-            });
-        });
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/theme-toggle.css">
 </head>
 
 <header>
-
     <?php
     //Log-in security
-    //If they aren't logged in, display our log-in form.
     $showing_login = false;
     if (!isset($_SESSION['logged_in'])) {
-		echo('<div class="navbar">
-        <!-- Left Section: Logo & Nav Links -->
-        <div class="left-section">
-            <div class="logo-container">
-                <a href="index.php"><img src="images/actual_log.png" alt="Logo"></a>
+        // Not logged in - simple navbar
+        echo('
+        <nav class="modern-navbar">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <a href="index.php" class="home-icon-btn" title="Home">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                    </a>
+                    <span class="nav-title">Volunteer Management System</span>
+                </div>
+                <div class="nav-actions">
+                    <div class="nav-date">' . date('l, F j, Y') . '</div>
+                </div>
             </div>
-            <div class="nav-links">
-		<div class="nav-item"><span class="font-change">Volunteer Management System</span>
-		</div>
-           </div>
-        </div>
-
-        <!-- Right Section: Date & Icon -->
-        <div class="right-section">
-            <div class="date-box">'); echo date('l, F j, Y'); echo('</div>           
-        </div>
-    </div>');
-
+        </nav>');
     } else if ($_SESSION['logged_in']) {
+        // Permission array setup
+        $permission_array = array(
+            'index.php' => 0, 'about.php' => 0, 'apply.php' => 0, 'logout.php' => 0,
+            'volunteerregister.php' => 0, 'leaderboard.php' => 0,
+            'help.php' => 1, 'dashboard.php' => 1, 'calendar.php' => 1, 'eventsearch.php' => 1,
+            'changepassword.php' => 1, 'editprofile.php' => 1, 'inbox.php' => 1, 'date.php' => 1,
+            'event.php' => 1, 'viewprofile.php' => 1, 'viewnotification.php' => 1,
+            'volunteerreport.php' => 1, 'viewmyupcomingevents.php' => 1, 'volunteerviewgroup.php' => 1,
+            'viewcheckinout.php' => 1, 'viewresources.php' => 1, 'discussionmain.php' => 1,
+            'viewdiscussions.php' => 1, 'discussioncontent.php' => 1, 'milestonepoints.php' => 1,
+            'selectvotm.php' => 1, 'volunteerviewgroupmembers.php' => 1,
+            'viewallevents.php' => 0, 'personsearch.php' => 2, 'personedit.php' => 0,
+            'viewschedule.php' => 2, 'addweek.php' => 2, 'log.php' => 2, 'reports.php' => 2,
+            'eventedit.php' => 2, 'modifyuserrole.php' => 2, 'addevent.php' => 2, 'editevent.php' => 2,
+            'report.php' => 2, 'reportspage.php' => 2, 'resetpassword.php' => 2,
+            'eventsuccess.php' => 2, 'viewsignuplist.php' => 2, 'vieweventsignups.php' => 2,
+            'viewalleventsignups.php' => 2, 'resources.php' => 2, 'uploadresources.php' => 2,
+            'deleteresources.php' => 2, 'creategroup.php' => 2, 'showgroups.php' => 2,
+            'groupview.php' => 2, 'managemembers.php' => 2, 'deletegroup.php' => 2,
+            'volunteermanagement.php' => 2, 'groupmanagement.php' => 2, 'eventmanagement.php' => 2,
+            'creatediscussion.php' => 2, 'checkedinvolunteers.php' => 2, 'deletediscussion.php' => 2,
+            'generatereport.php' => 2, 'generateemaillist.php' => 2, 'clockoutbulk.php' => 2,
+            'clockout.php' => 2, 'edithours.php' => 2, 'eventlist.php' => 1, 'eventsignup.php' => 1,
+            'eventfailure.php' => 1, 'signupsuccess.php' => 1, 'edittimes.php' => 1,
+            'adminviewingevents.php' => 2, 'signuppending.php' => 1, 'requestfailed.php' => 1,
+            'settimes.php' => 1, 'eventfailurebaddeparturetime.php' => 1
+        );
 
-        /*         * Set our permission array.
-         * anything a guest can do, a volunteer and manager can also do
-         * anything a volunteer can do, a manager can do.
-         *
-         * If a page is not specified in the permission array, anyone logged into the system
-         * can view it. If someone logged into the system attempts to access a page above their
-         * permission level, they will be sent back to the home page.
-         */
-        //pages guests are allowed to view
-        // LOWERCASE
-        $permission_array['index.php'] = 0;
-        $permission_array['about.php'] = 0;
-        $permission_array['apply.php'] = 0;
-        $permission_array['logout.php'] = 0;
-        $permission_array['volunteerregister.php'] = 0;
-	$permission_array['leaderboard.php'] = 0;
-        // $permission_array['findanimal.php'] = 0; //TODO DELETE
-        //pages volunteers can view
-        $permission_array['help.php'] = 1;
-        $permission_array['dashboard.php'] = 1;
-        $permission_array['calendar.php'] = 1;
-        $permission_array['eventsearch.php'] = 1;
-        $permission_array['changepassword.php'] = 1;
-        $permission_array['editprofile.php'] = 1;
-        $permission_array['inbox.php'] = 1;
-        $permission_array['date.php'] = 1;
-        $permission_array['event.php'] = 1;
-        $permission_array['viewprofile.php'] = 1;
-        $permission_array['viewnotification.php'] = 1;
-        $permission_array['volunteerreport.php'] = 1;
-        $permission_array['viewmyupcomingevents.php'] = 1;
-        $permission_array['volunteerviewgroup.php'] = 1;
-	    $permission_array['viewcheckinout.php'] = 1;
-        $permission_array['viewresources.php'] = 1;
-        $permission_array['discussionmain.php'] = 1;
-        $permission_array['viewdiscussions.php'] = 1;
-        $permission_array['discussioncontent.php'] = 1;
-        $permission_array['milestonepoints.php'] = 1;
-        $permission_array['selectvotm.php'] = 1;
-        $permission_array['volunteerviewgroupmembers.php'] = 1;
-        //pages only managers can view
-        $permission_array['viewallevents.php'] = 0;
-        $permission_array['personsearch.php'] = 2;
-        $permission_array['personedit.php'] = 0; // changed to 0 so that applicants can apply
-        $permission_array['viewschedule.php'] = 2;
-        $permission_array['addweek.php'] = 2;
-        $permission_array['log.php'] = 2;
-        $permission_array['reports.php'] = 2;
-        $permission_array['eventedit.php'] = 2;
-        $permission_array['modifyuserrole.php'] = 2;
-        $permission_array['addevent.php'] = 2;
-        $permission_array['editevent.php'] = 2;
-        // $permission_array['roster.php'] = 2; //TODO DELETE
-        $permission_array['report.php'] = 2;
-        $permission_array['reportspage.php'] = 2;
-        $permission_array['resetpassword.php'] = 2;
-        // $permission_array['addappointment.php'] = 2; //TODO DELETE
-        // $permission_array['addanimal.php'] = 2; //TODO DELETE
-        // $permission_array['addservice.php'] = 2; //TODO DELETE
-        // $permission_array['addlocation.php'] = 2; //TODO DELETE
-        // $permission_array['viewvece.php'] = 2; //TODO DELETE
-        // $permission_array['viewlocation.php'] = 2; //TODO DELETE
-        // $permission_array['viewarchived.php'] = 2; //TODO DELETE
-        // $permission_array['animal.php'] = 2; //TODO DELETE
-        // $permission_array['editanimal.php'] = 2; //TODO DELETE
-        $permission_array['eventsuccess.php'] = 2;
-        $permission_array['viewsignuplist.php'] = 2;
-        $permission_array['vieweventsignups.php'] = 2;
-        $permission_array['viewalleventsignups.php'] = 2;
-        $permission_array['resources.php'] = 2;
-        $permission_array['uploadresources.php'] = 2;        
-        $permission_array['deleteresources.php'] = 2;
-        $permission_array['creategroup.php'] = 2;
-        $permission_array['showgroups.php'] = 2;
-        $permission_array['groupview.php'] = 2;
-        $permission_array['managemembers.php'] = 2;
-        $permission_array['deleteGroup.php'] = 2;
-        $permission_array['volunteermanagement.php'] = 2;
-        $permission_array['groupmanagement.php'] = 2;
-        $permission_array['eventmanagement.php'] = 2;
-        $permission_array['creatediscussion.php'] = 2;
-        $permission_array['checkedinvolunteers.php'] = 2;
-        $permission_array['deletediscussion.php'] = 2;
-        $permission_array['generatereport.php'] = 2; //adding this to the generate report page
-        $permission_array['generateemaillist.php'] = 2; //adding this to the generate report page
-        $permission_array['clockoutbulk.php'] = 2;
-        $permission_array['clockOut.php'] = 2;
-        $permission_array['edithours.php'] = 2;
-        $permission_array['eventlist.php'] = 1;
-        $permission_array['eventsignup.php'] = 1;
-        $permission_array['eventfailure.php'] = 1;
-        $permission_array['signupsuccess.php'] = 1;
-        $permission_array['edittimes.php'] = 1;
-        $permission_array['adminviewingevents.php'] = 2;
-        $permission_array['signuppending.php'] = 1;
-        $permission_array['requestfailed.php'] = 1;
-        $permission_array['settimes.php'] = 1;
-        $permission_array['eventfailurebaddeparturetime.php'] = 1;
-        
-        // LOWERCASE
-
-
-
-        //Check if they're at a valid page for their access level.
+        // Check permissions
         $current_page = strtolower(substr($_SERVER['PHP_SELF'], strrpos($_SERVER['PHP_SELF'], '/') + 1));
-        $current_page = substr($current_page, strpos($current_page,"/"));
-        
-        if($permission_array[$current_page]>$_SESSION['access_level']){
-            //in this case, the user doesn't have permission to view this page.
-            //we redirect them to the index page.
+        if(isset($permission_array[$current_page]) && $permission_array[$current_page] > $_SESSION['access_level']){
             echo "<script type=\"text/javascript\">window.location = \"index.php\";</script>";
-            //note: if javascript is disabled for a user's browser, it would still show the page.
-            //so we die().
             die();
         }
-        //This line gives us the path to the html pages in question, useful if the server isn't installed @ root.
-        $path = strrev(substr(strrev($_SERVER['SCRIPT_NAME']), strpos(strrev($_SERVER['SCRIPT_NAME']), '/')));
-		$venues = array("portland"=>"RMH Portland");
-        
-        //they're logged in and session variables are set.
-	//
-	// SUPER ADMIN ONLY HEADER
+
+        // ADMIN NAVBAR
         if ($_SESSION['access_level'] >= 2) {
-		echo('<div class="navbar">
-        <!-- Left Section: Logo & Nav Links -->
-        <div class="left-section">
-            <div class="logo-container">
-                <a href="index.php"><img src="images/actual_log.png" alt="Logo"></a>
-            </div>
-                <a href="viewCheckInOut.php" style="color: white; text-decoration: none;"><div class="date-box">Check In/Out</div></a>
-            <div class="nav-links">
-                <div class="nav-item">Volunteers
-                    <div class="dropdown">
-            
-<a href="VolunteerRegister.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/add-person.svg">
-    <span style="font-size:24px;">Register Volunteer</span>
-  </div>
-</a>
-
-<a href="personSearch.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/person-search.svg">
-    <span>Search Volunteers</span>
-  </div>
-</a>
-<a href="checkedInVolunteers.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/clipboard-regular.svg">
-    <span>View Check-Ins</span>
-  </div>
-</a>
-			
+            echo('
+            <nav class="modern-navbar">
+                <div class="nav-container">
+                    <!-- Logo and Brand -->
+                    <div class="nav-brand">
+                        <a href="index.php" class="home-icon-btn" title="Home Dashboard">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                        </a>
                     </div>
-                </div>
-                <div class="nav-item">Events
-                    <div class="dropdown">
 
-<a href="addEvent.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/plus-solid.svg">
-    <span>Create Event</span>
-  </div>
-</a>
-<a href="viewAllEvents.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/list-solid.svg">
-    <span>View Events</span>
-  </div>
-</a>
-<a href="editHours.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/clock-regular.svg">
-    <span>Change Event Hours</span>
-  </div>
-</a>
-<a href="viewAllEventSignUps.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/users-solid.svg">
-    <span>Pending Sign-Ups</span>
-  </div>
-</a>
-<a href="adminViewingEvents.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/list-solid.svg">
-    <span>Edit Event</span>
-  </div>
-</a>
+                    <!-- Main Navigation -->
+                    <div class="nav-menu" id="navMenu">
+                        <a href="viewCheckInOut.php" class="nav-link nav-link-special">
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 11l3 3L22 4"></path>
+                                <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+                            </svg>
+                            <span>Check In/Out</span>
+                        </a>
 
+                        <div class="nav-dropdown">
+                            <button class="nav-link">
+                                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
+                                </svg>
+                                <span>Volunteers</span>
+                                <svg class="dropdown-arrow" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a href="VolunteerRegister.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+                                        <circle cx="8.5" cy="7" r="4"></circle>
+                                        <line x1="20" y1="8" x2="20" y2="14"></line>
+                                        <line x1="23" y1="11" x2="17" y2="11"></line>
+                                    </svg>
+                                    Register Volunteer
+                                </a>
+                                <a href="personSearch.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <path d="M21 21l-4.35-4.35"></path>
+                                    </svg>
+                                    Search Volunteers
+                                </a>
+                                <a href="checkedInVolunteers.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 11l3 3L22 4"></path>
+                                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+                                    </svg>
+                                    View Check-Ins
+                                </a>
+                            </div>
+                        </div>
 
-                    </div>
-                </div>
-                <div class="nav-item">Groups
-                    <div class="dropdown">
+                        <div class="nav-dropdown">
+                            <button class="nav-link">
+                                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                                <span>Events</span>
+                                <svg class="dropdown-arrow" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a href="addEvent.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    Create Event
+                                </a>
+                                <a href="viewAllEvents.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="8" y1="6" x2="21" y2="6"></line>
+                                        <line x1="8" y1="12" x2="21" y2="12"></line>
+                                        <line x1="8" y1="18" x2="21" y2="18"></line>
+                                        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                                        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                                        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                                    </svg>
+                                    View Events
+                                </a>
+                                <a href="editHours.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                    Change Event Hours
+                                </a>
+                                <a href="viewAllEventSignUps.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
+                                    </svg>
+                                    Pending Sign-Ups
+                                </a>
+                                <a href="adminViewingEvents.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    </svg>
+                                    Edit Event
+                                </a>
+                            </div>
+                        </div>
 
-<a href="createGroup.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/creategroup.svg">
-    <span>Create Group</span>
-  </div>
-</a>
-
-<a href="showGroups.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/group.svg">
-    <span>View Groups</span>
-  </div>
-</a>
-
-                    </div>
-               </div>
-            </div>
-        </div>
-
-        <!-- Right Section: Date & Icon -->
-        <div class="right-section">
-<a href="calendar.php">
-<div class="icon-butt">
-        <svg width="30" height="30" viewBox="0 0 24 24" fill="#294877" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3 4C3 3.44772 3.44772 3 4 3H6V2C6 1.44772 6.44772 1 7 1C7.55228 1 8 1.44772 8 2V3H16V2C16 1.44772 16.4477 1 17 1C17.5523 1 18 1.44772 18 2V3H20C20.5523 3 21 3.44772 21 4V21C21 21.5523 20.5523 22 20 22H4C3.44772 22 3 21.5523 3 21V4ZM5 5V20H19V5H5ZM7 10H9V12H7V10ZM11 10H13V12H11V10ZM15 10H17V12H15V10ZM7 14H9V16H7V14ZM11 14H13V16H11V14ZM15 14H17V16H15V14Z"/>
-        </svg>
-</div>
-</a>
-            <div class="date-box"></div>
-            <div class="nav-links">
-                <div class="nav-item" style="outline:none;">
-                    <div class="icon">
-                        <img src="images/usaicon.png" alt="User Icon">
-                        <div class="dropdown">
-                            <a href="changePassword.php" style="text-decoration: none;"><div>Change Password</div></a>
-                            <a href="logout.php" style="text-decoration: none;"><div>Log Out</div></a>
+                        <div class="nav-dropdown">
+                            <button class="nav-link">
+                                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"></path>
+                                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                                </svg>
+                                <span>Groups</span>
+                                <svg class="dropdown-arrow" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a href="createGroup.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    Create Group
+                                </a>
+                                <a href="showGroups.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"></path>
+                                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                                    </svg>
+                                    View Groups
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>');
-	}
 
-        // VOLUNTEER ONLY HEADER
-        if ($_SESSION['access_level'] <= 1) {
-		echo('<div class="navbar">
-        <!-- Left Section: Logo & Nav Links -->
-        <div class="left-section">
-            <div class="logo-container">
-                <a href="index.php"><img src="images/actual_log.png" alt="Logo"></a>
-            </div>
-            <div class="nav-links">
-                <div class="nav-item">Events
-                    <div class="dropdown">
-<a href="viewMyUpcomingEvents.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/list-solid.svg">
-    <span>My Upcoming</span>
-  </div>
-</a>
-<a href="viewAllEvents.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/new-event.svg">
-    <span>Sign-Up</span>
-  </div>
-</a>
-<a href="editHours.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/clock-regular.svg">
-    <span>Edit Hours</span>
-  </div>
-</a>
-                   </div>
-                </div>
-                <div class="nav-item">Groups
-                    <div class="dropdown">
-<a href="volunteerViewGroup.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/group.svg">
-    <span>My Groups</span>
-  </div>
-</a>
-                    </div>
-               </div>
-            </div>
-        </div>
+                    <!-- Right Actions -->
+                    <div class="nav-actions">
+                        <a href="calendar.php" class="nav-action-btn" title="Calendar">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                        </a>
+                        
+                        <button class="theme-toggle nav-action-btn" aria-label="Toggle theme" title="Toggle dark/light mode">
+                            <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="5"></circle>
+                                <line x1="12" y1="1" x2="12" y2="3"></line>
+                                <line x1="12" y1="21" x2="12" y2="23"></line>
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                <line x1="1" y1="12" x2="3" y2="12"></line>
+                                <line x1="21" y1="12" x2="23" y2="12"></line>
+                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                            </svg>
+                            <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                            </svg>
+                        </button>
 
-        <!-- Right Section: Date & Icon -->
-        <div class="right-section">
-<a href="calendar.php">
-<div class="icon-butt">
-        <svg width="30" height="30" viewBox="0 0 24 24" fill="#294877" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3 4C3 3.44772 3.44772 3 4 3H6V2C6 1.44772 6.44772 1 7 1C7.55228 1 8 1.44772 8 2V3H16V2C16 1.44772 16.4477 1 17 1C17.5523 1 18 1.44772 18 2V3H20C20.5523 3 21 3.44772 21 4V21C21 21.5523 20.5523 22 20 22H4C3.44772 22 3 21.5523 3 21V4ZM5 5V20H19V5H5ZM7 10H9V12H7V10ZM11 10H13V12H11V10ZM15 10H17V12H15V10ZM7 14H9V16H7V14ZM11 14H13V16H11V14ZM15 14H17V16H15V14Z"/>
-        </svg>
-</div>
-</a>
-            <div class="date-box"></div>
-            <div class="nav-links">
-                <div class="nav-item" style="outline:none;">
-                    <div class="icon">
-                        <img src="images/usaicon.png" alt="User Icon">
-                        <div class="dropdown">
-                            <a href="viewProfile.php" style="text-decoration: none;"><div>View Profile</div></a>
-                            <a href="editProfile.php" style="text-decoration: none;"><div>Edit Profile</div></a>
-                            <a href="volunteerReport.php" style="text-decoration: none;"><div>View Hours</div></a>
-                            <a href="inbox.php" style="text-decoration: none;"><div>Notifications</div></a>
-                            <a href="changePassword.php" style="text-decoration: none;"><div>Change Password</div></a>
-                            <a href="logout.php" style="text-decoration: none;"><div>Log Out</div></a>
+                        <div class="nav-date"></div>
+
+                        <div class="nav-dropdown user-dropdown">
+                            <button class="nav-action-btn user-btn">
+                                <svg class="dropdown-icon user-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <circle cx="12" cy="8" r="4"></circle>
+                                    <path d="M16 20c0-2.21-2.686-4-6-4s-6 1.79-6 4"></path>
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a href="changePassword.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                        <path d="M7 11V7a5 5 0 0110 0v4"></path>
+                                    </svg>
+                                    Change Password
+                                </a>
+                                <a href="logout.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path>
+                                        <polyline points="16 17 21 12 16 7"></polyline>
+                                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                                    </svg>
+                                    Log Out
+                                </a>
+                            </div>
                         </div>
+
+                        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>');
+            </nav>');
         }
 
+        // VOLUNTEER NAVBAR
+        if ($_SESSION['access_level'] <= 1) {
+            echo('
+            <nav class="modern-navbar">
+                <div class="nav-container">
+                    <!-- Logo and Brand -->
+                    <div class="nav-brand">
+                        <a href="index.php" class="home-icon-btn" title="Home Dashboard">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                        </a>
+                        <div class="nav-divider"></div>
+                        <a href="index.php"><img src="images/actual_log.png" alt="Logo" class="nav-logo"></a>
+                    </div>
 
+                    <!-- Main Navigation -->
+                    <div class="nav-menu" id="navMenu">
+                        <div class="nav-dropdown">
+                            <button class="nav-link">
+                                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                                <span>Events</span>
+                                <svg class="dropdown-arrow" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a href="viewMyUpcomingEvents.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="8" y1="6" x2="21" y2="6"></line>
+                                        <line x1="8" y1="12" x2="21" y2="12"></line>
+                                        <line x1="8" y1="18" x2="21" y2="18"></line>
+                                        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                                        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                                        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                                    </svg>
+                                    My Upcoming
+                                </a>
+                                <a href="viewAllEvents.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    </svg>
+                                    Sign-Up
+                                </a>
+                                <a href="editHours.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                    Edit Hours
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="nav-dropdown">
+                            <button class="nav-link">
+                                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"></path>
+                                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                                </svg>
+                                <span>Groups</span>
+                                <svg class="dropdown-arrow" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a href="volunteerViewGroup.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"></path>
+                                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                                    </svg>
+                                    My Groups
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Actions -->
+                    <div class="nav-actions">
+                        <a href="calendar.php" class="nav-action-btn" title="Calendar">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                        </a>
+                        
+                        <button class="theme-toggle nav-action-btn" aria-label="Toggle theme" title="Toggle dark/light mode">
+                            <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="5"></circle>
+                                <line x1="12" y1="1" x2="12" y2="3"></line>
+                                <line x1="12" y1="21" x2="12" y2="23"></line>
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                <line x1="1" y1="12" x2="3" y2="12"></line>
+                                <line x1="21" y1="12" x2="23" y2="12"></line>
+                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                            </svg>
+                            <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                            </svg>
+                        </button>
+
+                        <div class="nav-date"></div>
+
+                        <div class="nav-dropdown user-dropdown">
+                            <button class="nav-action-btn user-btn">
+                                <img src="images/usaicon.png" alt="User">
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a href="viewProfile.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                    View Profile
+                                </a>
+                                <a href="editProfile.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    </svg>
+                                    Edit Profile
+                                </a>
+                                <a href="volunteerReport.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                    View Hours
+                                </a>
+                                <a href="inbox.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                        <polyline points="22,6 12,13 2,6"></polyline>
+                                    </svg>
+                                    Notifications
+                                </a>
+                                <a href="changePassword.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                        <path d="M7 11V7a5 5 0 0110 0v4"></path>
+                                    </svg>
+                                    Change Password
+                                </a>
+                                <a href="logout.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path>
+                                        <polyline points="16 17 21 12 16 7"></polyline>
+                                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                                    </svg>
+                                    Log Out
+                                </a>
+                            </div>
+                        </div>
+
+                        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                    </div>
+                </div>
+            </nav>');
+        }
     }
     ?>
-<script>
-  function updateDateAndCheckBoxes() {
-    const now = new Date();
-    const width = window.innerWidth;
 
-    // Format the date based on width
-    let formatted = "";
-    if (width > 1650) {
-      formatted = "Today is " + now.toLocaleDateString("en-US", {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-      });
-    } else if (width >= 1450) {
-      formatted = now.toLocaleDateString("en-US", {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-      });
-    } else {
-      formatted = now.toLocaleDateString("en-US"); // e.g., 04/17/2025
+    <script>
+    function updateNavDate() {
+        const now = new Date();
+        const width = window.innerWidth;
+        let formatted = "";
+
+        if (width > 1400) {
+            formatted = now.toLocaleDateString("en-US", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+            });
+        } else if (width >= 1000) {
+            formatted = now.toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric"
+            });
+        } else {
+            formatted = now.toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric"
+            });
+        }
+
+        document.querySelectorAll(".nav-date").forEach(el => {
+            if (width < 900) {
+                el.style.display = "none";
+            } else {
+                el.style.display = "";
+                el.textContent = formatted;
+            }
+        });
     }
 
-    // Update right-section date boxes
-    document.querySelectorAll(".right-section .date-box").forEach(el => {
-      if (width < 1130) {
-        el.style.display = "none";
-      } else {
-        el.style.display = "";
-        el.textContent = formatted;
-      }
+    // Dropdown functionality
+    document.addEventListener("DOMContentLoaded", function() {
+        const dropdowns = document.querySelectorAll(".nav-dropdown");
+        
+        dropdowns.forEach(dropdown => {
+            const button = dropdown.querySelector("button");
+            const menu = dropdown.querySelector(".dropdown-menu");
+            
+            if (button && menu) {
+                button.addEventListener("click", function(e) {
+                    e.stopPropagation();
+                    
+                    // Close other dropdowns
+                    dropdowns.forEach(other => {
+                        if (other !== dropdown) {
+                            other.classList.remove("active");
+                        }
+                    });
+                    
+                    // Toggle current dropdown
+                    dropdown.classList.toggle("active");
+                });
+            }
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener("click", function() {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove("active");
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+        const navMenu = document.getElementById("navMenu");
+        
+        if (mobileMenuBtn && navMenu) {
+            mobileMenuBtn.addEventListener("click", function(e) {
+                e.stopPropagation();
+                this.classList.toggle("active");
+                navMenu.classList.toggle("active");
+                document.body.classList.toggle("mobile-menu-open");
+            });
+        }
+
+        // Update date on load and resize
+        updateNavDate();
+        window.addEventListener("resize", updateNavDate);
     });
+    </script>
+    <script src="js/theme-toggle.js"></script>
 
-    // Update left-section date boxes (Check In / Out or icon)
-document.querySelectorAll(".left-section .date-box").forEach(el => {
-  if (width < 750) {
-    el.style.display = "none";
-  } else {
-    el.style.display = "";
-    el.textContent = width < 1130 ? "🔁" : "Check In/Out";
-  }
-});
-
-document.querySelectorAll(".icon-butt").forEach(el => {
-  if (width < 800) {
-    el.style.display = "none";
-  } else {
-    el.style.display = "";
-  } 
-});
-
-
-
-
-  }
-
-  // Run on load and resize
-  window.addEventListener("resize", updateDateAndCheckBoxes);
-  window.addEventListener("load", updateDateAndCheckBoxes);
-</script>
+    <?php
+    // Mobile Bottom Navigation (PWA-optimized)
+    if ($_SESSION['logged_in']) {
+        if ($_SESSION['access_level'] >= 2) {
+            // ADMIN MOBILE NAV
+            echo('
+            <nav class="mobile-bottom-nav">
+                <a href="index.php" class="mobile-nav-item" data-page="index">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span>Home</span>
+                </a>
+                <a href="volunteerManagement.php" class="mobile-nav-item" data-page="volunteer">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
+                    </svg>
+                    <span>Volunteers</span>
+                </a>
+                <a href="eventManagement.php" class="mobile-nav-item" data-page="events">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <span>Events</span>
+                </a>
+                <a href="calendar.php" class="mobile-nav-item" data-page="calendar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <span>Calendar</span>
+                </a>
+                <button class="mobile-nav-item mobile-nav-more" id="mobileMoreBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="1"></circle>
+                        <circle cx="12" cy="5" r="1"></circle>
+                        <circle cx="12" cy="19" r="1"></circle>
+                    </svg>
+                    <span>More</span>
+                </button>
+            </nav>
+            
+            <!-- Mobile More Menu -->
+            <div class="mobile-more-menu" id="mobileMoreMenu">
+                <div class="mobile-more-header">
+                    <h3>More Options</h3>
+                    <button class="mobile-more-close" id="mobileMoreClose">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div class="mobile-more-content">
+                    <a href="groupManagement.php" class="mobile-more-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"></path>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                        </svg>
+                        <span>Groups</span>
+                    </a>
+                    <a href="resources.php" class="mobile-more-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"></path>
+                            <polyline points="13 2 13 9 20 9"></polyline>
+                        </svg>
+                        <span>Resources</span>
+                    </a>
+                    <a href="generateReport.php" class="mobile-more-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                        <span>Reports</span>
+                    </a>
+                    <a href="inbox.php" class="mobile-more-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        <span>Notifications</span>
+                    </a>
+                    <a href="viewProfile.php" class="mobile-more-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span>Profile</span>
+                    </a>
+                    <a href="logout.php" class="mobile-more-item mobile-more-logout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>');
+        } else {
+            // VOLUNTEER MOBILE NAV
+            echo('
+            <nav class="mobile-bottom-nav">
+                <a href="index.php" class="mobile-nav-item" data-page="index">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span>Home</span>
+                </a>
+                <a href="viewAllEvents.php" class="mobile-nav-item" data-page="events">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <span>Events</span>
+                </a>
+                <a href="calendar.php" class="mobile-nav-item" data-page="calendar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <span>Calendar</span>
+                </a>
+                <a href="volunteerViewGroup.php" class="mobile-nav-item" data-page="groups">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"></path>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                    </svg>
+                    <span>Groups</span>
+                </a>
+                <button class="mobile-nav-item mobile-nav-more" id="mobileMoreBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="1"></circle>
+                        <circle cx="12" cy="5" r="1"></circle>
+                        <circle cx="12" cy="19" r="1"></circle>
+                    </svg>
+                    <span>More</span>
+                </button>
+            </nav>
+            
+            <!-- Mobile More Menu -->
+            <div class="mobile-more-menu" id="mobileMoreMenu">
+                <div class="mobile-more-header">
+                    <h3>More Options</h3>
+                    <button class="mobile-more-close" id="mobileMoreClose">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div class="mobile-more-content">
+                    <a href="viewResources.php" class="mobile-more-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"></path>
+                            <polyline points="13 2 13 9 20 9"></polyline>
+                        </svg>
+                        <span>Resources</span>
+                    </a>
+                    <a href="viewDiscussions.php" class="mobile-more-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"></path>
+                        </svg>
+                        <span>Discussions</span>
+                    </a>
+                    <a href="inbox.php" class="mobile-more-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        <span>Notifications</span>
+                    </a>
+                    <a href="viewProfile.php" class="mobile-more-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span>Profile</span>
+                    </a>
+                    <a href="volunteerReport.php" class="mobile-more-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        <span>My Hours</span>
+                    </a>
+                    <a href="logout.php" class="mobile-more-item mobile-more-logout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>');
+        }
+    }
+    ?>
+    
+    <script>
+    // Mobile Bottom Nav Active State & More Menu
+    document.addEventListener('DOMContentLoaded', function() {
+        // Set active state based on current page
+        const currentPage = window.location.pathname.split('/').pop().replace('.php', '');
+        const mobileNavItems = document.querySelectorAll('.mobile-nav-item[data-page]');
+        
+        mobileNavItems.forEach(item => {
+            const page = item.getAttribute('data-page');
+            if (currentPage.includes(page) || (currentPage === '' && page === 'index')) {
+                item.classList.add('active');
+            }
+        });
+        
+        // More menu functionality
+        const moreBtn = document.getElementById('mobileMoreBtn');
+        const moreMenu = document.getElementById('mobileMoreMenu');
+        const moreClose = document.getElementById('mobileMoreClose');
+        
+        if (moreBtn && moreMenu && moreClose) {
+            moreBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                moreMenu.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            moreClose.addEventListener('click', function() {
+                moreMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+            
+            // Close when clicking outside
+            moreMenu.addEventListener('click', function(e) {
+                if (e.target === moreMenu) {
+                    moreMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        }
+    });
+    </script>
 </header>
