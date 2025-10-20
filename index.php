@@ -23,12 +23,8 @@
     require_once('database/dbAccounts.php');
     // Get date?
     if (isset($_SESSION['_id'])) {
-        echo "<script>console.log('_id={$_SESSION['_id']}');</script>";
         $accType = get_account_type($_SESSION['_id']);
-        echo "<script>console.log('accType={$accType}');</script>";
-        echo "<script>console.log('access_level={$_SESSION['access_level']}');</script>";
-
-        // $person = retrieve_person($_SESSION['_id']);
+        $person = retrieve_person($_SESSION['_id']);
     }
     $notRoot =  ($_SESSION['access_level'] < 2);
 ?>
@@ -209,21 +205,15 @@
         transition: transform 0.3s ease;
         letter-spacing: -0.01em;
     }
-
-
-
-
-
-
-
-
-
         /* Responsive Design */
    </style>
 <!--BEGIN TEST, UPLOAD AND NOTIFICATIONS CHANGED-->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            document.querySelector(".extra-info").style.maxHeight = "0px"; // Ensure proper initialization
+            const extraInfo = document.querySelector(".extra-info");
+            if (extraInfo) {
+                extraInfo.style.maxHeight = "0px"; // Ensure proper initialization
+            }
         });
         function toggleInfo(event) {
             event.stopPropagation(); // Prevents triggering the main button click
@@ -240,7 +230,6 @@
     <!-- ONLY SUPER ADMIN WILL SEE THIS -->
     <?php require 'header.php';?>
     <?php if ($_SESSION['access_level'] >= 2): ?>
-    <script>console.log('IN ADMIN PAGE');</script>
     <!-- Dummy content to enable scrolling -->
     <div style="margin-top: 0px; padding: 30px 20px;">
         <!-- <h2><b>Welcome <?php echo $person->get_first_name() ?>!</b> Let's get started.</h2> -->
@@ -442,7 +431,6 @@
     <script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script>
     <script src="js/theme-toggle.js"></script>
     <?php elseif($notRoot): ?>
-    <script>console.log('IN VOLUNTEER PAGE');</script>
     <!-- ONLY VOLUNTEERS WILL SEE THIS -->
      <!-- Icon Container -->
     <div class="icon-container">

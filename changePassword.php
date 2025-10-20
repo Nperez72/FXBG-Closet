@@ -36,31 +36,24 @@
         header('Location: login.php');
         die();
     }
+
     if($isAdmin) {
         $accounts = get_all_accounts();
     }
-
-    // $forced = false;
-    // if (isset($_SESSION['change-password']) && $_SESSION['change-password']) {
-    //     $forced = true;
-    // } else 
     
     if (!$loggedIn) {
         header('Location: login.php');
         die();
     }
+    
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         require_once('include/input-validation.php');
-        // require_once('domain/Person.php');
-        // require_once('database/dbPersons.php');
-
         // target account (admin can choose any account to change password for)
         $targetUser = $userID;
         if (isset($_POST['target']) && $_POST['target'] !== '') {
             $targetUser = $_POST['target'];
         }
 
-        // if ($forced) {
         if (!wereRequiredFieldsSubmitted($_POST, array('new-password'))) {
             echo "Args missing";
             die();
@@ -100,96 +93,6 @@
 
         }
     }
-            // if ($userID == 'vmsroot') {
-            //     $_SESSION['access_level'] = 3;
-            // } else {
-            //     // $user = retrieve_person($userID);
-            //     // $_SESSION['access_level'] = $user->get_access_level();
-
-            //     // This might not work
-            //     $accountType = get_account_type($userID);
-            //     switch($accountType){
-            //         // volunteer
-            //         case 0:
-            //             $_SESSION['access_level'] = 1;
-            //             break;
-            //         // coordinator/board member
-            //         case 1:
-            //             $_SESSION['access_level'] = 2;
-            //             break;
-            //         // admin
-            //         case 2:
-            //             $_SESSION['access_level'] = 3;
-            //             break;
-            //         }
-            // }
-
-            // If admin changed their own password, have them login back in using it
-        //     if ($targetUser === $userID || $forced) {
-        //         session_destroy();
-        //         header('Location: login.php?success=1');
-        //         die();
-        //     } else {
-        //         // Admin changed other account password, just display status message
-        //         header('Location: changePasswords.php?success=1');
-        //         die();
-        //     }
-
-
-        //     if ($targetUser === $userID) {
-        //         if ($userID == 'vmsroot') {
-        //             $_SESSION['access_level'] = 3;
-        //         } else {
-        //             $accountType = get_account_type($userID);
-        //             switch($accountType){
-        //                 // volunteer
-        //                 case 0:
-        //                     $_SESSION['access_level'] = 1;
-        //                     break;
-        //                 // coordinator/board member    
-        //                 case 1:
-        //                     $_SESSION['access_level'] = 2;
-        //                     break;
-        //                 // admin
-        //                 case 2:
-        //                     $_SESSION['access_level'] = 3;
-        //                     break;
-        //             }
-        //         }
-        //     }
-
-        //     $_SESSION['logged_in'] = true;
-        //     unset($_SESSION['change-password']);
-        //     session_destroy();
-        //     header('Location: login.php?success=1');
-        //     die();
-        // } 
-        // else {
-        //     if (!wereRequiredFieldsSubmitted($_POST, array('password', 'new-password'))) {
-        //         echo "Args missing";
-        //         die();
-        //     }
-        //     $password = $_POST['password'];
-        //     $newPassword = $_POST['new-password'];
-        //     $securePassword = isSecurePassword($_POST['new-password']);
-        //     // $user = retrieve_person($userID);
-        //     // if (!password_verify($password, $user->get_password())) {
-        //         if (!verify_account_password($userID, $password)) {
-        //             $error1 = true;
-        //         } else if($password == $newPassword) {     // old password is same as new one
-        //             $error2 = true;
-        //         } else if (!$securePassword) {
-        //             $error3 = true;
-        //         } else {
-        //             $hash = password_hash($newPassword, PASSWORD_BCRYPT);
-        //             // change_password($userID, $hash);
-        //             change_account_password($userID, $hash);
-        //             session_destroy();
-        //             header('Location: login.php?success=1');
-        //             die();
-        //     }
-        // }
-    // }
 ?>
 <!DOCTYPE html>
 <html>
@@ -224,12 +127,8 @@
                         <?php endforeach; ?>
                     </select>
                 <?php endif ?>
-                <!-- <?php if (!$forced): ?> -->
-                    <label for="password">Account Password</label>
-                    <input type="password" id="password" name="password" placeholder="Enter password for selected account" required>
-                <!-- <?php else: ?>
-                    <p>You must change your password before continuing.</p>
-                <?php endif ?> -->
+                <label for="password">Account Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter password for selected account" required>
                 <label for="new-password">New Password</label>
                 <input type="password" id="new-password" name="new-password" placeholder="Enter new password" required>
                  <p id="password-error" class="error hidden">Password needs to be at least 8 characters long, contain at least one number, one uppercase letter, and one lowercase letter!</p>
@@ -237,9 +136,7 @@
                 <input type="password" id="new-password-reenter" placeholder="Re-enter new password" required>
                 <p id="password-match-error" class="error hidden">Passwords must match!</p>
                 <input type="submit" id="submit" name="submit" value="Change Password">
-                <!-- <?php if (!$forced): ?> -->
                 <a class="button cancel" href="index.php">Cancel</a>
-                <!-- <?php endif ?> -->
             </form>
         </main>
     </body>
