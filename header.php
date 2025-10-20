@@ -83,24 +83,6 @@ if (date("H:i:s") > "18:19:59") {
             die();
         }
 
-<a href="personSearch.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/person-search.svg">
-    <span>Search Volunteers</span>
-  </div>
-</a>
-<a href="checkedInVolunteers.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/clipboard-regular.svg">
-    <span>View Check-Ins</span>
-  </div>
-</a>
-<a href="trackActivities.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/clipboard-regular.svg">
-    <span>Track Activities</span>
-  </div>
-</a>
 			
         // ADMIN NAVBAR
         if ($_SESSION['access_level'] >= 2) {
@@ -126,6 +108,7 @@ if (date("H:i:s") > "18:19:59") {
                             </svg>
                             <span>Check In/Out</span>
                         </a>
+
 
                         <div class="nav-dropdown">
                             <button class="nav-link">
@@ -163,7 +146,14 @@ if (date("H:i:s") > "18:19:59") {
                                     </svg>
                                     View Check-Ins
                                 </a>
-                            </div>
+                            <a href="trackActivities.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 11l3 3L22 4"></path>
+                                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+                                    </svg>
+                                    Track Activities
+                                </a>
+</div>
                         </div>
 
                         <div class="nav-dropdown">
@@ -380,8 +370,12 @@ if (date("H:i:s") > "18:19:59") {
                                     Edit Hours
                                 </a>
                             </div>
-                        </div>
-
+			</div>
+		</div>
+</div>
+</div>
+</div>');
+}
         // VOLUNTEER ONLY HEADER
         if ($_SESSION['access_level'] <= 1) {
 		echo('<div class="navbar">
