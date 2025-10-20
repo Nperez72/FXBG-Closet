@@ -15,63 +15,59 @@ if (isset($_SESSION['_id'])) {
   header('Location: index.php');
   die();
 }
+
 $badLogin = false;
 $archivedAccount = false;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  require_once('include/input-validation.php');
-  $ignoreList = array('password');
-  $args = sanitize($_POST, $ignoreList);
-  $required = array('username', 'password');
-  if (wereRequiredFieldsSubmitted($args, $required)) {
-    require_once('domain/Person.php');
-    require_once('database/dbPersons.php');
-    /*@require_once('database/dbMessages.php');*/
-    /*@dateChecker();*/
-    $username = strtolower($args['username']);
-    $password = $args['password'];
-    $user = retrieve_person($username);
-    if (!$user) {
-      $badLogin = true;
-    } else if ($user->get_status() === "Inactive") {
-      // If the user is archived, block login
-      $archivedAccount = true;
-    } else if (password_verify($password, $user->get_password())) {
-      $_SESSION['logged_in'] = true;
+    require_once('include/input-validation.php');
+    require_once("database/dbAccounts.php");
 
-      $_SESSION['access_level'] = $user->get_access_level();
-      $_SESSION['f_name'] = $user->get_first_name();
-      $_SESSION['l_name'] = $user->get_last_name();
+    $ignoreList = array('password');
+    $args = sanitize($_POST, $ignoreList);
+    $required = array('username', 'password');
 
+    if (wereRequiredFieldsSubmitted($args, $required)) {
+        $username = strtolower($args['username']);
+        $password = $args['password'];
 
-      $_SESSION['type'] = 'admin';
-      $_SESSION['_id'] = $user->get_id();
+        if(!verify_account_password($username, $password)) {
+            $badLogin = true;
+        } 
+        else {
+            session_regenerate_id(true);
 
-      //hard code root privileges
-      if ($user->get_id() == 'vmsroot') {
-        $_SESSION['access_level'] = 3;
-        $_SESSION['locked'] = false;
-        header('Location: index.php');
-      }
+            // Not setting session variables f_name, l_name, or type anymore
+            // If stuff breaks might need to add them back
+            $_SESSION['logged_in'] = true;
+            $_SESSION['_id'] = $username;
 
-      //if ($changePassword) {
-      //    $_SESSION['access_level'] = 0;
-      //    $_SESSION['change-password'] = true;
-      //    header('Location: changePassword.php');
-      //    die();
-      //} 
-      else {
-        header('Location: index.php');
-        die();
-      }
-      die();
-    } else {
-      $badLogin = true;
+          
+            // In the original code here is what the access levels are: 
+            // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
+            // Trying to map them but might break stuff
+            $accessLevel = $_SESSION['access_level'];
+            switch(get_account_type($username)){
+                // volunteer
+                case 0:
+                    $_SESSION['access_level'] = 1;
+                    break;
+                // coordinator/board member    
+                case 1:
+                    $_SESSION['access_level'] = 1;
+                    break;
+                // admin
+                case 2:
+                    $_SESSION['access_level'] = 3;
+                    break;
+            }
+            header('Location: index.php');
+            die();
+        }
     }
-  }
 }
-//<p>Or <a href="register.php">register as a new volunteer</a>!</p>
-//Had this line under login button, took user to register page
+    //<p>Or <a href="register.php">register as a new volunteer</a>!</p>
+    //Had this line under login button, took user to register page
 ?>
 <!DOCTYPE html>
 <html>
@@ -177,6 +173,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           }
           ?>
           <div class="mb-4">
+        <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
+            <div class="success-message bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                <p class="text-center">Password successfully changed!</p>
+                <p class="text-center">Please log in with your new password.</p>
+            </div>
+        <?php endif ?>
             <label class="block text-gray-700 font-medium mb-2" for="username">Login</label>
             <input class="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 focus:outline-none focus:ring-2" style="focus:ring-color: var(--accent-color, #d4af37);" type="text" name="username" placeholder="Enter your username" required>
           </div>
