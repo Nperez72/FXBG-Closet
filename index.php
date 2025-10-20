@@ -36,7 +36,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/theme-toggle.css">
-    <title>Fredericksburg SPCA Volunteer Management | Dashboard</title>
+    <title>FXBG Pride Volunteer Management | Dashboard</title>
     <style>
         * {
             box-sizing: border-box;
@@ -387,8 +387,8 @@
     <footer class="footer" style="margin-top: 100px;">
         <!-- Left Side: Logo & Info -->
         <div class="footer-left">
-            <img src="images/actual_log.png" alt="Logo" class="footer-logo">
-            <p style="margin-top: 1rem; color: var(--text-secondary); max-width: 300px; font-size: 0.95rem;">
+            <img src="images/FXBG-PrideWhiteLogo.png" alt="Logo" class="footer-logo">
+            <p style="margin-top: 1rem; margin-left: 5rem; color: var(--text-tertiary); max-width: 300px; font-size: 0.95rem;">
                 Fredericksburg's Resource For The LGBTQIA+ Community
             </p>
             <div class="social-icons" style="margin-top: 1rem;">
@@ -430,6 +430,8 @@
     <!-- Font Awesome for Icons -->
     <script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script>
     <script src="js/theme-toggle.js"></script>
+
+
     <?php elseif($notRoot): ?>
     <!-- ONLY VOLUNTEERS WILL SEE THIS -->
      <!-- Icon Container -->
@@ -571,8 +573,8 @@
     <footer class="footer" style="margin-top: 100px;">
         <!-- Left Side: Logo & Info -->
         <div class="footer-left">
-            <img src="images/actual_log.png" alt="Logo" class="footer-logo">
-            <p style="margin-top: 1rem; color: var(--text-secondary); max-width: 300px; font-size: 0.95rem;">
+            <img src="images/FXBG-PrideWhiteLogo.png" alt="Logo" class="footer-logo">
+            <p style="margin-top: 1rem; margin-left: 5rem; color: var(--text-tertiary); max-width: 300px; font-size: 0.95rem;">
                 Fredericksburg's Resource For The LGBTQIA+ Community
             </p>
             <div class="social-icons" style="margin-top: 1rem;">

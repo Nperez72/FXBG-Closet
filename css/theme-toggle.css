@@ -5,6 +5,7 @@
     --bg-color: #f9f6f3;
     --text-color: #363434;
     --text-secondary: #5a5856;
+    --text-tertiary: #e8c4b8;
     --text-muted: #8a8280;
     --navbar-bg: #ffffff;
     --navbar-shadow: rgba(54, 52, 52, 0.1);
@@ -35,6 +36,8 @@
     --nav-item-active-bg: #f4ede9;
     --svg-fill: #e8c4b8;
     
+    --logo-image: url('images/FXBG-PrideLogo.png')
+
     /* Ensure base.css variables are defined for consistency */
     --page-background-color: #f9f6f3;
     --page-font-color: #363434;
@@ -58,6 +61,7 @@
     --bg-color: #1a1816;
     --text-color: #e8c4b8;
     --text-secondary: #d4b8aa;
+    --text-tertiary: #e8c4b8;
     --text-muted: #b8a89d;
     --navbar-bg: #2a2826;
     --navbar-shadow: rgba(0, 0, 0, 0.5);
@@ -88,6 +92,8 @@
     --nav-item-active-bg: #3a342f;
     --svg-fill: #e8c4b8;
     
+    --logo-image: url('images/FXBG-PrideWhiteLogo.png')
+
     /* Override base.css variables for dark mode */
     --page-background-color: #1a1816;
     --page-font-color: #e8c4b8;

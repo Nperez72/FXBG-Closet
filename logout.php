@@ -16,8 +16,8 @@ session_write_close();
         <nav>
             <span id="nav-top">
                 <span class="logo">
-                    <img src="images/FredSPCAlogo.png">
-                        <span id="vms-logo"> Fredericksburg SPCA Volunteer </span>
+                    <img src="images/FXBG-PrideLogo.png">
+                        <span id="vms-logo">  Fredericksburg Pride Volunteer System</span>
                         </span>
                     <img id="menu-toggle" src="images/menu.png">
                 </span>

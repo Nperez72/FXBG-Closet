@@ -131,7 +131,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       font-family: Quicksand, sans-serif;
     }
   </style>
-  <title>Fredericksburg SPCA Volunteer System | Log In</title>
+  <title>FXBG Pride Volunteer System | Log In</title>
 </head>
 
 <body>
@@ -151,7 +151,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <!-- Logo Placeholder (Now the same width as inputs and centered) -->
         <div class="w-full flex justify-center mb-6">
-          <img src="images/drawn_logo.png"
+          <img src="images/FXBG-PrideLogo.png"
             alt="Logo"
             class="w-full max-w-xs">
         </div>
@@ -188,7 +188,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </div>
           <div class="flex justify-between items-center mb-4">
             <a href="#" class="text-sm hover:underline" style="color: var(--main-color, #e8c4b8);">Forgot password?</a>
-            <a href="https://fredspca.org/" class="text-sm hover:underline" style="color: var(--main-color, #e8c4b8);">Fredericksburg SPCA Website</a>
+            <a href="https://fxbgpride.org/" class="text-sm hover:underline" style="color: var(--main-color, #e8c4b8);">Fredericksburg Pride Website</a>
           </div>
           <button class="cursor-pointer w-full text-white font-semibold py-3 rounded-lg transition duration-300" style="background-color: var(--main-color, #e8c4b8); color: var(--button-text, #363434);" onmouseover="this.style.backgroundColor='var(--accent-color, #d4af37)'" onmouseout="this.style.backgroundColor='var(--main-color, #e8c4b8)'">Login</button>
         </form>
