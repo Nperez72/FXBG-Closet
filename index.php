@@ -19,11 +19,14 @@
         
     include_once('database/dbPersons.php');
     include_once('domain/Person.php');
+
+    require_once('database/dbAccounts.php');
     // Get date?
     if (isset($_SESSION['_id'])) {
+        $accType = get_account_type($_SESSION['_id']);
         $person = retrieve_person($_SESSION['_id']);
     }
-    $notRoot = $person->get_id() != 'vmsroot';
+    $notRoot =  ($_SESSION['access_level'] < 2);
 ?>
 
 <!DOCTYPE html>
@@ -31,8 +34,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <title>Frederickburg SPCA Volunteer Management | Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/theme-toggle.css">
+    <title>Fredericksburg SPCA Volunteer Management | Dashboard</title>
     <style>
         * {
             box-sizing: border-box;
@@ -41,31 +45,41 @@
         }
 
         body {
-            font-family: Quicksand, sans-serif;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 500;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         h2 {
-        	font-weight: normal;
+            font-weight: 600;
             font-size: 30px;
+            color: var(--text-color);
+            transition: color 0.3s ease;
         }
 
         .full-width-bar {
             width: 100%;
-            background: #294877;
+            background: var(--full-width-bar-bg);
             padding: 17px 5%;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 20px;
+            transition: background-color 0.3s ease;
         }
         .full-width-bar-sub {
             width: 100%;
-            background: white;
+            background: var(--full-width-bar-sub-bg);
             padding: 17px 5%;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 20px;
+            transition: background-color 0.3s ease;
         }
 
         .content-box {
@@ -93,19 +107,21 @@
         .content-box img {
             width: 100%;
             height: auto;
-            background: white;
+            background: var(--content-box-bg);
             border-radius: 5px;
             border-bottom-right-radius: 50px;
-            border: 0.5px solid #828282;
+            border: 0.5px solid var(--content-box-border);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .content-box-sub img {
             width: 105%;
             height: auto;
-            background: white;
+            background: var(--content-box-bg);
             border-radius: 5px;
             border-bottom-right-radius: 50px;
-            border: 1px solid #828282;
+            border: 1px solid var(--content-box-border);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .small-text {
@@ -113,8 +129,10 @@
             top: 20px;
             left: 30px;
             font-size: 14px;
-            font-weight: 700;
-            color: #294877;
+            font-weight: 600;
+            color: var(--main-color);
+            transition: color 0.3s ease;
+            letter-spacing: -0.01em;
         }
 
         .large-text {
@@ -122,9 +140,11 @@
             top: 40px;
             left: 30px;
             font-size: 22px;
-            font-weight: 700;
-            color: black;
+            font-weight: 600;
+            color: var(--text-color);
             max-width: 90%;
+            transition: color 0.3s ease;
+            letter-spacing: -0.02em;
         }
 
         .large-text-sub {
@@ -133,9 +153,11 @@
             top: 60%;
             left: 10%;
             font-size: 22px;
-            font-weight: 700;
-            color: black;
+            font-weight: 600;
+            color: var(--text-color);
             max-width: 90%;
+            transition: color 0.3s ease;
+            letter-spacing: -0.02em;
         }
 
         .graph-text {
@@ -143,86 +165,13 @@
             top: 75%;
             left: 10%;
             font-size: 14px;
-            font-weight: 700;
-            color: #294877;
+            font-weight: 500;
+            color: var(--main-color);
             max-width: 90%;
+            transition: color 0.3s ease;
         }
 
-        /* Navbar Container */
-        .navbar {
-            width: 100%;
-            height: 95px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background: white;
-            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25);
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            z-index: 1000;
-        }
-
-        /* Left Section: Logo & Nav Links */
-        .left-section {
-            display: flex;
-            align-items: center;
-            gap: 30px; /* Space between logo and links */
-        }
-
-        /* Logo */
-        .logo-container {
-            background: #294877;
-            padding: 10px 20px;
-            border-radius: 50px;
-            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) inset;
-        }
-
-        .logo-container img {
-            width: 128px;
-            height: 52px;
-            display: block;
-        }
-
-        /* Navigation Links */
-        .nav-links {
-            display: flex;
-            gap: 20px;
-        }
-
-        .nav-links div {
-            font-size: 24px;
-            font-weight: 700;
-            color: black;
-            cursor: pointer;
-        }
-
-        /* Right Section: Date & Icon */
-        .right-section {
-            margin-left: auto; /* Pushes right section to the end */
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .date-box {
-            background: #274471;
-            padding: 10px 30px;
-            border-radius: 50px;
-            box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.25) inset;
-            color: white;
-            font-size: 24px;
-            font-weight: 700;
-            text-align: center;
-        }
-
-        .icon {
-            width: 47px;
-            height: 47px;
-            /*background: #292D32;*/
-            border-radius: 50%;
-
-        }
+        /* These navbar styles are now handled by theme-toggle.css */
 
         /* Button Control */
         .arrow-button {
@@ -249,156 +198,22 @@
         gap: 10px;
         background: transparent;
         border: none;
-        font-size: 20px;
-        font-family: Quicksand, sans-serif;
-        font-weight: bold;
+        font-size: 18px;
+        font-family: 'Quicksand', sans-serif;
+        font-weight: 600;
         cursor: pointer;
         transition: transform 0.3s ease;
+        letter-spacing: -0.01em;
     }
-
-    .circle {
-        width: 30px;
-        height: 30px;
-        background-color: #294877; /* Blue color */
-        color: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 22px;
-        transition: transform 0.3s ease;
-    }
-
-    .circle-arrow-button:hover .circle {
-        transform: translateX(5px); /* Moves the circle slightly on hover */
-    }
-.colored-box {
-    display: inline-block; /* Ensures it wraps tightly around the text */
-    background-color: #294877; /* Change to any color */
-    color: white; /* Text color */
-    padding: 1px 5px; /* Adds space inside the box */
-    border-radius: 5px; /* Optional: Rounds the corners */
-    font-weight: bold; /* Optional: Makes text bold */
-}
-
-
-        /* Footer */
-        .footer {
-            width: 100%;
-            background: #294877;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            padding: 30px 50px;
-            flex-wrap: wrap;
-        }
-
-        /* Left Section */
-        .footer-left {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .footer-logo {
-            width: 150px; /* Adjust logo size */
-            margin-bottom: 15px;
-        }
-
-        /* Social Media Icons */
-        .social-icons {
-            display: flex;
-            gap: 15px;
-        }
-
-        .social-icons a {
-            color: white;
-            font-size: 20px;
-            transition: color 0.3s ease;
-        }
-
-        .social-icons a:hover {
-            color: #dcdcdc;
-        }
-
-        /* Right Section */
-        .footer-right {
-            display: flex;
-            gap: 50px;
-            flex-wrap: wrap;
-            align-items: flex-start;
-        }
-
-        .footer-section {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 10px;
-            color: white;
-            font-family: Inter, sans-serif;
-            font-size: 16px;
-            font-weight: 500;
-        }
-
-        .footer-topic {
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .footer a {
-            color: white;
-            text-decoration: none;
-            transition: background 0.2s ease, color 0.2s ease;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-
-        .footer a:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: #dcdcdc;
-        }
-
-        /* Icon Overlay */
-        .background-image {
-            width: 100%;
-            border-radius: 10px;
-        }
-
-        .icon-overlay {
-            position: absolute;
-            top: 40px; /* Adjust as needed */
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.8); /* Optional background for better visibility */
-            padding: 10px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .icon-overlay img {
-            width: 40px; /* Adjust size as needed */
-            height: 40px;
-            opacity: 0.9;
-        }
-
-        .content-box-test:hover .icon-overlay img {
-            transform: scale(1.1) rotate(5deg);
-            transition: transform 0.5s ease, fill 0.5s ease;
-        }
-
-
-
-
-
-
         /* Responsive Design */
    </style>
 <!--BEGIN TEST, UPLOAD AND NOTIFICATIONS CHANGED-->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            document.querySelector(".extra-info").style.maxHeight = "0px"; // Ensure proper initialization
+            const extraInfo = document.querySelector(".extra-info");
+            if (extraInfo) {
+                extraInfo.style.maxHeight = "0px"; // Ensure proper initialization
+            }
         });
         function toggleInfo(event) {
             event.stopPropagation(); // Prevents triggering the main button click
@@ -411,14 +226,14 @@
 <!--END TEST-->
 </head>
 
-<!-- ONLY SUPER ADMIN WILL SEE THIS -->
-<?php if ($_SESSION['access_level'] >= 2): ?>
 <body>
-<?php require 'header.php';?>
-
+    <!-- ONLY SUPER ADMIN WILL SEE THIS -->
+    <?php require 'header.php';?>
+    <?php if ($_SESSION['access_level'] >= 2): ?>
     <!-- Dummy content to enable scrolling -->
     <div style="margin-top: 0px; padding: 30px 20px;">
-        <h2><b>Welcome <?php echo $person->get_first_name() ?>!</b> Let's get started.</h2>
+        <!-- <h2><b>Welcome <?php echo $person->get_first_name() ?>!</b> Let's get started.</h2> -->
+        <h2><b>Welcome!</b> Let's get started.</h2>
     </div>
 
             <?php if (isset($_GET['pcSuccess'])): ?>
@@ -438,31 +253,29 @@
             <?php endif ?>
 
     <div class="full-width-bar">
-    <div class="content-box">
-        <img src="images/VolM.png" />
-        <div class="small-text">Make a difference.</div>
+      <div class="content-box">
+          <div class="small-text">Make a difference.</div>
         <div class="large-text">Volunteer Management</div>
-<button class="circle-arrow-button" onclick="window.location.href='volunteerManagement.php'">
-    <span class="button-text">Go</span>
-    <div class="circle">&gt;</div>
-</button>
-<!--
-        <div class="nav-buttons">
-            <button class="nav-button" onclick="window.location.href='personSearch.php'">
-                <span>Find</span>
-                <span class="arrow"><img src="images/person-search.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 20px;"></span>
-            </button>
-            <button class="nav-button" onclick="window.location.href='VolunteerRegister.php'">
-                <span>Register</span>
-                <span class="arrow"><img src="images/add-person.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 20px;"></span>
-            </button>
+    <button class="circle-arrow-button" onclick="window.location.href='volunteerManagement.php'">
+        <span class="button-text">Go</span>
+        <div class="circle">&gt;</div>
+    </button>
+    <!--
+            <div class="nav-buttons">
+                <button class="nav-button" onclick="window.location.href='personSearch.php'">
+                    <span>Find</span>
+                    <span class="arrow"><img src="images/person-search.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 20px;"></span>
+                </button>
+                <button class="nav-button" onclick="window.location.href='VolunteerRegister.php'">
+                    <span>Register</span>
+                    <span class="arrow"><img src="images/add-person.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 20px;"></span>
+                </button>
+            </div>
+    -->
         </div>
--->
-    </div>
 
-    <div class="content-box">
-        <img src="images/EvM.png" />
-        <div class="small-text">Let’s have some fun!</div>
+      <div class="content-box">
+          <div class="small-text">Let's have some fun!</div>
         <div class="large-text">Event Management</div>
 <button class="circle-arrow-button" onclick="window.location.href='eventManagement.php'">
     <span class="button-text"><?php 
@@ -477,9 +290,8 @@
 </button>
     </div>
 
-    <div class="content-box">
-        <img src="images/GrM.png" />
-        <div class="small-text">Our team makes this all possible.</div>
+      <div class="content-box">
+          <div class="small-text">Our team makes this all possible.</div>
         <div class="large-text">Group Management</div>
 <button class="circle-arrow-button" onclick="window.location.href='groupManagement.php'">
     <span class="button-text">Go</span>
@@ -487,9 +299,9 @@
 </button>
     </div>
 
-</div>
+    </div>
 
-    <div style="margin-top: 50px; padding: 0px 80px;">
+    <div class="dashboard-title">
         <h2><b>Admin Dashboard</h2>
     </div>
     <div class="full-width-bar-sub">
@@ -497,7 +309,7 @@
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/view-calendar.svg" alt="Calendar Icon">
             </div>
-            <img class="background-image" src="images/blank-white-background.jpg" />
+            <div class="background-image"></div>
             <div class="large-text-sub">Calendar</div>
             <div class="graph-text">See upcoming events/trainings.</div>
             <button class="arrow-button">→</button>
@@ -508,14 +320,15 @@
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Document Icon">
             </div>
-            <img class="background-image" src="images/blank-white-background.jpg" />
+            <div class="background-image"></div>
             <div class="large-text-sub">Manage Documents</div>
             <div class="graph-text">Resources for volunteers.</div>
             <button class="arrow-button">→</button>
         </div>
                 <?php
                     require_once('database/dbMessages.php');
-                    $unreadMessageCount = get_user_unread_count($person->get_id());
+                    // $unreadMessageCount = get_user_unread_count($person->get_id());
+                    $unreadMessageCount = 0;
                     $inboxIcon = 'inbox.svg';
                     if ($unreadMessageCount) {
                         $inboxIcon = 'inbox-unread.svg';
@@ -525,7 +338,7 @@
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/<?php echo $inboxIcon ?>" alt="Notification Icon">
             </div>
-            <img class="background-image" src="images/blank-white-background.jpg" />
+            <div class="background-image"></div>
             <div class="large-text-sub">System Notifications<?php 
                         if ($unreadMessageCount > 0) {
                             echo ' (' . $unreadMessageCount . ')';
@@ -539,7 +352,7 @@
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Report Icon">
             </div>
-            <img class="background-image" src="images/blank-white-background.jpg" />
+            <div class="background-image"></div>
             <div class="large-text-sub">Generate Report</div>
             <div class="graph-text">From this quarter or annual.</div>
             <button class="arrow-button">→</button>
@@ -548,7 +361,7 @@
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Report Icon">
             </div>
-            <img class="background-image" src="images/blank-white-background.jpg" />
+            <div class="background-image"></div>
             <div class="large-text-sub">Generate Email List</div>
             <div class="graph-text">Volunteer Emails</div>
             <button class="arrow-button">→</button>
@@ -558,7 +371,7 @@
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Report Icon">
             </div>
-            <img class="background-image" src="images/blank-white-background.jpg" />
+            <div class="background-image"></div>
             <div class="large-text-sub">Discussions</div>
             <div class="graph-text">See the latest.</div>
             <button class="arrow-button">→</button>
@@ -568,90 +381,87 @@
 
     
 
-<div style="width: 90%; /* Stops before page ends */
-            height: 100%;
-            outline: 1px #828282 solid;
-            outline-offset: -0.5px;
-            margin: 70px auto; /* Adds vertical space and centers */
-            padding: 1px 0;"> <!-- Adds spacing inside the div -->
-</div>
+<div class="divider-line"></div>
 
 
     <footer class="footer" style="margin-top: 100px;">
-        <!-- Left Side: Logo & Socials -->
+        <!-- Left Side: Logo & Info -->
         <div class="footer-left">
             <img src="images/actual_log.png" alt="Logo" class="footer-logo">
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-linkedin"></i></a>
+            <p style="margin-top: 1rem; color: var(--text-secondary); max-width: 300px; font-size: 0.95rem;">
+                Fredericksburg's Resource For The LGBTQIA+ Community
+            </p>
+            <div class="social-icons" style="margin-top: 1rem;">
+                <a href="https://www.facebook.com/fxbgpride" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.instagram.com/fxbgpride" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
 
         <!-- Right Side: Page Links -->
         <div class="footer-right">
             <div class="footer-section">
-                <div class="footer-topic">Connect</div>
-                <a href="https://www.facebook.com/share/g/15X2tqwFkA/">Facebook</a>
-                <a href="https://www.instagram.com/fredspca/?hl=en">Instagram</a>
-                <a href="https://fredspca.org">Main Website</a>
+                <div class="footer-topic">Get Involved</div>
+                <a href="eventManagement.php">Programs & Events</a>
+                <a href="volunteerManagement.php">Volunteer</a>
+                <a href="resources.php">Resources</a>
+                <a href="viewProfile.php">My Profile</a>
             </div>
             <div class="footer-section">
-                <div class="footer-topic">Contact Us</div>
-                <a href="mailto:volunteer@fredspca.org">volunteer@fredspca.org</a>
-                <a href="tel:5408981500">540-898-1500 (ext 117)</a>
+                <div class="footer-topic">Contact</div>
+                <a href="mailto:info@fxbgpride.org">info@fxbgpride.org</a>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem; line-height: 1.5;">4343 Plank Road Suite 110<br>Fredericksburg, VA 22407</p>
+            </div>
+            <div class="footer-section">
+                <div class="footer-topic">24-Hour Emergency</div>
+                <a href="tel:8775658860">Trans Lifeline: 877-565-8860</a>
+                <a href="tel:5403736876">RACSB: 540-373-6876</a>
+                <a href="https://translifeline.org" target="_blank" style="font-size: 0.85rem; margin-top: 0.5rem;">Trans Lifeline Website →</a>
             </div>
         </div>
     </footer>
-    <p>_</p>
+    
+    <!-- Footer Copyright -->
+    <div style="background: var(--navbar-bg); padding: 1rem 2rem; text-align: center; border-top: 1px solid var(--border-color);">
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0;">
+            Copyright © <?php echo date('Y'); ?> Fredericksburg Pride | All Rights Reserved
+        </p>
+    </div>
 
     <!-- Font Awesome for Icons -->
     <script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script>
-
-
-</body>
-<?php endif ?>
-
-<!-- ONLY VOLUNTEERS WILL SEE THIS -->
-<?php if ($notRoot) : ?>
-<body>
-<?php require 'header.php';?>
-
-  
-
-  <!-- Icon Container -->
-<div style="position: absolute; top: 110px; right: 30px; z-index: 999; display: flex; flex-direction: row; gap: 30px; align-items: center; text-align: center;">
-
-    <!-- Volunteer of the Month Icon -->
-    <a href="selectVOTM.php" style="text-decoration: none;">
-        <div style="font-size: 12px; font-weight: bold; color: #294877; margin-bottom: 5px;">
-            🎖 Volunteer of the Month
-        </div>
-        <img src="images/star-icon.svg" alt="Volunteer of the Month Icon" style="width: 55px; height: auto; transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-    </a>
+    <script src="js/theme-toggle.js"></script>
+    <?php elseif($notRoot): ?>
+    <!-- ONLY VOLUNTEERS WILL SEE THIS -->
+     <!-- Icon Container -->
+    <div class="icon-container">
+        <!-- Volunteer of the Month Icon -->
+        <a href="selectVOTM.php">
+            <div class="icon-label">
+                🎖 Volunteer of the Month
+            </div>
+            <img src="images/star-icon.svg" alt="Volunteer of the Month Icon" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+        </a>
 
     <!-- Leaderboard Icon -->
-    <a href="leaderboard.php" style="text-decoration: none;">
-        <div style="font-size: 12px; font-weight: bold; color: #294877; margin-bottom: 5px;">
+    <a href="leaderboard.php">
+        <div class="icon-label">
             👑 Leaderboard
         </div>
-        <img src="images/crown.png" alt="Leaderboard Icon" style="width: 55px; height: auto; transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+        <img src="images/crown.png" alt="Leaderboard Icon" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
     </a>
-
 </div>
 
 
 
-    <!-- Dummy content to enable scrolling -->
-    <div style="margin-top: 0px; padding: 30px 20px;">
-        <h2><b>Welcome <?php echo $person->get_first_name() ?>!</b> Let's get started.</h2>
-    </div>
+        <!-- Dummy content to enable scrolling -->
+        <div style="margin-top: 0px; padding: 30px 20px;">
+            <!-- <h2><b>Welcome <?php echo $person->get_first_name() ?>!</b> Let's get started.</h2> -->
+            <h2><b>Welcome!</b> Let's get started.</h2>
+        </div>
 
     <div class="full-width-bar">
-    <div class="content-box">
-        <img src="images/VolM.png" />
-        <div class="small-text">Make a difference.</div>
+      <div class="content-box">
+          <div class="small-text">Make a difference.</div>
         <div class="large-text">My Profile</div>
         <div class="nav-buttons">
             <button class="nav-button" onclick="window.location.href='viewProfile.php'">
@@ -669,9 +479,8 @@
         </div>
     </div>
 
-    <div class="content-box">
-        <img src="images/EvM.png" />
-        <div class="small-text">Let’s have some fun!</div>
+      <div class="content-box">
+          <div class="small-text">Let's have some fun!</div>
         <div class="large-text">My Events</div>
         <div class="nav-buttons">
             <button class="nav-button" onclick="window.location.href='viewAllEvents.php'">
@@ -689,9 +498,8 @@
         </div>
     </div>
 
-    <div class="content-box">
-        <img src="images/GrM.png" />
-        <div class="small-text">Our team makes this all possible.</div>
+      <div class="content-box">
+          <div class="small-text">Our team makes this all possible.</div>
         <div class="large-text">My Group</div>
         <div class="nav-buttons">
             <button class="nav-button" onclick="window.location.href='volunteerViewGroup.php'">
@@ -702,7 +510,7 @@
     </div>
     </div>
 
-    <div style="margin-top: 50px; padding: 0px 80px;">
+    <div class="dashboard-title">
         <h2><b>Your Dashboard</h2>
     </div>
     <div class="full-width-bar-sub">
@@ -710,26 +518,27 @@
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/view-calendar.svg" alt="Calendar Icon">
             </div>
-            <img class="background-image" src="images/blank-white-background.jpg" />
+            <div class="background-image"></div>
             <div class="large-text-sub">Calendar</div>
             <div class="graph-text">See upcoming events/trainings.</div>
             <button class="arrow-button">→</button>
         </div>
 
-               <?php
-                    require_once('database/dbMessages.php');
-                    $unreadMessageCount = get_user_unread_count($person->get_id());
-                    $inboxIcon = 'inbox.svg';
-                    if ($unreadMessageCount) {
-                        $inboxIcon = 'inbox-unread.svg';
-                    }   
-                ?>  
+                <?php
+                        require_once('database/dbMessages.php');
+                        // $unreadMessageCount = get_user_unread_count($person->get_id());
+                        $unreadMessageCount = 0;
+                        $inboxIcon = 'inbox.svg';
+                        if ($unreadMessageCount) {
+                            $inboxIcon = 'inbox-unread.svg';
+                        }   
+                    ?>  
 
         <div class="content-box-test" onclick="window.location.href='viewResources.php'">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Calendar Icon">
             </div>
-            <img class="background-image" src="images/blank-white-background.jpg" />
+            <div class="background-image"></div>
             <div class="large-text-sub">Documents</div>
             <div class="graph-text">View documents & the volunteer handbook.</div>
             <button class="arrow-button">→</button>
@@ -739,7 +548,7 @@
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Report Icon">
             </div>
-            <img class="background-image" src="images/blank-white-background.jpg" />
+            <div class="background-image"></div>
             <div class="large-text-sub">Discussions</div>
             <div class="graph-text">See the latest.</div>
             <button class="arrow-button">→</button>
@@ -749,54 +558,64 @@
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/<?php echo $inboxIcon ?>" alt="Notification Icon">
             </div>
-            <img class="background-image" src="images/blank-white-background.jpg" />
+            <div class="background-image"></div>
             <div class="large-text-sub">Notifications</div>
             <div class="graph-text">Stay up to date.</div>
             <button class="arrow-button">→</button>
         </div>
 
-    </div>
+        </div>
 
-<div style="width: 90%; /* Stops before page ends */
-            height: 100%;
-            outline: 1px #828282 solid;
-            outline-offset: -0.5px;
-            margin: 70px auto; /* Adds vertical space and centers */
-            padding: 1px 0;"> <!-- Adds spacing inside the div -->
-</div>
+<div class="divider-line"></div>
 
     <footer class="footer" style="margin-top: 100px;">
-        <!-- Left Side: Logo & Socials -->
+        <!-- Left Side: Logo & Info -->
         <div class="footer-left">
             <img src="images/actual_log.png" alt="Logo" class="footer-logo">
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-linkedin"></i></a>
+            <p style="margin-top: 1rem; color: var(--text-secondary); max-width: 300px; font-size: 0.95rem;">
+                Fredericksburg's Resource For The LGBTQIA+ Community
+            </p>
+            <div class="social-icons" style="margin-top: 1rem;">
+                <a href="https://www.facebook.com/fxbgpride" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.instagram.com/fxbgpride" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
 
         <!-- Right Side: Page Links -->
         <div class="footer-right">
             <div class="footer-section">
-                <div class="footer-topic">Connect</div>
-                <a href="https://www.facebook.com/share/g/15X2tqwFkA/">Facebook</a>
-                <a href="https://www.instagram.com/fredspca/?hl=en">Instagram</a>
-                <a href="https://fredspca.org">Main Website</a>
+                <div class="footer-topic">Get Involved</div>
+                <a href="viewAllEvents.php">Programs & Events</a>
+                <a href="volunteerViewGroup.php">Volunteer</a>
+                <a href="viewResources.php">Resources</a>
+                <a href="viewProfile.php">My Profile</a>
             </div>
             <div class="footer-section">
-                <div class="footer-topic">Contact Us</div>
-                <a href="mailto:volunteer@fredspca.org">volunteer@fredspca.org</a>
-                <a href="tel:5408981500">540-898-1500 (ext 117)</a>
+                <div class="footer-topic">Contact</div>
+                <a href="mailto:info@fxbgpride.org">info@fxbgpride.org</a>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem; line-height: 1.5;">4343 Plank Road Suite 110<br>Fredericksburg, VA 22407</p>
+            </div>
+            <div class="footer-section">
+                <div class="footer-topic">24-Hour Emergency</div>
+                <a href="tel:8775658860">Trans Lifeline: 877-565-8860</a>
+                <a href="tel:5403736876">RACSB: 540-373-6876</a>
+                <a href="https://translifeline.org" target="_blank" style="font-size: 0.85rem; margin-top: 0.5rem;">Trans Lifeline Website →</a>
             </div>
         </div>
     </footer>
-    <p>_</p>
+    
+    <!-- Footer Copyright -->
+    <div style="background: var(--navbar-bg); padding: 1rem 2rem; text-align: center; border-top: 1px solid var(--border-color);">
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0;">
+            Copyright © <?php echo date('Y'); ?> Fredericksburg Pride | All Rights Reserved
+        </p>
+    </div>
 
     <!-- Font Awesome for Icons -->
     <script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script>
+    <script src="js/theme-toggle.js"></script>
+
+    <?php endif; ?>
 
 </body>
-<?php endif ?>
 </html>

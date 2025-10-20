@@ -76,7 +76,7 @@ mysqli_close($con);
 
             padding: 20px;
 
-            background: white;
+            background: var(--card-bg, #ffffff);
 
             border-radius: 12px;
 
@@ -114,7 +114,7 @@ mysqli_close($con);
 
             text-align: center;
 
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid var(--card-border, #e8c4b8);
 
         }
 
@@ -122,7 +122,7 @@ mysqli_close($con);
 
         th {
 
-            background-color: #c92a7f;
+            background-color: var(--main-color, #e8c4b8);
 
             color: white;
 
@@ -132,7 +132,7 @@ mysqli_close($con);
 
         tr:nth-child(even) {
 
-            background-color: #f9f9f9;
+            background-color: var(--nav-item-active-bg, #f4ede9);
 
         }
 
@@ -140,7 +140,7 @@ mysqli_close($con);
 
         tr:hover {
 
-            background-color: #f1f1f1;
+            background-color: var(--dropdown-hover, rgba(232, 196, 184, 0.1));
 
         }
 
@@ -156,7 +156,7 @@ mysqli_close($con);
 
             padding: 10px 20px;
 
-            background-color: #c92a7f;
+            background-color: var(--main-color, #e8c4b8);
 
             color: white;
 
@@ -174,7 +174,7 @@ mysqli_close($con);
 
         .button-back:hover {
 
-            background-color: #a91d68;
+            background-color: var(--accent-color, #d4af37);
 
         }
 

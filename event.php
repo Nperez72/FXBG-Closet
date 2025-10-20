@@ -376,7 +376,7 @@
             <?php
                 $page_link = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
             ?>
-            <meta property="og:image" content="https://jenniferp160.sg-host.com/images/FredSPCAlogo.png">
+            <meta property="og:image" content="https://jenniferp160.sg-host.com/images/FXBG-PrideLogo.png">
             <div class="fb-share-button" data-href= $page_link data-layout="" data-size=""><a target="_blank" 
                 href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%2FfredSPCA%2FviewAllEvents.php&amp;src=sdkpreparse" 
                 class="fb-xfbml-parse-ignore">Share</a>
