@@ -32,7 +32,7 @@ require_once('header.php');
 ?>
 <style>
         .date-box {
-            background: #274471;
+            background: var(--date-box-bg, #e8c4b8);
             padding: 7px 30px;
             border-radius: 50px;
             box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.25) inset;
@@ -55,7 +55,7 @@ require_once('header.php');
             text-decoration: none;
             color: white;
             border-radius: 3px;
-            background-color: #4CAF50;
+            background-color: var(--main-color, #e8c4b8);
         }
         .btn-delete {
             background-color: #f44336;
@@ -66,7 +66,7 @@ require_once('header.php');
             border-radius: 3px;
         }
         .btn-edit:hover {
-            background-color: #45a049;
+            background-color: var(--accent-color, #d4af37);
         }
         .btn-delete:hover {
             background-color: #e53935;
@@ -95,7 +95,7 @@ require_once('header.php');
     <main>
 
       <div class="main-content-box w-[80%] p-8">
-        <?php if (isset($error)) echo "<p style='color: red;'>$error</p>"; ?>
+        <?php if (isset($error)) echo "<p style='color: var(--error-color, #d4635a);'>$error</p>"; ?>
 
         <div class="top-bar">
             <?php if ($accessLevel > 2): ?>

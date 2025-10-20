@@ -152,7 +152,7 @@ $progress_percent = min(100, max(0, round($progress * 100)));
 
         .xp-bar-container {
 
-            background-color: #ddd;
+            background-color: var(--inactive-background-color, #f4ede9);
 
             width: 100%;
 
@@ -172,7 +172,7 @@ $progress_percent = min(100, max(0, round($progress * 100)));
 
             height: 100%;
 
-            background-color: #c92a7f;
+            background-color: var(--main-color, #e8c4b8);
 
             transition: width 0.5s ease-in-out;
 

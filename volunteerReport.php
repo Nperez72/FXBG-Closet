@@ -55,8 +55,8 @@
         <link rel="stylesheet" href="css/hours-report.css">
         <style>
             .volunteer-stat {
-                background-color: #f8f9fc;
-                border: 2px solid #294877;
+                background-color: var(--card-bg, #ffffff);
+                border: 2px solid var(--main-color, #e8c4b8);
                 padding: 15px 20px;
                 border-radius: 10px;
                 width: fit-content;

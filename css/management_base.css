@@ -18,14 +18,19 @@
 		@apply flex-grow flex items-start justify-center p-6 -mt-12 relative z-10;
 	}
 	button {
-		@apply flex justify-center relative bg-white border-2 border-gray-300 rounded-2xl shadow-xs hover:shadow-md cursor-pointer hover:border-blue-900 p-6 transition-all duration-200 text-xl font-medium text-gray-700 hover:bg-gray-100;
+		@apply flex justify-center relative bg-white border-2 rounded-2xl shadow-xs hover:shadow-md cursor-pointer p-6 transition-all duration-200 text-xl font-medium hover:bg-gray-100;
+		border-color: var(--card-border, #e8c4b8);
+		color: var(--text-color, #363434);
+	}
+	button:hover {
+		border-color: var(--accent-color, #d4af37);
 	}
 }
 
 @layer components {
 	.hero-header {
-		@apply h-40 w-full bg-auto bg-center relative z-0;
-		background-image: url('../images/login_background.jpg');
+		@apply h-40 w-full relative z-0;
+		background-color: var(--main-color, #e8c4b8);
 	}
 	.sections {
 		@apply flex flex-col lg:flex-row gap-12 w-full max-w-6xl;
@@ -40,10 +45,12 @@
 		@apply absolute left-3 top-1/2 -translate-y-1/2 p-[2px];
 	}
 	.text-section {
-		@apply flex flex-col justify-center w-full lg:w-1/2 text-gray-700;
+		@apply flex flex-col justify-center w-full lg:w-1/2;
+		color: var(--text-secondary, #5a5856);
 	}
 	.div-blue {
-		@apply h-px bg-blue-900 w-full;
+		@apply h-px w-full;
+		background-color: var(--main-color, #e8c4b8);
 	}
 	.return-button {
 		@apply bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600;

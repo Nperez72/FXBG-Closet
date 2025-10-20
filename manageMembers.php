@@ -35,17 +35,17 @@ if ($accessLevel < 2) {
         }
 
         .btn-remove {
-            background-color: #f44336;
+            background-color: var(--error-color, #d4635a);
         }
         .btn-remove:hover {
-            background-color: #e53935;
+            background-color: var(--accent-color, #d4af37);
         }
 
         .btn-add {
-            background-color: #4CAF50;
+            background-color: var(--main-color, #e8c4b8);
         }
         .btn-add:hover {
-            background-color: #45a049;
+            background-color: var(--accent-color, #d4af37);
         }
 
         table {
@@ -56,21 +56,21 @@ if ($accessLevel < 2) {
 
         th, td {
             padding: 12px;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid var(--card-border, #e8c4b8);
             text-align: left;
         }
 
         th {
-            background-color: #f4f4f4;
+            background-color: var(--nav-item-active-bg, #f4ede9);
             font-weight: 600;
         }
 
         tr:hover {
-            background-color: #f1f1f1;
+            background-color: var(--dropdown-hover, rgba(232, 196, 184, 0.1));
         }
 
         .main-content-box {
-            background: #ffffff;
+            background: var(--card-bg, #ffffff);
             border-radius: 10px;
             padding: 2rem;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
@@ -83,7 +83,7 @@ if ($accessLevel < 2) {
             padding: 8px 10px;
             margin: 10px 5px 0 0;
             border-radius: 5px;
-            border: 1px solid #ccc;
+            border: 1px solid var(--card-border, #e8c4b8);
         }
 
         .success {
