@@ -137,6 +137,26 @@ function retrieve_person($id) { // (username! not id)
     return $thePerson;
 }
 
+/*
+ * @return a Person from dbPersons table matching a particular id.
+ * if not in table, return false
+ */
+
+function updated_retrieve_person($id) { // (username! not id)
+    $con=connect();
+    $query = "SELECT * FROM dbpersons WHERE person_id = $id";
+    $result = mysqli_query($con,$query);
+    if (mysqli_num_rows($result) !== 1) {
+        mysqli_close($con);
+        return false;
+    }
+    $result_row = mysqli_fetch_assoc($result);
+    var_dump($result_row);
+    $thePerson = make_a_person($result_row);
+//    mysqli_close($con);
+    return $thePerson;
+}
+
 // Name is first concat with last name. Example 'James Jones'
 // return array of Persons.
 function retrieve_persons_by_name ($name) {
@@ -1034,9 +1054,9 @@ function searchUsersByName($query) {
     $conn = connect();
 
     // Prepare the SQL query
-    $stmt = $conn->prepare("SELECT person_id, CONCAT(first_name, ' ', last_name) AS full_name
+    $stmt = $conn->prepare("SELECT person_id, role_name, CONCAT(first_name, ' ', last_name) AS full_name
         FROM dbpersons
-        WHERE CONCAT(first_name, ' ', last_name) LIKE CONCAT('%', ?, '%')
+        WHERE role_type = 1 AND CONCAT(first_name, ' ', last_name) LIKE CONCAT('%', ?, '%')
         LIMIT 10
     ");
     $stmt->bind_param("s", $query);
@@ -1048,7 +1068,8 @@ function searchUsersByName($query) {
 
     while ($row = $result->fetch_assoc()) {
         $data[] = [
-            'person_id'   => $row['person_id'],
+            'person_id' => $row['person_id'],
+            'role' => $row['role_name'],
             'fullname' => $row['full_name']
         ];
     }

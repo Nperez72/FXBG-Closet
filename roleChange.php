@@ -2,13 +2,11 @@
     session_cache_expire(30);
     session_start();
 
-    include 'database/dbShifts.php';
     include 'database/dbPersons.php';
 
     $loggedIn = false;
     $accessLevel = 0;
     $userID = null;
-    $today = date('Y-m-d');
 
     if (isset($_SESSION['_id'])) {
         $loggedIn = true;
@@ -17,13 +15,9 @@
     }  
 
 	if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
-    		header('Location: login.php');
-    		die();
+    	header('Location: login.php');
+    	die();
 	}
-
-    if ($loggedIn) {
-        $existingShift = get_shift_today($userID, $today);
-    }
 
 include 'infoBox.php';
 ?>
@@ -41,8 +35,14 @@ include 'infoBox.php';
     </div>
 </header>
 
-<main>
-    <div class="main-content-box w-[80%] p-8">
+<main class="w-[90%] max-w-6xl mx-auto">
+    <?php if (isset($_SESSION['access_level'])): ?>
+    <div style="display:none" id="debug-access">
+        Access level: <?= htmlspecialchars($_SESSION['access_level']) ?>
+    </div>
+    <?php endif; ?>
+
+    <div class="main-content-box w-full p-8">
         <div class="text-center mb-8">
             <h2>Find Your Name to Update Your Role</h2>
             <p class="sub-text">Start typing your full name below.</p>
@@ -53,9 +53,10 @@ include 'infoBox.php';
 
             <div class="overflow-x-auto">
                 <table class="w-full" id="results-table">
-                    <thead class="text-white" style="background-color: var(--main-color, #e8c4b8);">
+                    <thead style="color: var(--text-color); background-color: var(--main-color, #e8c4b8);">
                         <tr>
                             <th class="text-left p-2">Name</th>
+                            <th class="text-left p-2">Role</th>
                             <th class="text-left p-2">Action</th>
                         </tr>
                     </thead>
@@ -80,7 +81,7 @@ include 'infoBox.php';
 document.addEventListener('click', function (e) {
     if (e.target.tagName === 'A') {
         e.preventDefault(); // Stop the normal link behavior
-        const userConfirmed = confirm('Are you sure you want to continue?');
+        const userConfirmed = confirm('You will be logged out. Are you sure you want to continue?');
         if (userConfirmed) {
             window.location.href = 'logout.php'; // Force to your page
         }
@@ -90,7 +91,7 @@ document.addEventListener('click', function (e) {
 
 // Intercept back/forward navigation
 window.addEventListener('popstate', function (e) {
-    const userConfirmed = confirm('Are you sure you want to continue?');
+    const userConfirmed = confirm('You will be logged out. Are you sure you want to continue?');
     if (userConfirmed) {
         window.location.href = 'logout.php'; // Force to your page
     } else {
@@ -123,12 +124,16 @@ document.getElementById("search-box").addEventListener("input", function () {
                 fullnameCell.className = "p-2";
                 fullnameCell.textContent = user.fullname;
 
+                let roleCell = document.createElement("td");
+                roleCell.className = "p-2";
+                roleCell.textContent = user.role;
+
                 let actionCell = document.createElement("td");
                 actionCell.className = "p-2";
 
                 let form = document.createElement("form");
                 form.method = "POST";
-                form.action = "processCheckIn.php";
+                form.action = "processRoleChange.php";
 
                 let input = document.createElement("input");
                 input.type = "hidden";
@@ -145,6 +150,7 @@ document.getElementById("search-box").addEventListener("input", function () {
                 actionCell.appendChild(form);
 
                 row.appendChild(fullnameCell);
+                row.appendChild(roleCell);
                 row.appendChild(actionCell);
 
                 resultsList.appendChild(row);
