@@ -316,7 +316,10 @@ if (date("H:i:s") > "18:19:59") {
                             </svg>
                         </a>
                         <div class="nav-divider"></div>
-                        <a href="index.php"><img src="images/actual_log.png" alt="Logo" class="nav-logo"></a>
+                        <a href="index.php">
+                            <img src="images/FXBG-PrideLogo.png" alt="Logo" class="nav-logo logo-lightMode">
+                            <img src="images/FXBG-PrideWhiteLogo.png" alt="Logo (Dark Mode)" class="nav-logo logo-darkMode">
+                        </a>
                     </div>
 
                     <!-- Main Navigation -->
@@ -420,7 +423,10 @@ if (date("H:i:s") > "18:19:59") {
 
                         <div class="nav-dropdown user-dropdown">
                             <button class="nav-action-btn user-btn">
-                                <img src="images/usaicon.png" alt="User">
+                                <svg class="dropdown-icon user-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <circle cx="12" cy="8" r="4"></circle>
+                                    <path d="M16 20c0-2.21-2.686-4-6-4s-6 1.79-6 4"></path>
+                                </svg>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a href="viewProfile.php" class="dropdown-item">

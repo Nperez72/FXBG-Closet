@@ -130,30 +130,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     * {
       font-family: Quicksand, sans-serif;
     }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
   </style>
-  <title>Fredericksburg SPCA Volunteer System | Log In</title>
+  <title>FXBG Pride Volunteer System | Log In</title>
 </head>
 
 <body>
-  <div class="h-screen flex">
+  <div class="h-screen flex" style="background-color: var(--bg-color);">
 
     <!-- Left: Image Section (Hidden on small screens) -->
     <div class="hidden md:block md:w-1/2 bg-center rounded-r-[50px]"
-      style="background-color: var(--main-color, #e8c4b8);">
+      style="background-image: url(images/PrideFlagInWind.png); background-size: cover; background-position: center; background-repeat: no-repeat;">
     </div>
 
     <!-- Right: Form Section -->
 
-    <div class="w-full md:w-1/2 flex flex-col justify-center items-center bg-white relative ">
+    <div class="w-full md:w-1/2 flex flex-col justify-center items-center bg-[var(--bg-color)] relative ">
 
 
       <div class="w-2/3 max-w-md flex flex-col items-center">
 
         <!-- Logo Placeholder (Now the same width as inputs and centered) -->
         <div class="w-full flex justify-center mb-6">
-          <img src="images/drawn_logo.png"
-            alt="Logo"
-            class="w-full max-w-xs">
+          <img src="images/FXBG-PrideLogo.png" 
+            alt="Logo" 
+            class="logo-lightMode w-full max-w-xs">
+          <img src="images/FXBG-PrideWhiteLogo.png" 
+            alt="Logo (Dark Mode)" 
+            class="logo-darkMode w-full max-w-xs">
         </div>
 
         <h2 class="text-3xl font-bold mb-6 text-gray-800 text-center">
@@ -187,8 +196,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input class="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 focus:outline-none focus:ring-2" style="focus:ring-color: var(--accent-color, #d4af37);" type="password" name="password" placeholder="Enter your password" required>
           </div>
           <div class="flex justify-between items-center mb-4">
-            <a href="#" class="text-sm hover:underline" style="color: var(--main-color, #e8c4b8);">Forgot password?</a>
-            <a href="https://fredspca.org/" class="text-sm hover:underline" style="color: var(--main-color, #e8c4b8);">Fredericksburg SPCA Website</a>
+            <a href="#" class="text-sm hover:underline" style="color: var(--text-muted, #e8c4b8);">Forgot password?</a>
+            <a href="https://fxbgpride.org/" class="text-sm hover:underline" style="color: var(--text-muted, #e8c4b8);">Fredericksburg Pride Website</a>
           </div>
           <button class="cursor-pointer w-full text-white font-semibold py-3 rounded-lg transition duration-300" style="background-color: var(--main-color, #e8c4b8); color: var(--button-text, #363434);" onmouseover="this.style.backgroundColor='var(--accent-color, #d4af37)'" onmouseout="this.style.backgroundColor='var(--main-color, #e8c4b8)'">Login</button>
         </form>
@@ -196,7 +205,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- Divider -->
         <div class="flex items-center my-6 w-full">
           <div class="flex-grow border-t border-gray-300"></div>
-          <span class="mx-4 text-gray-500">or</span>
+          <span class="mx-4 text-gray-400">or</span>
           <div class="flex-grow border-t border-gray-300"></div>
         </div>
 
