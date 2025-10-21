@@ -316,7 +316,10 @@ if (date("H:i:s") > "18:19:59") {
                             </svg>
                         </a>
                         <div class="nav-divider"></div>
-                        <a href="index.php"><img src="images/FXBG-PrideLogo.png" alt="Logo" class="nav-logo"></a>
+                        <a href="index.php">
+                            <img src="images/FXBG-PrideLogo.png" alt="Logo" class="nav-logo logo-lightMode">
+                            <img src="images/FXBG-PrideWhiteLogo.png" alt="Logo (Dark Mode)" class="nav-logo logo-darkMode">
+                        </a>
                     </div>
 
                     <!-- Main Navigation -->
