@@ -54,7 +54,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     break;
                 // coordinator/board member    
                 case 1:
-                    $_SESSION['access_level'] = 1;
+                    $_SESSION['access_level'] = 2;
+                    header('Location: roleChange.php');
+                    die();
                     break;
                 // admin
                 case 2:

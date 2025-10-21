@@ -227,12 +227,12 @@
 </head>
 
 <body>
-    <!-- ONLY SUPER ADMIN WILL SEE THIS -->
+    <!-- ONLY SUPER ADMIN WILL SEE THIS --->
     <?php require 'header.php';?>
     <?php if ($_SESSION['access_level'] >= 2): ?>
     <!-- Dummy content to enable scrolling -->
     <div style="margin-top: 0px; padding: 30px 20px;">
-        <!-- <h2><b>Welcome <?php echo $person->get_first_name() ?>!</b> Let's get started.</h2> -->
+        <!-- <h2><b>Welcome, <?php //echo $person->get_first_name() ?>!</b> Let's get started.</h2> -->
         <h2><b>Welcome!</b> Let's get started.</h2>
     </div>
 
