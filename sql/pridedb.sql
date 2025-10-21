@@ -33,6 +33,12 @@ CREATE TABLE `dbaccounts` (
   `type` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `dbaccounts` (`username`, `password`, `type`) VALUES
+('volunteer', '$2y$10$w8VWUHueVa4y8mizksOV4eexntKRXqcrQJlxyGovBktjUYLhZTrqm', 0),   -- Volunteer
+('coordinator', '$2y$10$c.yLEZABvoKZESzN7FhWSOaxK0L0iv2oFfTEuuo/F8YNKTGnb5Ekq', 1), -- Coordinator
+('admin', '$2y$10$JkAz3mBongMc4rwCz3h8/e/7g1O3anZJxY4wUrGfa8jxba1IQAMGi', 2),    -- Admin
+('vmsroot', '$2y$10$M3Nxy9o5Bw/mMB5qWpXka.y4vF6Rhm7R1pzB3RNyC0piO2WKpNsMa', 2);
+
 -- --------------------------------------------------------
 
 --
@@ -586,8 +592,9 @@ INSERT INTO `dbpersons` (`person_id`, `id`, `role_type`, `role_name`, `start_dat
 (8, 'vmsroot', 0, NULL, NULL, 'vmsroot', '', 'N/A', 'N/A', 'VA', 'N/A', '', 'N/A', 'N/A', 'N/A', NULL, '', 'vmsroot', 'N/A', 'N/A', 'email', 'superadmin', 'Active', 'System root user account', '$2y$10$.3p8xvmUqmxNztEzMJQRBesLDwdiRU3xnt/HOcJtsglwsbUk88VTO', 'N/A', 'N/A', 0, 'vmsroot', 0, 0, 0.00, 0, NULL, NULL),
 (9, 'Volunteer25', 0, NULL, '2025-04-30', 'Volley', 'McTear', '123 Dog St', 'Dogville', 'VA', '56748', '9887765543', 'home', '6565651122', 'home', '2025-04-29', 'volly@gmail.com', 'Holly', 'n/a', 'Besty', NULL, 'volunteer', 'Active', NULL, '$2y$10$45gKdbjW78pNKX/5ROtb7eU9OykSCsP/QCyTAvqBtord4J7V3Ywga', 'None', 'None', 0, 'McTear', 0, 0, 10.00, 0, NULL, 'None'),
 (10, 'ameyer123', 0, NULL, '2025-05-01', 'Aidan', 'Meyer', '1541 Surry Hill Court', 'Charlottesville', 'VA', '22901', '4344222910', 'home', '4344222910', 'home', '2003-08-17', 'aidanmeyer32@gmail.com', 'Aidan', 'n/a', 'Father', NULL, 'participant', 'Inactive', NULL, '$2y$10$2VDZjrW0EacO0VA5hIYIl.fKqPC5wUdSSQ1lXXRSgC0eWxVslPcOC', 'a', 'a', 0, 'Meyer', 0, 0, 0.00, 0, NULL, 'None'),
-(11, 'testvolunteer', 0, NULL, '2025-10-19', 'TestVolunteer', 'N/A', 'N/A', 'N/A', 'VA', '12345', '1234567890', 'cellphone', '1234567890', 'cellphone', '2002-12-12', 'testvolunteer@email.com', 'N/A', NULL, 'N/A', NULL, 'participant', 'Active', NULL, '$2y$10$pruoDpDlIjCnKcP70/8J3eFofrrBVxwD.7ADrYcpWUhOFEv87xHmS', 'N/A', 'N/A', 0, 'N/A', 1, 0, 0.00, 0, NULL, 'None');
-
+(11, 'testvolunteer', 0, NULL, '2025-10-19', 'TestVolunteer', 'N/A', 'N/A', 'N/A', 'VA', '12345', '1234567890', 'cellphone', '1234567890', 'cellphone', '2002-12-12', 'testvolunteer@email.com', 'N/A', NULL, 'N/A', NULL, 'participant', 'Active', NULL, '$2y$10$pruoDpDlIjCnKcP70/8J3eFofrrBVxwD.7ADrYcpWUhOFEv87xHmS', 'N/A', 'N/A', 0, 'N/A', 1, 0, 0.00, 0, NULL, 'None'),
+(12, 'volunteer', 0, NULL, NULL, 'Volunteer', 'User', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'volunteer@example.com', NULL, NULL, NULL, NULL, 'volunteer', 'Active', NULL, NULL, NULL, NULL, 0, NULL, 1, 0, 0.00, 0, NULL, NULL),
+(13, 'admin', 0, NULL, NULL, 'Admin', 'User', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'admin@example.com', NULL, NULL, NULL, NULL, 'admin', 'Active', NULL, NULL, NULL, NULL, 0, NULL, 1, 0, 0.00, 0, NULL, NULL);
 -- --------------------------------------------------------
 
 --
