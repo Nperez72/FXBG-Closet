@@ -1030,6 +1030,36 @@ function searchUsers($query) {
     return $data; // Instead of echo, return the data
 }
 
+function searchUsersByName($query) {
+    $conn = connect();
+
+    // Prepare the SQL query
+    $stmt = $conn->prepare("SELECT person_id, CONCAT(first_name, ' ', last_name) AS full_name
+        FROM dbpersons
+        WHERE CONCAT(first_name, ' ', last_name) LIKE CONCAT('%', ?, '%')
+        LIMIT 10
+    ");
+    $stmt->bind_param("s", $query);
+    $stmt->execute();
+
+    // Get the results
+    $result = $stmt->get_result();
+    $data = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $data[] = [
+            'person_id'   => $row['person_id'],
+            'fullname' => $row['full_name']
+        ];
+    }
+
+    // Close statement and connection 
+    $stmt->close();
+    $conn->close();
+    
+    return $data; // Instead of echo, return the data
+}
+
 function find_user_names($name) {
         $where = 'where ';
         if (!($name)) {
