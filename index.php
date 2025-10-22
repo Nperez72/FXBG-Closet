@@ -19,11 +19,14 @@
         
     include_once('database/dbPersons.php');
     include_once('domain/Person.php');
+
+    require_once('database/dbAccounts.php');
     // Get date?
     if (isset($_SESSION['_id'])) {
+        $accType = get_account_type($_SESSION['_id']);
         $person = retrieve_person($_SESSION['_id']);
     }
-    $notRoot = $person->get_id() != 'vmsroot';
+    $notRoot =  ($_SESSION['access_level'] < 2);
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +36,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/theme-toggle.css">
-    <title>Fredericksburg SPCA Volunteer Management | Dashboard</title>
+    <title>FXBG Pride Volunteer Management | Dashboard</title>
     <style>
         * {
             box-sizing: border-box;
@@ -202,21 +205,15 @@
         transition: transform 0.3s ease;
         letter-spacing: -0.01em;
     }
-
-
-
-
-
-
-
-
-
         /* Responsive Design */
    </style>
 <!--BEGIN TEST, UPLOAD AND NOTIFICATIONS CHANGED-->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            document.querySelector(".extra-info").style.maxHeight = "0px"; // Ensure proper initialization
+            const extraInfo = document.querySelector(".extra-info");
+            if (extraInfo) {
+                extraInfo.style.maxHeight = "0px"; // Ensure proper initialization
+            }
         });
         function toggleInfo(event) {
             event.stopPropagation(); // Prevents triggering the main button click
@@ -229,14 +226,14 @@
 <!--END TEST-->
 </head>
 
-<!-- ONLY SUPER ADMIN WILL SEE THIS -->
-<?php if ($_SESSION['access_level'] >= 2): ?>
 <body>
-<?php require 'header.php';?>
-
+    <!-- ONLY SUPER ADMIN WILL SEE THIS --->
+    <?php require 'header.php';?>
+    <?php if ($_SESSION['access_level'] >= 2): ?>
     <!-- Dummy content to enable scrolling -->
     <div style="margin-top: 0px; padding: 30px 20px;">
-        <h2><b>Welcome <?php echo $person->get_first_name() ?>!</b> Let's get started.</h2>
+        <!-- <h2><b>Welcome, <?php //echo $person->get_first_name() ?>!</b> Let's get started.</h2> -->
+        <h2><b>Welcome!</b> Let's get started.</h2>
     </div>
 
             <?php if (isset($_GET['pcSuccess'])): ?>
@@ -259,23 +256,23 @@
       <div class="content-box">
           <div class="small-text">Make a difference.</div>
         <div class="large-text">Volunteer Management</div>
-<button class="circle-arrow-button" onclick="window.location.href='volunteerManagement.php'">
-    <span class="button-text">Go</span>
-    <div class="circle">&gt;</div>
-</button>
-<!--
-        <div class="nav-buttons">
-            <button class="nav-button" onclick="window.location.href='personSearch.php'">
-                <span>Find</span>
-                <span class="arrow"><img src="images/person-search.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 20px;"></span>
-            </button>
-            <button class="nav-button" onclick="window.location.href='VolunteerRegister.php'">
-                <span>Register</span>
-                <span class="arrow"><img src="images/add-person.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 20px;"></span>
-            </button>
+    <button class="circle-arrow-button" onclick="window.location.href='volunteerManagement.php'">
+        <span class="button-text">Go</span>
+        <div class="circle">&gt;</div>
+    </button>
+    <!--
+            <div class="nav-buttons">
+                <button class="nav-button" onclick="window.location.href='personSearch.php'">
+                    <span>Find</span>
+                    <span class="arrow"><img src="images/person-search.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 20px;"></span>
+                </button>
+                <button class="nav-button" onclick="window.location.href='VolunteerRegister.php'">
+                    <span>Register</span>
+                    <span class="arrow"><img src="images/add-person.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 20px;"></span>
+                </button>
+            </div>
+    -->
         </div>
--->
-    </div>
 
       <div class="content-box">
           <div class="small-text">Let's have some fun!</div>
@@ -302,7 +299,7 @@
 </button>
     </div>
 
-</div>
+    </div>
 
     <div class="dashboard-title">
         <h2><b>Admin Dashboard</h2>
@@ -330,7 +327,8 @@
         </div>
                 <?php
                     require_once('database/dbMessages.php');
-                    $unreadMessageCount = get_user_unread_count($person->get_id());
+                    // $unreadMessageCount = get_user_unread_count($person->get_id());
+                    $unreadMessageCount = 0;
                     $inboxIcon = 'inbox.svg';
                     if ($unreadMessageCount) {
                         $inboxIcon = 'inbox-unread.svg';
@@ -389,8 +387,8 @@
     <footer class="footer" style="margin-top: 100px;">
         <!-- Left Side: Logo & Info -->
         <div class="footer-left">
-            <img src="images/actual_log.png" alt="Logo" class="footer-logo">
-            <p style="margin-top: 1rem; color: var(--text-secondary); max-width: 300px; font-size: 0.95rem;">
+            <img src="images/FXBG-PrideWhiteLogo.png" alt="Logo" class="footer-logo">
+            <p style="margin-top: 1rem; margin-left: 5rem; color: var(--text-tertiary); max-width: 300px; font-size: 0.95rem;">
                 Fredericksburg's Resource For The LGBTQIA+ Community
             </p>
             <div class="social-icons" style="margin-top: 1rem;">
@@ -433,25 +431,18 @@
     <script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script>
     <script src="js/theme-toggle.js"></script>
 
-</body>
-<?php endif ?>
 
-<!-- ONLY VOLUNTEERS WILL SEE THIS -->
-<?php if ($notRoot) : ?>
-<body>
-<?php require 'header.php';?>
-
-  
-
-  <!-- Icon Container -->
-<div class="icon-container">
-    <!-- Volunteer of the Month Icon -->
-    <a href="selectVOTM.php">
-        <div class="icon-label">
-            🎖 Volunteer of the Month
-        </div>
-        <img src="images/star-icon.svg" alt="Volunteer of the Month Icon" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-    </a>
+    <?php elseif($notRoot): ?>
+    <!-- ONLY VOLUNTEERS WILL SEE THIS -->
+     <!-- Icon Container -->
+    <div class="icon-container">
+        <!-- Volunteer of the Month Icon -->
+        <a href="selectVOTM.php">
+            <div class="icon-label">
+                🎖 Volunteer of the Month
+            </div>
+            <img src="images/star-icon.svg" alt="Volunteer of the Month Icon" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+        </a>
 
     <!-- Leaderboard Icon -->
     <a href="leaderboard.php">
@@ -464,10 +455,11 @@
 
 
 
-    <!-- Dummy content to enable scrolling -->
-    <div style="margin-top: 0px; padding: 30px 20px;">
-        <h2><b>Welcome <?php echo $person->get_first_name() ?>!</b> Let's get started.</h2>
-    </div>
+        <!-- Dummy content to enable scrolling -->
+        <div style="margin-top: 0px; padding: 30px 20px;">
+            <!-- <h2><b>Welcome <?php echo $person->get_first_name() ?>!</b> Let's get started.</h2> -->
+            <h2><b>Welcome!</b> Let's get started.</h2>
+        </div>
 
     <div class="full-width-bar">
       <div class="content-box">
@@ -534,14 +526,15 @@
             <button class="arrow-button">→</button>
         </div>
 
-               <?php
-                    require_once('database/dbMessages.php');
-                    $unreadMessageCount = get_user_unread_count($person->get_id());
-                    $inboxIcon = 'inbox.svg';
-                    if ($unreadMessageCount) {
-                        $inboxIcon = 'inbox-unread.svg';
-                    }   
-                ?>  
+                <?php
+                        require_once('database/dbMessages.php');
+                        // $unreadMessageCount = get_user_unread_count($person->get_id());
+                        $unreadMessageCount = 0;
+                        $inboxIcon = 'inbox.svg';
+                        if ($unreadMessageCount) {
+                            $inboxIcon = 'inbox-unread.svg';
+                        }   
+                    ?>  
 
         <div class="content-box-test" onclick="window.location.href='viewResources.php'">
             <div class="icon-overlay">
@@ -573,15 +566,15 @@
             <button class="arrow-button">→</button>
         </div>
 
-    </div>
+        </div>
 
 <div class="divider-line"></div>
 
     <footer class="footer" style="margin-top: 100px;">
         <!-- Left Side: Logo & Info -->
         <div class="footer-left">
-            <img src="images/actual_log.png" alt="Logo" class="footer-logo">
-            <p style="margin-top: 1rem; color: var(--text-secondary); max-width: 300px; font-size: 0.95rem;">
+            <img src="images/FXBG-PrideWhiteLogo.png" alt="Logo" class="footer-logo">
+            <p style="margin-top: 1rem; margin-left: 5rem; color: var(--text-tertiary); max-width: 300px; font-size: 0.95rem;">
                 Fredericksburg's Resource For The LGBTQIA+ Community
             </p>
             <div class="social-icons" style="margin-top: 1rem;">
@@ -624,6 +617,7 @@
     <script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script>
     <script src="js/theme-toggle.js"></script>
 
+    <?php endif; ?>
+
 </body>
-<?php endif ?>
 </html>

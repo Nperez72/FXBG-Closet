@@ -5,6 +5,7 @@
     --bg-color: #f9f6f3;
     --text-color: #363434;
     --text-secondary: #5a5856;
+    --text-tertiary: #e8c4b8;
     --text-muted: #8a8280;
     --navbar-bg: #ffffff;
     --navbar-shadow: rgba(54, 52, 52, 0.1);
@@ -34,7 +35,7 @@
     --icon-overlay-bg: rgba(255, 255, 255, 0.95);
     --nav-item-active-bg: #f4ede9;
     --svg-fill: #e8c4b8;
-    
+
     /* Ensure base.css variables are defined for consistency */
     --page-background-color: #f9f6f3;
     --page-font-color: #363434;
@@ -58,6 +59,7 @@
     --bg-color: #1a1816;
     --text-color: #e8c4b8;
     --text-secondary: #d4b8aa;
+    --text-tertiary: #e8c4b8;
     --text-muted: #b8a89d;
     --navbar-bg: #2a2826;
     --navbar-shadow: rgba(0, 0, 0, 0.5);
@@ -87,7 +89,7 @@
     --icon-overlay-bg: rgba(74, 63, 58, 0.95);
     --nav-item-active-bg: #3a342f;
     --svg-fill: #e8c4b8;
-    
+
     /* Override base.css variables for dark mode */
     --page-background-color: #1a1816;
     --page-font-color: #e8c4b8;
@@ -218,6 +220,24 @@ body {
     background: var(--button-bg);
     color: var(--button-text);
     transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* For FXBG Pride logo in light mode */
+.logo-lightMode {
+    display: block;
+}
+
+.logo-darkMode {
+  display: none;
+}
+
+/* For FXBG Pride logo in dark mode */
+[data-theme="dark"] .logo-lightMode {
+  display: none;
+}
+
+[data-theme="dark"] .logo-darkMode {
+  display: block;
 }
 
 /* Dark mode adjustments for specific elements */
