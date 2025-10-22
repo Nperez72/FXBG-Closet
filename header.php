@@ -73,7 +73,7 @@ if (date("H:i:s") > "18:19:59") {
             'clockout.php' => 2, 'edithours.php' => 2, 'eventlist.php' => 1, 'eventsignup.php' => 1,
             'eventfailure.php' => 1, 'signupsuccess.php' => 1, 'edittimes.php' => 1,
             'adminviewingevents.php' => 2, 'signuppending.php' => 1, 'requestfailed.php' => 1,
-            'settimes.php' => 1, 'eventfailurebaddeparturetime.php' => 1
+            'settimes.php' => 1, 'eventfailurebaddeparturetime.php' => 1, 'trackActivities.php' => 0
         );
 
         // Check permissions
@@ -83,7 +83,6 @@ if (date("H:i:s") > "18:19:59") {
             die();
         }
 
-			
         // ADMIN NAVBAR
         if ($_SESSION['access_level'] >= 2) {
             echo('
@@ -108,7 +107,6 @@ if (date("H:i:s") > "18:19:59") {
                             </svg>
                             <span>Check In/Out</span>
                         </a>
-
 
                         <div class="nav-dropdown">
                             <button class="nav-link">
@@ -146,14 +144,14 @@ if (date("H:i:s") > "18:19:59") {
                                     </svg>
                                     View Check-Ins
                                 </a>
-                            <a href="trackActivities.php" class="dropdown-item">
+                                 <a href="trackActivities.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M9 11l3 3L22 4"></path>
                                         <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
                                     </svg>
                                     Track Activities
                                 </a>
-</div>
+                            </div>
                         </div>
 
                         <div class="nav-dropdown">
@@ -311,6 +309,227 @@ if (date("H:i:s") > "18:19:59") {
             </nav>');
         }
 
+/*
+        // BOARD MEMBER/VOLUNTEER COORDINATOR NAVBAR
+        if ($_SESSION['access_level'] >= 2) {
+            echo('
+            <nav class="modern-navbar">
+                <div class="nav-container">
+                    <!-- Logo and Brand -->
+                    <div class="nav-brand">
+                        <a href="index.php" class="home-icon-btn" title="Home Dashboard">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+
+                    <!-- Main Navigation -->
+                    <div class="nav-menu" id="navMenu">
+                        <a href="viewCheckInOut.php" class="nav-link nav-link-special">
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 11l3 3L22 4"></path>
+                                <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+                            </svg>
+                            <span>Check In/Out</span>
+                        </a>
+
+                        <div class="nav-dropdown">
+                            <button class="nav-link">
+                                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
+                                </svg>
+                                <span>Volunteers</span>
+                                <svg class="dropdown-arrow" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a href="VolunteerRegister.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+                                        <circle cx="8.5" cy="7" r="4"></circle>
+                                        <line x1="20" y1="8" x2="20" y2="14"></line>
+                                        <line x1="23" y1="11" x2="17" y2="11"></line>
+                                    </svg>
+                                    Register Volunteer
+                                </a>
+                                <a href="personSearch.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <path d="M21 21l-4.35-4.35"></path>
+                                    </svg>
+                                    Search Volunteers
+                                </a>
+                                <a href="checkedInVolunteers.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 11l3 3L22 4"></path>
+                                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+                                    </svg>
+                                    View Check-Ins
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="nav-dropdown">
+                            <button class="nav-link">
+                                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                                <span>Events</span>
+                                <svg class="dropdown-arrow" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a href="addEvent.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    Create Event
+                                </a>
+                                <a href="viewAllEvents.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="8" y1="6" x2="21" y2="6"></line>
+                                        <line x1="8" y1="12" x2="21" y2="12"></line>
+                                        <line x1="8" y1="18" x2="21" y2="18"></line>
+                                        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                                        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                                        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                                    </svg>
+                                    View Events
+                                </a>
+                                <a href="editHours.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                    Change Event Hours
+                                </a>
+                                <a href="viewAllEventSignUps.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
+                                    </svg>
+                                    Pending Sign-Ups
+                                </a>
+                                <a href="adminViewingEvents.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    </svg>
+                                    Edit Event
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="nav-dropdown">
+                            <button class="nav-link">
+                                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"></path>
+                                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                                </svg>
+                                <span>Groups</span>
+                                <svg class="dropdown-arrow" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a href="createGroup.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    Create Group
+                                </a>
+                                <a href="showGroups.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"></path>
+                                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                                    </svg>
+                                    View Groups
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Actions -->
+                    <div class="nav-actions">
+                        <a href="calendar.php" class="nav-action-btn" title="Calendar">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                        </a>
+                        
+                        <button class="theme-toggle nav-action-btn" aria-label="Toggle theme" title="Toggle dark/light mode">
+                            <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="5"></circle>
+                                <line x1="12" y1="1" x2="12" y2="3"></line>
+                                <line x1="12" y1="21" x2="12" y2="23"></line>
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                <line x1="1" y1="12" x2="3" y2="12"></line>
+                                <line x1="21" y1="12" x2="23" y2="12"></line>
+                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                            </svg>
+                            <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                            </svg>
+                        </button>
+
+                        <div class="nav-date"></div>
+
+                        <div class="nav-dropdown user-dropdown">
+                            <button class="nav-action-btn user-btn">
+                                <svg class="dropdown-icon user-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <circle cx="12" cy="8" r="4"></circle>
+                                    <path d="M16 20c0-2.21-2.686-4-6-4s-6 1.79-6 4"></path>
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a href="modifyUserRole.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                    Change Role
+                                </a>
+                                <a href="logout.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path>
+                                        <polyline points="16 17 21 12 16 7"></polyline>
+                                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                                    </svg>
+                                    Log Out
+                                </a>
+                            </div>
+                        </div>
+
+                        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                    </div>
+                </div>
+            </nav>');
+        }
+*/
+
         // VOLUNTEER NAVBAR
         if ($_SESSION['access_level'] <= 1) {
             echo('
@@ -325,7 +544,10 @@ if (date("H:i:s") > "18:19:59") {
                             </svg>
                         </a>
                         <div class="nav-divider"></div>
-                        <a href="index.php"><img src="images/actual_log.png" alt="Logo" class="nav-logo"></a>
+                        <a href="index.php">
+                            <img src="images/FXBG-PrideLogo.png" alt="Logo" class="nav-logo logo-lightMode">
+                            <img src="images/FXBG-PrideWhiteLogo.png" alt="Logo (Dark Mode)" class="nav-logo logo-darkMode">
+                        </a>
                     </div>
 
                     <!-- Main Navigation -->
@@ -362,6 +584,13 @@ if (date("H:i:s") > "18:19:59") {
                                     </svg>
                                     Sign-Up
                                 </a>
+                                 <a href="trackActivities.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 11l3 3L22 4"></path>
+                                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+                                    </svg>
+                                    Track Activities
+                                </a>
                                 <a href="editHours.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <circle cx="12" cy="12" r="10"></circle>
@@ -370,57 +599,8 @@ if (date("H:i:s") > "18:19:59") {
                                     Edit Hours
                                 </a>
                             </div>
-			</div>
-		</div>
-</div>
-</div>
-</div>');
-}
-        // VOLUNTEER ONLY HEADER
-        if ($_SESSION['access_level'] <= 1) {
-		echo('<div class="navbar">
-        <!-- Left Section: Logo & Nav Links -->
-        <div class="left-section">
-            <div class="logo-container">
-                <a href="index.php"><img src="images/actual_log.png" alt="Logo"></a>
-            </div>
-            <div class="nav-links">
-                <div class="nav-item">Events
-                    <div class="dropdown">
-<a href="viewMyUpcomingEvents.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/list-solid.svg">
-    <span>My Upcoming</span>
-  </div>
-</a>
-<a href="viewAllEvents.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/new-event.svg">
-    <span>Sign-Up</span>
-  </div>
-</a>
-<a href="editHours.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/clock-regular.svg">
-    <span>Edit Hours</span>
-  </div>
-</a>
-<a href="trackActivities.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/clipboard-regular.svg">
-    <span>Track Activities</span>
-  </div>
-</a>
-                   </div>
-                </div>
-                <div class="nav-item">Groups
-                    <div class="dropdown">
-<a href="volunteerViewGroup.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/group.svg">
-    <span>My Groups</span>
-  </div>
-</a>
+                        </div>
+
                         <div class="nav-dropdown">
                             <button class="nav-link">
                                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -478,7 +658,10 @@ if (date("H:i:s") > "18:19:59") {
 
                         <div class="nav-dropdown user-dropdown">
                             <button class="nav-action-btn user-btn">
-                                <img src="images/usaicon.png" alt="User">
+                                <svg class="dropdown-icon user-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <circle cx="12" cy="8" r="4"></circle>
+                                    <path d="M16 20c0-2.21-2.686-4-6-4s-6 1.79-6 4"></path>
+                                </svg>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a href="viewProfile.php" class="dropdown-item">
@@ -508,13 +691,6 @@ if (date("H:i:s") > "18:19:59") {
                                         <polyline points="22,6 12,13 2,6"></polyline>
                                     </svg>
                                     Notifications
-                                </a>
-                                <a href="changePassword.php" class="dropdown-item">
-                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                        <path d="M7 11V7a5 5 0 0110 0v4"></path>
-                                    </svg>
-                                    Change Password
                                 </a>
                                 <a href="logout.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
