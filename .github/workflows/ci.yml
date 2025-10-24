@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+        extensions: mbstring, xml, ctype, json, mysqli
+        coverage: none
+    
+    - name: Validate PHP syntax
+      run: |
+        find . -name "*.php" -not -path "./vendor/*" -not -path "./lib/*" | while read file; do
+          php -l "$file" || exit 1
+        done
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Install Node dependencies
+      run: npm ci
+    
+    - name: Build Tailwind CSS
+      run: |
+        if [ -f "tailwind.config.js" ]; then
+          npx tailwindcss -o ./css/output.css --minify
+        fi
+    
+    - name: Check for common security issues
+      run: |
+        echo "Checking for potential security issues..."
+        ! grep -r "mysql_query" --include="*.php" . || (echo "Warning: Found deprecated mysql_query usage" && exit 1)
+        echo "Basic security check passed"
+
