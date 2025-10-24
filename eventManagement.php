@@ -9,17 +9,17 @@
     $loggedIn = false;
     $accessLevel = 0;
     $userID = null;
-    if (isset($_SESSION['_id'])) {
-        $loggedIn = true;
-        // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
-        $accessLevel = $_SESSION['access_level'];
-        $userID = $_SESSION['_id'];
-    }
+if (isset($_SESSION['_id'])) {
+    $loggedIn = true;
+    // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
+    $accessLevel = $_SESSION['access_level'];
+    $userID = $_SESSION['_id'];
+}
     // admin-only access
-    if ($accessLevel < 2) {
-        header('Location: index.php');
-        die();
-    }
+if ($accessLevel < 2) {
+    header('Location: index.php');
+    die();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,9 +45,9 @@ require_once('header.php');
             font-weight: 700;
             text-align: center;
         }
-	.dropdown {
-	    padding-right: 50px;
-	}
+    .dropdown {
+        padding-right: 50px;
+    }
 
 </style>
 <!-- BANDAID END, REMOVE ONCE SOME GENIUS FIXES -->
@@ -69,46 +69,46 @@ require_once('header.php');
       <div class="button-section">
 
         <button onclick="window.location.href='addEvent.php';">
-	  <div class="button-left-gray"></div>
-	  <div>Create Event</div>
-	  <img class="button-icon h-12 w-12 left-4" src="images/plus-solid.svg" alt="Calendar Icon">
+      <div class="button-left-gray"></div>
+      <div>Create Event</div>
+      <img class="button-icon h-12 w-12 left-4" src="images/plus-solid.svg" alt="Calendar Icon">
         </button>
 
         <button onclick="window.location.href='viewAllEvents.php';">
-	  <div class="button-left-gray"></div>
-	  <div>View Events</div>
-	  <img class="button-icon left-4" src="images/new-event.svg" alt="Calendar Icon">
+      <div class="button-left-gray"></div>
+      <div>View Events</div>
+      <img class="button-icon left-4" src="images/new-event.svg" alt="Calendar Icon">
         </button>
 
         <button onclick="window.location.href='editHours.php';">
-	  <div class="button-left-gray"></div>
-	  <div>Change Event Hours</div>
-	  <img class="button-icon h-10 w-10 left-5" src="images/list-solid.svg" alt="Calendar Icon">
+      <div class="button-left-gray"></div>
+      <div>Change Event Hours</div>
+      <img class="button-icon h-10 w-10 left-5" src="images/list-solid.svg" alt="Calendar Icon">
         </button>
 
         <button onclick="window.location.href='viewAllEventSignUps.php';">
-	  <div class="button-left-gray"></div>
-	  <div>Pending Sign-Ups <?php 
+      <div class="button-left-gray"></div>
+      <div>Pending Sign-Ups <?php
                         require_once('database/dbEvents.php');
                         require_once('database/dbPersons.php');
                         $pendingsignups = all_pending_names();
-                        if (sizeof($pendingsignups) > 0) {
-                            echo '(' . sizeof($pendingsignups) . ')';
-                        }   
-                    ?></div>
+        if (sizeof($pendingsignups) > 0) {
+            echo '(' . sizeof($pendingsignups) . ')';
+        }
+        ?></div>
 
-	  <img class="button-icon h-10 w-10 left-5" src="images/clock-regular.svg" alt="Calendar Icon">
+      <img class="button-icon h-10 w-10 left-5" src="images/clock-regular.svg" alt="Calendar Icon">
         </button>
 
         <button onclick="window.location.href='adminViewingEvents.php';">
-	  <div class="button-left-gray"></div>
-	  <div>Edit Event</div>
-	  <img class="button-icon h-10 w-10 left-5" src="images/users-solid.svg" alt="Calendar Icon">
+      <div class="button-left-gray"></div>
+      <div>Edit Event</div>
+      <img class="button-icon h-10 w-10 left-5" src="images/users-solid.svg" alt="Calendar Icon">
         </button>
 
-	<div class="text-center mt-6">
-        	<a href="index.php" class="return-button">Return to Dashboard</a>
-	</div>
+    <div class="text-center mt-6">
+            <a href="index.php" class="return-button">Return to Dashboard</a>
+    </div>
 
 
      </div>

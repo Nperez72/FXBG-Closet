@@ -9,15 +9,15 @@
     $loggedIn = false;
     $accessLevel = 0;
     $userID = null;
-    if (isset($_SESSION['_id'])) {
-        $loggedIn = true;
-        // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
-        $accessLevel = $_SESSION['access_level'];
-        $userID = $_SESSION['_id'];
-    }
+if (isset($_SESSION['_id'])) {
+    $loggedIn = true;
+    // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
+    $accessLevel = $_SESSION['access_level'];
+    $userID = $_SESSION['_id'];
+}
     // admin-only access
-    if ($accessLevel < 2) {
-    }
+if ($accessLevel < 2) {
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,9 +38,9 @@
             font-weight: 700;
             text-align: center;
         }
-	.dropdown {
-	    padding-right: 50px;
-	}
+    .dropdown {
+        padding-right: 50px;
+    }
   </style>
 
 </head>
@@ -58,16 +58,16 @@
       <!-- Buttons Section -->
       <div class="grid grid-cols-1 gap-6 w-full md:grid-cols-2 lg:w-2/3 lg:grid-cols-1">
         <button class="flex justify-center relative bg-white border-2 border-gray-300 rounded-2xl shadow-sm hover:shadow-md cursor-pointer p-6 transition-all duration-200 text-xl font-medium text-gray-700 hover:bg-gray-100" style="border-color: var(--card-border, #e8c4b8);" onmouseover="this.style.borderColor='var(--accent-color, #d4af37)'" onmouseout="this.style.borderColor='var(--card-border, #e8c4b8)'" onclick="window.location.href='viewDiscussions.php';">
-	  <div class="absolute top-0 left-0 w-[80px] h-full bg-gray-200 rounded-l-2xl pointer-events-none z-0"></div>
-	  <div>View Discussions</div>
-	  <img class="w-14 h-14 absolute left-3 top-1/2 -translate-y-1/2 p-[2px]" src="images/group.svg" alt="Calendar Icon">
+      <div class="absolute top-0 left-0 w-[80px] h-full bg-gray-200 rounded-l-2xl pointer-events-none z-0"></div>
+      <div>View Discussions</div>
+      <img class="w-14 h-14 absolute left-3 top-1/2 -translate-y-1/2 p-[2px]" src="images/group.svg" alt="Calendar Icon">
         </button>
 
-<?php if ($accessLevel >= 2): ?>
+<?php if ($accessLevel >= 2) : ?>
         <button class="flex justify-center relative bg-white border-2 border-gray-300 rounded-2xl shadow-sm hover:shadow-md cursor-pointer p-6 transition-all duration-200 text-xl font-medium text-gray-700 hover:bg-gray-100" style="border-color: var(--card-border, #e8c4b8);" onmouseover="this.style.borderColor='var(--accent-color, #d4af37)'" onmouseout="this.style.borderColor='var(--card-border, #e8c4b8)'" onclick="window.location.href='createDiscussion.php';">
-	  <div class="absolute top-0 left-0 w-[80px] h-full bg-gray-200 rounded-l-2xl pointer-events-none z-0"></div>
-	  <div>Create Discussion</div>
-	  <img class="w-14 h-14 absolute left-3 top-1/2 -translate-y-1/2 p-[2px]" src="images/creategroup.svg" alt="Calendar Icon">
+      <div class="absolute top-0 left-0 w-[80px] h-full bg-gray-200 rounded-l-2xl pointer-events-none z-0"></div>
+      <div>Create Discussion</div>
+      <img class="w-14 h-14 absolute left-3 top-1/2 -translate-y-1/2 p-[2px]" src="images/creategroup.svg" alt="Calendar Icon">
         </button>
 <?php endif; ?>
            </div>

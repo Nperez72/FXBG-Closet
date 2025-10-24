@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 //     session_cache_expire(30);
 //     session_start();
@@ -16,16 +16,16 @@
 //         var_dump($args);
 // #        header('Location: findAnimal.php');
 //         die();
-//   	}
+//      }
 
-//   	include_once('database/dbServices.php');
+//      include_once('database/dbServices.php');
 
 //     // need to get all events for the animal
 //     $location = find_location($id);
 
 //     // We need to check for a bad ID here before we query the db
 //     // otherwise we may be vulnerable to SQL injection(!)
-//   	// $animal_info = fetch_animal_by_id($id);
+//      // $animal_info = fetch_animal_by_id($id);
 //     // if ($animal_info == NULL) {
 //     //     // TODO: Need to create error page for no event found
 //     //     // header('Location: calendar.php');
@@ -48,8 +48,8 @@
 //         $args = sanitize($_GET, null);
 // #        var_dump($args);
 //         $required = array(
-// 			"id"
-// 		);
+//          "id"
+//      );
 //         if (!wereRequiredFieldsSubmitted($args, $required)) {
 //             echo 'bad form data';
 //             die();
@@ -105,22 +105,22 @@
     <?php require_once('header.php') ?>
     <h1>View Location</h1>
     <main class="event-info">
-        <?php if (isset($_GET['createSuccess'])): ?>
+        <?php if (isset($_GET['createSuccess'])) : ?>
             <div class="happy-toast">Animal created successfully!</div>
         <?php endif ?>
-        <?php if (isset($_GET['attachSuccess'])): ?>
+        <?php if (isset($_GET['attachSuccess'])) : ?>
             <div class="happy-toast">Media attached successfully!</div>
         <?php endif ?>
-        <?php if (isset($_GET['removeSuccess'])): ?>
+        <?php if (isset($_GET['removeSuccess'])) : ?>
             <div class="happy-toast">Media removed successfully!</div>
         <?php endif ?>
-        <?php if (isset($_GET['editSuccess'])): ?>
+        <?php if (isset($_GET['editSuccess'])) : ?>
             <div class="happy-toast">Animal details updated successfully!</div>
         <?php endif ?>
-        <?php if (isset($_GET['locationAdded'])): ?>
+        <?php if (isset($_GET['locationAdded'])) : ?>
             <div class="happy-toast">Location successfully added!</div>
         <?php endif ?>
-        <?php    
+        <?php
             require_once('include/output.php');
 #            $service = $animal_info['name'];
 #            $animal_breed = $animal_info['breed'];
@@ -132,37 +132,38 @@
             <table class="centered">
                 <tbody>
                     <th class="label" style="min-width:170px">Location Info</th>
-                    <tr>	
+                    <tr>    
                         <td class="label">Name </td>
                         <td><?php echo $location['name'] ?></td>
                     </tr>
-                    <tr>	
+                    <tr>    
                         <td class="label">Address </td>
                         <td><?php echo $location['address'] ?></td>
                     </tr>
-                    <tr>	
+                    <tr>    
                         <td class="label">Services Available: </td>
                         <td>
-                            <?php 
+                            <?php
                                 $services = find_services_for_location($location['id']);
                                 $length = count($services);
-                                for ($i = 0; $i < $length; $i++) { 
-                                    echo $services[$i]['name'];
-                                    if ($i < $length - 1) {
-                                        echo ', ';
-                                    }
+                            for ($i = 0; $i < $length; $i++) {
+                                echo $services[$i]['name'];
+                                if ($i < $length - 1) {
+                                    echo ', ';
                                 }
+                            }
                             ?>
                         </td>
                     </tr>
-                    <tr>	
+                    <tr>    
                         <td class="label"> </td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <?php if ($access_level >= 2) : ?> -->
+        <?php if ($access_level >= 2) :
+            ?> -->
             <!-- <form method="post" action="deleteEvent.php">
                 <input type="submit" value="Delete Event">
                 <input type="hidden" name="id" value="<?= $id ?>">

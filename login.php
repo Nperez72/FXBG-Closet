@@ -12,8 +12,8 @@ error_reporting(E_ALL);
 
 // redirect to index if already logged in
 if (isset($_SESSION['_id'])) {
-  header('Location: index.php');
-  die();
+    header('Location: index.php');
+    die();
 }
 
 $badLogin = false;
@@ -31,10 +31,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $username = strtolower($args['username']);
         $password = $args['password'];
 
-        if(!verify_account_password($username, $password)) {
+        if (!verify_account_password($username, $password)) {
             $badLogin = true;
-        } 
-        else {
+        } else {
             session_regenerate_id(true);
 
             // Not setting session variables f_name, l_name, or type anymore
@@ -42,17 +41,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['logged_in'] = true;
             $_SESSION['_id'] = $username;
 
-          
-            // In the original code here is what the access levels are: 
+
+            // In the original code here is what the access levels are:
             // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
             // Trying to map them but might break stuff
             $accessLevel = $_SESSION['access_level'];
-            switch(get_account_type($username)){
+            switch (get_account_type($username)) {
                 // volunteer
                 case 0:
                     $_SESSION['access_level'] = 1;
                     break;
-                // coordinator/board member    
+                // coordinator/board member
                 case 1:
                     $_SESSION['access_level'] = 2;
                     header('Location: roleChange.php');
@@ -173,18 +172,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <form class="w-full" method="post">
           <?php
-          if ($badLogin) {
-            echo '<span class="text-white bg-red-700 text-center block p-2 rounded-lg mb-2">No login with that username and password combination currently exists.</span>';
-          }
-          if ($archivedAccount) {
-            echo '<span class="text-white bg-red-700 block p-2 rounded-lg mb-2">This account has either been archived or not yet approved by managment. For help, notify <a href="mailto:volunteer@fredspca.org">volunteer@fredspca.org</a>.</span>';
-          }
-          if (isset($_GET['registerSuccess'])) {
-            echo '<span class="text-white text-center bg-green-700 block p-2 rounded-lg mb-2">Registration Successful! Please login below.</span>';
-          }
-          ?>
+            if ($badLogin) {
+                echo '<span class="text-white bg-red-700 text-center block p-2 rounded-lg mb-2">No login with that username and password combination currently exists.</span>';
+            }
+            if ($archivedAccount) {
+                echo '<span class="text-white bg-red-700 block p-2 rounded-lg mb-2">This account has either been archived or not yet approved by managment. For help, notify <a href="mailto:volunteer@fredspca.org">volunteer@fredspca.org</a>.</span>';
+            }
+            if (isset($_GET['registerSuccess'])) {
+                echo '<span class="text-white text-center bg-green-700 block p-2 rounded-lg mb-2">Registration Successful! Please login below.</span>';
+            }
+            ?>
           <div class="mb-4">
-        <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
+        <?php if (isset($_GET['success']) && $_GET['success'] == 1) : ?>
             <div class="success-message bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
                 <p class="text-center">Password successfully changed!</p>
                 <p class="text-center">Please log in with your new password.</p>

@@ -5,18 +5,18 @@
     date_default_timezone_set("America/New_York");
 
     // Ensure user is logged in
-    if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 1) {
-        header('Location: login.php');
-        die();
-    }
+if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 1) {
+    header('Location: login.php');
+    die();
+}
 
     // Redirect to current month
-    if (!isset($_GET['month'])) {
-        $month = date("Y-m");
-    } else {
-        $month = $_GET['month'];
-    }
-    
+if (!isset($_GET['month'])) {
+    $month = date("Y-m");
+} else {
+    $month = $_GET['month'];
+}
+
     $year = substr($month, 0, 4);
     $month2digit = substr($month, 5, 2);
 
@@ -31,24 +31,24 @@
     $previousMonth = strtotime(date('Y-m', $month) . ' -1 month');
     $nextMonth = strtotime(date('Y-m', $month) . ' +1 month');
     // Validate; redirect if bad arg given
-    if (!$month) {
-        header('Location: calendar.php?month=' . date("Y-m"));
-        die();
-    }
+if (!$month) {
+    header('Location: calendar.php?month=' . date("Y-m"));
+    die();
+}
     $calendarStart = $first;
     // Back up until we find the first Sunday that should appear on the calendar
-    while (date('w', $calendarStart) > 0) {
-        $calendarStart = strtotime(date('Y-m-d', $calendarStart) . ' -1 day');
-    }
+while (date('w', $calendarStart) > 0) {
+    $calendarStart = strtotime(date('Y-m-d', $calendarStart) . ' -1 day');
+}
     $calendarEnd = date('Y-m-d', strtotime(date('Y-m-d', $calendarStart) . ' +34 day'));
     $calendarEndEpoch = strtotime($calendarEnd);
     $weeks = 5;
     // Add another row if it's needed to display all days in the month
-    if (date('m', strtotime($calendarEnd . ' +1 day')) == date('m', $first)) {
-        $calendarEnd = date('Y-m-d', strtotime($calendarEnd . ' +7 day'));
-        $calendarEndEpoch = strtotime($calendarEnd);
-        $weeks = 6;
-    }
+if (date('m', strtotime($calendarEnd . ' +1 day')) == date('m', $first)) {
+    $calendarEnd = date('Y-m-d', strtotime($calendarEnd . ' +7 day'));
+    $calendarEndEpoch = strtotime($calendarEnd);
+    $weeks = 6;
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -92,7 +92,7 @@
                                 }
                                 $digit++;
                             }
-                        ?>
+                            ?>
                     </select>
                     <input id="jumper-year" type="number" value="<?php echo $year ?>" required min="2023">
                 </div>
@@ -114,7 +114,7 @@
                 <div class="happy-toast">Event completed successfully.</div>
             <?php elseif (isset($_GET['cancelSuccess'])) : ?>
                 <div class="happy-toast">Event canceled successfully.</div>
-                <?php elseif (isset($_GET['cancelSuccess'])) : ?>
+            <?php elseif (isset($_GET['cancelSuccess'])) : ?>
                 <div class="happy-toast">Event canceled successfully.</div>
             <?php endif ?>
             <div class="table-wrapper">
@@ -137,55 +137,51 @@
                         $end = date('Y-m-d', $calendarEndEpoch);
                         require_once('database/dbEvents.php');
                         $events = fetch_events_in_date_range($start, $end);
-                        for ($week = 0; $week < $weeks; $week++) {
-                            echo '
+                    for ($week = 0; $week < $weeks; $week++) {
+                        echo '
                                 <tr class="calendar-week">
                             ';
-                            for ($day = 0; $day < 7; $day++) {
-                                $extraAttributes = '';
-                                $extraClasses = '';
-                                if ($date == $today) {
-                                    $extraClasses = ' today';
-                                }
-                                if (date('m', $date) != date('m', $month)) {
-                                    $extraClasses .= ' other-month';
-                                    $extraAttributes .= ' data-month="' . date('Y-m', $date) . '"';
-                                }
-                                $eventsStr = '';
-                                $e = date('Y-m-d', $date);
+                        for ($day = 0; $day < 7; $day++) {
+                            $extraAttributes = '';
+                            $extraClasses = '';
+                            if ($date == $today) {
+                                $extraClasses = ' today';
+                            }
+                            if (date('m', $date) != date('m', $month)) {
+                                $extraClasses .= ' other-month';
+                                $extraAttributes .= ' data-month="' . date('Y-m', $date) . '"';
+                            }
+                            $eventsStr = '';
+                            $e = date('Y-m-d', $date);
 
-                                if (isset($events[$e])) {
-                                    $dayEvents = $events[$e];
-                                    foreach ($dayEvents as $info) {
+                            if (isset($events[$e])) {
+                                $dayEvents = $events[$e];
+                                foreach ($dayEvents as $info) {
+                                    $backgroundCol = 'var(--main-color, #e8c4b8)'; // default color
 
-                                        $backgroundCol = 'var(--main-color, #e8c4b8)'; // default color
-
-                                        if (is_archived($info['id'])) { // archived event
-                                            if ($_SESSION['access_level'] < 2) {
-                                                continue; // users cannot see archived events
-                                            }
-                                            $backgroundCol = 'var(--inactive-background-color, #f4ede9)'; //TODO
-
-                                        } elseif (check_if_signed_up($info['id'], $_SESSION['_id'])) {// user is signed-up for event
-                                            $backgroundCol = 'var(--accent-color, #d4af37)';
-
+                                    if (is_archived($info['id'])) { // archived event
+                                        if ($_SESSION['access_level'] < 2) {
+                                            continue; // users cannot see archived events
                                         }
-                                        
-                                        $eventsStr .= '<a class="calendar-event" style="background-color: ' . $backgroundCol . '" href="event.php?id=' . $info['id'] . '&user_id=' . $_SESSION['_id'] . '">' . htmlspecialchars_decode($info['name']) . '</a>';
-
+                                        $backgroundCol = 'var(--inactive-background-color, #f4ede9)'; //TODO
+                                    } elseif (check_if_signed_up($info['id'], $_SESSION['_id'])) {// user is signed-up for event
+                                        $backgroundCol = 'var(--accent-color, #d4af37)';
                                     }
+
+                                    $eventsStr .= '<a class="calendar-event" style="background-color: ' . $backgroundCol . '" href="event.php?id=' . $info['id'] . '&user_id=' . $_SESSION['_id'] . '">' . htmlspecialchars_decode($info['name']) . '</a>';
                                 }
-                                echo '<td class="calendar-day' . $extraClasses . '" ' . $extraAttributes . ' data-date="' . date('Y-m-d', $date) . '">
+                            }
+                            echo '<td class="calendar-day' . $extraClasses . '" ' . $extraAttributes . ' data-date="' . date('Y-m-d', $date) . '">
                                     <div class="calendar-day-wrapper">
                                         <p class="calendar-day-number">' . date('j', $date) . '</p>
                                         ' . $eventsStr . '
                                     </div>
                                 </td>';
-                                $date = strtotime(date('Y-m-d', $date) . ' +1 day');
-                            }
-                            echo '
-                                </tr>';
+                            $date = strtotime(date('Y-m-d', $date) . ' +1 day');
                         }
+                        echo '
+                                </tr>';
+                    }
                     ?>
                     </tbody>
                 </table>

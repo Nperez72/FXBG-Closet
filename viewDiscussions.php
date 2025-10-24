@@ -23,7 +23,7 @@ $discussions = get_all_discussions();
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  	<link href="css/normal_tw.css" rel="stylesheet">
+    <link href="css/normal_tw.css" rel="stylesheet">
 
 <!-- BANDAID FIX FOR HEADER BEING WEIRD -->
 <?php
@@ -95,11 +95,12 @@ require_once('header.php');
     <main>
 
       <div class="main-content-box w-[80%] p-8">
-        <?php if (isset($error)) echo "<p style='color: var(--error-color, #d4635a);'>$error</p>"; ?>
+        <?php if (isset($error)) {
+            echo "<p style='color: var(--error-color, #d4635a);'>$error</p>";
+        } ?>
 
         <div class="top-bar">
-            <?php if ($accessLevel > 2): ?>
-
+            <?php if ($accessLevel > 2) : ?>
                 <form action="deleteBulk.php" method="POST" onsubmit="return confirm('Are you sure you want to delete ALL discussions?');">
                     <button type="submit" name="delete_all" class="delete-button">Delete All</button>
                 </form>
@@ -116,7 +117,7 @@ require_once('header.php');
         <table>
             <thead>
                 <tr>
-                    <?php if ($accessLevel > 2): ?>
+                    <?php if ($accessLevel > 2) : ?>
                         <th><input type="checkbox" id="selectAll"></th>
                     <?php endif; ?>
                     <th>Author</th>
@@ -126,14 +127,14 @@ require_once('header.php');
                 </tr>
             </thead>
             <tbody>
-                <?php if ($discussions): ?>
-                    <?php foreach ($discussions as $discussion): 
+                <?php if ($discussions) : ?>
+                    <?php foreach ($discussions as $discussion) :
                         $person = get_user_from_author($discussion['author_id']);
                         $author_name = $person->get_first_name() . ' ' . $person->get_last_name();
                         $entryValue = htmlspecialchars($discussion['author_id']) . '|' . htmlspecialchars($discussion['title']);
-                    ?>
+                        ?>
                         <tr>
-                            <?php if ($accessLevel > 2): ?>
+                            <?php if ($accessLevel > 2) : ?>
                                 <td>
                                     <input type="checkbox" class="rowCheckbox" name="selected_discussions[]" value="<?php echo $entryValue; ?>">
                                 </td>
@@ -145,7 +146,7 @@ require_once('header.php');
                             <td>
                                 <a href="discussionContent.php?author=<?php echo urlencode($person->get_id()); ?>&title=<?php echo urlencode($discussion['title']); ?>" class="blue-button">View</a>
 
-                                <?php if ($accessLevel > 2): ?>
+                                <?php if ($accessLevel > 2) : ?>
                                     <form action="deleteDiscussion.php" method="POST" style="display:inline;">
                                         <input type="hidden" name="author_id" value="<?php echo htmlspecialchars($person->get_id()); ?>">
                                         <input type="hidden" name="title" value="<?php echo htmlspecialchars($discussion['title']); ?>">
@@ -155,7 +156,7 @@ require_once('header.php');
                             </td>
                         </tr>
                     <?php endforeach; ?>
-                <?php else: ?>
+                <?php else : ?>
                     <tr><td colspan="5">No discussions found.</td></tr>
                 <?php endif; ?>
             </tbody>
@@ -163,16 +164,16 @@ require_once('header.php');
 
         <br>
         <?php
-            if ($accessLevel > 2):
+        if ($accessLevel > 2) :
             ?>
                 <div class="text-center">
                     <a href="createDiscussion.php" class="blue-button">Create Discussion</a>
                 </div>
             <?php
-            endif;
+        endif;
         ?>
 
-	</div>
+    </div>
     <div class="text-center mt-6">
         <a href="index.php" class="return-button">Return to Dashboard</a>
     </div>

@@ -1,55 +1,55 @@
 .print-only {
-    display: none;
+  display: none;
 }
 
 #signature-table td {
-    padding: 1rem 0rem;
-    width: 100%;
+  padding: 1rem 0rem;
+  width: 100%;
 }
 
 main.hours-report {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin: 0rem 1rem 8rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0rem 1rem 8rem 1rem;
 }
 
 td.total-hours {
-    text-align: right;
+  text-align: right;
 }
 
 tr.total-hours {
-    font-weight: 500;
+  font-weight: 500;
 }
 
 table#signature-table td:first-of-type {
-    width: 1%;
-    white-space: nowrap;
+  width: 1%;
+  white-space: nowrap;
 }
 
 @media print {
-    :root {
-        font-size: 12pt;
-    }
+  :root {
+    font-size: 12pt;
+  }
 
-    h2 {
-        font-size: 14pt;
-    }
+  h2 {
+    font-size: 14pt;
+  }
 
-    .print-only {
-        display: initial;
-    }
+  .print-only {
+    display: initial;
+  }
 
-    .no-print {
-        display: none;
-    }
+  .no-print {
+    display: none;
+  }
 
-    header {
-        display: none;
-    }
+  header {
+    display: none;
+  }
 
-    table.general td {
-        white-space: normal !important;
-        padding: 0.5rem !important;
-    }
+  table.general td {
+    white-space: normal !important;
+    padding: 0.5rem !important;
+  }
 }

@@ -81,19 +81,22 @@ foreach ($replies as $reply) {
 }
 
 // Recursive function to display replies
-function displayReplies($parentId, $repliesByParent, $level = 0, $accessLevel = 0, $discussionTitle = '') {
-    if (!isset($repliesByParent[$parentId])) return;
+function displayReplies($parentId, $repliesByParent, $level = 0, $accessLevel = 0, $discussionTitle = '')
+{
+    if (!isset($repliesByParent[$parentId])) {
+        return;
+    }
 
     foreach ($repliesByParent[$parentId] as $reply) {
         ?>
         <div class="reply" style="margin-left: <?php echo ($level * 40); ?>px; position: relative; border-left: <?php echo $level > 0 ? '2px solid #ccc' : 'none'; ?>; padding-left: 15px;">
-            <?php if ($accessLevel > 2): ?>
+            <?php if ($accessLevel > 2) : ?>
                 <a href="deleteReply.php?reply_id=<?php echo htmlspecialchars($reply['reply_id']); ?>&title=<?php echo urlencode($discussionTitle); ?>" onclick="return confirm('Are you sure you want to delete this reply?');">
                     <img src="images/trash.svg" alt="Delete" style="width: 20px; height: 20px; cursor: pointer; position: absolute; top: 10px; right: 10px;">
                 </a>
             <?php endif; ?>
 
-            <?php if (!empty($reply['parent_reply_id'])): ?>
+            <?php if (!empty($reply['parent_reply_id'])) : ?>
                 <div style="font-size: 12px; color: #777; margin-bottom: 5px;">
                     Responding to <strong><?php echo htmlspecialchars(get_username_by_reply_id($reply['parent_reply_id'])); ?></strong>
                 </div>
@@ -102,7 +105,7 @@ function displayReplies($parentId, $repliesByParent, $level = 0, $accessLevel = 
             <div class="reply-author"><?php echo htmlspecialchars($reply['user_reply_id']); ?></div>
             <div class="reply-body"><?php echo nl2br(htmlspecialchars($reply['reply_body'])); ?></div>
 
-            <?php if (isset($_SESSION['_id'])): ?>
+            <?php if (isset($_SESSION['_id'])) : ?>
                 <button class="small-reply-btn" style="width: 10%;" onclick="toggleReplyBox('<?php echo $reply['reply_id']; ?>')">Reply</button>
                 <div class="reply-box" id="replyBox-<?php echo $reply['reply_id']; ?>" style="display:none; margin-top:5px;">
                     <form method="post">
@@ -118,7 +121,8 @@ function displayReplies($parentId, $repliesByParent, $level = 0, $accessLevel = 
         displayReplies($reply['reply_id'], $repliesByParent, $level + 1, $accessLevel, $discussionTitle);
     }
 }
-function get_username_by_reply_id($reply_id) {
+function get_username_by_reply_id($reply_id)
+{
     // Fetch reply from database
     $reply = get_reply_by_id($reply_id);
     if ($reply) {
@@ -237,7 +241,7 @@ function get_username_by_reply_id($reply_id) {
         <div class="body"><?php echo nl2br(htmlspecialchars($discussion['body'])); ?></div>
 
         <div class="reply-section">
-            <?php if ($loggedIn): ?>
+            <?php if ($loggedIn) : ?>
                 <button class="reply-btn" onclick="toggleMainReplyBox()">Reply to Discussion</button>
                 <div class="reply-box" id="mainReplyBox" style="display:none;">
                     <form method="post">
@@ -245,7 +249,7 @@ function get_username_by_reply_id($reply_id) {
                         <button type="submit" class="reply-btn">Submit Reply</button>
                     </form>
                 </div>
-            <?php else: ?>
+            <?php else : ?>
                 <p><em>Login to post a reply.</em></p>
             <?php endif; ?>
         </div>

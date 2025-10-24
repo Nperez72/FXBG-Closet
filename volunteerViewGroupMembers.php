@@ -88,15 +88,15 @@ if ($accessLevel > 1) {
 
         $selected_group = $_GET['group_name'] ?? '';
 
-        if ($selected_group):
+        if ($selected_group) :
             echo "<h2 class='text-xl font-bold mb-4'>Group: " . htmlspecialchars($selected_group) . "</h2>";
 
             $members = get_users_in_group($selected_group);
-        ?>
+            ?>
             <h3 class="text-lg font-semibold">Current Members</h3>
-            <?php if (empty($members)): ?>
+            <?php if (empty($members)) : ?>
                 <p>No members in this group.</p>
-            <?php else: ?>
+            <?php else : ?>
                 <table>
                     <thead>
                         <tr>
@@ -105,10 +105,10 @@ if ($accessLevel > 1) {
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($members as $member): 
+                        <?php foreach ($members as $member) :
                             $full_name = htmlspecialchars($member['first_name']) . " " . htmlspecialchars($member['last_name'] ?? '');
                             $email = htmlspecialchars($member['email']);
-                        ?>
+                            ?>
                             <tr>
                                 <td><?= $full_name ?></td>
                                 <td><?= $email ?></td>

@@ -5,37 +5,35 @@
     $accesslevel = 0;
     $userID = null;
 
-    if (isset($_SESSION['_id'])) {
-        $loggedIn = true;
-        $accessLevel = $_SESSION['access_level'];
-        $userID = $_SESSION['_id'];
-    }
+if (isset($_SESSION['_id'])) {
+    $loggedIn = true;
+    $accessLevel = $_SESSION['access_level'];
+    $userID = $_SESSION['_id'];
+}
 
-    if (!$loggedIn) {
-        header('Location: login.php');
-        die();
-    }
+if (!$loggedIn) {
+    header('Location: login.php');
+    die();
+}
 
     $resource_dir = './uploads';
 
     // List PDF files in /uploads
-    function listPDFFiles($dir) {
-        $pdfFiles = array();
-        if (is_dir($dir)) {
-
-            if ($open_dir = opendir($dir)) { // open uploads directory
-
-                while (($file = readdir($open_dir)) !== false) {
-
-                    if (pathinfo($file, PATHINFO_EXTENSION) == 'pdf') { // if file is a PDF
-                        $pdfFiles[] = $file;
-                    }
+function listPDFFiles($dir)
+{
+    $pdfFiles = array();
+    if (is_dir($dir)) {
+        if ($open_dir = opendir($dir)) { // open uploads directory
+            while (($file = readdir($open_dir)) !== false) {
+                if (pathinfo($file, PATHINFO_EXTENSION) == 'pdf') { // if file is a PDF
+                    $pdfFiles[] = $file;
                 }
-                closedir($open_dir);
             }
+            closedir($open_dir);
         }
-    return $pdfFiles;
     }
+    return $pdfFiles;
+}
 
 $pdfFiles = listPDFFiles($resource_dir);
 ?>
@@ -83,7 +81,7 @@ $pdfFiles = listPDFFiles($resource_dir);
                     </thead>
                     <!-- display each pdf as a row in the table -->
                     <tbody class="standout">
-                        <?php foreach ($pdfFiles as $pdf): ?>
+                        <?php foreach ($pdfFiles as $pdf) : ?>
                             <tr>
                                 <td><a href="<?php echo $resource_dir . '/' . $pdf; ?>" target="_blank"><?php echo $pdf; ?></a></td>
                             </tr>

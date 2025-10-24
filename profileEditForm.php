@@ -4,20 +4,20 @@
     require_once('include/output.php');
 
     $args = sanitize($_GET);
-    if ($_SESSION['access_level'] >= 2 && isset($args['id'])) {
-        $id = $args['id'];
-        $editingSelf = $id == $_SESSION['_id'];
-        // Check to see if user is a lower-level manager here
-    } else {
-        $editingSelf = true;
-        $id = $_SESSION['_id'];
-    }
+if ($_SESSION['access_level'] >= 2 && isset($args['id'])) {
+    $id = $args['id'];
+    $editingSelf = $id == $_SESSION['_id'];
+    // Check to see if user is a lower-level manager here
+} else {
+    $editingSelf = true;
+    $id = $_SESSION['_id'];
+}
 
     $person = retrieve_person($id);
-    if (!$person) {
-        echo '<main class="signup-form"><p class="error-toast">That user does not exist.</p></main></body></html>';
-        die();
-    }
+if (!$person) {
+    echo '<main class="signup-form"><p class="error-toast">That user does not exist.</p></main></body></html>';
+    die();
+}
 
     $times = [
         '12:00 AM', '1:00 AM', '2:00 AM', '3:00 AM', '4:00 AM', '5:00 AM',
@@ -27,14 +27,15 @@
         '11:59 PM'
     ];
     $values = [
-        "00:00", "01:00", "02:00", "03:00", "04:00", "05:00", 
-        "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", 
-        "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", 
+        "00:00", "01:00", "02:00", "03:00", "04:00", "05:00",
+        "06:00", "07:00", "08:00", "09:00", "10:00", "11:00",
+        "12:00", "13:00", "14:00", "15:00", "16:00", "17:00",
         "18:00", "19:00", "20:00", "21:00", "22:00", "23:00",
         "23:59"
     ];
-    
-    function buildSelect($name, $disabled=false, $selected=null) {
+
+    function buildSelect($name, $disabled = false, $selected = null)
+    {
         global $times;
         global $values;
         if ($disabled) {
@@ -61,28 +62,28 @@
         $select .= '</select>';
         return $select;
     }
-?>
+    ?>
 <h1>Edit Profile</h1>
 <main class="signup-form">
     <h2>Modify Volunteer Profile</h2>
-    <?php if (isset($updateSuccess)): ?>
-        <?php if ($updateSuccess): ?>
+    <?php if (isset($updateSuccess)) : ?>
+        <?php if ($updateSuccess) : ?>
             <div class="happy-toast">Profile updated successfully!</div>
-        <?php else: ?>
+        <?php else : ?>
             <div class="error-toast">An error occurred.</div>
         <?php endif ?>
     <?php endif ?>
-    <?php if ($isAdmin): ?>
+    <?php if ($isAdmin) : ?>
         <?php if (strtolower($id) == 'vmsroot') : ?>
             <div class="error-toast">The root user profile cannot be modified</div></main></body>
             <?php die() ?>
-        <?php elseif (isset($_GET['id']) && $_GET['id'] != $_SESSION['_id']): ?>
+        <?php elseif (isset($_GET['id']) && $_GET['id'] != $_SESSION['_id']) : ?>
             <!-- <a class="button" href="modifyUserRole.php?id=<?php echo htmlspecialchars($_GET['id']) ?>">Modify User Access</a> -->
         <?php endif ?>
     <?php endif ?>
     <form class="signup-form" method="post">
         <br>
-	<p>An asterisk (<em>*</em>) indicates a required field.</p>
+    <p>An asterisk (<em>*</em>) indicates a required field.</p>
     
         <fieldset class="section-box">
             <legend>Login Credentials</legend>
@@ -131,7 +132,7 @@
                             echo '<option value="' . $abbrevs[$i] . '">' . $states[$i] . '</option>';
                         }
                     }
-                ?>
+                    ?>
             </select>
 
             <label for="zip_code"><em>* </em>Zip Code</label>
@@ -151,9 +152,15 @@
             <label><em>* </em>Phone Type</label>
             <div class="radio-group">
                 <?php $type = $person->get_phone1type(); ?>
-                <input type="radio" id="phone-type-cellphone" name="phone1type" value="cellphone" <?php if ($type == 'cellphone') echo 'checked'; ?> required><label for="phone-type-cellphone">Cell</label>
-                <input type="radio" id="phone-type-home" name="phone1type" value="home" <?php if ($type == 'home') echo 'checked'; ?> required><label for="phone-type-home">Home</label>
-                <input type="radio" id="phone-type-work" name="phone1type" value="work" <?php if ($type == 'work') echo 'checked'; ?> required><label for="phone-type-work">Work</label>
+                <input type="radio" id="phone-type-cellphone" name="phone1type" value="cellphone" <?php if ($type == 'cellphone') {
+                    echo 'checked';
+                                                                                                  } ?> required><label for="phone-type-cellphone">Cell</label>
+                <input type="radio" id="phone-type-home" name="phone1type" value="home" <?php if ($type == 'home') {
+                    echo 'checked';
+                                                                                        } ?> required><label for="phone-type-home">Home</label>
+                <input type="radio" id="phone-type-work" name="phone1type" value="work" <?php if ($type == 'work') {
+                    echo 'checked';
+                                                                                        } ?> required><label for="phone-type-work">Work</label>
             </div>
 
         </fieldset>
@@ -177,9 +184,15 @@
             <label><em>* </em>Phone Type</label>
             <div class="radio-group">
                 <?php $type = $person->get_emergency_contact_phone_type(); ?>
-                <input type="radio" id="phone-type-cellphone" name="emergency_contact_phone_type" value="cellphone" <?php if ($type == 'cellphone') echo 'checked'; ?> required><label for="phone-type-cellphone">Cell</label>
-                <input type="radio" id="phone-type-home" name="emergency_contact_phone_type" value="home" <?php if ($type == 'home') echo 'checked'; ?> required><label for="phone-type-home">Home</label>
-                <input type="radio" id="phone-type-work" name="emergency_contact_phone_type" value="work" <?php if ($type == 'work') echo 'checked'; ?> required><label for="phone-type-work">Work</label>
+                <input type="radio" id="phone-type-cellphone" name="emergency_contact_phone_type" value="cellphone" <?php if ($type == 'cellphone') {
+                    echo 'checked';
+                                                                                                                    } ?> required><label for="phone-type-cellphone">Cell</label>
+                <input type="radio" id="phone-type-home" name="emergency_contact_phone_type" value="home" <?php if ($type == 'home') {
+                    echo 'checked';
+                                                                                                          } ?> required><label for="phone-type-home">Home</label>
+                <input type="radio" id="phone-type-work" name="emergency_contact_phone_type" value="work" <?php if ($type == 'work') {
+                    echo 'checked';
+                                                                                                          } ?> required><label for="phone-type-work">Work</label>
             </div>
         
         </fieldset>
@@ -189,10 +202,10 @@
 
     <label>Account Type</label>
     <p>
-        <?php 
-            echo $person->get_is_community_service_volunteer() 
-                ? 'Community Service Volunteer' 
-                : 'Standard Volunteer'; 
+        <?php
+            echo $person->get_is_community_service_volunteer()
+                ? 'Community Service Volunteer'
+                : 'Standard Volunteer';
         ?>
     </p>
 </fieldset>
@@ -222,9 +235,9 @@
 
         <input type="hidden" name="id" value="<?php echo $id; ?>">
         <input type="submit" name="profile-edit-form" value="Update Profile">
-        <?php if ($editingSelf): ?>
+        <?php if ($editingSelf) : ?>
             <a class="button cancel" href="viewProfile.php" style="margin-top: -.5rem">Cancel</a>
-        <?php else: ?>
+        <?php else : ?>
             <a class="button cancel" href="viewProfile.php?id=<?php echo htmlspecialchars($_GET['id']) ?>" style="margin-top: -.5rem">Cancel</a>
         <?php endif ?>
     </form>

@@ -8,27 +8,27 @@
     $accessLevel = 0;
     $userID = null;
     $isAdmin = false;
-    if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 1) {
-        header('Location: login.php');
-        die();
-    }
-    if (isset($_SESSION['_id'])) {
-        $loggedIn = true;
-        // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
-        $accessLevel = $_SESSION['access_level'];
-        $isAdmin = $accessLevel >= 2;
-        $userID = $_SESSION['_id'];
-    } else {
-        header('Location: login.php');
-        die();
-    }
-    if ($isAdmin && isset($_GET['id'])) {
-        require_once('include/input-validation.php');
-        $args = sanitize($_GET);
-        $id = strtolower($args['id']);
-    } else {
-        $id = $userID;
-    }
+if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 1) {
+    header('Location: login.php');
+    die();
+}
+if (isset($_SESSION['_id'])) {
+    $loggedIn = true;
+    // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
+    $accessLevel = $_SESSION['access_level'];
+    $isAdmin = $accessLevel >= 2;
+    $userID = $_SESSION['_id'];
+} else {
+    header('Location: login.php');
+    die();
+}
+if ($isAdmin && isset($_GET['id'])) {
+    require_once('include/input-validation.php');
+    $args = sanitize($_GET);
+    $id = strtolower($args['id']);
+} else {
+    $id = $userID;
+}
     require_once('database/dbPersons.php');
     //if (isset($_GET['removePic'])) {
      // if ($_GET['removePic'] === 'true') {
@@ -37,7 +37,7 @@
     //}
 
    $user = retrieve_person($id);
-   if ($isAdmin && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_hours'])) {
+if ($isAdmin && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_hours'])) {
     require_once('database/dbPersons.php'); // already required, so you can just remove the duplicate
     $con = connect();
 
@@ -66,20 +66,19 @@
     } else {
         echo '<div class="absolute left-[40%] top-[15%] z-50 bg-red-800 p-4 text-white rounded-xl text-xl">Failed to update hours.</div>';
     }
-  
 }
 
     $viewingOwnProfile = $id == $userID;
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      if (isset($_POST['url'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['url'])) {
         if (!update_profile_pic($id, $_POST['url'])) {
-          header('Location: viewProfile.php?id='.$id.'&picsuccess=False');
+            header('Location: viewProfile.php?id=' . $id . '&picsuccess=False');
         } else {
-          header('Location: viewProfile.php?id='.$id.'&picsuccess=True');
+            header('Location: viewProfile.php?id=' . $id . '&picsuccess=True');
         }
-      }
     }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -107,26 +106,26 @@
 
     window.onload = () => showSection('personal');
   </script>
-  <?php 
-    require_once('header.php'); 
+  <?php
+    require_once('header.php');
     require_once('include/output.php');
-  ?>
+    ?>
 
 </head>
-            <?php if ($id == 'vmsroot'): ?>
-		<div class="absolute left-[40%] top-[20%] bg-red-800 p-4 text-white rounded-xl text-xl">The root user does not have a profile.</div>
+            <?php if ($id == 'vmsroot') : ?>
+        <div class="absolute left-[40%] top-[20%] bg-red-800 p-4 text-white rounded-xl text-xl">The root user does not have a profile.</div>
                 </main></body></html>
                 <?php die() ?>
-            <?php elseif (!$user): ?>
-		<div class="absolute left-[40%] top-[20%] bg-red-800 p-4 text-white rounded-xl text-xl">User does not exist.</div>
+            <?php elseif (!$user) : ?>
+        <div class="absolute left-[40%] top-[20%] bg-red-800 p-4 text-white rounded-xl text-xl">User does not exist.</div>
                 </main></body></html>
                 <?php die() ?>
             <?php endif ?>
-            <?php if (isset($_GET['editSuccess'])): ?>
-		<div class="absolute left-[40%] top-[15%] z-50 bg-green-800 p-4 text-white rounded-xl text-xl">Profile updated successfully!</div>
+            <?php if (isset($_GET['editSuccess'])) : ?>
+        <div class="absolute left-[40%] top-[15%] z-50 bg-green-800 p-4 text-white rounded-xl text-xl">Profile updated successfully!</div>
             <?php endif ?>
-            <?php if (isset($_GET['rscSuccess'])): ?>
-		<div class="absolute left-[40%] top-[15%] z-50 bg-green-800 p-4 text-white rounded-xl text-xl">User role/status updated successfully!</div>
+            <?php if (isset($_GET['rscSuccess'])) : ?>
+        <div class="absolute left-[40%] top-[15%] z-50 bg-green-800 p-4 text-white rounded-xl text-xl">User role/status updated successfully!</div>
             <?php endif ?>
 
 <body class="bg-gray-100">
@@ -139,14 +138,14 @@
     <!-- Left Box -->
     <div class="w-full md:w-1/3 bg-white border border-gray-300 rounded-2xl shadow-lg p-6 flex flex-col justify-between">
       <div>
-	<div class="flex justify-between items-center">
-	<?php if ($viewingOwnProfile): ?>
+    <div class="flex justify-between items-center">
+    <?php if ($viewingOwnProfile) : ?>
           <h2 class="text-xl font-semibold mb-4">My Profile</h2>
-	  <h2 class="mb-4">Edit Icon Placeholder</h2>
-	<?php else: ?>
-	  <h2 class="text-xl font-semibold mb-4">Viewing <?php echo $user->get_first_name() . ' ' . $user->get_last_name() ?></h2>
-	<?php endif ?>
-	</div>
+      <h2 class="mb-4">Edit Icon Placeholder</h2>
+    <?php else : ?>
+      <h2 class="text-xl font-semibold mb-4">Viewing <?php echo $user->get_first_name() . ' ' . $user->get_last_name() ?></h2>
+    <?php endif ?>
+    </div>
         <div class="space-y-2 divide-y divide-gray-300">
           <div class="flex justify-between py-2">
             <span class="font-medium">Joined</span><span>Jan 2022</span>
@@ -156,26 +155,28 @@
           </div>
           <div class="flex justify-between py-2">
             <span class="font-medium">Status</span><span><?php
-                 if ($user->get_archived()) {
-                     echo 'Archived';
-                 } else {
-                     echo 'Active';
-                 }
-                     ?></span>
+            if ($user->get_archived()) {
+                echo 'Archived';
+            } else {
+                echo 'Active';
+            }
+            ?></span>
           </div>
         </div>
       </div>
       <div class="mt-6 space-y-2">
-        <button onclick="window.location.href='editProfile.php<?php if ($id != $userID) echo '?id=' . $id ?>';" class="text-lg font-medium w-full px-4 py-2 bg-blue-900 text-white rounded-md hover:bg-blue-700 cursor-pointer">Edit Profile</button>
+        <button onclick="window.location.href='editProfile.php<?php if ($id != $userID) {
+            echo '?id=' . $id;
+                                                              } ?>';" class="text-lg font-medium w-full px-4 py-2 bg-blue-900 text-white rounded-md hover:bg-blue-700 cursor-pointer">Edit Profile</button>
 
 <!-- -->
-            <?php if ($id != $userID): ?>
-                <?php if (($accessLevel == 2 && $user->get_access_level() == 1) || $accessLevel >= 3): ?>
+            <?php if ($id != $userID) : ?>
+                <?php if (($accessLevel == 2 && $user->get_access_level() == 1) || $accessLevel >= 3) : ?>
         <button onclick="window.location.href='resetPassword.php?id=<?php echo htmlspecialchars($_GET['id']) ?>';" class="text-lg font-medium w-full px-4 py-2 bg-blue-900 text-white rounded-md hover:bg-blue-700 cursor-pointer">Change Password</button>
                 <?php endif ?>
         <button onclick="window.location.href='volunteerReport.php?id=<?php echo htmlspecialchars($_GET['id']) ?>';" class="text-lg font-medium w-full px-4 py-2 bg-blue-900 text-white rounded-md hover:bg-blue-700 cursor-pointer">View Volunteer Hours</button>
         <button onclick="window.location.href='personSearch.php';" class="text-lg font-medium w-full px-4 py-2 border-2 border-gray-300 text-black rounded-md hover:border-blue-700 cursor-pointer">Return to User Search</button>
-            <?php else: ?>
+            <?php else : ?>
         <button onclick="window.location.href='changePassword.php';" class="text-lg font-medium w-full px-4 py-2 bg-blue-900 text-white rounded-md hover:bg-blue-700 cursor-pointer">Change Password</button>
         <button onclick="window.location.href='volunteerReport.php';" class="text-lg font-medium w-full px-4 py-2 bg-blue-900 text-white rounded-md hover:bg-blue-700 cursor-pointer">View Volunteer Hours</button>
         <button onclick="window.location.href='milestonePoints.php';" class="text-lg font-medium w-full px-4 py-2 bg-blue-900 text-white rounded-md hover:bg-blue-700 cursor-pointer">View Milestones &amp Points</button>
@@ -251,12 +252,12 @@
         <div>
           <span class="block text-sm font-medium text-blue-900">Account Type</span>
           <p class="text-gray-900 font-medium text-xl"><?php
-                if ($user->get_is_community_service_volunteer()) {
-                    echo 'Community Service Volunteer';
-                } else {
-                    echo 'Standard Volunteer';
-                }
-                    ?></p>
+            if ($user->get_is_community_service_volunteer()) {
+                echo 'Community Service Volunteer';
+            } else {
+                echo 'Standard Volunteer';
+            }
+            ?></p>
         </div>
         <div>
           <span class="block text-sm font-medium text-blue-900">Skills</span>
@@ -266,9 +267,9 @@
           <span class="block text-sm font-medium text-blue-900">Interests</span>
           <p class="text-gray-900 font-medium text-xl"><?php echo ucfirst($user->get_interests() ?: "Not specified") ?></p>
         </div>
-	      <div>
+          <div>
           <span class="block text-sm font-medium text-blue-900">Total Hours Volunteered</span>
-          <?php if ($isAdmin && !$viewingOwnProfile): ?>
+          <?php if ($isAdmin && !$viewingOwnProfile) : ?>
             <form method="POST" class="mt-2 flex items-center gap-4">
               <input type="number" step="0.01" name="new_hours" min="0" value="<?= htmlspecialchars($user->get_total_hours_volunteered()) ?>" required
                     class="border border-gray-300 px-3 py-1 rounded-md w-32 shadow-sm">
@@ -278,14 +279,14 @@
                 Update
               </button>
             </form>
-          <?php else: ?>
+          <?php else : ?>
             <p class="text-gray-900 font-medium text-xl">
               <?= number_format($user->get_total_hours_volunteered(), 2) ?> hours
             </p>
           <?php endif; ?>
         </div>
 
-	      
+          
       </div>
     </div>
   </div>
