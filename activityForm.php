@@ -1,3 +1,7 @@
+<?php
+  $all_events = get_all_events_sorted_by_date_not_archived(); // grab active events to display in dropdown table
+?>
+
 <header class="hero-header"> 
     <div class="center-header">
         <h1>Track Volunteer Activities</h1>
@@ -20,8 +24,16 @@
             <p class="mb-2">Please provide information about your volunteer activity.</p>
             <div class="blue-div"></div>
 
-            <label for="event_name"><em>* </em>Event Name</label>
-            <input type="text" id="event_name" name="event_name" required placeholder="Enter the name of the event">
+            <label for="event_id"><em>* </em>Event Name</label>
+            <select id="event_id" name="event_id" required>
+                <option value="">Select an event</option>
+                <!-- Loop through every value in all_events and display the name for each one -->
+                <?php foreach ($all_events as $event): ?>
+                    <option value="<?php echo $event->getID(); ?>">
+                        <?php echo htmlspecialchars($event->getName()); ?> - <?php echo $event->getDate(); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
 
             <label for="hours_spent"><em>* </em>Hours Spent</label>
             <input type="number" id="hours_spent" name="hours_spent" min="0" step="0.5" required placeholder="Enter hours spent (e.g., 2.5)">

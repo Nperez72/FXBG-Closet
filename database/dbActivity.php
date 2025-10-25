@@ -1,6 +1,6 @@
 <?php
 
-function add_activity($person_id, $date, $hours_spent, $activity_description) {
+function add_activity($person_id, $date, $event_id, $hours_spent, $activity_description) {
     require_once('dbinfo.php');
     
     $connection = connect();
@@ -9,12 +9,11 @@ function add_activity($person_id, $date, $hours_spent, $activity_description) {
         return false;
     }
     
-    $start_time = "00:00:00";
-    $end_time = "00:00:00";
+    $hours = (float)$hours_spent;
     $photo_id = NULL;
     
-    $query = "INSERT INTO dbvolunteeractivity (person_id, date, start_time, end_time, event_id, interactions, photo_id) 
-              VALUES (?, ?, ?, ?, ?, ?, ?)";
+     $query = "INSERT INTO dbvolunteeractivity (person_id, date, hours, event_id, interactions, photo_id) 
+              VALUES (?, ?, ?, ?, ?, ?)";
     
     $stmt = mysqli_prepare($connection, $query);
     
@@ -23,7 +22,7 @@ function add_activity($person_id, $date, $hours_spent, $activity_description) {
         return false;
     }
     
-    mysqli_stmt_bind_param($stmt, "isssdsi", $person_id, $date, $start_time, $end_time, $hours_spent, $activity_description, $photo_id);
+    mysqli_stmt_bind_param($stmt, "isdisi", $person_id, $date, $hours, $event_id, $activity_description, $photo_id);
     
     $result = mysqli_stmt_execute($stmt);
     

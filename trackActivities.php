@@ -32,6 +32,7 @@ require_once('header.php');
 <body class="relative">
 <?php
     require_once('database/dbActivity.php');
+    require_once('database/dbEvents.php');
 
     $showPopup = false;
     $popupMessage = '';
@@ -42,7 +43,7 @@ require_once('header.php');
         $args = sanitize($_POST, $ignoreList);
 
         $required = array(
-            'event_name',
+            'event_id',
             'hours_spent',
             'activity_description'
         );
@@ -52,6 +53,14 @@ require_once('header.php');
         if (!wereRequiredFieldsSubmitted($args, $required)) {
             $errors = true;
             $popupMessage = 'Please fill out all required fields.';
+            $popupType = 'error';
+        }
+
+        $event_id = isset($args['event_id']) ? (int)$args['event_id'] : 0;
+        if ($event_id <= 0) {
+            echo "<p>Invalid event selected.</p>";
+            $errors = true;
+            $popupMessage = 'Please select a valid event.';
             $popupType = 'error';
         }
 
@@ -71,7 +80,7 @@ require_once('header.php');
             echo '<p class="error">Your form submission contained unexpected or invalid input.</p>';
             $showPopup = true;
         } else {
-            $result = add_activity($person_id, $date, $hours_spent, $activity_description);
+             $result = add_activity($person_id, $date, $event_id, $hours_spent, $activity_description);
             
             if (!$result) {
                 $showPopup = true;
