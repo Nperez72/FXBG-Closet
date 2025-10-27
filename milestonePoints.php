@@ -2,21 +2,19 @@
 
 session_start();
 
- 
+
 
 if (!isset($_SESSION['_id']) || $_SESSION['access_level'] < 1) {
-
     header('Location: login.php');
 
     exit;
-
 }
 
- 
+
 
 require_once('database/dbPersons.php');
 
- 
+
 
 $userID = $_SESSION['_id'];
 
@@ -35,16 +33,14 @@ $query = "SELECT total_hours_volunteered FROM dbpersons WHERE id = '$escaped_id'
 $result = mysqli_query($con, $query);
 
 if ($row = mysqli_fetch_assoc($result)) {
-
     $points = round($row['total_hours_volunteered']);
-
 }
 
 mysqli_close($con);
 
 //testing the area above
 
- 
+
 
 $xp_levels = [50, 100, 500, 1000];
 
@@ -52,23 +48,19 @@ $current_level = 0;
 
 $next_level = 50;
 
- 
+
 
 foreach ($xp_levels as $level) {
-
     if ($points < $level) {
-
         $next_level = $level;
 
         break;
-
     }
 
     $current_level = $level;
-
 }
 
- 
+
 
 $progress = ($points - $current_level) / ($next_level - $current_level);
 
@@ -222,13 +214,12 @@ $progress_percent = min(100, max(0, round($progress * 100)));
 
     <div class="badge-row">
 
-        <?php foreach ($xp_levels as $badge):
-
+        <?php foreach ($xp_levels as $badge) :
             $unlocked = $points >= $badge;
 
             $imgPath = "images/{$badge}.png";
 
-        ?>
+            ?>
 
             <div class="badge <?php echo $unlocked ? 'unlocked' : ''; ?>">
 

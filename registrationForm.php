@@ -8,13 +8,13 @@
 <main>
   <div class="main-content-box w-full max-w-3xl p-8 mb-8">
     <form class="signup-form" method="post">
-	<div class="text-center mb-8">
+    <div class="text-center mb-8">
           <h2 class="mb-8">Registration Form</h2>
             <div class="main-content-box border-2 mb-0 shadow-xs w-full p-4">
               <p class="sub-text">Please fill out each section of the following form if you would like to volunteer for the organization.</p>
               <p>An asterisk (<em>*</em>) indicates a required field.</p>
             </div>
-	</div>
+    </div>
         
         <fieldset class="section-box mb-4">
 
@@ -108,15 +108,15 @@
 
             <label><em>* </em>Phone Type</label>
             <div class="radio-group">
-	      <div class="radio-element">
+          <div class="radio-element">
                 <input type="radio" id="phone-type-cellphone" name="phone_type" value="cellphone" required><label for="phone-type-cellphone">Cell</label>
-	      </div>
-	      <div class="radio-element">
+          </div>
+          <div class="radio-element">
                 <input type="radio" id="phone-type-home" name="phone_type" value="home" required><label for="phone-type-home">Home</label>
-	      </div>
-	      <div class="radio-element">
+          </div>
+          <div class="radio-element">
                 <input type="radio" id="phone-type-work" name="phone_type" value="work" required><label for="phone-type-work">Work</label>
-	      </div>
+          </div>
             </div>
 
         </fieldset>
@@ -139,15 +139,15 @@
 
             <label><em>* </em>Contact Phone Type</label>
             <div class="radio-group">
-	      <div class="radio-element">
+          <div class="radio-element">
                 <input type="radio" id="phone-type-cellphone" name="emergency_contact_phone_type" value="cellphone" required><label for="phone-type-cellphone">Cell</label>
-	      </div>
-	      <div class="radio-element">
+          </div>
+          <div class="radio-element">
                 <input type="radio" id="phone-type-home" name="emergency_contact_phone_type" value="home" required><label for="phone-type-home">Home</label>
-	      </div>
-	      <div class="radio-element">
+          </div>
+          <div class="radio-element">
                 <input type="radio" id="phone-type-work" name="emergency_contact_phone_type" value="work" required><label for="phone-type-work">Work</label>
-	      </div>
+          </div>
             </div>
         </fieldset>
 
@@ -158,15 +158,15 @@
             
            <label><em>* </em>Are you volunteering for court-ordered community service?</label>
             <div class="radio-group">
-	      <div class="radio-element">
+          <div class="radio-element">
                 <input type="radio" id="yes" name="is_community_service_volunteer" value="yes" required>
                 <label for="yes">Yes</label>
-	      </div>
+          </div>
 
-	      <div class="radio-element">
+          <div class="radio-element">
                 <input type="radio" id="no" name="is_community_service_volunteer" value="no">
                 <label for="no">No</label>
-	      </div>
+          </div>
             </div>
          
         

@@ -11,29 +11,29 @@
     $accessLevel = 0;
     $userID = null;
     $user = null;
-    if (isset($_SESSION['_id'])) {
-        $loggedIn = true;
-        // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
-        $accessLevel = $_SESSION['access_level'];
-        $userID = $_SESSION['_id'];
-    }
-    if ($accessLevel < 1) {
-        header('Location: login.php');
-        die();
-    }
-    if ($accessLevel == 1) {
-        $user = $_SESSION['_id'];
-    }
+if (isset($_SESSION['_id'])) {
+    $loggedIn = true;
+    // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
+    $accessLevel = $_SESSION['access_level'];
+    $userID = $_SESSION['_id'];
+}
+if ($accessLevel < 1) {
+    header('Location: login.php');
+    die();
+}
+if ($accessLevel == 1) {
+    $user = $_SESSION['_id'];
+}
     $eventId = isset($_GET['eventId']) ? htmlspecialchars($_GET['eventId']) : null;
     $oldStartTime = isset($_GET['start_time']) ? htmlspecialchars($_GET['start_time']) : null;
     $oldEndTime = isset($_GET['end_time']) ? htmlspecialchars($_GET['end_time']) : null;
     //$UNIX = 0;
 
     // Ensure fallback values or error handling
-    if (!$eventId || !$oldStartTime || !$oldEndTime) {
-        echo "Missing required data.";
-        die(); // Stop further execution
-    }
+if (!$eventId || !$oldStartTime || !$oldEndTime) {
+    echo "Missing required data.";
+    die(); // Stop further execution
+}
     // if (!isset($_GET['date'])) {
     //     header('Location: calendar.php');
     //     die();
@@ -46,7 +46,7 @@
 //     require_once('include/input-validation.php');
   //  $get = sanitize($_GET);
     //$eventIDGiven = $get['id'];
-    
+
     // Split the string by "?"
     //$parts = explode('?', $eventIDGiven);
 
@@ -69,20 +69,20 @@
  //   $id = $parts[0];
 
     // Check if $parts[1] exists before trying to parse it
-    if (isset($parts[1])) {
-        parse_str($parts[1], $userArray);
-        $user = isset($userArray['user']) ? $userArray['user'] : 'Unknown User';
-    } else {
-        $user = 'Unknown User';
-    }
+if (isset($parts[1])) {
+    parse_str($parts[1], $userArray);
+    $user = isset($userArray['user']) ? $userArray['user'] : 'Unknown User';
+} else {
+    $user = 'Unknown User';
+}
 
     // Check if $parts[2] exists before trying to parse it
-    if (isset($parts[2])) {
-        parse_str($parts[2], $timeArray);
-        $old_start_time = isset($timeArray['old_start_time']) ? $timeArray['old_start_time'] : 'No Start Time';
-    } else {
-        $old_start_time = 'No Start Time';
-    }
+if (isset($parts[2])) {
+    parse_str($parts[2], $timeArray);
+    $old_start_time = isset($timeArray['old_start_time']) ? $timeArray['old_start_time'] : 'No Start Time';
+} else {
+    $old_start_time = 'No Start Time';
+}
 
     // Output the variables
     // echo "ID: $id\n";
@@ -109,12 +109,12 @@
 //     $timeStampStart = strtotime($oldStartTime);
 //     $timeStampEnd = strtotime($oldEndTime);
 
-//     $displayTimeStart = $timeStampStart !== false 
-//         ? date("l, F j, Y, H:i:s", $timeStampStart) 
+//     $displayTimeStart = $timeStampStart !== false
+//         ? date("l, F j, Y, H:i:s", $timeStampStart)
 //         : "Invalid time format.";
 
-//     $displayTimeEnd = $timeStampEnd !== false 
-//         ? date("l, F j, Y, H:i:s", $timeStampEnd) 
+//     $displayTimeEnd = $timeStampEnd !== false
+//         ? date("l, F j, Y, H:i:s", $timeStampEnd)
 //         : "Invalid time format.";
 // } else {
 //     $displayTimeStart = "Invalid or missing data.";
@@ -136,9 +136,8 @@ if (isset($_GET['eventId'], $_GET['user'], $_GET['start_time'], $_GET['end_time'
     $eventId = htmlspecialchars($_GET['eventId']);
     if ($accessLevel == 1) {
         $user = $_SESSION['_id'];
-    }
-    else {
-    $user = htmlspecialchars($_GET['user']);
+    } else {
+        $user = htmlspecialchars($_GET['user']);
     }
     $oldStartTime = htmlspecialchars($_GET['start_time']); // good
     $oldEndTime = htmlspecialchars($_GET['end_time']); // good
@@ -152,20 +151,20 @@ if (isset($_GET['eventId'], $_GET['user'], $_GET['start_time'], $_GET['end_time'
     $timeStampStart = strtotime($oldStartTime);
     $timeStampEnd = strtotime($oldEndTime);
 
-    $displayTimeStart = $timeStampStart !== false 
-        ? date("l, F j, Y, g:i:s A", $timeStampStart)  
+    $displayTimeStart = $timeStampStart !== false
+        ? date("l, F j, Y, g:i:s A", $timeStampStart)
         : "Invalid time format.";
 
-    $displayTimeEnd = $timeStampEnd !== false 
-        ? date("l, F j, Y, g:i:s A", $timeStampEnd) 
+    $displayTimeEnd = $timeStampEnd !== false
+        ? date("l, F j, Y, g:i:s A", $timeStampEnd)
         : "Invalid time format.";
-    
+
     $displayTimeStartSQL = $oldStartTime !== false ? date("Y-m-d H:i:s", $timeStampStart) : null;
     $displayTimeEndSQL = $oldEndTime !== false ? date("Y-m-d H:i:s", $timeStampEnd) : null;
 
   //  echo $displayTimeEndSQL;
    // echo $displayTimeStartSQL;
-    
+
     // Validate conversion
     if (!$displayTimeStartSQL || !$displayTimeEndSQL) {
         echo "Invalid date or time format.";
@@ -199,30 +198,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $formattedEndDateTime = date("Y-m-d", strtotime($displayTimeEndSQL));
 // Y-m-d needed before times too
 // use this to convert start time and end time
-$validated = validate12hTimeRangeAndConvertTo24h($_POST['start-time'], $_POST['end-time']);
+        $validated = validate12hTimeRangeAndConvertTo24h($_POST['start-time'], $_POST['end-time']);
 // AmPm version vs not no diff at top?
-if (!$validated) {
-    $errors .= '<p>The provided time range was invalid.</p>';
-}
-$startTime = $args['start-time'] = $validated[0];
-$endTime = $args['end-time'] = $validated[1];
+        if (!$validated) {
+            $errors .= '<p>The provided time range was invalid.</p>';
+        }
+        $startTime = $args['start-time'] = $validated[0];
+        $endTime = $args['end-time'] = $validated[1];
 //echo "start:" . $startTime;
 //echo $endTime;
 //echo "START: ";
 // Combine date and time
-$formattedStartDateTime = $formattedStartDateTime . ' ' . $startTime;
+        $formattedStartDateTime = $formattedStartDateTime . ' ' . $startTime;
 
 
 // Use the string in your query or other operations
 //echo "START: " . $formattedStartDateTime;
 // Combine date and time
-$formattedEndDateTime = $formattedEndDateTime . ' ' . $endTime;
+        $formattedEndDateTime = $formattedEndDateTime . ' ' . $endTime;
 
 
 
 
 //echo "END: ";
-//echo $formattedEndDateTime; 
+//echo $formattedEndDateTime;
 //echo "<br>" . $user . "<br>" . $eventId;
 
         //echo $displayTimeStartSQL;
@@ -250,27 +249,27 @@ $formattedEndDateTime = $formattedEndDateTime . ' ' . $endTime;
         // // Close statement and connection
         // mysqli_stmt_close($stmt);
         // Execute the query
-if (mysqli_query($connection, $query)) {
-    // On successful update, redirect to the desired URL with query parameters
-    // CHANGE IF LOCALHOST OR NOT
-    if ($accessLevel == 1) {
-        header('Location: eventList.php');
-    } else {
-        header('Location: eventList.php?username=' . $user);
-    }
-    //header("Location: editTimes.php?eventId=$eventId&user=" . urlencode($user) . "&start_time=" . urlencode($formattedStartDateTime) . "&end_time=" . urlencode($formattedEndDateTime));
-    //header("Location: http://localhost/stepvarepo/editTimes.php?eventId=$eventId&user=" . urlencode($user) . "&start_time=" . urlencode($formattedStartDateTime) . "&end_time=" . urlencode($formattedEndDateTime));
-    exit(); // Make sure to call exit after the header to stop further code execution
-} else {
-    echo "Error updating hours: " . mysqli_error($connection);
-}
+        if (mysqli_query($connection, $query)) {
+            // On successful update, redirect to the desired URL with query parameters
+            // CHANGE IF LOCALHOST OR NOT
+            if ($accessLevel == 1) {
+                header('Location: eventList.php');
+            } else {
+                header('Location: eventList.php?username=' . $user);
+            }
+            //header("Location: editTimes.php?eventId=$eventId&user=" . urlencode($user) . "&start_time=" . urlencode($formattedStartDateTime) . "&end_time=" . urlencode($formattedEndDateTime));
+            //header("Location: http://localhost/stepvarepo/editTimes.php?eventId=$eventId&user=" . urlencode($user) . "&start_time=" . urlencode($formattedStartDateTime) . "&end_time=" . urlencode($formattedEndDateTime));
+            exit(); // Make sure to call exit after the header to stop further code execution
+        } else {
+            echo "Error updating hours: " . mysqli_error($connection);
+        }
         mysqli_close($connection);
     } else {
         echo "Please fill in both start and end times.";
     }
 }
 
- ?>
+?>
 
 
 
@@ -328,17 +327,22 @@ if (mysqli_query($connection, $query)) {
                 <!--
                 <label for="name">* Animal</label>
                 <select for="name" id="animal" name="animal" required>
-                    <?php 
+                    <?php
                         // fetch data from the $all_animals variable
                         // and individually display as an option
-                        while ($animal = mysqli_fetch_array(
-                                $all_animals, MYSQLI_ASSOC)):; 
-                    ?>
+                    while (
+                        $animal = mysqli_fetch_array(
+                            $all_animals,
+                            MYSQLI_ASSOC
+                        )
+                    ) :
+                        ;
+                        ?>
                     <option value="<?php echo $animal['id'];?>">
                         <?php echo $animal['name'];?>
                     </option>
-                    <?php 
-                        endwhile; 
+                        <?php
+                    endwhile;
                         // terminate while loop
                     ?>
                 </select>
@@ -346,9 +350,9 @@ if (mysqli_query($connection, $query)) {
                 <p></p>
                 <input type="submit" value="Create Event">
             </form>
-                <?php if ($date): ?>
+                <?php if ($date) : ?>
                     <a class="button cancel" href="calendar.php?month=<?php echo substr($date, 0, 7) ?>" style="margin-top: -.5rem">Return to Calendar</a>
-                <?php else: ?>
+                <?php else : ?>
                     <a class="button cancel" href="index.php" style="margin-top: -.5rem">Return to Dashboard</a>
                 <?php endif ?>
 

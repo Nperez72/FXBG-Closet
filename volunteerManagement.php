@@ -9,17 +9,17 @@
     $loggedIn = false;
     $accessLevel = 0;
     $userID = null;
-    if (isset($_SESSION['_id'])) {
-        $loggedIn = true;
-        // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
-        $accessLevel = $_SESSION['access_level'];
-        $userID = $_SESSION['_id'];
-    }
+if (isset($_SESSION['_id'])) {
+    $loggedIn = true;
+    // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
+    $accessLevel = $_SESSION['access_level'];
+    $userID = $_SESSION['_id'];
+}
     // admin-only access
-    if ($accessLevel < 2) {
-        header('Location: index.php');
-        die();
-    }
+if ($accessLevel < 2) {
+    header('Location: index.php');
+    die();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,39 +50,39 @@ require_once('header.php');
       <!-- Buttons Section -->
       <div class="button-section">
         <button onclick="window.location.href='VolunteerRegister.php';">
-	  <div class="button-left-gray"></div>
-	  <div>Register Volunteer</div>
-	  <img class="button-icon" src="images/add-person.svg" alt="Person Icon">
+      <div class="button-left-gray"></div>
+      <div>Register Volunteer</div>
+      <img class="button-icon" src="images/add-person.svg" alt="Person Icon">
         </button>
 
         <button onclick="window.location.href='personSearch.php';">
-	  <div class="button-left-gray"></div>
-	  <div>Search Volunteers</div>
-	  <img class="button-icon" src="images/person-search.svg" alt="Person Icon">
+      <div class="button-left-gray"></div>
+      <div>Search Volunteers</div>
+      <img class="button-icon" src="images/person-search.svg" alt="Person Icon">
         </button>
 
-	<button onclick="window.location.href='checkedInVolunteers.php';">
-	  <div class="button-left-gray"></div>
-	  <div>Checked-In Volunteers</div>
-	  <img class="button-icon h-10 w-10 left-5" src="images/clipboard-regular.svg" alt="Person Icon">
+    <button onclick="window.location.href='checkedInVolunteers.php';">
+      <div class="button-left-gray"></div>
+      <div>Checked-In Volunteers</div>
+      <img class="button-icon h-10 w-10 left-5" src="images/clipboard-regular.svg" alt="Person Icon">
         </button>
 
-	<button onclick="window.location.href='selectVOTM.php';">
-	  <div class="button-left-gray"></div>
-	  <div>Volunteer of the Month</div>
-	  <img class="button-icon h-10 w-10 left-5" src="images/star-icon.svg" alt="Person Icon">
+    <button onclick="window.location.href='selectVOTM.php';">
+      <div class="button-left-gray"></div>
+      <div>Volunteer of the Month</div>
+      <img class="button-icon h-10 w-10 left-5" src="images/star-icon.svg" alt="Person Icon">
         </button>
 
-	<button onclick="window.location.href='leaderboard.php';">
-	  <div class="button-left-gray"></div>
-	  <div>Leaderboard</div>
-	  <img class="button-icon h-10 w-10 left-5" src="images/crown.svg.png" alt="Person Icon">
+    <button onclick="window.location.href='leaderboard.php';">
+      <div class="button-left-gray"></div>
+      <div>Leaderboard</div>
+      <img class="button-icon h-10 w-10 left-5" src="images/crown.svg.png" alt="Person Icon">
         </button>
-	
-	<div class="text-center mt-6">
-        	<a href="index.php" class="return-button">Return to Dashboard</a>
-	</div>
-		
+    
+    <div class="text-center mt-6">
+            <a href="index.php" class="return-button">Return to Dashboard</a>
+    </div>
+        
      </div>
 
       <!-- Text Section -->

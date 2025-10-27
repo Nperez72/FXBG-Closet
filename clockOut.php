@@ -1,4 +1,5 @@
 <?php
+
 require_once 'database/dbShifts.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -12,4 +13,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Missing shiftID or description.";
     }
 }
-?>

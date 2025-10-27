@@ -1,7 +1,7 @@
 <?php
     session_cache_expire(30);
     session_start();
-    header("refresh:2; url=index.php"); 
+    header("refresh:2; url=index.php");
 ?>
     <!DOCTYPE html>
     <html>

@@ -23,7 +23,7 @@ require_once 'domain/Groups.php';
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  	<link href="css/normal_tw.css" rel="stylesheet">
+    <link href="css/normal_tw.css" rel="stylesheet">
 <!-- BANDAID FIX FOR HEADER BEING WEIRD -->
 <?php
 $tailwind_mode = true;
@@ -51,9 +51,9 @@ require_once('header.php');
 <body>
 
 <header class="hero-header">
-	<div class="center-header">
-		<h1>Create a New Group</h1>
-	</div>
+    <div class="center-header">
+        <h1>Create a New Group</h1>
+    </div>
 </header>
 
     <main>
@@ -85,19 +85,19 @@ require_once('header.php');
                 <option value="orange">Orange</option>
             </select>
 
-	<div class="text-center mt-6">
+    <div class="text-center mt-6">
             <button type="submit" class="blue-button">Save Group</button>
-	</div>
+    </div>
         </form>
-	</div>
-	<div class="text-center mt-6">
+    </div>
+    <div class="text-center mt-6">
         <a href="groupManagement.php" class="return-button">Back to Group Management</a>
-	</div>
+    </div>
 
 <div class="info-section mt-0">
-	<div class="blue-div"></div>
-	<p class="info-text">Create a new Volunteer Group. 
-	</p>
+    <div class="blue-div"></div>
+    <p class="info-text">Create a new Volunteer Group. 
+    </p>
 </div>
     </main>
 </body>

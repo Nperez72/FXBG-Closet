@@ -1,10 +1,11 @@
 <?php
-    ini_set("display_errors",1);
+
+    ini_set("display_errors", 1);
     error_reporting(E_ALL);
     include_once('domain/Person.php');
     include_once('database/dbPersons.php');
 
-    $person = Array();
+    $person = array();
     $person['first_name'] = 'vmsroot';
     $person['last_name'] = '';
     $person['venue'] = 'portland';
@@ -38,15 +39,14 @@
     $person['gender'] = '';
     $person['force_password_change'] = 1;
     $days = array('sun', 'mon', 'tues', 'wednes', 'thurs', 'fri', 'satur');
-    foreach ($days as $day) {
-        $person[$day . 'days_start'] = '';
-        $person[$day . 'days_end'] = '';
-    }
+foreach ($days as $day) {
+    $person[$day . 'days_start'] = '';
+    $person[$day . 'days_end'] = '';
+}
     $PERSON = make_a_person($person);
     $result = add_person($PERSON);
-    if ($result) {
-        echo 'ROOT USER CREATION SUCCESS';
-    } else {
-        echo 'USER ALREADY EXISTS';
-    }
-?>
+if ($result) {
+    echo 'ROOT USER CREATION SUCCESS';
+} else {
+    echo 'USER ALREADY EXISTS';
+}
