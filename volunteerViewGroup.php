@@ -24,9 +24,9 @@ $groups = get_groups_from_user($userID);
 <html lang="en">
 <head>
     <link href="css/normal_tw.css" rel="stylesheet">
-    <?php 
+    <?php
         $tailwind_mode = true;
-        require('header.php'); 
+        require('header.php');
     ?>
     <style>
         .btn-edit {
@@ -94,8 +94,8 @@ $groups = get_groups_from_user($userID);
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if (!empty($groups)): ?>
-                        <?php foreach ($groups as $group): ?>
+                    <?php if (!empty($groups)) : ?>
+                        <?php foreach ($groups as $group) : ?>
                             <tr>
                                 <td><?php echo htmlspecialchars($group['group_name']); ?></td>
                                 <td><?php echo ucfirst($group['color_level']); ?></td>
@@ -104,7 +104,7 @@ $groups = get_groups_from_user($userID);
                                 </td>
                             </tr>
                         <?php endforeach; ?>
-                    <?php else: ?>
+                    <?php else : ?>
                         <tr>
                             <td colspan="3">No groups found.</td>
                         </tr>

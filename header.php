@@ -1,12 +1,12 @@
 <!-- Modern Header Navigation -->
 <?php
 date_default_timezone_set('America/New_York');/*
-* Copyright 2013 by Allen Tucker. 
-* This program is part of RMHP-Homebase, which is free software.  It comes with 
-* absolutely no warranty. You can redistribute and/or modify it under the terms 
+* Copyright 2013 by Allen Tucker.
+* This program is part of RMHP-Homebase, which is free software.  It comes with
+* absolutely no warranty. You can redistribute and/or modify it under the terms
 * of the GNU General Public License as published by the Free Software Foundation
 * (see <http://www.gnu.org/licenses/ for more information).
-* 
+*
 if (date("H:i:s") > "18:19:59") {
  require_once 'database/dbShifts.php';
  auto_checkout_missing_shifts();
@@ -14,7 +14,7 @@ if (date("H:i:s") > "18:19:59") {
 */
 
 // check if we are in locked mode, if so,
-// user cannot access anything else without 
+// user cannot access anything else without
 // logging back in
 ?>
 <head>
@@ -47,7 +47,7 @@ if (date("H:i:s") > "18:19:59") {
                 </div>
             </div>
         </nav>');
-    } else if ($_SESSION['logged_in']) {
+    } elseif ($_SESSION['logged_in']) {
         // Permission array setup
         $permission_array = array(
             'index.php' => 0, 'about.php' => 0, 'apply.php' => 0, 'logout.php' => 0,
@@ -78,7 +78,7 @@ if (date("H:i:s") > "18:19:59") {
 
         // Check permissions
         $current_page = strtolower(substr($_SERVER['PHP_SELF'], strrpos($_SERVER['PHP_SELF'], '/') + 1));
-        if(isset($permission_array[$current_page]) && $permission_array[$current_page] > $_SESSION['access_level']){
+        if (isset($permission_array[$current_page]) && $permission_array[$current_page] > $_SESSION['access_level']) {
             echo "<script type=\"text/javascript\">window.location = \"index.php\";</script>";
             die();
         }
@@ -467,7 +467,7 @@ if (date("H:i:s") > "18:19:59") {
                                 <line x1="3" y1="10" x2="21" y2="10"></line>
                             </svg>
                         </a>
-                        
+
                         <button class="theme-toggle nav-action-btn" aria-label="Toggle theme" title="Toggle dark/light mode">
                             <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <circle cx="12" cy="12" r="5"></circle>

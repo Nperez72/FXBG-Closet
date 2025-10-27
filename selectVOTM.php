@@ -64,7 +64,6 @@ if ($isAdmin && !empty($topVolunteers)) {
     }
 
     $winner = mysqli_fetch_assoc($winner_query);
-    
 }
 ?>
 
@@ -115,7 +114,7 @@ if ($isAdmin && !empty($topVolunteers)) {
     <div class="votm-container">
         <h1 class="title">🏆 Volunteer of the Month</h1>
 
-        <?php if (!empty($winner)): ?>
+        <?php if (!empty($winner)) : ?>
             <div class="successbox" style="margin-bottom: 20px;">
                 <p>
                     Congratulations to <strong><?= htmlspecialchars($winner['first_name'] . ' ' . $winner['last_name']) ?></strong> 
@@ -123,13 +122,13 @@ if ($isAdmin && !empty($topVolunteers)) {
                     <strong><?= number_format($winner['total_hours_volunteered'], 2) ?></strong> hours!
                 </p>
             </div>
-        <?php else: ?>
+        <?php else : ?>
             <div class="error" style="margin-bottom: 20px; color: var(--error-color, #d4635a);">
                 ⚠️ No Volunteer of the Month has been selected yet.
             </div>
         <?php endif; ?>
 
-        <?php if (!empty($topVolunteers)): ?>
+        <?php if (!empty($topVolunteers)) : ?>
             <h2 style="font-size: 1.4em;">📊 Top Volunteers Leaderboard</h2>
             <table class="votm-table">
                 <thead>
@@ -140,7 +139,7 @@ if ($isAdmin && !empty($topVolunteers)) {
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($topVolunteers as $index => $v): ?>
+                    <?php foreach ($topVolunteers as $index => $v) : ?>
                         <?php
                             $isWinner = isset($winner['id']) && $v['id'] === $winner['id'];
                             $rowClass = $isWinner ? 'winner-highlight' : '';

@@ -4,81 +4,81 @@
     session_cache_expire(30);
     session_start();
 
-    ini_set("display_errors",1);
+    ini_set("display_errors", 1);
     error_reporting(E_ALL);
 
     $loggedIn = false;
     $accessLevel = 0;
     $userID = null;
-    if (isset($_SESSION['_id'])) {
-        $loggedIn = true;
-        // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
-        $accessLevel = $_SESSION['access_level'];
-        $userID = $_SESSION['_id'];
-    } 
+if (isset($_SESSION['_id'])) {
+    $loggedIn = true;
+    // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
+    $accessLevel = $_SESSION['access_level'];
+    $userID = $_SESSION['_id'];
+}
     // Require admin privileges
-    if ($accessLevel < 2) {
-        header('Location: login.php');
-        echo 'bad access level';
-        die();
-    }
+if ($accessLevel < 2) {
+    header('Location: login.php');
+    echo 'bad access level';
+    die();
+}
     require_once('include/input-validation.php');
     require_once('database/dbEvents.php');
     $errors = '';
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $args = sanitize($_POST, null);
-        $required = array(
-            "id", "name", "date", "start-time", "description");
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $args = sanitize($_POST, null);
+    $required = array(
+        "id", "name", "date", "start-time", "description");
 
-        if (!wereRequiredFieldsSubmitted($args, $required)) {
-            echo 'bad form data';
-            die();
-        } else {
-            require_once('database/dbPersons.php');
-            $id = $args['id'];
-            $validated = validate12hTimeRangeAndConvertTo24h($args["start-time"], $args["end-time"]);
-            if (!$validated) {
-                $errors .= '<p>The provided time range was invalid.</p>';
+    if (!wereRequiredFieldsSubmitted($args, $required)) {
+        echo 'bad form data';
+        die();
+    } else {
+        require_once('database/dbPersons.php');
+        $id = $args['id'];
+        $validated = validate12hTimeRangeAndConvertTo24h($args["start-time"], $args["end-time"]);
+        if (!$validated) {
+            $errors .= '<p>The provided time range was invalid.</p>';
+        }
+        $startTime = $args['start-time'] = $validated[0];
+        $endTime = $args['end-time'] = $validated[1];
+        $date = $args['date'] = validateDate($args["date"]);
+        $capacity = intval($args["capacity"]);
+        $assignedVolunteerCount = count(getvolunteers_byevent($id));
+        $difference = $assignedVolunteerCount - $capacity;
+        if ($capacity < $assignedVolunteerCount) {
+            $errors .= "<p>There are currently $assignedVolunteerCount volunteers assigned to this event. The new capacity must not exceed this number. You must remove $difference volunteer(s) from the event to reduce the capacity to $capacity.</p>";
+        }
+        if (!$startTime || !$date > 11) {
+            $errors .= '<p>Your request was missing arguments.</p>';
+        }
+        if (!$errors) {
+            $success = update_event($id, $args);
+            if (!$success) {
+                echo "Oopsy!";
+                die();
             }
-            $startTime = $args['start-time'] = $validated[0];
-            $endTime = $args['end-time'] = $validated[1];
-            $date = $args['date'] = validateDate($args["date"]);
-            $capacity = intval($args["capacity"]);
-            $assignedVolunteerCount = count(getvolunteers_byevent($id));
-            $difference = $assignedVolunteerCount - $capacity;
-            if ($capacity < $assignedVolunteerCount) {
-               $errors .= "<p>There are currently $assignedVolunteerCount volunteers assigned to this event. The new capacity must not exceed this number. You must remove $difference volunteer(s) from the event to reduce the capacity to $capacity.</p>";
-            }
-            if (!$startTime || !$date > 11){
-                $errors .= '<p>Your request was missing arguments.</p>';
-            }
-            if (!$errors) {
-                $success = update_event($id, $args);
-                if (!$success){
-                    echo "Oopsy!";
-                    die();
-                }
-                header('Location: event.php?id=' . $id . '&editSuccess');
-            }
+            header('Location: event.php?id=' . $id . '&editSuccess');
         }
     }
-    if (!isset($_GET['id'])) {
-        // uhoh
-        die();
-    }
+}
+if (!isset($_GET['id'])) {
+    // uhoh
+    die();
+}
     $args = sanitize($_GET);
     $id = $args['id'];
     $event = fetch_event_by_id($id);
-    if (!$event) {
-        echo "Event does not exist";
-        die();
-    }
+if (!$event) {
+    echo "Event does not exist";
+    die();
+}
     require_once('include/output.php');
 
     // get animal data from database for form
     // Connect to database
-    include_once('database/dbinfo.php'); 
-    $con=connect();  
+    include_once('database/dbinfo.php');
+    $con = connect();
     /*$sql = "SELECT * FROM `dbLocations`";
     $all_locations = mysqli_query($con,$sql);
     $sql = "SELECT * FROM `dbServices`";
@@ -98,7 +98,7 @@
         <?php require_once('header.php') ?>
         <h1>Edit Event</h1>
         <main class="date">
-        <?php if ($errors): ?>
+        <?php if ($errors) : ?>
             <div class="error-toast"><?php echo $errors ?></div>
         <?php endif ?>
             <h2>Event Details</h2>

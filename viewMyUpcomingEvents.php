@@ -31,13 +31,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pending_event_id = $_POST['pending_event_id'] ?? null;
 
     if (!$event_id) {
-        if(!$pending_event_id) {
+        if (!$pending_event_id) {
             echo "Event ID is missing.";
             die();
         }
     }
 
-    if($event_id) {
+    if ($event_id) {
         // Fetch the event name before canceling
         $event_name = fetch_event_name($event_id);
 
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $cancel_error = "Failed to cancel registration for event $event_id.";
         }
-    } elseif($pending_event_id) {
+    } elseif ($pending_event_id) {
         // Fetch the event name before canceling
         $event_name = fetch_event_name($pending_event_id);
 
@@ -62,7 +62,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Fetch events the user is signed up for
-function fetch_user_events($user_id) {
+function fetch_user_events($user_id)
+{
     $connection = connect();
     $query = "SELECT e.id, e.name, e.date 
               FROM dbevents e
@@ -85,7 +86,8 @@ function fetch_user_events($user_id) {
 }
 
 // Fetch event name by ID
-function fetch_event_name($event_id) {
+function fetch_event_name($event_id)
+{
     $connection = connect();
     $query = "SELECT name FROM dbevents WHERE id = '$event_id'";
     $result = mysqli_query($connection, $query);
@@ -100,7 +102,8 @@ function fetch_event_name($event_id) {
     return $event['name'] ?? 'Unknown Event';
 }
 
-function fetch_my_pending($userid) {
+function fetch_my_pending($userid)
+{
     $connection = connect();
     $query = "SELECT e.id, e.name, e.date 
               FROM dbevents e
@@ -136,13 +139,13 @@ $pending_events = fetch_my_pending($user_id);
 
     <h1>My Upcoming Events</h1>
     <main class="general">
-        <?php if (isset($cancel_success)): ?>
+        <?php if (isset($cancel_success)) : ?>
             <p class="success"><?php echo htmlspecialchars($cancel_success); ?></p>
-        <?php elseif (isset($cancel_error)): ?>
+        <?php elseif (isset($cancel_error)) : ?>
             <p class="error"><?php echo htmlspecialchars($cancel_error); ?></p>
         <?php endif; ?>
 
-        <?php if (count($upcoming_events) > 0): ?>
+        <?php if (count($upcoming_events) > 0) : ?>
             <div class="table-wrapper">
             <h2>My Upcoming Events</h2>
                 <table class="general">
@@ -154,7 +157,7 @@ $pending_events = fetch_my_pending($user_id);
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($upcoming_events as $event): ?>
+                        <?php foreach ($upcoming_events as $event) : ?>
                             <tr>
                                 <td>
                                     <!-- Link the event name to the event.php page with event ID as query parameter -->
@@ -176,11 +179,11 @@ $pending_events = fetch_my_pending($user_id);
                     </tbody>
                 </table>
             </div>
-        <?php else: ?>
+        <?php else : ?>
             <p>You have no sign-ups.</p>
         <?php endif; ?>
         
-        <?php if (count($pending_events) > 0): ?>
+        <?php if (count($pending_events) > 0) : ?>
             <p </p>
             <h2>Pending sign-ups:</h2>
             <div class="table-wrapper">
@@ -193,7 +196,7 @@ $pending_events = fetch_my_pending($user_id);
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($pending_events as $event): ?>
+                        <?php foreach ($pending_events as $event) : ?>
                             <tr>
                                 <td>
                                     <!-- Link the event name to the event.php page with event ID as query parameter -->
@@ -215,10 +218,10 @@ $pending_events = fetch_my_pending($user_id);
                     </tbody>
                 </table>
             </div>
-            <?php else: ?>
+        <?php else : ?>
             <p </p>
                 <p>You have no pending sign-ups.</p>
-            <?php endif; ?>
+        <?php endif; ?>
 
         <a class="button cancel" href="index.php">Return to Dashboard</a>
     </main>

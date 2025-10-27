@@ -132,7 +132,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <main>
     <div class="main-content-box">
-        <?php if (!empty($error)) echo "<p class='error'>$error</p>"; ?>
+        <?php if (!empty($error)) {
+            echo "<p class='error'>$error</p>";
+        } ?>
 
         <form method="POST" action="createDiscussion.php">
             <label for="title">Title:</label>

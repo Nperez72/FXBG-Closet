@@ -1,7 +1,8 @@
 <?php
+
 include_once('dbinfo.php');
 include_once('dbMessages.php');
-include_once(dirname(__FILE__).'/../domain/Shift.php');
+include_once(dirname(__FILE__) . '/../domain/Shift.php');
 
 //function get_shift_today($person_id,$today) {
 //    $con=connect();
@@ -9,13 +10,14 @@ include_once(dirname(__FILE__).'/../domain/Shift.php');
 //    $result = mysqli_query($con,$query);
 //    return $result;
 //}
-function get_shift_today($person_id, $today) {
+function get_shift_today($person_id, $today)
+{
     $con = connect();
     $query = "SELECT * FROM dbshifts WHERE person_id = ? AND date = ?";
     $stmt = mysqli_prepare($con, $query);
     mysqli_stmt_bind_param($stmt, "ss", $person_id, $today);
     mysqli_stmt_execute($stmt);
-    
+
     $result = mysqli_stmt_get_result($stmt);
     $shift = mysqli_fetch_assoc($result); // Fetch the row as an associative array
     //$shift = $result->fetch_object();
@@ -26,7 +28,8 @@ function get_shift_today($person_id, $today) {
 }
 
 // Check if a shift already exists for today
-function check_existing_shift($person_id, $date) {
+function check_existing_shift($person_id, $date)
+{
     $con = connect();
     $query = "SELECT * FROM dbshifts WHERE person_id = ? AND date = ?";
     $stmt = $con->prepare($query);
@@ -36,28 +39,30 @@ function check_existing_shift($person_id, $date) {
     return $result->num_rows > 0; // Returns true if a shift exists
 }
 
-function get_shift_hours($shift_id) {
+function get_shift_hours($shift_id)
+{
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
     $con = connect();
-    
+
     $query = "SELECT totalHours FROM dbshifts WHERE shift_id=?";
     $stmt = $con->prepare($query);
     $stmt->bind_param("i", $shift_id);
     $stmt->execute();
-    
+
     $result = $stmt->get_result();
     $row = $result->fetch_assoc(); // Fetch the actual data
-    
+
     $stmt->close();
     $con->close();
-    
+
     return $row ? $row['totalHours'] : null; // Return the hours or null if not found
 }
 
 
 // Insert a new shift (check-in)
-function insert_shift($person_id, $date, $startTime) {
+function insert_shift($person_id, $date, $startTime)
+{
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
     $con = connect();
@@ -71,7 +76,8 @@ function insert_shift($person_id, $date, $startTime) {
 }
 
 // Get a shift that has no endTime (i.e., currently checked in)
-function get_open_shift($person_id, $date) {
+function get_open_shift($person_id, $date)
+{
     $con = connect();
     $query = "SELECT * FROM dbshifts WHERE person_id = ? AND date = ? AND endTime IS NULL";
     $stmt = $con->prepare($query);
@@ -85,10 +91,11 @@ function get_open_shift($person_id, $date) {
 }
 
 // get the person_id and check-in time from a shift_id
-function get_checkin_info_from_shift_id($shift_id){
-    $con=connect();
+function get_checkin_info_from_shift_id($shift_id)
+{
+    $con = connect();
     $query = "SELECT * FROM dbshifts WHERE shift_id = '" . $shift_id . "'";
-    $result = mysqli_query($con,$query);
+    $result = mysqli_query($con, $query);
     if (mysqli_num_rows($result) !== 1) {
         mysqli_close($con);
         return false;
@@ -97,14 +104,15 @@ function get_checkin_info_from_shift_id($shift_id){
     $check_in_info = [
         'person_id' => $shift['person_id'],
         'startTime' => $shift['startTime'],
-	'shift_id' => $shift['shift_id'],
+    'shift_id' => $shift['shift_id'],
     ];
     return $check_in_info;
 }
 
 
 
-function update_shift_end_time($shift_id, $endTime, $desc) {
+function update_shift_end_time($shift_id, $endTime, $desc)
+{
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
     $con = connect();
@@ -123,7 +131,7 @@ function update_shift_end_time($shift_id, $endTime, $desc) {
     $success = $stmt->execute();
 
     $stmt->close();
-   
+
 
     // Step 2: If successful, get totalHours and person_id for the shift
     if ($success) {
@@ -143,7 +151,8 @@ function update_shift_end_time($shift_id, $endTime, $desc) {
     return $success;
 }
 
-function auto_checkout_missing_shifts() {
+function auto_checkout_missing_shifts()
+{
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
     $con = connect();
@@ -176,7 +185,7 @@ function auto_checkout_missing_shifts() {
         $person_id = $row['person_id'];
         send_system_message('vmsroot', '[Auto Checkout]', "$person_id was Automatically Checked Out for their shift on $today");
     }
-    
+
     $stmt->close();
     $con->close();
 
@@ -185,7 +194,8 @@ function auto_checkout_missing_shifts() {
 }
 
 //this will be where volunteers will be automatically archived if they do not work at least 2 hours in 3 months.
-function archive_volunteers_from_shifts(){
+function archive_volunteers_from_shifts()
+{
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
     $con = connect();
@@ -199,7 +209,7 @@ function archive_volunteers_from_shifts(){
         WHERE date >= ?
         GROUP BY person_id
         HAVING total_hours < 2 OR total_hours IS NULL";
-     
+
     $stmt = $con->prepare($query);
     $stmt->bind_param("s", $threeMonthsAgo);
     $stmt->execute();
@@ -208,7 +218,7 @@ function archive_volunteers_from_shifts(){
     $archivedCount = 0;
 
     //archiving all the volunteers that meet the reuqirements of becoming 'inactive'
-    while ($row = $result->fetch_assoc()){
+    while ($row = $result->fetch_assoc()) {
         $person_id = $row['person_id'];
 
         //updating the status to inactive instead of active - archived volunteer now
@@ -218,7 +228,7 @@ function archive_volunteers_from_shifts(){
         $updateStmt->execute();
         $updateStmt->close();
 
-        //calling the function in dbPersons.php - to fully archive the volunteer 
+        //calling the function in dbPersons.php - to fully archive the volunteer
         archive_volunteer($person_id);
 
         $archivedCount++;
@@ -230,7 +240,8 @@ function archive_volunteers_from_shifts(){
     echo "✅ Archived $archivedCount inactive volunteers.\n";
     return $archivedCount;
 }
-function clockOutByShiftId($shift_id, $description) {
+function clockOutByShiftId($shift_id, $description)
+{
     $con = connect();
 
     // Step 1: Get the shift's startTime
@@ -256,5 +267,3 @@ function clockOutByShiftId($shift_id, $description) {
         $stmt->close();
     }
 }
-
-?>

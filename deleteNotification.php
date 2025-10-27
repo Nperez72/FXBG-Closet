@@ -1,4 +1,5 @@
 <?php
+
 session_cache_expire(30);
 session_start();
 require_once('database/dbMessages.php');

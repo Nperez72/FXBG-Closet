@@ -1,6 +1,7 @@
-<?php 
-    
-class Message{
+<?php
+
+class Message
+{
     private $id;
     private $senderID;
     private $recipentID;
@@ -11,74 +12,90 @@ class Message{
     private $prioritylevel;
 
     //ID
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
     }
 
     // Sender ID
-    public function getSenderID() {
+    public function getSenderID()
+    {
         return $this->senderID;
     }
 
-    public function setSenderID($senderID) {
+    public function setSenderID($senderID)
+    {
         $this->senderID = $senderID;
     }
 
     // Recipient ID
-    public function getRecipentID() {
+    public function getRecipentID()
+    {
         return $this->recipentID;
     }
 
-    public function setRecipentID($recipentID) {
+    public function setRecipentID($recipentID)
+    {
         $this->recipentID = $recipentID;
     }
 
     // Title
-    public function getTitle() {
+    public function getTitle()
+    {
         return $this->title;
     }
 
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         $this->title = $title;
     }
 
     // Body
-    public function getBody() {
+    public function getBody()
+    {
         return $this->body;
     }
 
-    public function setBody($body) {
+    public function setBody($body)
+    {
         $this->body = $body;
     }
 
     // Time
-    public function getTime() {
+    public function getTime()
+    {
         return $this->time;
     }
 
-    public function setTime($time) {
+    public function setTime($time)
+    {
         $this->time = $time;
     }
 
     // Was Read
-    public function getWasRead() {
+    public function getWasRead()
+    {
         return $this->wasRead;
     }
 
-    public function setWasRead($wasRead) {
+    public function setWasRead($wasRead)
+    {
         $this->wasRead = $wasRead;
     }
 
     // Priority Level
-    public function getPriorityLevel() {
+    public function getPriorityLevel()
+    {
         return $this->prioritylevel;
     }
 
-    public function setPriorityLevel($prioritylevel) {
+    public function setPriorityLevel($prioritylevel)
+    {
         $this->prioritylevel = $prioritylevel;
     }
 }

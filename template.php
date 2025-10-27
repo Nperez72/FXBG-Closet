@@ -9,12 +9,12 @@
     $loggedIn = false;
     $accessLevel = 0;
     $userID = null;
-    if (isset($_SESSION['_id'])) {
-        $loggedIn = true;
-        // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
-        $accessLevel = $_SESSION['access_level'];
-        $userID = $_SESSION['_id'];
-    }
+if (isset($_SESSION['_id'])) {
+    $loggedIn = true;
+    // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
+    $accessLevel = $_SESSION['access_level'];
+    $userID = $_SESSION['_id'];
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -27,11 +27,13 @@
         <main>
             <!-- Your code goes here. Be sure to wrap any form elements in a <form> tag -->
             <p>Here's an example paragraph tag!</p>
-            <p>You are <?php if (!$loggedIn) echo 'not '; ?>logged in.</p>
+            <p>You are <?php if (!$loggedIn) {
+                echo 'not ';
+                       } ?>logged in.</p>
             <?php
-                if ($userID) {
-                    echo '<p>Your user ID is ' . $userID . '.</p>';
-                }
+            if ($userID) {
+                echo '<p>Your user ID is ' . $userID . '.</p>';
+            }
             ?>
         </main>
     </body>

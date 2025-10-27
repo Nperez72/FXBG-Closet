@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Encapsulated version of a dbTrainings entry.
  */
-class Training {
+class Training
+{
     private $id;
     private $name;
     #private $abbrevName;
@@ -19,7 +21,8 @@ class Training {
     #private $postMedia;
     #private $animalId;
 
-    function __construct($id, $name, $date, $startTime, $endTime, $description, $capacity, $completed, $event_type, $restricted_signup) {
+    function __construct($id, $name, $date, $startTime, $endTime, $description, $capacity, $completed, $event_type, $restricted_signup)
+    {
         $this->id = $id;
         $this->name = $name;
         $this->date = $date;
@@ -32,11 +35,13 @@ class Training {
         $this->restricted_signup = $restricted_signup;
     }
 
-    function getID() {
+    function getID()
+    {
         return $this->id;
     }
 
-    function getName() {
+    function getName()
+    {
         return $this->name;
     }
 
@@ -44,19 +49,23 @@ class Training {
     #    return $this->abbrevName;
     #}
 
-    function getDate() {
+    function getDate()
+    {
         return $this->date;
     }
 
-    function getStartTime() {
+    function getStartTime()
+    {
         return $this->startTime;
     }
 
-    function getEndTime() {
+    function getEndTime()
+    {
         return $this->endTime;
     }
 
-    function getDescription() {
+    function getDescription()
+    {
         return $this->description;
     }
 
@@ -64,19 +73,23 @@ class Training {
     #    return $this->location;
     #}
 
-    function getCapacity() {
+    function getCapacity()
+    {
         return $this->capacity;
     }
 
-    function getCompleted() {
+    function getCompleted()
+    {
         return $this->completed;
     }
 
-    function getTrainingType() {
+    function getTrainingType()
+    {
         return $this->event_type;
     }
 
-    function getRestrictedSignup() {
+    function getRestrictedSignup()
+    {
         return $this->restricted_signup;
     }
 

@@ -11,7 +11,8 @@ $today = date("Y-m-d");
 $currentTime = date("H:i:s");
 
 // Function to display the success message with an animated checkmark
-function showSuccessMessage($message, $redirectUrl = null, $shift_id=null) {
+function showSuccessMessage($message, $redirectUrl = null, $shift_id = null)
+{
     $content = isset($shift_id) ? get_shift_hours($shift_id) : "✔";
     echo '<html><head><style>
         body {
@@ -156,7 +157,7 @@ if ($existingShift) {
     $desc = $_POST['desc'];
 
     if (update_shift_end_time($existingShift, $currentTime, $desc)) {
-        showSuccessMessage("Hours Logged!","viewCheckInOut.php",$existingShift);
+        showSuccessMessage("Hours Logged!", "viewCheckInOut.php", $existingShift);
     } else {
         echo "Error: Could not check out.";
     }
