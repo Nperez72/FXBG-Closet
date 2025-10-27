@@ -23,10 +23,8 @@ if ($accessLevel < 2) {
     die();
 }
 require_once('database/dbPersons.php');
-$con=connect();
+$con = connect();
 $query = "INSERT INTO dbpersonhours (personID, eventID, start_time, end_time) VALUES ('someInfo2',33,'2025-01-01 12:00','2025-01-01 12:01')";
-$result = mysqli_query($con,$query);
+$result = mysqli_query($con, $query);
 mysqli_close($con);
-header('Location: index.php')
-
-?>
+header('Location: index.php');

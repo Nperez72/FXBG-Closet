@@ -44,7 +44,7 @@
         <?php require_once('header.php') ?>
         <h1>Archived Animals</h1>
         <form id="animal-search" class="general" method="get">
-            <?php 
+            <?php
                 // require_once('include/input-validation.php');
                 // require_once('database/dbAnimals.php');
                 //     $animals = find_archived();

@@ -11,7 +11,7 @@
     require_once('email.php');
     require_once('include/input-validation.php');
 
-    ini_set("display_errors",1);
+    ini_set("display_errors", 1);
     error_reporting(E_ALL);
     
     
@@ -31,6 +31,7 @@
             $accounts = get_all_accounts();
         }
     }
+}
 
     if(!$isAdmin) {
         header('Location: login.php');
@@ -142,6 +143,7 @@
             }
         }
     }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -187,12 +189,14 @@
             <?php else: ?>
             <!-- Password Change Form -->
             <form id="password-change" method="post">
-                <?php if ($isAdmin): ?>
+                <?php if ($isAdmin) : ?>
                     <label for="target">Account to Change</label>
                     <select id="target" name="target">
-                        <?php foreach ($accounts as $acct): ?>
-                            <option value="<?php echo htmlspecialchars($acct['username']); ?>" <?php if ($acct['username'] === $userID) echo 'selected'; ?>>
-                                <?php echo htmlspecialchars($acct['username'] . ' (' . ($acct['type']==2?'admin':($acct['type']==1?'coordinator':'volunteer')) . ')'); ?>
+                        <?php foreach ($accounts as $acct) : ?>
+                            <option value="<?php echo htmlspecialchars($acct['username']); ?>" <?php if ($acct['username'] === $userID) {
+                                echo 'selected';
+                                           } ?>>
+                                <?php echo htmlspecialchars($acct['username'] . ' (' . ($acct['type'] == 2 ? 'admin' : ($acct['type'] == 1 ? 'coordinator' : 'volunteer')) . ')'); ?>
                             </option>
                         <?php endforeach; ?>
                     </select>

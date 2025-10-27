@@ -24,7 +24,8 @@ if (!$loggedIn) {
 $target_dir = 'uploads/';
 
 // List PDF files in /uploads
-function listPDFFiles($dir) {
+function listPDFFiles($dir)
+{
     $pdfFiles = array();
     if (is_dir($dir)) {
         if ($open_dir = opendir($dir)) {
@@ -87,8 +88,8 @@ require_once('header.php');
             <!-- Document Table -->
 <table>
     <tbody>
-        <?php if ($pdfFiles): ?>
-            <?php foreach ($pdfFiles as $pdf): ?>
+        <?php if ($pdfFiles) : ?>
+            <?php foreach ($pdfFiles as $pdf) : ?>
                 <tr>
                     <td>
                         <a href="<?php echo $target_dir . $pdf; ?>" target="_blank" class="text-blue-700 hover:underline">
@@ -104,7 +105,7 @@ require_once('header.php');
                     </td>
                 </tr>
             <?php endforeach ?>
-        <?php else: ?>
+        <?php else : ?>
             <tr>
                 <td class="py-6 text-gray-500" colspan="2">No Documents Found.</td>
             </tr>

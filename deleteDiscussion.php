@@ -1,4 +1,5 @@
 <?php
+
 ob_start();
 session_cache_expire(30);
 session_start();
@@ -41,4 +42,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 header('Location: viewDiscussions.php?error=1');
 exit;
 ob_end_flush();
-?>

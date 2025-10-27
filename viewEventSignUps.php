@@ -92,27 +92,27 @@ $access_level = $_SESSION['access_level'];
 
         <h2><?php echo htmlspecialchars($event_info['name']); ?></h2>
 
-        <?php if (isset($remove_success)): ?>
+        <?php if (isset($remove_success)) : ?>
             <p class="success"><?php echo htmlspecialchars($remove_success); ?></p>
-        <?php elseif (isset($remove_error)): ?>
+        <?php elseif (isset($remove_error)) : ?>
             <p class="error"><?php echo htmlspecialchars($remove_error); ?></p>
         <?php endif; ?>
 
         <p>
-            <?php if (count($signups) === 1): ?>
+            <?php if (count($signups) === 1) : ?>
                 <p>1 person has signed up for this event.</p>
-            <?php else: ?>
+            <?php else : ?>
                 <p><?php echo htmlspecialchars(count($signups)); ?> people have signed up for this event.</p>
             <?php endif; ?>
            
-            <?php if (count($pending_signups) === 1): ?>
+            <?php if (count($pending_signups) === 1) : ?>
                 <p>1 sign-up is pending for this event.</p>
-            <?php else: ?>
+            <?php else : ?>
                 <p><?php echo htmlspecialchars(count($pending_signups)); ?> sign-ups are pending for this event.</p>
             <?php endif; ?>
         </p>
         
-        <?php if (count($signups) > 0 || count($pending_signups) > 0): ?>
+        <?php if (count($signups) > 0 || count($pending_signups) > 0) : ?>
             <div class="table-wrapper">
                 <table class="general">
                     <thead>
@@ -126,18 +126,18 @@ $access_level = $_SESSION['access_level'];
                             
                             <th>Notes</th>
                             <th>Pending</th>
-                            <?php if ($access_level >= 2): ?>
+                            <?php if ($access_level >= 2) : ?>
                                 <th>Actions</th>
                             <?php endif; ?>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($signups as $signup): 
+                        <?php foreach ($signups as $signup) :
                             $user_info = retrieve_person($signup['userID']);
                             $position_label = $signup['position'] === 'p' ? 'Participant' : ($signup['position'] === 'v' ? 'Volunteer' : 'Unknown');
                             $pending = check_if_signed_up($args['id'], $signup['userID']);
-                            $notes = isset($signup['notes']) && ($signup['notes'] !== '' && $signup['notes'] !== NULL) ? $signup['notes'] : 'No notes.';
-                                
+                            $notes = isset($signup['notes']) && ($signup['notes'] !== '' && $signup['notes'] !== null) ? $signup['notes'] : 'No notes.';
+
                             ?>
                             <tr>
                                 <td><?php echo htmlspecialchars($user_info->get_first_name()); ?></td>
@@ -149,7 +149,7 @@ $access_level = $_SESSION['access_level'];
                                 
                                 <td>
                                 <?php
-                                    $formatted_notes = isset($signup['notes']) && ($signup['notes'] !== '' && $signup['notes'] !== NULL) ? $signup['notes'] : 'No notes.';
+                                    $formatted_notes = isset($signup['notes']) && ($signup['notes'] !== '' && $signup['notes'] !== null) ? $signup['notes'] : 'No notes.';
 
                                     // Handle empty categories (before the pipe) by replacing them with N/A
                                     $formatted_notes = preg_replace('/Skills:\s*\|/', 'Skills: N/A', $formatted_notes);
@@ -170,23 +170,27 @@ $access_level = $_SESSION['access_level'];
                                     $formatted_notes = preg_replace('/(Skills: .+|Dietary restrictions: .+|Disabilities: .+|Materials: .+)/', '$0<br>', $formatted_notes);
 
                                     // Check for the specific "no meaningful notes" format and replace it
-                                    if (trim($formatted_notes) === "Skills: N/A<br>Dietary restrictions: N/A<br>Disabilities: N/A<br>Materials: N/A<br>") {
-                                        $formatted_notes = "No notes";
-                                    }
+                                if (trim($formatted_notes) === "Skills: N/A<br>Dietary restrictions: N/A<br>Disabilities: N/A<br>Materials: N/A<br>") {
+                                    $formatted_notes = "No notes";
+                                }
 
                                     // If no notes are provided, replace 'No notes.' with 'No notes.' followed by a line break
                                     $formatted_notes = str_replace("No notes.", "No notes.<br>", $formatted_notes);
 
                                     // Display the formatted notes with correct line breaks
                                     echo nl2br($formatted_notes);
-?>
+                                ?>
 
 
 
                                 </td>
 
-                                <td><?php if($pending == '0') echo "Yes"; elseif($pending == '1') echo "No"?></td>
-                                <?php if ($access_level >= 2 && $pending == "1"): ?>
+                                <td><?php if ($pending == '0') {
+                                    echo "Yes";
+                                    } elseif ($pending == '1') {
+                                        echo "No";
+                                    }?></td>
+                                <?php if ($access_level >= 2 && $pending == "1") : ?>
                                     <td>
                                         <form method="POST" style="display:inline;">
                                             <input type="hidden" name="event_id" value="<?php echo htmlspecialchars($id); ?>">
@@ -199,7 +203,7 @@ $access_level = $_SESSION['access_level'];
                                 <?php endif; ?>
                             </tr>
                         <?php endforeach; ?>
-                        <?php foreach ($pending_signups as $signup): 
+                        <?php foreach ($pending_signups as $signup) :
                             $user_info = retrieve_person($signup['username']);
                             if ($user_info) {
                                 $position_label = $signup['role'] === 'p' ? 'Participant' : ($signup['role'] === 'v' ? 'Volunteer' : 'Unknown');
@@ -213,8 +217,12 @@ $access_level = $_SESSION['access_level'];
                                     <td><a href="viewProfile.php?id=<?php echo urlencode($signup['username']); ?>"><?php echo htmlspecialchars($signup['username']); ?></a></td>
                                     <td><?php echo htmlspecialchars($position_label); ?></td>
                                     <td><?php echo htmlspecialchars($notes); ?></td>
-                                    <td><?php if($pending == '0') echo "Yes"; elseif($pending == '1') echo "No"; ?></td>
-                                    <?php if ($access_level >= 2 && $pending == "0"): ?>
+                                    <td><?php if ($pending == '0') {
+                                        echo "Yes";
+                                        } elseif ($pending == '1') {
+                                            echo "No";
+                                        } ?></td>
+                                    <?php if ($access_level >= 2 && $pending == "0") : ?>
                                         <td>
                                             <form method="POST" style="display:inline;">
                                                 <input type="hidden" name="event_id" value="<?php echo htmlspecialchars($id); ?>">
@@ -224,7 +232,7 @@ $access_level = $_SESSION['access_level'];
                                         </td>
                                     <?php endif; ?>
                                 </tr>
-                            <?php 
+                                <?php
                             }
                         endforeach;
                         ?>
@@ -232,7 +240,7 @@ $access_level = $_SESSION['access_level'];
                     </tbody>
                 </table>
             </div>
-        <?php else: ?>
+        <?php else : ?>
         <?php endif; ?>
 
         <a class="button cancel" href="index.php">Return to Dashboard</a>

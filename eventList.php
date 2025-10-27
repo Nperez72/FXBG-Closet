@@ -69,10 +69,8 @@
         <?php endif ?>
 
         <main class="general">
-            <?php if (!empty($event_ids)): ?>
-
-                <?php foreach ($event_ids as $event_id): ?>
-
+            <?php if (!empty($event_ids)) : ?>
+                <?php foreach ($event_ids as $event_id) : ?>
                     <?php $event = retrieve_event2($event_id); ?>
 
                     <fieldset class="section-box">
@@ -89,12 +87,12 @@
                                 <th style="width: 200px;"></th>
                             </tr>
 
-                            <?php foreach ($shifts as $shift): ?>
+                            <?php foreach ($shifts as $shift) : ?>
                                 <tr>
 
                                     <?php
                                         $start_date_time = explode(' ', $shift['start_time']);
-                                        
+
 
                                         $end_date_time = explode(' ', $shift['end_time']);
                                     ?>
@@ -105,7 +103,7 @@
                                     <?php
                                         $start_time = strtotime($shift['start_time']);
                                         $end_time = strtotime($shift['end_time']);
-                                        $duration = ($end_time - $start_time)/60; // minutes
+                                        $duration = ($end_time - $start_time) / 60; // minutes
                                     ?>
                                     <td style="padding-right: 0;"><?php echo floatPrecision($duration, 2) ?></td>
 
@@ -147,7 +145,7 @@
                     </fieldset>
 
                 <?php endforeach; ?>
-            <?php else: ?>
+            <?php else : ?>
                 <p class="no-events-message">No events attended by <?php echo htmlspecialchars($username); ?>.</p>
             <?php endif; ?>
             <a class="button cancel" href="index.php" style="margin-top: -.5rem">Return to Dashboard</a>
