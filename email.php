@@ -2,7 +2,7 @@
 
 /**
 *  
-*  FUNCTIONS USED FOR SENDNING EMAILS
+*  FUNCTIONS USED FOR SENDING EMAILS
 *  WILL NOT FUNCTION XAMPP ONLY ON SITEGROUND
 *  getEmailByType() + getAllEmails()  sendEmails() are helper functions 
 *  but are left non-private to allow for using them if needed/being lazy
