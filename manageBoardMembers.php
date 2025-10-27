@@ -86,6 +86,13 @@ if ($accessLevel < 2) {
             border: 1px solid var(--card-border, #e8c4b8);
         }
 
+        .inline-form {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
         .success {
             color: green;
             margin-top: 10px;
@@ -119,7 +126,7 @@ if ($accessLevel < 2) {
             <?php if (empty($members)): ?>
                 <p>No members in this group.</p>
             <?php else: ?>
-                <table>
+                <table style="margin-bottom: 25px">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -172,7 +179,7 @@ if ($accessLevel < 2) {
             <?php if (empty($users_not_in_group)): ?>
                 <p>No available users to add.</p>
             <?php else: ?>
-                <form method="POST" action="manageBoardMembers.php">
+                <form method="POST" action="manageBoardMembers.php" class="inline-form">
                     <select name="add_user_id" required>
                         <option value="" disabled selected>Select a user to add</option>
                         <?php foreach ($users_not_in_group as $user): ?>
@@ -181,7 +188,7 @@ if ($accessLevel < 2) {
                             </option>
                         <?php endforeach; ?>
                     </select>
-                    <button type="submit" name="add_member" style="margin-bottom: 10px;" class="btn btn-add">Add</button>
+                    <button type="submit" name="add_member" class="btn btn-add">Add</button>
                 </form>
             <?php endif; ?>
 

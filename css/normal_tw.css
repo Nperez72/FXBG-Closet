@@ -1030,7 +1030,7 @@
   .hero-header {
     position: relative;
     z-index: 0;
-    height: calc(var(--spacing) * 52);
+    height: calc(var(--spacing) * 35);
     width: 100%;
     background-color: var(--main-color, #e8c4b8);
     background-position: center;
