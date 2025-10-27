@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `dbaccounts` (
   `username` varchar(256) NOT NULL,
+  `email` varchar(256) DEFAULT NULL,    -- required for admins, NULL for others
   `password` text NOT NULL,
   `type` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -37,11 +38,11 @@ CREATE TABLE `dbaccounts` (
 -- Dumping data for table `dbaccounts`
 --
 
-INSERT INTO `dbaccounts` (`username`, `password`, `type`) VALUES
-('admin', '$2y$10$3VG4XS1am7XIB4hlCnmOSut3dQFELyo.e0DCge8sQ0yqD932DNLyq', 2),
-('coordinator', '$2y$10$5M4vOQnvVzmBPFvBV7y6XePx/62JYtktoZtNKruDdBRFA5PvtDPrS', 1),
-('vmsroot', '$2y$10$azSckAKgmDvY5stYh5iXtuOpADqsCHZX.3q9QW8uZHVXk.9BSYO3W', 2),
-('volunteer', '$2y$10$uRS4b4Ye/HxLip.9WUncnuu3a9qqxc8lkD2uL6vpl9epjwgkdC8AG', 0);
+INSERT INTO `dbaccounts` (`username`, `email`, `password`, `type`) VALUES
+('admin', 'admin@example.com', '$2y$10$3VG4XS1am7XIB4hlCnmOSut3dQFELyo.e0DCge8sQ0yqD932DNLyq', 2),
+('coordinator', NULL, '$2y$10$5M4vOQnvVzmBPFvBV7y6XePx/62JYtktoZtNKruDdBRFA5PvtDPrS', 1),
+('vmsroot', 'rootadmin@example.com', '$2y$10$azSckAKgmDvY5stYh5iXtuOpADqsCHZX.3q9QW8uZHVXk.9BSYO3W', 2),
+('volunteer', NULL, '$2y$10$uRS4b4Ye/HxLip.9WUncnuu3a9qqxc8lkD2uL6vpl9epjwgkdC8AG', 0);
 
 -- --------------------------------------------------------
 
@@ -754,7 +755,13 @@ INSERT INTO `user_groups` (`user_id`, `group_name`) VALUES
 -- Indexes for table `dbaccounts`
 --
 ALTER TABLE `dbaccounts`
-  ADD PRIMARY KEY (`username`);
+  ADD PRIMARY KEY (`username`),
+  ADD UNIQUE KEY `uq_dbaccounts_email` (`email`),
+  ADD CONSTRAINT `chk_admin_email`
+  CHECK (
+    (type >= 2 AND email IS NOT NULL AND email <> '')
+    OR (type < 2 AND (email IS NULL OR email = ''))
+  );
 
 --
 -- Indexes for table `dbarchived_volunteers`
