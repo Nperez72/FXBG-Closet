@@ -665,8 +665,7 @@ CREATE TABLE `dbvolunteeractivity` (
   `activity_id` int(11) NOT NULL,
   `person_id` int(11) NOT NULL,
   `date` date NOT NULL,
-  `start_time` time NOT NULL,
-  `end_time` time NOT NULL,
+  `hours` decimal(4,2) NOT NULL,
   `event_id` int(11) NOT NULL,
   `interactions` text DEFAULT NULL,
   `photo_id` int(11) DEFAULT NULL
