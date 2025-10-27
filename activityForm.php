@@ -28,7 +28,7 @@
             <select id="event_id" name="event_id" required>
                 <option value="">Select an event</option>
                 <!-- Loop through every value in all_events and display the name for each one -->
-                <?php foreach ($all_events as $event): ?>
+                <?php foreach ($all_events as $event) : ?>
                     <option value="<?php echo $event->getID(); ?>">
                         <?php echo htmlspecialchars($event->getName()); ?> - <?php echo $event->getDate(); ?>
                     </option>
