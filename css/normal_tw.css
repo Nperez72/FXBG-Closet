@@ -1141,7 +1141,7 @@
   main {
     position: relative;
     z-index: 10;
-    margin-top: calc(var(--spacing) * -16);
+    margin-top: calc(var(--spacing) * -8);
     display: flex;
     flex-grow: 1;
     flex-direction: column;
