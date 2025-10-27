@@ -1,176 +1,180 @@
-<?php 
+<?php
 
     session_cache_expire(30);
     session_start();
 
     // Ensure user is logged in
-    if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 1) {
-        header('Location: login.php');
-        die();
-    }
+if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 1) {
+    header('Location: login.php');
+    die();
+}
     require_once('include/input-validation.php');
     $args = sanitize($_GET);
-    if (isset($args["id"])) {
-        $id = $args["id"];
-    } else {
-        header('Location: calendar.php');
-        die();
-  	}
-  	
-  	include_once('database/dbEvents.php');
-  	
+if (isset($args["id"])) {
+    $id = $args["id"];
+} else {
+    header('Location: calendar.php');
+    die();
+}
+
+    include_once('database/dbEvents.php');
+
     // We need to check for a bad ID here before we query the db
     // otherwise we may be vulnerable to SQL injection(!)
-  	$event_info = fetch_event_by_id($id);
-    if ($event_info == NULL) {
-        // TODO: Need to create error page for no event found
-        // header('Location: calendar.php');
+    $event_info = fetch_event_by_id($id);
+if ($event_info == null) {
+    // TODO: Need to create error page for no event found
+    // header('Location: calendar.php');
 
-        // Lauren: changing this to a more specific error message for testing
-        echo 'bad event ID';
-        die();
-    }
+    // Lauren: changing this to a more specific error message for testing
+    echo 'bad event ID';
+    die();
+}
 
     include_once('database/dbPersons.php');
     $access_level = $_SESSION['access_level'];
     $user = retrieve_person($_SESSION['_id']);
     $active = $user->get_status() == 'Active';
 
-    ini_set("display_errors",1);
+    ini_set("display_errors", 1);
     error_reporting(E_ALL);
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $args = sanitize($_POST);
-        $get = sanitize($_GET);
-        if (isset($_POST['attach-post-media-submit'])) {
-            if ($access_level < 2) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $args = sanitize($_POST);
+    $get = sanitize($_GET);
+    if (isset($_POST['attach-post-media-submit'])) {
+        if ($access_level < 2) {
+            echo 'forbidden';
+            die();
+        }
+        $required = [
+            'url', 'description', 'format', 'id'
+        ];
+        if (!wereRequiredFieldsSubmitted($args, $required)) {
+            echo "dude, args missing";
+            die();
+        }
+        $type = 'post';
+        $format = $args['format'];
+        $url = $args['url'];
+        if ($format == 'video') {
+            $url = convertYouTubeURLToEmbedLink($url);
+            if (!$url) {
+                echo "bad video link";
+                die();
+            }
+        } elseif (!validateURL($url)) {
+            echo "bad url";
+            die();
+        }
+        $eid = $args['id'];
+        $description = $args['description'];
+        if (!valueConstrainedTo($format, ['link', 'video', 'picture'])) {
+            echo "dude, bad format";
+            die();
+        }
+        attach_post_event_media($eid, $url, $format, $description);
+        header('Location: event.php?id=' . $id . '&attachSuccess');
+        die();
+    }
+    if (isset($_POST['attach-training-media-submit'])) {
+        if ($access_level < 2) {
+            echo 'forbidden';
+            die();
+        }
+        $required = [
+            'url', 'description', 'format', 'id'
+        ];
+        if (!wereRequiredFieldsSubmitted($args, $required)) {
+            echo "dude, args missing";
+            die();
+        }
+        $type = 'post';
+        $format = $args['format'];
+        $url = $args['url'];
+        if ($format == 'video') {
+            $url = convertYouTubeURLToEmbedLink($url);
+            if (!$url) {
+                echo "bad video link";
+                die();
+            }
+        } elseif (!validateURL($url)) {
+            echo "bad url";
+            die();
+        }
+        $eid = $args['id'];
+        $description = $args['description'];
+        if (!valueConstrainedTo($format, ['link', 'video', 'picture'])) {
+            echo "dude, bad format";
+            die();
+        }
+        attach_event_training_media($eid, $url, $format, $description);
+        header('Location: event.php?id=' . $id . '&attachSuccess');
+        die();
+    }
+} else {
+    if (isset($args["request_type"])) {
+        //if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $request_type = $args['request_type'];
+        if (
+            !valueConstrainedTo(
+                $request_type,
+                array('add self', 'add another', 'remove')
+            )
+        ) {
+            echo "Bad request";
+            die();
+        }
+        $eventID = $args["id"];
+
+        // Check if Get request from user is from an organization member
+        // (volunteer, admin/super admin)
+        if ($request_type == 'add self' && $access_level >= 1) {
+            if (!$active) {
                 echo 'forbidden';
                 die();
             }
-            $required = [
-                'url', 'description', 'format', 'id'
-            ];
-            if (!wereRequiredFieldsSubmitted($args, $required)) {
-                echo "dude, args missing";
-                die();
-            }
-            $type = 'post';
-            $format = $args['format'];
-            $url = $args['url'];
-            if ($format == 'video') {
-                $url = convertYouTubeURLToEmbedLink($url);
-                if (!$url) {
-                    echo "bad video link";
-                    die();
-                }
-            } else if (!validateURL($url)) {
-                echo "bad url";
-                die();
-            }
-            $eid = $args['id'];
-            $description = $args['description'];
-            if (!valueConstrainedTo($format, ['link', 'video', 'picture'])) {
-                echo "dude, bad format";
-                die();
-            }
-            attach_post_event_media($eid, $url, $format, $description);
-            header('Location: event.php?id=' . $id . '&attachSuccess');
-            die();
-        }
-        if (isset($_POST['attach-training-media-submit'])) {
-            if ($access_level < 2) {
-                echo 'forbidden';
-                die();
-            }
-            $required = [
-                'url', 'description', 'format', 'id'
-            ];
-            if (!wereRequiredFieldsSubmitted($args, $required)) {
-                echo "dude, args missing";
-                die();
-            }
-            $type = 'post';
-            $format = $args['format'];
-            $url = $args['url'];
-            if ($format == 'video') {
-                $url = convertYouTubeURLToEmbedLink($url);
-                if (!$url) {
-                    echo "bad video link";
-                    die();
-                }
-            } else if (!validateURL($url)) {
-                echo "bad url";
-                die();
-            }
-            $eid = $args['id'];
-            $description = $args['description'];
-            if (!valueConstrainedTo($format, ['link', 'video', 'picture'])) {
-                echo "dude, bad format";
-                die();
-            }
-            attach_event_training_media($eid, $url, $format, $description);
-            header('Location: event.php?id=' . $id . '&attachSuccess');
-            die();
-        }
-    } else {
-        if (isset($args["request_type"])) {
-            //if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $request_type = $args['request_type'];
-            if (!valueConstrainedTo($request_type, 
-                    array('add self', 'add another', 'remove'))) {
-                echo "Bad request";
-                die();
-            }
-            $eventID = $args["id"];
-    
-            // Check if Get request from user is from an organization member
-            // (volunteer, admin/super admin)
-            if ($request_type == 'add self' && $access_level >= 1) {
-                if (!$active) {
-                    echo 'forbidden';
-                    die();
-                }
-                $volunteerID = $args['selected_id'];
-                $person = retrieve_person($volunteerID);
-                $name = $person->get_first_name() . ' ' . $person->get_last_name();
-                $name = htmlspecialchars_decode($name);
-                require_once('database/dbMessages.php');
-                require_once('include/output.php');
-                $event = fetch_event_by_id($eventID);
-                
-                $eventName = htmlspecialchars_decode($event['name']);
-                $eventDate = date('l, F j, Y', strtotime($event['date']));
-                $eventStart = time24hto12h($event['start-time']);
-                $eventEnd = time24hto12h($event['end-time']);
-                system_message_all_admins("$name signed up for an event!", "Exciting news!\r\n\r\n$name signed up for the [$eventName](event: $eventID) event from $eventStart to $eventEnd on $eventDate.");
-                // Check if GET request from user is from an admin/super admin
+            $volunteerID = $args['selected_id'];
+            $person = retrieve_person($volunteerID);
+            $name = $person->get_first_name() . ' ' . $person->get_last_name();
+            $name = htmlspecialchars_decode($name);
+            require_once('database/dbMessages.php');
+            require_once('include/output.php');
+            $event = fetch_event_by_id($eventID);
+
+            $eventName = htmlspecialchars_decode($event['name']);
+            $eventDate = date('l, F j, Y', strtotime($event['date']));
+            $eventStart = time24hto12h($event['start-time']);
+            $eventEnd = time24hto12h($event['end-time']);
+            system_message_all_admins("$name signed up for an event!", "Exciting news!\r\n\r\n$name signed up for the [$eventName](event: $eventID) event from $eventStart to $eventEnd on $eventDate.");
+            // Check if GET request from user is from an admin/super admin
             // (Only admins and super admins can add another user)
-            } else if ($request_type == 'add another' && $access_level > 1) {
-                $volunteerID = strtolower($args['selected_id']);
-                if ($volunteerID == 'vmsroot') {
-                    echo 'invalid user id';
-                    die();
-                }
-                require_once('database/dbMessages.php');
-                require_once('include/output.php');
-                $event = fetch_event_by_id($eventID);
-                $eventName = htmlspecialchars_decode($event['name']);
-                $eventDate = date('l, F j, Y', strtotime($event['date']));
-                $eventStart = time24hto12h($event['startTime']);
-                $eventEnd = time24hto12h($event['endTime']);
-                send_system_message($volunteerID, 'You were assigned to an event!', "Hello,\r\n\r\nYou were assigned to the [$eventName](event: $eventID) event from $eventStart to $eventEnd on $eventDate.");
-            } else {
-                header('Location: event.php?id='.$eventID);
+        } elseif ($request_type == 'add another' && $access_level > 1) {
+            $volunteerID = strtolower($args['selected_id']);
+            if ($volunteerID == 'vmsroot') {
+                echo 'invalid user id';
                 die();
             }
+            require_once('database/dbMessages.php');
+            require_once('include/output.php');
+            $event = fetch_event_by_id($eventID);
+            $eventName = htmlspecialchars_decode($event['name']);
+            $eventDate = date('l, F j, Y', strtotime($event['date']));
+            $eventStart = time24hto12h($event['startTime']);
+            $eventEnd = time24hto12h($event['endTime']);
+            send_system_message($volunteerID, 'You were assigned to an event!', "Hello,\r\n\r\nYou were assigned to the [$eventName](event: $eventID) event from $eventStart to $eventEnd on $eventDate.");
+        } else {
+            header('Location: event.php?id=' . $eventID);
+            die();
         }
     }
+}
 ?>
 
 <!DOCTYPE html>
 <html>
 
 <head>
-    <?php 
+    <?php
         require_once('universal.inc');
     ?>
     <title>Fredericksburg SPCA | View Event: <?php echo $event_info['name'] ?></title>
@@ -186,13 +190,13 @@
     <h1>View Event</h1>
     <main class="event-info">
         <!-- Success notifications -->
-        <?php if (isset($_GET['createSuccess'])): ?>
+        <?php if (isset($_GET['createSuccess'])) : ?>
             <div class="happy-toast">Event created successfully!</div>
         <?php endif ?>
-        <?php if (isset($_GET['editSuccess'])): ?>
+        <?php if (isset($_GET['editSuccess'])) : ?>
             <div class="happy-toast">Event details updated successfully!</div>
         <?php endif ?>
-        <?php if (isset($_GET['cancelSuccess'])): ?>
+        <?php if (isset($_GET['cancelSuccess'])) : ?>
             <div class="happy-toast">Sign-up canceled successfully!</div>
         <?php endif ?>
         <!-- Facebook share button -->
@@ -200,32 +204,29 @@
         <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v22.0"></script>
         <!--@@@ Thomas: if user clicked check in/out-->
         <?php
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                if (isset($_POST['checking_in'])) {
-                    $personID = $_POST['personID'];
-                    $eventID = $_POST['eventID'];
-                    $timestamp = $_POST['timestamp'];
-                    check_in($personID, $eventID, $timestamp);
-                    echo "<div class='happy-toast'>You've checked in!</div>";
-                }
-                else if (isset($_POST['checking_out'])) {
-                    $personID = $_POST['personID'];
-                    $eventID = $_POST['eventID'];
-                    $timestamp = $_POST['timestamp'];
-                    check_out($personID, $eventID, $timestamp);
-                    echo "<div class='happy-toast'>You've checked out!</div>";
-                }
-                else if (isset($_POST['archiving'])) {
-                    $eventID = $_POST['eventID'];
-                    archive_event($eventID);
-                    echo "<div class='happy-toast'>Event has been archived!</div>";
-                }
-                else if (isset($_POST['unarchiving'])) {
-                    $eventID = $_POST['eventID'];
-                    unarchive_event($eventID);
-                    echo "<div class='happy-toast'>Event has been unarchived!</div>";
-                }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['checking_in'])) {
+                $personID = $_POST['personID'];
+                $eventID = $_POST['eventID'];
+                $timestamp = $_POST['timestamp'];
+                check_in($personID, $eventID, $timestamp);
+                echo "<div class='happy-toast'>You've checked in!</div>";
+            } elseif (isset($_POST['checking_out'])) {
+                $personID = $_POST['personID'];
+                $eventID = $_POST['eventID'];
+                $timestamp = $_POST['timestamp'];
+                check_out($personID, $eventID, $timestamp);
+                echo "<div class='happy-toast'>You've checked out!</div>";
+            } elseif (isset($_POST['archiving'])) {
+                $eventID = $_POST['eventID'];
+                archive_event($eventID);
+                echo "<div class='happy-toast'>Event has been archived!</div>";
+            } elseif (isset($_POST['unarchiving'])) {
+                $eventID = $_POST['eventID'];
+                unarchive_event($eventID);
+                echo "<div class='happy-toast'>Event has been unarchived!</div>";
             }
+        }
         ?>
         <!---->
         
@@ -245,7 +246,7 @@
         <!-- Event Information Table -->
         <h2 style="font-size: 2.25em; font-weight: 700; color: black;">
             <?php echo htmlspecialchars_decode($event_name); ?>
-            <?php if ($access_level >= 2): ?>
+            <?php if ($access_level >= 2) : ?>
                 <a href="editEvent.php?id=<?= $id ?>" title="Edit Event" class="edit-icon">
                     <i class="fas fa-pencil-alt"></i>
                 <a href="deleteEvent.php?id=<?= $id ?>" title="Delete Event" class="delete-icon" 
@@ -293,10 +294,10 @@
                 </tr>
                 <tr>
                     <td class="label">Training Required</td>
-                    <td><?php if($event_training_level == null) {
+                    <td><?php if ($event_training_level == null) {
                         $event_training_level = "N/A";
-                    }
-                    echo $event_training_level; ?></td>
+                        }
+                        echo $event_training_level; ?></td>
                 </tr>
             </table>
         </div>
@@ -305,7 +306,7 @@
         <div class="action-buttons">
 
             <!--@@@ Check-In and Check-Out Buttons by Thomas -->
-            <?php if (can_check_in($user->get_id(), $event_info))  : ?>
+            <?php if (can_check_in($user->get_id(), $event_info)) : ?>
                 <form method="POST" action="">
                     <input type="hidden" name="checking_in" value="1">
                     <input type="hidden" name="personID" value="<?php echo $user->get_id(); ?>">
@@ -316,7 +317,7 @@
                 </form>
             <?php endif ?>
 
-            <?php if (can_check_out($user->get_id(), $event_info))  : ?>
+            <?php if (can_check_out($user->get_id(), $event_info)) : ?>
                 <form method="POST" action="">
                     <input type="hidden" name="checking_out" value="1">
                     <input type="hidden" name="personID" value="<?php echo $user->get_id(); ?>">
@@ -336,12 +337,11 @@
             <?php endif*/ ?>
 
             <?php if ($access_level >= 2) : ?>
-
                 <a href="viewEventSignUps.php?id=<?php echo $id; ?>"class = "button signup">View Event Signups</a>
 
                 <!-- Archive and Unarchive buttons by Thomas -->
 
-                <?php if (is_archived($event_info['id']))  : ?>
+                <?php if (is_archived($event_info['id'])) : ?>
                     <form method="POST" action="" onsubmit="return confirmAction('unarchive')">
                         <input type="hidden" name="unarchiving" value="1">
                         <input type="hidden" name="eventID" value="<?php echo $event_info['id']; ?>">
@@ -408,7 +408,7 @@
 
                 </div>
             </div>
-            <?php endif ?>
+        <?php endif ?>
 
 
             <?php if ($access_level < 2) : ?>
@@ -424,8 +424,8 @@
                     <button onclick="document.getElementById('cancel-confirmation-wrapper').classList.add('hidden')" id="cancel-cancel" class="button cancel">Cancel</button>
                 </div>
             </div>
-            <?php
-        ?>
+                <?php
+                ?>
             <?php endif ?>
 
             

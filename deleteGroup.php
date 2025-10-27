@@ -1,4 +1,5 @@
 <?php
+
 session_cache_expire(30);
 session_start();
 
@@ -37,4 +38,3 @@ if (isset($_GET['group_name'])) {
     header("Location: showGroups.php?error=" . urlencode("No group name provided."));
     exit();
 }
-?>

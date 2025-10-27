@@ -9,17 +9,17 @@
     $loggedIn = false;
     $accessLevel = 0;
     $userID = null;
-    if (isset($_SESSION['_id'])) {
-        $loggedIn = true;
-        // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
-        $accessLevel = $_SESSION['access_level'];
-        $userID = $_SESSION['_id'];
-    }
+if (isset($_SESSION['_id'])) {
+    $loggedIn = true;
+    // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
+    $accessLevel = $_SESSION['access_level'];
+    $userID = $_SESSION['_id'];
+}
     // admin-only access
-    if ($accessLevel < 2) {
-        header('Location: index.php');
-        die();
-    }
+if ($accessLevel < 2) {
+    header('Location: index.php');
+    die();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,9 +45,9 @@ require_once('header.php');
             font-weight: 700;
             text-align: center;
         }
-	.dropdown {
-	    padding-right: 50px;
-	}
+    .dropdown {
+        padding-right: 50px;
+    }
 
 </style>
 <!-- BANDAID END, REMOVE ONCE SOME GENIUS FIXES -->
@@ -67,20 +67,20 @@ require_once('header.php');
       <!-- Buttons Section -->
       <div class="button-section">
         <button onclick="window.location.href='createGroup.php';">
-	  <div class="button-left-gray"></div>
-	  <div>Create Group</div>
-	  <img class="button-icon h-14 w-14" src="images/creategroup.svg" alt="Calendar Icon">
+      <div class="button-left-gray"></div>
+      <div>Create Group</div>
+      <img class="button-icon h-14 w-14" src="images/creategroup.svg" alt="Calendar Icon">
         </button>
 
         <button onclick="window.location.href='showGroups.php';">
-	  <div class="button-left-gray"></div>
-	  <div>View Groups</div>
-	  <img class="button-icon h-14 w-14" src="images/group.svg" alt="Calendar Icon">
+      <div class="button-left-gray"></div>
+      <div>View Groups</div>
+      <img class="button-icon h-14 w-14" src="images/group.svg" alt="Calendar Icon">
         </button>
 
-	<div class="text-center mt-6">
-        	<a href="index.php" class="return-button">Return to Dashboard</a>
-	</div>
+    <div class="text-center mt-6">
+            <a href="index.php" class="return-button">Return to Dashboard</a>
+    </div>
 
      </div>
 

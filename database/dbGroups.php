@@ -1,23 +1,26 @@
-<?php /* Implemented by Aidan Meyer */
+<?php
+
+/* Implemented by Aidan Meyer */
 
 include_once('dbinfo.php');
-include_once(dirname(__FILE__).'/../domain/Groups.php');
+include_once(dirname(__FILE__) . '/../domain/Groups.php');
 
 /*
  * Add a group to dbGroups table: if already there, return false
  */
-function add_group($group) {
-    if (!$group instanceof Group)
+function add_group($group)
+{
+    if (!$group instanceof Group) {
         die("Error: add_group type mismatch");
+    }
     $con = connect();
     $query = "SELECT * FROM dbgroups WHERE group_name = '" . $group->get_group_name() . "'";
     $result = mysqli_query($con, $query);
-    
+
     if ($result == null || mysqli_num_rows($result) == 0) {
         mysqli_query($con, 'INSERT INTO dbgroups (group_name, color_level) VALUES ("' .
             $group->get_group_name() . '", "' .
-            $group->get_color_level() . '");'
-        );
+            $group->get_color_level() . '");');
         mysqli_close($con);
         return true;
     }
@@ -28,7 +31,8 @@ function add_group($group) {
 /*
  * Remove a group from dbGroups table. If not there, return false
  */
-function remove_group($group_name) {
+function remove_group($group_name)
+{
     $con = connect();
     $query = 'SELECT * FROM dbgroups WHERE group_name = "' . $group_name . '"';
     $result = mysqli_query($con, $query);
@@ -46,7 +50,8 @@ function remove_group($group_name) {
  * Retrieve a group from dbGroups table matching a particular group_name.
  * If not in table, return false
  */
-function retrieve_group($group_name) {
+function retrieve_group($group_name)
+{
     $con = connect();
     $query = "SELECT * FROM dbgroups WHERE group_name = '" . $group_name . "'";
     $result = mysqli_query($con, $query);
@@ -59,7 +64,8 @@ function retrieve_group($group_name) {
     mysqli_close($con);
     return $theGroup;
 }
-function get_all_groups() {
+function get_all_groups()
+{
     $con = connect();
     $query = "SELECT * FROM dbgroups";
     $result = mysqli_query($con, $query);
@@ -83,15 +89,16 @@ function get_all_groups() {
 /*
 add a user to a volunteer group
 */
-function add_user_to_group($user_id, $group_name) {
-    $con = connect();  
+function add_user_to_group($user_id, $group_name)
+{
+    $con = connect();
 
     $query = "INSERT INTO user_groups (user_id, group_name) VALUES (?, ?)";
     $stmt = mysqli_prepare($con, $query);
 
     if ($stmt) {
         // Use prepared statements to prevent SQL injection
-        mysqli_stmt_bind_param($stmt, "ss", $user_id, $group_name);  
+        mysqli_stmt_bind_param($stmt, "ss", $user_id, $group_name);
 
         // Execute the prepared statement and check for success
         $success = mysqli_stmt_execute($stmt);
@@ -107,8 +114,9 @@ function add_user_to_group($user_id, $group_name) {
 /*
 Remove a user from a volunteer group
 */
-function remove_user_from_group($user_id, $group_name) {
-    $con = connect();  
+function remove_user_from_group($user_id, $group_name)
+{
+    $con = connect();
 
     // Prepare the query to check if the user exists in the group
     $query = "SELECT * FROM user_groups WHERE user_id = ? AND group_name = ?";
@@ -148,7 +156,8 @@ function remove_user_from_group($user_id, $group_name) {
     mysqli_close($con);  // Close the connection
     return $delete_result ? true : false;
 }
-function remove_all_users_in_group($group_name){
+function remove_all_users_in_group($group_name)
+{
     $con = connect();
 
     $query = "DELETE FROM user_groups WHERE group_name = ?";
@@ -165,12 +174,12 @@ function remove_all_users_in_group($group_name){
 
     mysqli_close($con);
     return true;
-
 }
 /*
     return group name from database
 */
-function get_group_name($group_name){
+function get_group_name($group_name)
+{
     $con = connect();
 
     // Prepare the SQL query to prevent SQL injection
@@ -185,7 +194,7 @@ function get_group_name($group_name){
         if ($result && mysqli_num_rows($result) === 1) {
             $row = mysqli_fetch_assoc($result);
             mysqli_close($con);
-            return new Group($row['group_name'], $row['color_level']); 
+            return new Group($row['group_name'], $row['color_level']);
         }
     }
 
@@ -195,13 +204,14 @@ function get_group_name($group_name){
 /*
  * Get all users in a specific group
  */
-function get_users_in_group($group_name) {
+function get_users_in_group($group_name)
+{
     $con = connect();
 
     $query = "SELECT dbpersons.id, dbpersons.first_name, dbpersons.last_name, dbpersons.email
               FROM dbpersons 
               INNER JOIN user_groups ON dbpersons.id = user_groups.user_id 
-              WHERE user_groups.group_name = ?";  
+              WHERE user_groups.group_name = ?";
 
     $stmt = mysqli_prepare($con, $query);
     $users = [];
@@ -224,7 +234,8 @@ function get_users_in_group($group_name) {
 /*
  * Get users NOT in a specific group
  */
-function get_users_not_in_group($group_name) {
+function get_users_not_in_group($group_name)
+{
     $con = connect();
 
     $query = "SELECT id, first_name, last_name FROM dbpersons 
@@ -242,7 +253,7 @@ function get_users_not_in_group($group_name) {
             $users[] = [
                 'id' => $row['id'],
                 'first_name' => $row['first_name'],
-                'last_name' => $row['last_name'] 
+                'last_name' => $row['last_name']
             ];
         }
 
@@ -253,7 +264,8 @@ function get_users_not_in_group($group_name) {
     return $users;
 }
 
-function get_groups_from_user($user_id) {
+function get_groups_from_user($user_id)
+{
     $con = connect();
     $query = "SELECT ug.group_name, dg.color_level 
               FROM user_groups ug
@@ -280,4 +292,3 @@ function get_groups_from_user($user_id) {
     mysqli_close($con);
     return $groups;
 }
-

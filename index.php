@@ -7,25 +7,25 @@
     session_start();
 
     date_default_timezone_set("America/New_York");
-    
-    if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 1) {
-        if (isset($_SESSION['change-password'])) {
-            header('Location: changePassword.php');
-        } else {
-            header('Location: login.php');
-        }
-        die();
+
+if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 1) {
+    if (isset($_SESSION['change-password'])) {
+        header('Location: changePassword.php');
+    } else {
+        header('Location: login.php');
     }
-        
+    die();
+}
+
     include_once('database/dbPersons.php');
     include_once('domain/Person.php');
 
     require_once('database/dbAccounts.php');
     // Get date?
-    if (isset($_SESSION['_id'])) {
-        $accType = get_account_type($_SESSION['_id']);
-        $person = retrieve_person($_SESSION['_id']);
-    }
+if (isset($_SESSION['_id'])) {
+    $accType = get_account_type($_SESSION['_id']);
+    $person = retrieve_person($_SESSION['_id']);
+}
     $notRoot =  ($_SESSION['access_level'] < 2);
 ?>
 
@@ -454,19 +454,19 @@
             ?>
     </div>
 
-            <?php if (isset($_GET['pcSuccess'])): ?>
+            <?php if (isset($_GET['pcSuccess'])) : ?>
                 <div class="happy-toast">Password changed successfully!</div>
-            <?php elseif (isset($_GET['deleteService'])): ?>
+            <?php elseif (isset($_GET['deleteService'])) : ?>
                 <div class="happy-toast">Service successfully removed!</div>
-            <?php elseif (isset($_GET['serviceAdded'])): ?>
+            <?php elseif (isset($_GET['serviceAdded'])) : ?>
                 <div class="happy-toast">Service successfully added!</div>
-            <?php elseif (isset($_GET['animalRemoved'])): ?>
+            <?php elseif (isset($_GET['animalRemoved'])) : ?>
                 <div class="happy-toast">Animal successfully removed!</div>
-            <?php elseif (isset($_GET['locationAdded'])): ?>
+            <?php elseif (isset($_GET['locationAdded'])) : ?>
                 <div class="happy-toast">Location successfully added!</div>
-            <?php elseif (isset($_GET['deleteLocation'])): ?>
+            <?php elseif (isset($_GET['deleteLocation'])) : ?>
                 <div class="happy-toast">Location successfully removed!</div>
-            <?php elseif (isset($_GET['registerSuccess'])): ?>
+            <?php elseif (isset($_GET['registerSuccess'])) : ?>
                 <div class="happy-toast">Volunteer registered successfully!</div>
             <?php endif ?>
 
@@ -496,14 +496,14 @@
           <div class="small-text">Let's have some fun!</div>
         <div class="large-text">Event Management</div>
 <button class="circle-arrow-button" onclick="window.location.href='eventManagement.php'">
-    <span class="button-text"><?php 
+    <span class="button-text"><?php
                         require_once('database/dbEvents.php');
                         require_once('database/dbPersons.php');
                         $pendingsignups = all_pending_names();
-                        if (sizeof($pendingsignups) > 0) {
-                            echo '<span class="colored-box">' . sizeof($pendingsignups) . '</span>';
-                        }   
-                    ?> Sign-Ups </span>
+    if (sizeof($pendingsignups) > 0) {
+        echo '<span class="colored-box">' . sizeof($pendingsignups) . '</span>';
+    }
+    ?> Sign-Ups </span>
     <div class="circle">&gt;</div>
 </button>
     </div>
@@ -548,20 +548,20 @@
                     // $unreadMessageCount = get_user_unread_count($person->get_id());
                     $unreadMessageCount = 0;
                     $inboxIcon = 'inbox.svg';
-                    if ($unreadMessageCount) {
-                        $inboxIcon = 'inbox-unread.svg';
-                    }
+                if ($unreadMessageCount) {
+                    $inboxIcon = 'inbox-unread.svg';
+                }
                 ?>
         <div class="content-box-test" onclick="window.location.href='inbox.php'">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/<?php echo $inboxIcon ?>" alt="Notification Icon">
             </div>
             <div class="background-image"></div>
-            <div class="large-text-sub">System Notifications<?php 
-                        if ($unreadMessageCount > 0) {
-                            echo ' (' . $unreadMessageCount . ')';
-                        }
-                    ?></div>
+            <div class="large-text-sub">System Notifications<?php
+            if ($unreadMessageCount > 0) {
+                echo ' (' . $unreadMessageCount . ')';
+            }
+            ?></div>
             <div class="graph-text">Stay up to date.</div>
             <button class="arrow-button">→</button>
         </div>
@@ -749,10 +749,10 @@
                         // $unreadMessageCount = get_user_unread_count($person->get_id());
                         $unreadMessageCount = 0;
                         $inboxIcon = 'inbox.svg';
-                        if ($unreadMessageCount) {
-                            $inboxIcon = 'inbox-unread.svg';
-                        }   
-                    ?>  
+                if ($unreadMessageCount) {
+                    $inboxIcon = 'inbox-unread.svg';
+                }
+                ?>  
 
         <div class="content-box-test" onclick="window.location.href='viewResources.php'">
             <div class="icon-overlay">

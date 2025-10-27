@@ -22,7 +22,7 @@ include_once "database/dbShifts.php";
 <html lang="en">
 <head>
     <title>Fredericksburg SPCA | Checked In Volunteers</title>
-  	<link href="css/normal_tw.css" rel="stylesheet">
+    <link href="css/normal_tw.css" rel="stylesheet">
 
 <!-- BANDAID FIX FOR HEADER BEING WEIRD -->
 <?php

@@ -64,13 +64,13 @@ if (isset($_SESSION['_id'])) {
     $oldMessages = get_user_read_messages($userID);
     $allMessages = array_merge($newMessages, $oldMessages);
 
-    usort($allMessages, function($a, $b) {
+    usort($allMessages, function ($a, $b) {
         return strtotime(str_replace('-', ' ', $b['time'])) - strtotime(str_replace('-', ' ', $a['time']));
     });
 
     mark_all_as_read($userID);
     ?>
-    <?php if (count($allMessages) > 0): ?>
+    <?php if (count($allMessages) > 0) : ?>
         <form id="bulkDeleteForm" action="deleteNotification.php" method="POST">
             <div class="top-bar">
             <button type="submit" name="delete_all" class="button delete" style="width:10%; margin-bottom: 10px;" onclick="return confirm('Are you sure you want to delete ALL notifications?');">Delete All</button>
@@ -92,21 +92,25 @@ if (isset($_SESSION['_id'])) {
                         </tr>
                     </thead>
                     <tbody class="standout">
-                        <?php 
+                        <?php
                             $id_to_name_hash = [];
-                            foreach ($allMessages as $message):
-                                $sender = $id_to_name_hash[$message['senderID']] ?? get_name_from_id($message['senderID']);
-                                $id_to_name_hash[$message['senderID']] = $sender;
+                        foreach ($allMessages as $message) :
+                            $sender = $id_to_name_hash[$message['senderID']] ?? get_name_from_id($message['senderID']);
+                            $id_to_name_hash[$message['senderID']] = $sender;
 
-                                $messageID = $message['id'];
-                                $title = $message['title'];
-                                $timePacked = $message['time'];
-                                [$year, $month, $day, $clock] = explode('-', $timePacked);
-                                $time = time24hto12h($clock);
-                                $class = 'message';
-                                if (!$message['wasRead']) $class .= ' unread';
-                                if ($message['prioritylevel']) $class .= ' prio' . $message['prioritylevel'];
-                        ?>
+                            $messageID = $message['id'];
+                            $title = $message['title'];
+                            $timePacked = $message['time'];
+                            [$year, $month, $day, $clock] = explode('-', $timePacked);
+                            $time = time24hto12h($clock);
+                            $class = 'message';
+                            if (!$message['wasRead']) {
+                                $class .= ' unread';
+                            }
+                            if ($message['prioritylevel']) {
+                                $class .= ' prio' . $message['prioritylevel'];
+                            }
+                            ?>
                         <tr class="<?= $class ?>" data-message-id="<?= $messageID ?>">
                             <td><input type="checkbox" class="rowCheckbox" name="selected_messages[]" value="<?= $messageID ?>"></td>
                             <td><?= $sender ?></td>
@@ -125,9 +129,9 @@ if (isset($_SESSION['_id'])) {
                 </table>
             </div>
         </form>
-        <?php else: ?>
+    <?php else : ?>
             <p class="no-messages standout">You currently have no notifications.</p>
-        <?php endif; ?>
+    <?php endif; ?>
 
         <a class="button cancel" href="index.php">Return to Dashboard</a>
 
