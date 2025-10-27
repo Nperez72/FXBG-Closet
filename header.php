@@ -84,7 +84,7 @@ if (date("H:i:s") > "18:19:59") {
         }
 
         // ADMIN NAVBAR
-        if ($_SESSION['access_level'] >= 2) {
+        if ($_SESSION['access_level'] >= 3) {
             echo('
             <nav class="modern-navbar">
                 <div class="nav-container">
@@ -217,20 +217,21 @@ if (date("H:i:s") > "18:19:59") {
                                 </svg>
                             </button>
                             <div class="dropdown-menu">
-                                <a href="createGroup.php" class="dropdown-item">
+                                <a href="manageBoardMembers.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <line x1="12" y1="5" x2="12" y2="19"></line>
-                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
                                     </svg>
-                                    Create Group
+                                    Manage Board Members
                                 </a>
-                                <a href="showGroups.php" class="dropdown-item">
+                                <a href="manageVolunteerCoordinators.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"></path>
-                                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                                        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
                                     </svg>
-                                    View Groups
+                                    Manage Volunteer Coordinators
                                 </a>
                             </div>
                         </div>
@@ -302,9 +303,9 @@ if (date("H:i:s") > "18:19:59") {
             </nav>');
         }
 
-/*
+
         // BOARD MEMBER/VOLUNTEER COORDINATOR NAVBAR
-        if ($_SESSION['access_level'] >= 2) {
+        if ($_SESSION['access_level'] == 2) {
             echo('
             <nav class="modern-navbar">
                 <div class="nav-container">
@@ -494,7 +495,7 @@ if (date("H:i:s") > "18:19:59") {
                                 </svg>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a href="modifyUserRole.php" class="dropdown-item">
+                                <a href="roleChange.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
                                         <circle cx="12" cy="7" r="4"></circle>
@@ -521,7 +522,7 @@ if (date("H:i:s") > "18:19:59") {
                 </div>
             </nav>');
         }
-*/
+
 
         // VOLUNTEER NAVBAR
         if ($_SESSION['access_level'] <= 1) {

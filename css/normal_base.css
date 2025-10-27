@@ -76,7 +76,7 @@
 
 @layer components {
   .hero-header {
-    @apply h-52 w-full bg-center relative z-0;
+    @apply h-35 w-full bg-center relative z-0;
     background-color: var(--main-color);
   }
   .center-header {
