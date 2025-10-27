@@ -9,47 +9,47 @@
     $loggedIn = false;
     $accessLevel = 0;
     $userID = null;
-    if (isset($_SESSION['_id'])) {
-        $loggedIn = true;
-        // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
-        $accessLevel = $_SESSION['access_level'];
-        $userID = $_SESSION['_id'];
-    }
-    if (!$loggedIn) {
-        header('Location: login.php');
-        die();
-    }
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        require_once('include/input-validation.php');
-        require_once('database/dbEvents.php');
-        $args = sanitize($_POST);
-        if (isset($args['submitName'])) {
-            if (!wereRequiredFieldsSubmitted($args, array('name'))) {
-                echo 'missing form data';
-                die();
-            }
-            $events = find_event($args['name']);
-            $search = 'Results for Search by Name: "' . htmlspecialchars($_POST['name']) . '"';
-        } else if (isset($args['submitDateRange'])) {
-            if (!wereRequiredFieldsSubmitted($args, array('date-start', 'date-end'))) {
-                echo 'missing form data';
-                die();
-            }
-            $start = validateDate($args['date-start']);
-            $end = validateDate($args['date-end']);
-            if (!$start || !$end || $start > $end) {
-                echo 'bad date range';
-                die();
-            }
-            $events = fetch_events_in_date_range_as_array($start, $end);
-
-            $start = date('m/d/Y', strtotime($start));
-            $end = date('m/d/Y', strtotime($end));
-            $search = 'Results for Search by Date Range: ' . htmlspecialchars($_POST['date-start']) . ' - ' . htmlspecialchars($_POST['date-end']);
+if (isset($_SESSION['_id'])) {
+    $loggedIn = true;
+    // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
+    $accessLevel = $_SESSION['access_level'];
+    $userID = $_SESSION['_id'];
+}
+if (!$loggedIn) {
+    header('Location: login.php');
+    die();
+}
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    require_once('include/input-validation.php');
+    require_once('database/dbEvents.php');
+    $args = sanitize($_POST);
+    if (isset($args['submitName'])) {
+        if (!wereRequiredFieldsSubmitted($args, array('name'))) {
+            echo 'missing form data';
+            die();
         }
-    } else {
-        $events = null;
+        $events = find_event($args['name']);
+        $search = 'Results for Search by Name: "' . htmlspecialchars($_POST['name']) . '"';
+    } elseif (isset($args['submitDateRange'])) {
+        if (!wereRequiredFieldsSubmitted($args, array('date-start', 'date-end'))) {
+            echo 'missing form data';
+            die();
+        }
+        $start = validateDate($args['date-start']);
+        $end = validateDate($args['date-end']);
+        if (!$start || !$end || $start > $end) {
+            echo 'bad date range';
+            die();
+        }
+        $events = fetch_events_in_date_range_as_array($start, $end);
+
+        $start = date('m/d/Y', strtotime($start));
+        $end = date('m/d/Y', strtotime($end));
+        $search = 'Results for Search by Date Range: ' . htmlspecialchars($_POST['date-start']) . ' - ' . htmlspecialchars($_POST['date-end']);
     }
+} else {
+    $events = null;
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -62,15 +62,15 @@
         <h1>Event Search</h1>
         <main class="search-form">
             <?php
-                if (isset($events)) {
-                    echo '<h2>' . $search . '</h2>';
-                    require_once('include/output.php');
-                    if (count($events) > 0) {
-                        foreach ($events as $event) {
-                            $date = $event['date'];
-                            $date = strtotime($date);
-                            $date = date('l, F j, Y', $date);
-                            echo "
+            if (isset($events)) {
+                echo '<h2>' . $search . '</h2>';
+                require_once('include/output.php');
+                if (count($events) > 0) {
+                    foreach ($events as $event) {
+                        $date = $event['date'];
+                        $date = strtotime($date);
+                        $date = date('l, F j, Y', $date);
+                        echo "
                                 <table class='event'>
                                     <thead>
                                         <tr>
@@ -85,11 +85,11 @@
                                     </tbody>
                                 </table>
                             ";
-                        }
-                    } else {
-                        echo '<div class="error-toast">Your search returned no results.</div>';
                     }
+                } else {
+                    echo '<div class="error-toast">Your search returned no results.</div>';
                 }
+            }
             ?>
             <h2>Search for an Event</h2>
             <form method="post">

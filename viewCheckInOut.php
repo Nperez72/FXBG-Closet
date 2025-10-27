@@ -1,4 +1,5 @@
 <?php
+
     session_cache_expire(30);
     session_start();
 
@@ -10,20 +11,20 @@
     $userID = null;
     $today = date('Y-m-d');
 
-    if (isset($_SESSION['_id'])) {
-        $loggedIn = true;
-        $accessLevel = $_SESSION['access_level'];
-        $userID = $_SESSION['_id'];
-    }  
+if (isset($_SESSION['_id'])) {
+    $loggedIn = true;
+    $accessLevel = $_SESSION['access_level'];
+    $userID = $_SESSION['_id'];
+}
 
-	if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
-    		header('Location: login.php');
-    		die();
-	}
+if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
+        header('Location: login.php');
+        die();
+}
 
-    if ($loggedIn) {
-        $existingShift = get_shift_today($userID, $today);
-    }
+if ($loggedIn) {
+    $existingShift = get_shift_today($userID, $today);
+}
 
 include 'infoBox.php';
 ?>

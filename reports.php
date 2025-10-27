@@ -1,13 +1,13 @@
 <?php
 /*
- * Copyright 2013 by Jerrick Hoang, Ivy Xing, Sam Roberts, James Cook, 
- * Johnny Coster, Judy Yang, Jackson Moniaga, Oliver Radwan, 
- * Maxwell Palmer, Nolan McNair, Taylor Talmage, and Allen Tucker. 
- * This program is part of RMH Homebase, which is free software.  It comes with 
- * absolutely no warranty. You can redistribute and/or modify it under the terms 
+ * Copyright 2013 by Jerrick Hoang, Ivy Xing, Sam Roberts, James Cook,
+ * Johnny Coster, Judy Yang, Jackson Moniaga, Oliver Radwan,
+ * Maxwell Palmer, Nolan McNair, Taylor Talmage, and Allen Tucker.
+ * This program is part of RMH Homebase, which is free software.  It comes with
+ * absolutely no warranty. You can redistribute and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation
  * (see <http://www.gnu.org/licenses/ for more information).
- * 
+ *
  */
 
 /*
@@ -36,48 +36,48 @@ include_once('domain/Shift.php');
 <script src="lib/jquery-ui.js"></script>
 <script>
 $(function() {
-	$( "#from" ).datepicker({dateFormat: 'y-mm-dd',changeMonth:true,changeYear:true});
-	$( "#to" ).datepicker({dateFormat: 'y-mm-dd',changeMonth:true,changeYear:true});
+    $( "#from" ).datepicker({dateFormat: 'y-mm-dd',changeMonth:true,changeYear:true});
+    $( "#to" ).datepicker({dateFormat: 'y-mm-dd',changeMonth:true,changeYear:true});
 
-	$(document).on("keyup", ".volunteer-name", function() {
-		var str = $(this).val();
-		var target = $(this);
-		$.ajax({
-			type: 'get',
-			url: 'reportsCompute.php?q='+str,
-			success: function (response) {
-				var suggestions = $.parseJSON(response);
-				console.log(target);
-				target.autocomplete({
-					source: suggestions
-				});
-			}
-		});
-	});
+    $(document).on("keyup", ".volunteer-name", function() {
+        var str = $(this).val();
+        var target = $(this);
+        $.ajax({
+            type: 'get',
+            url: 'reportsCompute.php?q='+str,
+            success: function (response) {
+                var suggestions = $.parseJSON(response);
+                console.log(target);
+                target.autocomplete({
+                    source: suggestions
+                });
+            }
+        });
+    });
 
-	$("input[name='date']").change(function() {
-		if ($("input[name='date']:checked").val() == 'date-range') {
-			$("#fromto").show();
-		} else {
-			$("#fromto").hide();
-		}
-	});
+    $("input[name='date']").change(function() {
+        if ($("input[name='date']:checked").val() == 'date-range') {
+            $("#fromto").show();
+        } else {
+            $("#fromto").hide();
+        }
+    });
 
-	$("#report-submit").on('click', function (e) {
-		e.preventDefault();
-		$.ajax({
-			type: 'post',
-			url: 'reportsCompute.php',
-			data: $('#search-fields').serialize(),
-			success: function (response) {
-				$("#outputs").html(response);
-			}
-		});
-	} );
-	
+    $("#report-submit").on('click', function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'post',
+            url: 'reportsCompute.php',
+            data: $('#search-fields').serialize(),
+            success: function (response) {
+                $("#outputs").html(response);
+            }
+        });
+    } );
+    
 });
 </script>
-	<?php require_once('universal.inc') ?>
+    <?php require_once('universal.inc') ?>
         <title>Fredericksburg SPCA | Reports</title>
         <style>
             .report_select{
@@ -99,12 +99,12 @@ $(function() {
         </style>
 </head>
 <body>
- 	<?php require_once('header.php');
-	if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["go_to_reports_page"]) && isset($_POST["report_types"])) {
-		$type = $_POST['report_type'];
-		header("Location: /gwyneth/reportsPage.php?report_type=$type");
-	}
-	?>
+    <?php require_once('header.php');
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["go_to_reports_page"]) && isset($_POST["report_types"])) {
+        $type = $_POST['report_type'];
+        header("Location: /gwyneth/reportsPage.php?report_type=$type");
+    }
+    ?>
         <h1>Business and Operational Reports</h1>
         <main class="reportSelection">
             <form class="report_select" method="post">

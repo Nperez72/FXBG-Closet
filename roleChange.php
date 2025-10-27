@@ -8,16 +8,16 @@
     $accessLevel = 0;
     $userID = null;
 
-    if (isset($_SESSION['_id'])) {
-        $loggedIn = true;
-        $accessLevel = $_SESSION['access_level'];
-        $userID = $_SESSION['_id'];
-    }  
+if (isset($_SESSION['_id'])) {
+    $loggedIn = true;
+    $accessLevel = $_SESSION['access_level'];
+    $userID = $_SESSION['_id'];
+}
 
-	if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
-    	header('Location: login.php');
-    	die();
-	}
+if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
+    header('Location: login.php');
+    die();
+}
 
 include 'infoBox.php';
 ?>
@@ -36,7 +36,7 @@ include 'infoBox.php';
 </header>
 
 <main class="w-[90%] max-w-6xl mx-auto">
-    <?php if (isset($_SESSION['access_level'])): ?>
+    <?php if (isset($_SESSION['access_level'])) : ?>
     <div style="display:none" id="debug-access">
         Access level: <?= htmlspecialchars($_SESSION['access_level']) ?>
     </div>

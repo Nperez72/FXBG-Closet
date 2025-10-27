@@ -5,122 +5,122 @@
 @tailwind utilities;
 
 @layer base {
-	body {
-		@apply bg-gray-100 min-h-screen flex flex-col;
-	}
-	
-	h1 {
-		@apply text-white md:text-4xl text-2xl font-bold drop-shadow-md /*bg-[#012741]*/ p-2 rounded-xl w-full text-center;
-	}
+  body {
+    @apply bg-gray-100 min-h-screen flex flex-col;
+  }
 
-	table {
-		@apply table-auto w-full text-lg border border-2;
-		color: var(--text-secondary, #5a5856);
-		border-color: var(--card-border, #e8c4b8);
-	}
+  h1 {
+    @apply text-white md:text-4xl text-2xl font-bold drop-shadow-md /*bg-[#012741]*/ p-2 rounded-xl w-full text-center;
+  }
 
-	tr {
-		@apply border-b-2 border-gray-300 bg-white hover:bg-gray-100;
-	}
+  table {
+    @apply table-auto w-full text-lg border border-2;
+    color: var(--text-secondary, #5a5856);
+    border-color: var(--card-border, #e8c4b8);
+  }
 
-	td {
-		@apply px-6 py-4;
-	}
+  tr {
+    @apply border-b-2 border-gray-300 bg-white hover:bg-gray-100;
+  }
 
-	thead {
-		background-color: var(--nav-item-active-bg, #f4ede9);
-	}
+  td {
+    @apply px-6 py-4;
+  }
 
-	th {
-		@apply text-left px-6 py-4 font-semibold;
-		background-color: var(--nav-item-active-bg, #f4ede9);
-	}
+  thead {
+    background-color: var(--nav-item-active-bg, #f4ede9);
+  }
 
-	h2 {
-		@apply text-2xl font-bold;
-		color: var(--text-color, #363434);
-	}
+  th {
+    @apply text-left px-6 py-4 font-semibold;
+    background-color: var(--nav-item-active-bg, #f4ede9);
+  }
 
-	h3 {
-		@apply text-xl font-semibold mt-6;
-		color: var(--text-color, #363434);
-	}
+  h2 {
+    @apply text-2xl font-bold;
+    color: var(--text-color, #363434);
+  }
 
-	main {
-		@apply flex-grow flex flex-col items-center justify-start -mt-16 z-10 relative px-4;
-	}
-	label {
-		@apply text-lg block mb-1 font-semibold;
-		color: var(--text-color, #363434);
-	}
-	/*
+  h3 {
+    @apply text-xl font-semibold mt-6;
+    color: var(--text-color, #363434);
+  }
+
+  main {
+    @apply flex-grow flex flex-col items-center justify-start -mt-16 z-10 relative px-4;
+  }
+  label {
+    @apply text-lg block mb-1 font-semibold;
+    color: var(--text-color, #363434);
+  }
+  /*
 	select {
 		@apply w-full p-2 border border-gray-300 rounded-md;
 	}
 	*/
-	input:not([type="radio"]), select{
-		@apply w-full rounded-md border-2 mb-2 shadow-xs p-2;
-		border-color: var(--card-border, #e8c4b8);
-	}
-	input:not([type="radio"]):focus, select:focus{
-		border-color: var(--accent-color, #d4af37);
-		outline: none;
-		box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
-	}
-	em {
-		@apply text-red-600;
-	}
-
+  input:not([type="radio"]),
+  select {
+    @apply w-full rounded-md border-2 mb-2 shadow-xs p-2;
+    border-color: var(--card-border, #e8c4b8);
+  }
+  input:not([type="radio"]):focus,
+  select:focus {
+    border-color: var(--accent-color, #d4af37);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+  }
+  em {
+    @apply text-red-600;
+  }
 }
 
 @layer components {
-	.hero-header {
-		@apply h-52 w-full bg-center relative z-0;
-		background-color: var(--main-color);
-	}
-	.center-header {
-		@apply absolute inset-0 flex items-center justify-center; /* bg-opacity-30 removed */
-	}
-	.main-content-box {
-		@apply bg-white border-2 border-gray-300 rounded-xl shadow-lg;
-	}
-	.delete-button {
-		@apply text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg font-semibold cursor-pointer;
-	}
-	.blue-button {
-		@apply px-6 py-2 rounded-lg cursor-pointer;
-		background-color: var(--main-color, #e8c4b8);
-		color: var(--button-text, #363434);
-	}
-	.blue-button:hover {
-		background-color: var(--accent-color, #d4af37);
-	}
-	.return-button {
-		@apply bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600;
-	}
-	.info-section {
-		@apply mt-10 max-w-4xl text-center;
-		color: var(--text-secondary, #5a5856);
-	}
-	.blue-div {
-		@apply h-px mb-4;
-		background-color: var(--main-color, #e8c4b8);
-	}
-	.info-text {
-		@apply text-lg leading-relaxed;
-	}
-	.sub-text {
-		@apply font-semibold mt-1;
-		color: var(--main-color);
-	}
-	.error-block {
-		@apply text-white bg-red-700 text-center p-2 rounded-lg mb-2;
-	}
-	.radio-group {
-		@apply flex space-x-4;
-	}
-	.radio-element {
-		@apply flex items-center space-x-2;
-	}
-	
+  .hero-header {
+    @apply h-52 w-full bg-center relative z-0;
+    background-color: var(--main-color);
+  }
+  .center-header {
+    @apply absolute inset-0 flex items-center justify-center; /* bg-opacity-30 removed */
+  }
+  .main-content-box {
+    @apply bg-white border-2 border-gray-300 rounded-xl shadow-lg;
+  }
+  .delete-button {
+    @apply text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg font-semibold cursor-pointer;
+  }
+  .blue-button {
+    @apply px-6 py-2 rounded-lg cursor-pointer;
+    background-color: var(--main-color, #e8c4b8);
+    color: var(--button-text, #363434);
+  }
+  .blue-button:hover {
+    background-color: var(--accent-color, #d4af37);
+  }
+  .return-button {
+    @apply bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600;
+  }
+  .info-section {
+    @apply mt-10 max-w-4xl text-center;
+    color: var(--text-secondary, #5a5856);
+  }
+  .blue-div {
+    @apply h-px mb-4;
+    background-color: var(--main-color, #e8c4b8);
+  }
+  .info-text {
+    @apply text-lg leading-relaxed;
+  }
+  .sub-text {
+    @apply font-semibold mt-1;
+    color: var(--main-color);
+  }
+  .error-block {
+    @apply text-white bg-red-700 text-center p-2 rounded-lg mb-2;
+  }
+  .radio-group {
+    @apply flex space-x-4;
+  }
+  .radio-element {
+    @apply flex items-center space-x-2;
+  }
 }

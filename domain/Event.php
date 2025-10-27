@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Encapsulated version of a dbs entry.
  */
-class Event {
+class Event
+{
     private $id;
     private $name;
     #private $abbrevName;
@@ -20,7 +22,8 @@ class Event {
     #private $postMedia;
     #private $animalId;
 
-    function __construct($id, $name, $date, $startTime, $endTime, $description, $capacity, $completed, $restricted_signup, $training_level_required, $type) {
+    function __construct($id, $name, $date, $startTime, $endTime, $description, $capacity, $completed, $restricted_signup, $training_level_required, $type)
+    {
         $this->id = $id;
         $this->name = $name;
         $this->date = $date;
@@ -34,11 +37,13 @@ class Event {
         $this->type = $type;
     }
 
-    function getID() {
+    function getID()
+    {
         return $this->id;
     }
 
-    function getName() {
+    function getName()
+    {
         return $this->name;
     }
 
@@ -46,19 +51,23 @@ class Event {
     #    return $this->abbrevName;
     #}
     // new Event
-    function getDate() {
+    function getDate()
+    {
         return $this->date;
     }
 
-    function getStartTime() {
+    function getStartTime()
+    {
         return $this->startTime;
     }
 
-    function getEndTime() {
+    function getEndTime()
+    {
         return $this->endTime;
     }
 
-    function getDescription() {
+    function getDescription()
+    {
         return $this->description;
     }
 
@@ -66,22 +75,27 @@ class Event {
     #    return $this->location;
     #}
 
-    function getCapacity() {
+    function getCapacity()
+    {
         return $this->capacity;
     }
 
-    function getCompleted() {
+    function getCompleted()
+    {
         return $this->completed;
     }
 
-    function getRestrictedSignup() {
+    function getRestrictedSignup()
+    {
         return $this->restricted_signup;
     }
 
-    function getTrainingLevelRequired() {
+    function getTrainingLevelRequired()
+    {
         return $this->training_level_required;
     }
-    function getEventType(){
+    function getEventType()
+    {
         return $this->type;
     }
 
