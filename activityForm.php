@@ -42,7 +42,7 @@
             <textarea id="activity_description" name="activity_description" rows="6" required placeholder="Describe what you did during this volunteer activity"></textarea>
         </fieldset>
            <label for="img">Choose photo</label>
-  <input id="img" name="img" type="file" /> 
+  <input id="img" name="img" accept="image/jpeg, image/png" type="file" /> 
         <input type="submit" name="activity-form" value="Submit" class="blue-button">
     </form>
    </div> 
