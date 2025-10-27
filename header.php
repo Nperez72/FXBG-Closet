@@ -73,7 +73,7 @@ if (date("H:i:s") > "18:19:59") {
             'clockout.php' => 2, 'edithours.php' => 2, 'eventlist.php' => 1, 'eventsignup.php' => 1,
             'eventfailure.php' => 1, 'signupsuccess.php' => 1, 'edittimes.php' => 1,
             'adminviewingevents.php' => 2, 'signuppending.php' => 1, 'requestfailed.php' => 1,
-            'settimes.php' => 1, 'eventfailurebaddeparturetime.php' => 1
+            'settimes.php' => 1, 'eventfailurebaddeparturetime.php' => 1, 'trackActivities.php' => 0
         );
 
         // Check permissions
@@ -143,6 +143,13 @@ if (date("H:i:s") > "18:19:59") {
                                         <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
                                     </svg>
                                     View Check-Ins
+                                </a>
+                                <a href="trackActivities.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 11l3 3L22 4"></path>
+                                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+                                    </svg>
+                                    Track Activities
                                 </a>
                             </div>
                         </div>
@@ -583,6 +590,13 @@ if (date("H:i:s") > "18:19:59") {
                                         <polyline points="12 6 12 12 16 14"></polyline>
                                     </svg>
                                     Edit Hours
+                                </a>
+                                <a href="trackActivities.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 11l3 3L22 4"></path>
+                                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+                                    </svg>
+                                    Track Activities
                                 </a>
                             </div>
                         </div>
