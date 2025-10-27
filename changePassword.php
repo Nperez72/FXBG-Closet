@@ -31,7 +31,6 @@ if ($loggedIn) {
         $accounts = get_all_accounts();
     }
 }
-}
 
 if (!$isAdmin) {
     header('Location: login.php');
@@ -135,7 +134,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die();
         }
     }
-}
 }
 ?>
 <!DOCTYPE html>
