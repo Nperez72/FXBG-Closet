@@ -36,7 +36,7 @@ function getAdminAccountEmails(): array {
 
 
 /**
- *  EACH EMAIL TYPE IS A SEPERATE FUNCTION TO REQUIRE 1 LESS PARAM AND INCREASE READIBILITY
+ *  EACH EMAIL TYPE IS A SEPARATE FUNCTION TO REQUIRE 1 LESS PARAM AND INCREASE READABILITY
  **/
 function emailAdmins(string $fromUser, string $subject, string $body): array {
     $list = getAdminAccountEmails();
