@@ -75,53 +75,52 @@
 }
 
 @layer components {
-	.hero-header {
-		@apply h-35 w-full bg-center relative z-0;
-		background-color: var(--main-color);
-	}
-	.center-header {
-		@apply absolute inset-0 flex items-center justify-center; /* bg-opacity-30 removed */
-	}
-	.main-content-box {
-		@apply bg-white border-2 border-gray-300 rounded-xl shadow-lg;
-	}
-	.delete-button {
-		@apply text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg font-semibold cursor-pointer;
-	}
-	.blue-button {
-		@apply px-6 py-2 rounded-lg cursor-pointer;
-		background-color: var(--main-color, #e8c4b8);
-		color: var(--button-text, #363434);
-	}
-	.blue-button:hover {
-		background-color: var(--accent-color, #d4af37);
-	}
-	.return-button {
-		@apply bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600;
-	}
-	.info-section {
-		@apply mt-10 max-w-4xl text-center;
-		color: var(--text-secondary, #5a5856);
-	}
-	.blue-div {
-		@apply h-px mb-4;
-		background-color: var(--main-color, #e8c4b8);
-	}
-	.info-text {
-		@apply text-lg leading-relaxed;
-	}
-	.sub-text {
-		@apply font-semibold mt-1;
-		color: var(--main-color);
-	}
-	.error-block {
-		@apply text-white bg-red-700 text-center p-2 rounded-lg mb-2;
-	}
-	.radio-group {
-		@apply flex space-x-4;
-	}
-	.radio-element {
-		@apply flex items-center space-x-2;
-	}
-	
+  .hero-header {
+    @apply h-35 w-full bg-center relative z-0;
+    background-color: var(--main-color);
+  }
+  .center-header {
+    @apply absolute inset-0 flex items-center justify-center; /* bg-opacity-30 removed */
+  }
+  .main-content-box {
+    @apply bg-white border-2 border-gray-300 rounded-xl shadow-lg;
+  }
+  .delete-button {
+    @apply text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg font-semibold cursor-pointer;
+  }
+  .blue-button {
+    @apply px-6 py-2 rounded-lg cursor-pointer;
+    background-color: var(--main-color, #e8c4b8);
+    color: var(--button-text, #363434);
+  }
+  .blue-button:hover {
+    background-color: var(--accent-color, #d4af37);
+  }
+  .return-button {
+    @apply bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600;
+  }
+  .info-section {
+    @apply mt-10 max-w-4xl text-center;
+    color: var(--text-secondary, #5a5856);
+  }
+  .blue-div {
+    @apply h-px mb-4;
+    background-color: var(--main-color, #e8c4b8);
+  }
+  .info-text {
+    @apply text-lg leading-relaxed;
+  }
+  .sub-text {
+    @apply font-semibold mt-1;
+    color: var(--main-color);
+  }
+  .error-block {
+    @apply text-white bg-red-700 text-center p-2 rounded-lg mb-2;
+  }
+  .radio-group {
+    @apply flex space-x-4;
+  }
+  .radio-element {
+    @apply flex items-center space-x-2;
+  }
 }

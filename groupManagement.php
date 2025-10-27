@@ -45,9 +45,9 @@ require_once('header.php');
       font-weight: 700;
       text-align: center;
   }
-	.dropdown {
-	    padding-right: 50px;
-	}
+    .dropdown {
+        padding-right: 50px;
+    }
   
   .button-section button {
     display: flex;                    /* Use flexbox for alignment */

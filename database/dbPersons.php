@@ -785,7 +785,8 @@ function getonlythose_dbPersons($type, $status, $name, $day, $shift, $venue)
 }
 
 
-function getBoardMembers() {
+function getBoardMembers()
+{
     $conn = connect();
 
     // Prepare the SQL query
@@ -808,14 +809,15 @@ function getBoardMembers() {
         ];
     }
 
-    // Close statement and connection 
+    // Close statement and connection
     $stmt->close();
     $conn->close();
-    
+
     return $data; // Instead of echo, return the data
 }
 
-function getNonBoardMembers() {
+function getNonBoardMembers()
+{
     $conn = connect();
 
     // Prepare the SQL query
@@ -838,14 +840,15 @@ function getNonBoardMembers() {
         ];
     }
 
-    // Close statement and connection 
+    // Close statement and connection
     $stmt->close();
     $conn->close();
-    
+
     return $data; // Instead of echo, return the data
 }
 
-function addBoardMember($person_id) {
+function addBoardMember($person_id)
+{
     $conn = connect();
 
     // Prepare the SQL query
@@ -874,11 +877,12 @@ function addBoardMember($person_id) {
 
     // Close connection
     $conn->close();
-    
+
     return $add_result ? true : false;
 }
 
-function removeBoardMember($person_id) {
+function removeBoardMember($person_id)
+{
     $conn = connect();
 
     // Prepare the SQL query
@@ -908,12 +912,13 @@ function removeBoardMember($person_id) {
 
     // Close connection
     $conn->close();
-    
+
     return $remove_result ? true : false;
 }
 
 
-function getVolunteerCoordinators() {
+function getVolunteerCoordinators()
+{
     $conn = connect();
 
     // Prepare the SQL query
@@ -936,14 +941,15 @@ function getVolunteerCoordinators() {
         ];
     }
 
-    // Close statement and connection 
+    // Close statement and connection
     $stmt->close();
     $conn->close();
-    
+
     return $data; // Instead of echo, return the data
 }
 
-function getNonVolunteerCoordinators() {
+function getNonVolunteerCoordinators()
+{
     $conn = connect();
 
     // Prepare the SQL query
@@ -966,14 +972,15 @@ function getNonVolunteerCoordinators() {
         ];
     }
 
-    // Close statement and connection 
+    // Close statement and connection
     $stmt->close();
     $conn->close();
-    
+
     return $data; // Instead of echo, return the data
 }
 
-function addVolunteerCoordinator($person_id) {
+function addVolunteerCoordinator($person_id)
+{
     $conn = connect();
 
     // Prepare the SQL query
@@ -1002,11 +1009,12 @@ function addVolunteerCoordinator($person_id) {
 
     // Close connection
     $conn->close();
-    
+
     return $add_result ? true : false;
 }
 
-function removeVolunteerCoordinator($person_id) {
+function removeVolunteerCoordinator($person_id)
+{
     $conn = connect();
 
     // Prepare the SQL query
@@ -1036,15 +1044,18 @@ function removeVolunteerCoordinator($person_id) {
 
     // Close connection
     $conn->close();
-    
+
     return $remove_result ? true : false;
 }
 
 
-function phone_edit($phone) {
-    if ($phone!="")
-		return substr($phone, 0, 3) . "-" . substr($phone, 3, 3) . "-" . substr($phone, 6);
-	else return "";
+function phone_edit($phone)
+{
+    if ($phone != "") {
+        return substr($phone, 0, 3) . "-" . substr($phone, 3, 3) . "-" . substr($phone, 6);
+    } else {
+        return "";
+    }
 }
 
 function get_people_for_export($attr, $first_name, $last_name, $type, $status, $start_date, $city, $zip, $phone, $email)

@@ -123,9 +123,9 @@ if ($accessLevel < 2) {
         $members = getBoardMembers();
         ?>
             <h3 class="text-lg font-semibold">Current Board Members</h3>
-            <?php if (empty($members)): ?>
+            <?php if (empty($members)) : ?>
                 <p>No members in this group.</p>
-            <?php else: ?>
+            <?php else : ?>
                 <table style="margin-bottom: 25px">
                     <thead>
                         <tr>
@@ -135,10 +135,10 @@ if ($accessLevel < 2) {
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($members as $member): 
+                        <?php foreach ($members as $member) :
                             $fullname = htmlspecialchars($member['fullname']);
                             $email = htmlspecialchars($member['email']);
-                        ?>
+                            ?>
                             <tr>
                                 <td><?= $fullname ?></td>
                                 <td><?= $email ?></td>
@@ -176,13 +176,13 @@ if ($accessLevel < 2) {
             $users_not_in_group = getNonBoardMembers();
             ?>
             <h3 class="text-lg font-semibold mt-6">Promote an Existing User to Board Member</h3>
-            <?php if (empty($users_not_in_group)): ?>
+            <?php if (empty($users_not_in_group)) : ?>
                 <p>No available users to add.</p>
-            <?php else: ?>
+            <?php else : ?>
                 <form method="POST" action="manageBoardMembers.php" class="inline-form">
                     <select name="add_user_id" required>
                         <option value="" disabled selected>Select a user to add</option>
-                        <?php foreach ($users_not_in_group as $user): ?>
+                        <?php foreach ($users_not_in_group as $user) : ?>
                             <option value="<?= htmlspecialchars($user['person_id']) ?>">
                                 <?= htmlspecialchars($user['fullname']) ?>
                             </option>
