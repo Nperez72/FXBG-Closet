@@ -84,7 +84,7 @@ if (date("H:i:s") > "18:19:59") {
         }
 
         // ADMIN NAVBAR
-        if ($_SESSION['access_level'] >= 2) {
+        if ($_SESSION['access_level'] >= 3) {
             echo('
             <nav class="modern-navbar">
                 <div class="nav-container">
@@ -303,9 +303,9 @@ if (date("H:i:s") > "18:19:59") {
             </nav>');
         }
 
-/*
+
         // BOARD MEMBER/VOLUNTEER COORDINATOR NAVBAR
-        if ($_SESSION['access_level'] >= 2) {
+        if ($_SESSION['access_level'] == 2) {
             echo('
             <nav class="modern-navbar">
                 <div class="nav-container">
@@ -495,7 +495,7 @@ if (date("H:i:s") > "18:19:59") {
                                 </svg>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a href="modifyUserRole.php" class="dropdown-item">
+                                <a href="roleChange.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
                                         <circle cx="12" cy="7" r="4"></circle>
@@ -522,7 +522,7 @@ if (date("H:i:s") > "18:19:59") {
                 </div>
             </nav>');
         }
-*/
+
 
         // VOLUNTEER NAVBAR
         if ($_SESSION['access_level'] <= 1) {
