@@ -743,6 +743,7 @@ function getonlythose_dbPersons($type, $status, $name, $day, $shift, $venue) {
    return $thePersons;
 }
 
+
 function getBoardMembers() {
     $conn = connect();
 
@@ -869,6 +870,135 @@ function removeBoardMember($person_id) {
     
     return $remove_result ? true : false;
 }
+
+
+function getVolunteerCoordinators() {
+    $conn = connect();
+
+    // Prepare the SQL query
+    $stmt = $conn->prepare("SELECT person_id, CONCAT(first_name, ' ', last_name) AS full_name, email
+        FROM dbpersons
+        WHERE role_type = 1 AND role_name = 'Volunteer Coordinator'
+        ORDER BY full_name ASC
+    ");
+    $stmt->execute();
+
+    // Get the results
+    $result = $stmt->get_result();
+    $data = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $data[] = [
+            'person_id' => $row['person_id'],
+            'fullname' => $row['full_name'],
+            'email' => $row['email']
+        ];
+    }
+
+    // Close statement and connection 
+    $stmt->close();
+    $conn->close();
+    
+    return $data; // Instead of echo, return the data
+}
+
+function getNonVolunteerCoordinators() {
+    $conn = connect();
+
+    // Prepare the SQL query
+    $stmt = $conn->prepare("SELECT person_id, CONCAT(first_name, ' ', last_name) AS full_name, email
+        FROM dbpersons
+        WHERE role_type = 0
+        ORDER BY full_name ASC
+    ");
+    $stmt->execute();
+
+    // Get the results
+    $result = $stmt->get_result();
+    $data = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $data[] = [
+            'person_id' => $row['person_id'],
+            'fullname' => $row['full_name'],
+            'email' => $row['email']
+        ];
+    }
+
+    // Close statement and connection 
+    $stmt->close();
+    $conn->close();
+    
+    return $data; // Instead of echo, return the data
+}
+
+function addVolunteerCoordinator($person_id) {
+    $conn = connect();
+
+    // Prepare the SQL query
+    $stmt = $conn->prepare("SELECT person_id, CONCAT(first_name, ' ', last_name) AS full_name, email
+        FROM dbpersons
+        WHERE person_id = ?");
+    $stmt->bind_param("s", $person_id);
+    $stmt->execute();
+
+    // Get the results
+    $result = $stmt->get_result();
+    $stmt->close();
+
+    if ($result && $result->num_rows > 0) {
+        // Prepare and execute the addition query to add the user
+        $add_stmt = $conn->prepare("UPDATE dbpersons
+            SET role_type = 1, role_name = 'Volunteer Coordinator'
+            WHERE person_id = ?");
+        $add_stmt->bind_param("s", $person_id);
+
+        $add_result = $add_stmt->execute();
+        $add_stmt->close();
+    } else {
+        $add_result = false;
+    }
+
+    // Close connection
+    $conn->close();
+    
+    return $add_result ? true : false;
+}
+
+function removeVolunteerCoordinator($person_id) {
+    $conn = connect();
+
+    // Prepare the SQL query
+    $stmt = $conn->prepare("SELECT person_id, CONCAT(first_name, ' ', last_name) AS full_name, email
+        FROM dbpersons
+        WHERE person_id = ? AND role_type = 1 AND role_name = 'Volunteer Coordinator'
+    ");
+    $stmt->bind_param("s", $person_id);
+    $stmt->execute();
+
+    // Get the results
+    $result = $stmt->get_result();
+    $stmt->close();
+
+    if ($result && $result->num_rows > 0) {
+        // Prepare and execute the remove query to remove the user
+        $remove_stmt = $conn->prepare("UPDATE dbpersons
+            SET role_type = 0, role_name = NULL
+            WHERE person_id = ?");
+        $remove_stmt->bind_param("s", $person_id);
+
+        $remove_result = $remove_stmt->execute();
+        $remove_stmt->close();
+    } else {
+        $remove_result = false;
+    }
+
+    // Close connection
+    $conn->close();
+    
+    return $remove_result ? true : false;
+}
+
 
 function phone_edit($phone) {
     if ($phone!="")

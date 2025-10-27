@@ -22,7 +22,7 @@ if ($accessLevel < 2) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Manage Group Members</title>
+    <title>Manage Board Members</title>
     <link href="css/normal_tw.css" rel="stylesheet">
     <?php require('header.php'); ?>
     <style>

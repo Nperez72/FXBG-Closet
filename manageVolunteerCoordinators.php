@@ -22,7 +22,7 @@ if ($accessLevel < 2) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Manage Group Members</title>
+    <title>Manage Volunteer Coordinators</title>
     <link href="css/normal_tw.css" rel="stylesheet">
     <?php require('header.php'); ?>
     <style>
@@ -111,15 +111,11 @@ if ($accessLevel < 2) {
         <?php
         require_once('database/dbGroups.php');
         require_once('database/dbMessages.php');
+        require_once('database/dbPersons.php');
 
-        $selected_group = $_GET['group_name'] ?? '';
-
-        if ($selected_group):
-            echo "<h2 class='text-xl font-bold mb-4'>Managing: " . htmlspecialchars($selected_group) . "</h2>";
-
-            $members = get_users_in_group($selected_group);
+        $members = getVolunteerCoordinators();
         ?>
-            <h3 class="text-lg font-semibold">Current Members</h3>
+            <h3 class="text-lg font-semibold">Current Volunteer Coordinators</h3>
             <?php if (empty($members)): ?>
                 <p>No members in this group.</p>
             <?php else: ?>
@@ -133,16 +129,15 @@ if ($accessLevel < 2) {
                     </thead>
                     <tbody>
                         <?php foreach ($members as $member): 
-                            $full_name = htmlspecialchars($member['first_name']) . " " . htmlspecialchars($member['last_name'] ?? '');
+                            $fullname = htmlspecialchars($member['fullname']);
                             $email = htmlspecialchars($member['email']);
                         ?>
                             <tr>
-                                <td><?= $full_name ?></td>
+                                <td><?= $fullname ?></td>
                                 <td><?= $email ?></td>
                                 <td>
                                     <form method="POST" style="display:inline;">
-                                        <input type="hidden" name="remove_user_id" value="<?= htmlspecialchars($member['id']) ?>">
-                                        <input type="hidden" name="remove_group_name" value="<?= htmlspecialchars($selected_group) ?>">
+                                        <input type="hidden" name="remove_user_id" value="<?= htmlspecialchars($member['person_id']) ?>">
                                         <button type="submit" name="remove_member" class="btn btn-remove">Remove</button>
                                     </form>
                                 </td>
@@ -156,39 +151,36 @@ if ($accessLevel < 2) {
             // REMOVE MEMBER LOGIC
             if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_member'])) {
                 $user_id = $_POST['remove_user_id'];
-                $remove_group_name = $_POST['remove_group_name'];
-                require_once('database/dbPersons.php');
 
-                if (!empty($user_id) && !empty($remove_group_name)) {
-                    $success = remove_user_from_group($user_id, $remove_group_name);
+                if (!empty($user_id)) {
+                    $success = removeVolunteerCoordinator($user_id);
                     if ($success) {
-                        echo "<p class='success'>User removed successfully from $remove_group_name.</p>";
+                        echo "<p class='success'>User removed successfully from Volunteer Coordinators.</p>";
                     } else {
                         echo "<p class='error'>Failed to remove user.</p>";
                     }
                 }
 
-                header("Location: manageMembers.php?group_name=" . urlencode($remove_group_name));
+                header("Location: manageVolunteerCoordinators.php");
                 exit();
             }
 
             // ADD USER SECTION
-            $users_not_in_group = get_users_not_in_group($selected_group);
+            $users_not_in_group = getNonVolunteerCoordinators();
             ?>
-            <h3 class="text-lg font-semibold mt-6">Add a User to this Group</h3>
+            <h3 class="text-lg font-semibold mt-6">Promote an Existing User to Volunteer Coordinator</h3>
             <?php if (empty($users_not_in_group)): ?>
                 <p>No available users to add.</p>
             <?php else: ?>
-                <form method="POST" action="manageMembers.php?group_name=<?= urlencode($selected_group) ?>">
+                <form method="POST" action="manageVolunteerCoordinators.php">
                     <select name="add_user_id" required>
                         <option value="" disabled selected>Select a user to add</option>
                         <?php foreach ($users_not_in_group as $user): ?>
-                            <option value="<?= htmlspecialchars($user['id']) ?>">
-                                <?= htmlspecialchars($user['first_name']) . " " . htmlspecialchars($user['last_name']) ?>
+                            <option value="<?= htmlspecialchars($user['person_id']) ?>">
+                                <?= htmlspecialchars($user['fullname']) ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
-                    <input type="hidden" name="add_group_name" value="<?= htmlspecialchars($selected_group) ?>">
                     <button type="submit" name="add_member" style="margin-bottom: 10px;" class="btn btn-add">Add</button>
                 </form>
             <?php endif; ?>
@@ -196,29 +188,26 @@ if ($accessLevel < 2) {
             <?php
             if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_member'])) {
                 $user_id = $_POST['add_user_id'];
-                $group_name = $_POST['add_group_name'];
-                require_once('database/dbPersons.php');
 
-                if (!empty($user_id) && !empty($group_name)) {
-                    $success = add_user_to_group($user_id, $group_name);
+                if (!empty($user_id)) {
+                    $success = addVolunteerCoordinator($user_id);
                     if ($success) {
-                        //message user that got added
-                        $title = 'You have been added to a group. View under Groups page.';
-                        $body = 'You have been added to ' . $group_name;
-                        send_system_message($user_id, $title, $body);
-                        echo "<p class='success'>User added successfully to $group_name.</p>";
+                        /* //message user that got added
+                        $title = 'You have been added as Volunteer Coordinator.';
+                        $body = ' View under Groups page.';
+                        send_system_message($user_id, $title, $body); */
+                        echo "<p class='success'>User added successfully to Volunteer Coordinators.</p>";
                     } else {
                         echo "<p class='error'>Failed to add user.</p>";
                     }
                 }
-                header("Location: manageMembers.php?group_name=" . urlencode($group_name));
+                header("Location: manageVolunteerCoordinators.php");
                 exit();
             }
             ?>
-        <?php endif; ?>
 
         <div class="mt-6">
-            <a href="showGroups.php" class="btn btn-add">Back to Groups</a>
+            <a href="groupManagement.php" class="btn btn-add">Back to Groups</a>
         </div>
     </div>
 </main>
