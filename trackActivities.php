@@ -109,11 +109,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 } else {
                     // move it to the uploads folder.
                     // format: person_id_event_id_date_fname
-                    move_uploaded_file($ftemp, "uploads/" . $person_id . "_" . $event_id . "_" . $date . "_" . $fname);
-                    $fresult = add_media(null, $event_id, basename($fname), $ftype, $ext, $activity_description, basename($ftemp), $date);
-                    if (!$fresult) {
+                    $destination = "uploads/" . $person_id . "_" . $event_id . "_" . $date . "_" . $fname;
+                    if (move_uploaded_file($ftemp, $destination)) {
+                        $fresult = add_media(basename($ftemp), $event_id, basename($fname), $ftype, $ext, $activity_description, basename($ftemp), $date);
+                        if (!$fresult) {
+                            $showPopup = true;
+                            $popupMessage = 'Failed to upload photo. Please try again.';
+                            $popupType = 'error';
+                            break;
+                        }
+                    } else {
+                        $errors = true;
                         $showPopup = true;
-                        $popupMessage = 'Failed to log activity. Please try again.';
+                        $popupMessage = 'Failed to upload file: ' . htmlspecialchars($fname) . '. Please try again.';
                         $popupType = 'error';
                         break;
                     }
