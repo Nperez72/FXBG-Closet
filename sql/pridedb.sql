@@ -122,7 +122,7 @@ CREATE TABLE `dbeventmedia` (
   `type` text NOT NULL,
   `file_format` text NOT NULL,
   `description` text NOT NULL,
-  `altername_name` text NOT NULL,
+  `alternate_name` text NOT NULL,
   `time_created` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

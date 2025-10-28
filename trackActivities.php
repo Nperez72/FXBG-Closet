@@ -48,13 +48,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         'activity_description'
     );
 
-    $errors = false;
+        $errors = false;
 
     if (!wereRequiredFieldsSubmitted($args, $required)) {
         $errors = true;
         $popupMessage = 'Please fill out all required fields.';
         $popupType = 'error';
     }
+
+    
 
     $event_id = isset($args['event_id']) ? (int)$args['event_id'] : 0;
     if ($event_id <= 0) {
@@ -75,6 +77,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $activity_description = $args['activity_description'];
     $person_id = $_SESSION['_id'];
     $date = date("Y-m-d");
+	// were photos uploaded?
+    if (isset($_FILES["activity_images"]) && !$errors) {
+	    // try to filter out non-images
+	    $allowed = array("jpg" => "image/jpg", "jpeg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png");
+	    // loop based on how many images
+	    for ($x = 0; $x < count($_FILES["activity_images"]["name"]); $x++) {
+	    	$fname = basename($_FILES["activity_images"]["name"][$x]);
+		$ftype = $_FILES["activity_images"]["type"][$x];
+		$ftemp = $_FILES["activity_images"]["tmp_name"][$x];
+		$ext = pathinfo($fname, PATHINFO_EXTENSION);
+		
+		// only allow the above file extensions
+		// TODO security could be better
+		if (!array_key_exists($ext, $allowed)) {
+			$errors = true;
+			$popupMessage = 'Invalid photo file type.';
+			$popupType = 'error';
+			break;
+		}
+
+		// only allow the above MIME types
+		// TODO security could be better
+		if (in_array($ftype, $allowed)) {
+			// does it already exist?
+			if (file_exists("uploads/" . $person_id . "_" . $event_id . "_" . $date . "_" . $fname)) {
+				$errors = true;
+				$popupMessage = $fname . "already exists.";
+				break;
+			} else {
+				// move it to the uploads folder.
+				// format: person_id_event_id_date_fname
+				move_uploaded_file($ftemp, "uploads/" . $person_id . "_" . $event_id . "_" . $date . "_" . $fname);
+				
+			}
+		} else {
+			$errors = true;
+			// something went wrong with the photo.
+			$popupMessage = "Error: " . $_FILES["activity_images"]["error"][$x];
+			$popupType = 'error';
+			break;
+		}
+	    }
+    }
 
     if ($errors) {
         echo '<p class="error">Your form submission contained unexpected or invalid input.</p>';
