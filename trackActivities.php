@@ -104,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // does it already exist?
                 if (file_exists("uploads/" . $person_id . "_" . $event_id . "_" . $date . "_" . $fname)) {
                     $errors = true;
-                    $popupMessage = $fname . "already exists.";
+                    $popupMessage = $fname . " already exists.";
                     break;
                 } else {
                     // move it to the uploads folder.
