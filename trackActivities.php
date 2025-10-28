@@ -111,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     // format: person_id_event_id_date_fname
                     $destination = "uploads/" . $person_id . "_" . $event_id . "_" . $date . "_" . $fname;
                     if (move_uploaded_file($ftemp, $destination)) {
-                        $fresult = add_media(NULL, $event_id, basename($fname), $ftype, $ext, $activity_description, basename($ftemp), $date);
+                        $fresult = add_media(null, $event_id, basename($fname), $ftype, $ext, $activity_description, basename($ftemp), $date);
                         if (!$fresult) {
                             $showPopup = true;
                             $popupMessage = 'Failed to upload photo. Please try again.';
