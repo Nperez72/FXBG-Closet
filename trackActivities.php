@@ -110,7 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     // move it to the uploads folder.
                     // format: person_id_event_id_date_fname
                     move_uploaded_file($ftemp, "uploads/" . $person_id . "_" . $event_id . "_" . $date . "_" . $fname);
-                    $fresult = add_media(NULL, $event_id, basename($fname), $ftype, $ext, $activity_description, basename($ftemp), $date);
+                    $fresult = add_media(null, $event_id, basename($fname), $ftype, $ext, $activity_description, basename($ftemp), $date);
                     if (!$fresult) {
                         $showPopup = true;
                         $popupMessage = 'Failed to log activity. Please try again.';
