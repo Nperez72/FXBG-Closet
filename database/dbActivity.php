@@ -43,9 +43,6 @@ function add_media($media_id, $activity_id, $file_name, $type, $file_format, $de
         return false;
     }
 
-    $hours = (float)$hours_spent;
-    $photo_id = null;
-
      $query = "INSERT INTO dbeventmedia (media_id, activity_id,	file_name, type, file_format, description, alternate_name, time_created) 
               VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -56,7 +53,7 @@ function add_media($media_id, $activity_id, $file_name, $type, $file_format, $de
         return false;
     }
 
-    mysqli_stmt_bind_param($stmt, $media_id, $activity_id, $file_name, $type, $file_format, $description, $alternate_name, $time_created);
+    mysqli_stmt_bind_param($stmt, "iissssss", $media_id, $activity_id, $file_name, $type, $file_format, $description, $alternate_name, $time_created);
 
     $result = mysqli_stmt_execute($stmt);
 

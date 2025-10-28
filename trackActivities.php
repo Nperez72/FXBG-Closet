@@ -84,6 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // loop based on how many images
         for ($x = 0; $x < count($_FILES["activity_images"]["name"]); $x++) {
             $fname = basename($_FILES["activity_images"]["name"][$x]);
+            $fname = strtolower($fname);
             $ftype = $_FILES["activity_images"]["type"][$x];
             $ftemp = $_FILES["activity_images"]["tmp_name"][$x];
             $ext = pathinfo($fname, PATHINFO_EXTENSION);
@@ -109,7 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     // move it to the uploads folder.
                     // format: person_id_event_id_date_fname
                     move_uploaded_file($ftemp, "uploads/" . $person_id . "_" . $event_id . "_" . $date . "_" . $fname);
-                    $fresult = add_media($basename($ftemp), $event_id, basename($fname), $ftype, $ext, $activity_description, basename($ftemp), $date);
+                    $fresult = add_media(basename($ftemp), $event_id, basename($fname), $ftype, $ext, $activity_description, basename($ftemp), $date);
                     if (!$fresult) {
                         $showPopup = true;
                         $popupMessage = 'Failed to log activity. Please try again.';
