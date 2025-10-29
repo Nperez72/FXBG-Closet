@@ -87,8 +87,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $fname = strtolower($fname);
             $ftype = $_FILES["activity_images"]["type"][$x];
             $ftemp = $_FILES["activity_images"]["tmp_name"][$x];
-	    $fsize = $_FILES["activity_images"]["size"][$x];
-	    $ext = pathinfo($fname, PATHINFO_EXTENSION);
+            $fsize = $_FILES["activity_images"]["size"][$x];
+            $ext = pathinfo($fname, PATHINFO_EXTENSION);
 
         // only allow the above file extensions
         // TODO security could be better
@@ -98,8 +98,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $popupType = 'error';
                 break;
             }
-            
-	
+
+
         // only allow the above MIME types
         // TODO security could be better
             if (in_array($ftype, $allowed)) {
@@ -108,21 +108,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $errors = true;
                     $popupMessage = $fname . " already exists.";
                     break;
-		} else {
-			// max image size in bytes is 5MB
-			$maxsize = 5 * 1024 * 1024;
-			$destination = "uploads/" . $person_id . "_" . $event_id . "_" . $date . "_" . $fname . ".jpeg";
-			// temporary file destination
-			$image = NULL;
-			if ($fsize > $maxsize) {
-				// tmp imagecreate
-		    		$image = match ($ftype) {
-		        		"image/jpeg" => imagecreatefromjpeg($ftemp),
-		        		"image/gif" => imagecreatefromgif($ftemp),
-		        		"image/png" => imagecreatefrompng($ftemp),
-				};
-				//compress
-	    		}
+                } else {
+                    // max image size in bytes is 5MB
+                    $maxsize = 5 * 1024 * 1024;
+                    $destination = "uploads/" . $person_id . "_" . $event_id . "_" . $date . "_" . $fname . ".jpeg";
+                    // temporary file destination
+                    $image = null;
+                    if ($fsize > $maxsize) {
+                        // tmp imagecreate
+                            $image = match ($ftype) {
+                                "image/jpeg" => imagecreatefromjpeg($ftemp),
+                                "image/gif" => imagecreatefromgif($ftemp),
+                                "image/png" => imagecreatefrompng($ftemp),
+                            };
+                //compress
+                    }
                     // move it to the uploads folder.
                     // format: person_id_event_id_date_fname
                     if (imagejpeg($image, $destination)) {
