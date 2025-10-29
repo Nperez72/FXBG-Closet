@@ -10,7 +10,7 @@
 
 <main>
   <div class="main-content-box w-full max-w-3xl p-8 mb-8">
-    <form class="signup-form" method="post">
+    <form class="signup-form" method="post" enctype="multipart/form-data">
         <div class="text-center mb-8">
           <h2 class="mb-8">Activity Log Form</h2>
             <div class="main-content-box border-2 mb-0 shadow-xs w-full p-4">
@@ -41,7 +41,8 @@
             <label for="activity_description"><em>* </em>Activity Description</label>
             <textarea id="activity_description" name="activity_description" rows="6" required placeholder="Describe what you did during this volunteer activity"></textarea>
         </fieldset>
-            
+           <label for="activity_image">Choose photos</label>
+  <input id="activity_image" name="activity_images[]" multiple accept="image/jpeg, image/png" type="file" /> 
         <input type="submit" name="activity-form" value="Submit" class="blue-button">
     </form>
    </div> 
