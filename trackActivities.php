@@ -113,15 +113,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $maxsize = 10 * 1024 * 1024;
                     $destination = "uploads/" . $person_id . "_" . $event_id . "_" . $date . "_" . $fname . ".jpeg";
                     // temporary file destination
-		    $image = null;
-		    // enforce file size
-		    if ($fsize > $maxsize) {
-		        $showPopup = true;
+                    $image = null;
+            // enforce file size
+                    if ($fsize > $maxsize) {
+                        $showPopup = true;
                         $popupMessage = 'Failed to upload photo. Max size is 10MB.';
                         $popupType = 'error';
                         break;
-		    }
-		    // compress images larger than 5MB
+                    }
+            // compress images larger than 5MB
                     if ($fsize > $maxsize / 2) {
                         // tmp imagecreate
                             $image = match ($ftype) {
