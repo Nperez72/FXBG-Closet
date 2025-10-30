@@ -87,6 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $fname = strtolower($fname);
             $ftype = $_FILES["activity_images"]["type"][$x];
             $ftemp = $_FILES["activity_images"]["tmp_name"][$x];
+            $fsize = $_FILES["activity_images"]["size"][$x];
             $ext = pathinfo($fname, PATHINFO_EXTENSION);
 
         // only allow the above file extensions
@@ -98,6 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 break;
             }
 
+
         // only allow the above MIME types
         // TODO security could be better
             if (in_array($ftype, $allowed)) {
@@ -107,10 +109,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $popupMessage = $fname . " already exists.";
                     break;
                 } else {
+                    // max image size in bytes is 10MB
+                    $maxsize = 10 * 1024 * 1024;
+                    $destination = "uploads/" . $person_id . "_" . $event_id . "_" . $date . "_" . $fname . ".jpeg";
+                    // temporary file destination
+                    $image = null;
+            // enforce file size
+                    if ($fsize > $maxsize) {
+                        $showPopup = true;
+                        $popupMessage = 'Failed to upload photo. Max size is 10MB.';
+                        $popupType = 'error';
+                        break;
+                    }
+            // compress images larger than 5MB
+                    if ($fsize > $maxsize / 2) {
+                        // tmp imagecreate
+                            $image = match ($ftype) {
+                                "image/jpeg" => imagecreatefromjpeg($ftemp),
+                                "image/gif" => imagecreatefromgif($ftemp),
+                                "image/png" => imagecreatefrompng($ftemp),
+                            };
+                //compress
+                    }
                     // move it to the uploads folder.
                     // format: person_id_event_id_date_fname
-                    $destination = "uploads/" . $person_id . "_" . $event_id . "_" . $date . "_" . $fname;
-                    if (move_uploaded_file($ftemp, $destination)) {
+                    if (imagejpeg($image, $destination)) {
                         $fresult = add_media(null, $event_id, basename($fname), $ftype, $ext, $activity_description, basename($ftemp), $date);
                         if (!$fresult) {
                             $showPopup = true;
