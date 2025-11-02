@@ -1,6 +1,12 @@
 <?php
     require_once('include/input-validation.php');
     session_start();
+
+    $loggedIn = isset($_SESSION['_id']);
+    if (!$loggedIn) {
+        header("Location: login.php");
+        die();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -90,8 +96,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $fsize = $_FILES["activity_images"]["size"][$x];
             $ext = pathinfo($fname, PATHINFO_EXTENSION);
 
-        // only allow the above file extensions
-        // TODO security could be better
+            // only allow the above file extensions
+            // TODO security could be better
             if (!array_key_exists($ext, $allowed)) {
                 $errors = true;
                 $popupMessage = 'Invalid photo file type.';
@@ -100,8 +106,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
 
 
-        // only allow the above MIME types
-        // TODO security could be better
+            // only allow the above MIME types
+            // TODO security could be better
             if (in_array($ftype, $allowed)) {
                 // does it already exist?
                 if (file_exists("uploads/" . $person_id . "_" . $event_id . "_" . $date . "_" . $fname)) {
@@ -114,14 +120,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $destination = "uploads/" . $person_id . "_" . $event_id . "_" . $date . "_" . $fname . ".jpeg";
                     // temporary file destination
                     $image = null;
-            // enforce file size
+                    // enforce file size
                     if ($fsize > $maxsize) {
                         $showPopup = true;
                         $popupMessage = 'Failed to upload photo. Max size is 10MB.';
                         $popupType = 'error';
                         break;
                     }
-            // compress images larger than 5MB
+                    // compress images larger than 5MB
                     if ($fsize > $maxsize / 2) {
                         // tmp imagecreate
                             $image = match ($ftype) {
@@ -129,7 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 "image/gif" => imagecreatefromgif($ftemp),
                                 "image/png" => imagecreatefrompng($ftemp),
                             };
-                //compress
+                    //compress
                     }
                     // move it to the uploads folder.
                     // format: person_id_event_id_date_fname
