@@ -57,33 +57,33 @@ require_once('header.php');
     
     <?php
         $supplies = get_all_supply_requests();
-        
-        if (empty($supplies)) {
-            echo '<p>No supply requests found.</p>';
-        } else {
-            echo '<table>';
-            echo '<thead>';
+
+    if (empty($supplies)) {
+        echo '<p>No supply requests found.</p>';
+    } else {
+        echo '<table>';
+        echo '<thead>';
+        echo '<tr>';
+        echo '<th>Date Submitted</th>';
+        echo '<th>Item Type</th>';
+        echo '<th>Quantity</th>';
+        echo '<th>Description</th>';
+        echo '</tr>';
+        echo '</thead>';
+        echo '<tbody>';
+
+        foreach ($supplies as $supply) {
             echo '<tr>';
-            echo '<th>Date Submitted</th>';
-            echo '<th>Item Type</th>';
-            echo '<th>Quantity</th>';
-            echo '<th>Description</th>';
+            echo '<td>' . htmlspecialchars($supply['date_submitted']) . '</td>';
+            echo '<td>' . htmlspecialchars($supply['item_type']) . '</td>';
+            echo '<td>' . htmlspecialchars($supply['quantity']) . '</td>';
+            echo '<td>' . htmlspecialchars($supply['description']) . '</td>';
             echo '</tr>';
-            echo '</thead>';
-            echo '<tbody>';
-            
-            foreach ($supplies as $supply) {
-                echo '<tr>';
-                echo '<td>' . htmlspecialchars($supply['date_submitted']) . '</td>';
-                echo '<td>' . htmlspecialchars($supply['item_type']) . '</td>';
-                echo '<td>' . htmlspecialchars($supply['quantity']) . '</td>';
-                echo '<td>' . htmlspecialchars($supply['description']) . '</td>';
-                echo '</tr>';
-            }
-            
-            echo '</tbody>';
-            echo '</table>';
         }
+
+        echo '</tbody>';
+        echo '</table>';
+    }
     ?>
   </div>
 </main>

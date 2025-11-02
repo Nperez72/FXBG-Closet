@@ -37,68 +37,68 @@ require_once('header.php');
     $popupMessage = '';
     $popupType = 'success';
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $ignoreList = array();
-        $args = sanitize($_POST, $ignoreList);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $ignoreList = array();
+    $args = sanitize($_POST, $ignoreList);
 
-        $required = array(
-            'item_type',
-            'quantity',
-            'description'
-        );
+    $required = array(
+        'item_type',
+        'quantity',
+        'description'
+    );
 
-        $errors = false;
+    $errors = false;
 
-        if (!wereRequiredFieldsSubmitted($args, $required)) {
+    if (!wereRequiredFieldsSubmitted($args, $required)) {
+        $errors = true;
+        $popupMessage = 'Please fill out all required fields.';
+        $popupType = 'error';
+    }
+
+    $item_type = $args['item_type'];
+
+    if ($item_type === 'other') {
+        if (empty($args['other_item'])) {
             $errors = true;
-            $popupMessage = 'Please fill out all required fields.';
+            $popupMessage = 'Please specify the item type for "Other".';
             $popupType = 'error';
-        }
-
-        $item_type = $args['item_type'];
-        
-        if ($item_type === 'other') {
-            if (empty($args['other_item'])) {
-                $errors = true;
-                $popupMessage = 'Please specify the item type for "Other".';
-                $popupType = 'error';
-            } else {
-                $item_type = $args['other_item'];
-            }
-        }
-
-        $quantity = isset($args['quantity']) ? (int)$args['quantity'] : 0;
-        if ($quantity <= 0) {
-            echo "<p>Invalid quantity.</p>";
-            $errors = true;
-            $popupMessage = 'Quantity must be greater than 0.';
-            $popupType = 'error';
-        }
-
-        $description = $args['description'];
-        $date_submitted = date("Y-m-d");
-
-        if ($errors) {
-            echo '<p class="error">Your form submission contained unexpected or invalid input.</p>';
-            $showPopup = true;
         } else {
-            $result = add_supply_request($item_type, $quantity, $description, $date_submitted);
-            
-            if (!$result) {
-                $showPopup = true;
-                $popupMessage = 'Failed to log supply request. Please try again.';
-                $popupType = 'error';
-            } else {
-                $showPopup = true;
-                $popupMessage = 'Supply request submitted successfully!';
-                $popupType = 'success';
-            }
+            $item_type = $args['other_item'];
         }
     }
-    
-    if ($_SERVER["REQUEST_METHOD"] != "POST") {
-        require_once('suppliesForm.php');
+
+    $quantity = isset($args['quantity']) ? (int)$args['quantity'] : 0;
+    if ($quantity <= 0) {
+        echo "<p>Invalid quantity.</p>";
+        $errors = true;
+        $popupMessage = 'Quantity must be greater than 0.';
+        $popupType = 'error';
     }
+
+    $description = $args['description'];
+    $date_submitted = date("Y-m-d");
+
+    if ($errors) {
+        echo '<p class="error">Your form submission contained unexpected or invalid input.</p>';
+        $showPopup = true;
+    } else {
+        $result = add_supply_request($item_type, $quantity, $description, $date_submitted);
+
+        if (!$result) {
+            $showPopup = true;
+            $popupMessage = 'Failed to log supply request. Please try again.';
+            $popupType = 'error';
+        } else {
+            $showPopup = true;
+            $popupMessage = 'Supply request submitted successfully!';
+            $popupType = 'success';
+        }
+    }
+}
+
+if ($_SERVER["REQUEST_METHOD"] != "POST") {
+    require_once('suppliesForm.php');
+}
 ?>
 
 <?php if ($showPopup) : ?>
