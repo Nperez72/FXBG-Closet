@@ -106,6 +106,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <?php endif ?>
             <form id="password-change" method="post">
+                <label for="type">Account type</label>
+                <select id="type" name="type">
+                    <option value="0">Volunteer</option>
+                    <option value="1">Coordinator/Board Member</option>
+                    <option value="2">Admin</option>
+                </select>
                 <label for="username">New username</label>
                 <input type="text" id="username" name="new-username" placeholder="Enter new username" required>
                 <label for="password">New password</label>
@@ -114,12 +120,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="reenter-password">New Password</label>
                 <input type="password" id="password-reenter" name = 'new-password-reenter' placeholder="Re-enter new password" required>
                 <p id="password-match-error" class="error hidden">Passwords must match!</p>
-                <label for="type">Account type</label>
-                <select id="type" name="type">
-                    <option value="0">Volunteer</option>
-                    <option value="1">Coordinator/Board Member</option>
-                    <option value="2">Admin</option>
-                </select>
                 <input type="submit" id="submit" name="submit" value="Create Account">
                 <a class="button cancel" href="index.php">Cancel</a>
             </form>
