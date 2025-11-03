@@ -129,7 +129,7 @@ require_once('header.php');
             if (sizeof($pendingsignups) > 0) {
                 echo '<span class="action-card-badge urgent">' . sizeof($pendingsignups) . ' Pending</span>';
             }
-          ?>
+            ?>
           <span class="card-arrow">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M5 12h14M12 5l7 7-7 7"/>
