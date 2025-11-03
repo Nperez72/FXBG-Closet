@@ -73,7 +73,8 @@ if (date("H:i:s") > "18:19:59") {
             'clockout.php' => 2, 'edithours.php' => 2, 'eventlist.php' => 1, 'eventsignup.php' => 1,
             'eventfailure.php' => 1, 'signupsuccess.php' => 1, 'edittimes.php' => 1,
             'adminviewingevents.php' => 2, 'signuppending.php' => 1, 'requestfailed.php' => 1,
-            'settimes.php' => 1, 'eventfailurebaddeparturetime.php' => 1, 'trackActivities.php' => 0
+            'settimes.php' => 1, 'eventfailurebaddeparturetime.php' => 1, 'trackActivities.php' => 0,
+            'trackSupplies.php' => 2, 'viewSupplies.php' => 2
         );
 
         // Check permissions
@@ -207,6 +208,20 @@ if (date("H:i:s") > "18:19:59") {
                                         <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                                     </svg>
                                     Edit Event
+                                </a>
+                                 <a href="trackSupplies.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <path d="M21 21l-4.35-4.35"></path>
+                                    </svg>
+                                    Material Request Form
+                                </a>
+                                <a href="viewSupplies.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <path d="M21 21l-4.35-4.35"></path>
+                                    </svg>
+                                    View Material Requests
                                 </a>
                             </div>
                         </div>
@@ -378,6 +393,20 @@ if (date("H:i:s") > "18:19:59") {
                                         <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
                                     </svg>
                                     View Check-Ins
+                                </a>
+                                <a href="trackSupplies.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <path d="M21 21l-4.35-4.35"></path>
+                                    </svg>
+                                    Material Request Form
+                                </a>
+                                <a href="viewSupplies.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <path d="M21 21l-4.35-4.35"></path>
+                                    </svg>
+                                    View Material Requests
                                 </a>
                             </div>
                         </div>

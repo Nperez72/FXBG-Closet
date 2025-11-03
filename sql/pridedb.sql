@@ -129,6 +129,21 @@ CREATE TABLE `dbeventmedia` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `dbsupplies`
+--
+
+CREATE TABLE `dbsupplies` (
+  `supply_id` int(11) NOT NULL AUTO_INCREMENT,
+  `item_type` varchar(100) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `description` text NOT NULL,
+  `date_submitted` date NOT NULL,
+  PRIMARY KEY (`supply_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `dbeventpersons`
 --
 
