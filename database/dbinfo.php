@@ -21,15 +21,25 @@ date_default_timezone_set('America/New_York');
 
 function connect()
 {
+    // Standard credentials for local/XAMPP development
     $host = "localhost";
     $database = "pridedb";
     $user = "pridedb";
     $pass = "pridedb";
+    
+    // Auto-detect Docker environment
+    // Docker containers have .dockerenv file
+    if (file_exists('/.dockerenv')) {
+        $host = 'db';  // Use Docker service name
+    }
+    
+    // Production server override
     if ($_SERVER['SERVER_NAME'] == 'jenniferp160.sg-host.com') {
         $user = 'uknrzrk8sj1e7';
         $database = 'dbkzrh4cfmxbt0';
         $pass = 'fxextih7mssg';
     }
+    
     $con = mysqli_connect($host, $user, $pass, $database);
     if (!$con) {
         echo "not connected to server";

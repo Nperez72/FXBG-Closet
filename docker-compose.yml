@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  # PHP Web Server
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fxbg-closet-web
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www/html
+    environment:
+      - PHP_IDE_CONFIG=serverName=localhost
+    networks:
+      - fxbg-network
+    depends_on:
+      db:
+        condition: service_healthy
+    command: bash -c "apache2-foreground"
+
+  db:
+    image: mysql:8.0
+    container_name: fxbg-closet-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: pridedb
+      MYSQL_USER: pridedb
+      MYSQL_PASSWORD: pridedb
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      # Mount SQL initialization scripts - they run on first container start
+      - ./sql:/docker-entrypoint-initdb.d
+    networks:
+      - fxbg-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 10
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: fxbg-closet-phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_USER: pridedb
+      PMA_PASSWORD: pridedb
+      PMA_ROOT_PASSWORD: root
+    ports:
+      - "8080:80"
+    networks:
+      - fxbg-network
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  db_data:
+
+networks:
+  fxbg-network:
+    driver: bridge

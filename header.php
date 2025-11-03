@@ -22,6 +22,15 @@ if (date("H:i:s") > "18:19:59") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/theme-toggle.css">
+    
+    <!-- PWA Meta Tags - Enables offline support, installation, etc. -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#6B46C1">
+    <meta name="description" content="Volunteer Management System for Fredericksburg Pride - FXBG Closet">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="FXBG Closet">
+    <link rel="apple-touch-icon" href="/images/FXBG-PrideWhiteLogo.png">
 </head>
 
 <header>
@@ -1060,6 +1069,17 @@ if (date("H:i:s") > "18:19:59") {
                     document.body.style.overflow = '';
                 }
             });
+        }
+        
+        // PWA Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then((registration) => {
+                    console.log('Service Worker registered:', registration);
+                })
+                .catch((error) => {
+                    console.log('Service Worker registration failed:', error);
+                });
         }
     });
     </script>
