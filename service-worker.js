@@ -12,7 +12,6 @@ const STATIC_ASSETS = [
   "/js/theme-toggle.js",
   "/images/FXBG-PrideWhiteLogo.png",
   "https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap",
-  "https://kit.fontawesome.com/yourkit.js",
 ];
 
 self.addEventListener("install", (event) => {
