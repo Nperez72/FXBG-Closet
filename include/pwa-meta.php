@@ -1,9 +1,11 @@
 <?php
+
 /**
  * PWA Meta Tags and Service Worker Registration
  * Include this file in your page headers to enable PWA functionality
  * Usage: <?php include 'include/pwa-meta.php'; ?>
  */
+
 ?>
 <!-- PWA Manifest -->
 <link rel="manifest" href="/manifest.json">
