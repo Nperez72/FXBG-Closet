@@ -92,3 +92,46 @@ function get_all_accounts()
     mysqli_close($connection);
     return $rows;
 }
+
+function create_account($username, $password, $type)
+{
+    $connection = connect();
+    if (!$connection) {
+        echo "<script>console.log('Failed to connect to the database');</script>";
+        return false;
+    }
+    $check_stmt = mysqli_prepare($connection, "SELECT `username` FROM `dbaccounts` WHERE `username` = ? LIMIT 1");
+    if (!$check_stmt) {
+        mysqli_close($connection);
+        return false;
+    }
+
+    mysqli_stmt_bind_param($check_stmt, "s", $username);
+    mysqli_stmt_execute($check_stmt);
+    mysqli_stmt_store_result($check_stmt);
+
+    if (mysqli_stmt_num_rows($check_stmt) > 0) {
+        // Username already exists
+        mysqli_stmt_close($check_stmt);
+        mysqli_close($connection);
+        return 'duplicate';
+    }
+
+    mysqli_stmt_close($check_stmt);
+
+    $password_hash = password_hash($password, PASSWORD_DEFAULT);
+
+    $stmt = mysqli_prepare($connection, "INSERT INTO `dbaccounts` (`username`, `password`, `type`) VALUES (?, ?, ?)");
+    if (!$stmt) {
+        mysqli_close($connection);
+        return false;
+    }
+
+    mysqli_stmt_bind_param($stmt, "ssi", $username, $password_hash, $type);
+    $success = mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+
+    return $success;
+}
