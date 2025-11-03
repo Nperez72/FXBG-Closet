@@ -56,15 +56,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $item_type = $args['item_type'];
-
+    
     if ($item_type === 'other') {
-        if (empty($args['other_item'])) {
-            $errors = true;
-            $popupMessage = 'Please specify the item type for "Other".';
-            $popupType = 'error';
-        } else {
-            $item_type = $args['other_item'];
-        }
+        $item_type = $args['other_item'];
     }
 
     $quantity = isset($args['quantity']) ? (int)$args['quantity'] : 0;

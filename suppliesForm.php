@@ -28,7 +28,7 @@
                 <option value="other">Other</option>
             </select>
 
-            <div id="other_item_field" style="display: none;">
+            <div id="other_item_field">
                 <label for="other_item">Specify Item Type</label>
                 <input type="text" id="other_item" name="other_item" placeholder="Enter the item type">
             </div>
