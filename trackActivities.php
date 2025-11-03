@@ -82,18 +82,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // try to filter out non-images
         $allowed = array("jpg" => "image/jpeg", "jpeg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png");
         // loop based on how many images
-	for ($x = 0; $x < count($_FILES["activity_images"]["name"]); $x++) {
-	    if (is_uploaded_file($_FILES["activity_images"]["tmp_name"][$x])) {
+        for ($x = 0; $x < count($_FILES["activity_images"]["name"]); $x++) {
+            if (is_uploaded_file($_FILES["activity_images"]["tmp_name"][$x])) {
                 $fname = basename($_FILES["activity_images"]["name"][$x]);
                 $fname = strtolower($fname);
                 $ftemp = $_FILES["activity_images"]["tmp_name"][$x];
                 $ftype = mime_content_type($ftemp);
                 $fsize = $_FILES["activity_images"]["size"][$x];
-                
 
-            // only allow the above MIME types
-		// TODO security could be better
-		
+
+                // only allow the above MIME types
+            // TODO security could be better
+
                 if (in_array($ftype, $allowed)) {
                     // does it already exist?
                     if (file_exists("uploads/" . $person_id . "_" . $event_id . "_" . $date . "_" . $fname)) {
@@ -147,8 +147,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $popupMessage = "Error: " . $_FILES["activity_images"]["name"][$x];
                     $popupType = 'error';
                     break;
-		}
-	    }
+                }
+            }
         }
     }
 

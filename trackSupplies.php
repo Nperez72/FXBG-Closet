@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $item_type = $args['item_type'];
-    
+
     if ($item_type === 'other') {
         $item_type = $args['other_item'];
     }
