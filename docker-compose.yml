@@ -19,6 +19,15 @@ services:
       db:
         condition: service_healthy
     command: bash -c "apache2-foreground"
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /var/www/html
+          ignore:
+            - node_modules/
+            - .git/
+            - vendor/
 
   db:
     image: mysql:8.0
