@@ -26,7 +26,7 @@ $groups = get_all_groups();
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  	<link href="css/normal_tw.css" rel="stylesheet">
+    <link href="css/normal_tw.css" rel="stylesheet">
 <!-- BANDAID FIX FOR HEADER BEING WEIRD -->
 <?php
 $tailwind_mode = true;
@@ -60,7 +60,9 @@ require_once('header.php');
 
     <main>
         <div class="main-content-box w-[80%] p-6">
-            <?php if (isset($error)) echo "<p style='color: var(--error-color, #d4635a);'>$error</p>"; ?>
+            <?php if (isset($error)) {
+                echo "<p style='color: var(--error-color, #d4635a);'>$error</p>";
+            } ?>
 
             <table>
                 <thead>
@@ -71,8 +73,8 @@ require_once('header.php');
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if (!empty($groups)): ?>
-                        <?php foreach ($groups as $group): ?>
+                    <?php if (!empty($groups)) : ?>
+                        <?php foreach ($groups as $group) : ?>
                             <tr>
                                 <td><?php echo htmlspecialchars($group->get_group_name()); ?></td>
                                 <td><?php echo ucfirst($group->get_color_level()); ?></td>
@@ -82,7 +84,7 @@ require_once('header.php');
                                 </td>
                             </tr>
                         <?php endforeach; ?>
-                    <?php else: ?>
+                    <?php else : ?>
                         <tr><td colspan="3">No groups found.</td></tr>
                     <?php endif; ?>
                 </tbody>

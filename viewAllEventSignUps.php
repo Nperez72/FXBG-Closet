@@ -73,7 +73,7 @@ $access_level = $_SESSION['access_level']; ?>
     <?php require_once('header.php'); ?>
 
     <h1>View Pending Sign-Ups List</h1>
-    <?php if (isset($_GET['pendingSignupSuccess'])): ?>
+    <?php if (isset($_GET['pendingSignupSuccess'])) : ?>
         <div class="happy-toast">Sign-up request resolved successfully.</div>
     <?php endif ?>
 
@@ -83,17 +83,17 @@ $access_level = $_SESSION['access_level']; ?>
         $event_ids = all_pending_ids(); ?>
 
         <p>
-            <?php if (sizeof($event_names) === 0):
+            <?php if (sizeof($event_names) === 0) :
                 echo "There are 0 pending signups awaiting resolution.";
                 ?>
-            <?php elseif (sizeof($event_names) === 1):
+            <?php elseif (sizeof($event_names) === 1) :
                 echo "There is 1 pending signup awaiting resolution"; ?>
-            <?php else: ?>
+            <?php else : ?>
                 <?php echo "There are " . htmlspecialchars(string: sizeof($event_names)) . " pending signups awaiting resolution"; ?>
             <?php endif; ?>
         </p>
 
-        <?php if (count(value: $event_names) > 0): ?>
+        <?php if (count(value: $event_names) > 0) : ?>
             <div class="table-wrapper">
                 <table class="general">
                     <thead>
@@ -103,20 +103,20 @@ $access_level = $_SESSION['access_level']; ?>
                             <th>Last Name</th>
                             <th>User ID</th>
                             <th>Position</th>
-                            <?php if ($access_level >= 2): ?>
+                            <?php if ($access_level >= 2) : ?>
                                 <th>Actions</th>
                             <?php endif; ?>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php for ($x = 0; $x < sizeof($event_names); $x++): ?>
+                        <?php for ($x = 0; $x < sizeof($event_names); $x++) : ?>
                             <h2><?php $name = $event_names[$x]; ?></h2>
 
                             <?php
                             $event = $events[$x];
                             $event_id = $event_ids[$x];
 
-                            //foreach ($events as $event): 
+                            //foreach ($events as $event):
                             $user_info = retrieve_person($event['username']);
                             $position_label = $event['role'] === 'p' ? 'Participant' : ($event['role'] === 'v' ? 'Volunteer' : 'Unknown');
                             ?>
@@ -130,7 +130,7 @@ $access_level = $_SESSION['access_level']; ?>
                                         href="viewProfile.php?id=<?php echo urlencode($user_info->get_id()); ?>"><?php echo htmlspecialchars($user_info->get_id()); ?></a>
                                 </td>
                                 <td><?php echo htmlspecialchars($position_label); ?></td>
-                                <?php if ($access_level >= 2): ?>
+                                <?php if ($access_level >= 2) : ?>
                                     <td>
                                         <form method="POST" style="display:inline;">
                                             <input type="hidden" name="event_id" value="<?= $event_id['eventname']; ?>">

@@ -1,4 +1,5 @@
 <?php
+
 ob_start();
 
 session_start();
@@ -20,11 +21,11 @@ if ($replyID && $discussionTitle) {
 
     // Now fetch the discussion associated with the title to get the authorID
     $discussion = get_discussion($discussionTitle); // Fetch discussion based on the title
-    
+
     if ($discussion) {
         $authorID = $discussion['author_id'];  // Get the author ID from the discussion
         $title = $discussion['title'];         // Get the title from the discussion
-        
+
         // Redirect back to the discussion content page
         header("Location: discussionContent.php?author=" . urlencode($authorID) . "&title=" . urlencode($title));
         exit;
@@ -35,4 +36,3 @@ if ($replyID && $discussionTitle) {
     die("Invalid request. Missing reply ID or title.");
 }
 ob_end_flush();
-?>

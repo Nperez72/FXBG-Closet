@@ -23,7 +23,7 @@ if ($accessLevel < 1) {
 // Process the form submission or auto-redirect based on access level
 if ($_SERVER["REQUEST_METHOD"] == "POST" || $accessLevel == 1) {
     require_once('include/input-validation.php');
-    
+
     // Use session username if accessLevel is 1, otherwise validate form input
     if ($accessLevel == 1) {
         $args['username'] = $username;
@@ -63,14 +63,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || $accessLevel == 1) {
         <main class="general">
             <h2>Change Hours for Event</h2>
 
-            <?php if ($accessLevel > 1): ?>
+            <?php if ($accessLevel > 1) : ?>
                 <!--shows the form only if access level is greater than 1 -->
                 <form id="new-event-form" method="post" class="styled-form">
                     <label for="username">* Your Account Name </label>
                     <input type="text" id="username" name="username" required placeholder="Enter account name"> 
                     <input type="submit" value="Change Volunteer Hours" class="button primary-button">
                 </form>
-            <?php else: ?>
+            <?php else : ?>
                 <!-- Message or auto-redirect if access level is 1 -->
                 <p>Redirecting you to your event list...</p>
             <?php endif; ?>

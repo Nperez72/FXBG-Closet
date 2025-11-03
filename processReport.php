@@ -1,4 +1,5 @@
 <?php
+
 session_cache_expire(30);
 session_start();
 ini_set("display_errors", 1);
@@ -12,7 +13,8 @@ if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
 require_once('database/dbPersons.php');
 
 // 👉 Add month completeness check function
-function is_month_complete($dateFrom) {
+function is_month_complete($dateFrom)
+{
     $lastDayOfMonth = date("Y-m-t", strtotime($dateFrom));
     $today = date("Y-m-d");
     return $today > $lastDayOfMonth;
@@ -155,4 +157,3 @@ foreach ($reportData as $month => $data) {
 echo "</table>";
 echo "</body></html>";
 exit();
-?>

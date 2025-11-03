@@ -1,0 +1,57 @@
+name: Auto Format
+
+on:
+  push:
+    branches-ignore:
+      - main
+      - master
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    # Skip if the commit was made by github-actions bot (prevents infinite loop)
+    if: github.actor != 'github-actions[bot]'
+    permissions:
+      contents: write
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.head_ref }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+        tools: phpcbf
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    
+    - name: Install Prettier
+      run: npm install -g prettier
+    
+    - name: Format PHP files
+      run: |
+        if command -v phpcbf &> /dev/null; then
+          phpcbf --standard=PSR12 --extensions=php --ignore=vendor/,lib/ . || echo "PHP formatting completed with some files unable to be auto-fixed"
+        else
+          echo "Skipping PHP formatting - phpcbf not available"
+        fi
+    
+    - name: Format JavaScript/CSS files
+      run: |
+        prettier --write "**/*.{js,css,json}" --ignore-path .gitignore || echo "Prettier formatting completed"
+    
+    - name: Commit changes
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add -A
+        git diff --quiet && git diff --staged --quiet || git commit -m "chore: auto-format code"
+        git push || echo "No changes to push"
+

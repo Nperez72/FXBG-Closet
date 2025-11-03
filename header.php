@@ -1,12 +1,12 @@
 <!-- Modern Header Navigation -->
 <?php
 date_default_timezone_set('America/New_York');/*
-* Copyright 2013 by Allen Tucker. 
-* This program is part of RMHP-Homebase, which is free software.  It comes with 
-* absolutely no warranty. You can redistribute and/or modify it under the terms 
+* Copyright 2013 by Allen Tucker.
+* This program is part of RMHP-Homebase, which is free software.  It comes with
+* absolutely no warranty. You can redistribute and/or modify it under the terms
 * of the GNU General Public License as published by the Free Software Foundation
 * (see <http://www.gnu.org/licenses/ for more information).
-* 
+*
 if (date("H:i:s") > "18:19:59") {
  require_once 'database/dbShifts.php';
  auto_checkout_missing_shifts();
@@ -14,7 +14,7 @@ if (date("H:i:s") > "18:19:59") {
 */
 
 // check if we are in locked mode, if so,
-// user cannot access anything else without 
+// user cannot access anything else without
 // logging back in
 ?>
 <head>
@@ -47,7 +47,7 @@ if (date("H:i:s") > "18:19:59") {
                 </div>
             </div>
         </nav>');
-    } else if ($_SESSION['logged_in']) {
+    } elseif ($_SESSION['logged_in']) {
         // Permission array setup
         $permission_array = array(
             'index.php' => 0, 'about.php' => 0, 'apply.php' => 0, 'logout.php' => 0,
@@ -73,18 +73,18 @@ if (date("H:i:s") > "18:19:59") {
             'clockout.php' => 2, 'edithours.php' => 2, 'eventlist.php' => 1, 'eventsignup.php' => 1,
             'eventfailure.php' => 1, 'signupsuccess.php' => 1, 'edittimes.php' => 1,
             'adminviewingevents.php' => 2, 'signuppending.php' => 1, 'requestfailed.php' => 1,
-            'settimes.php' => 1, 'eventfailurebaddeparturetime.php' => 1
+            'settimes.php' => 1, 'eventfailurebaddeparturetime.php' => 1, 'trackActivities.php' => 0
         );
 
         // Check permissions
         $current_page = strtolower(substr($_SERVER['PHP_SELF'], strrpos($_SERVER['PHP_SELF'], '/') + 1));
-        if(isset($permission_array[$current_page]) && $permission_array[$current_page] > $_SESSION['access_level']){
+        if (isset($permission_array[$current_page]) && $permission_array[$current_page] > $_SESSION['access_level']) {
             echo "<script type=\"text/javascript\">window.location = \"index.php\";</script>";
             die();
         }
 
         // ADMIN NAVBAR
-        if ($_SESSION['access_level'] >= 2) {
+        if ($_SESSION['access_level'] >= 3) {
             echo('
             <nav class="modern-navbar">
                 <div class="nav-container">
@@ -143,6 +143,13 @@ if (date("H:i:s") > "18:19:59") {
                                         <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
                                     </svg>
                                     View Check-Ins
+                                </a>
+                                <a href="trackActivities.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 11l3 3L22 4"></path>
+                                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+                                    </svg>
+                                    Track Activities
                                 </a>
                             </div>
                         </div>
@@ -217,20 +224,21 @@ if (date("H:i:s") > "18:19:59") {
                                 </svg>
                             </button>
                             <div class="dropdown-menu">
-                                <a href="createGroup.php" class="dropdown-item">
+                                <a href="manageBoardMembers.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <line x1="12" y1="5" x2="12" y2="19"></line>
-                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
                                     </svg>
-                                    Create Group
+                                    Manage Board Members
                                 </a>
-                                <a href="showGroups.php" class="dropdown-item">
+                                <a href="manageVolunteerCoordinators.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"></path>
-                                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                                        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
                                     </svg>
-                                    View Groups
+                                    Manage Volunteer Coordinators
                                 </a>
                             </div>
                         </div>
@@ -309,9 +317,9 @@ if (date("H:i:s") > "18:19:59") {
             </nav>');
         }
 
-/*
+
         // BOARD MEMBER/VOLUNTEER COORDINATOR NAVBAR
-        if ($_SESSION['access_level'] >= 2) {
+        if ($_SESSION['access_level'] == 2) {
             echo('
             <nav class="modern-navbar">
                 <div class="nav-container">
@@ -473,7 +481,7 @@ if (date("H:i:s") > "18:19:59") {
                                 <line x1="3" y1="10" x2="21" y2="10"></line>
                             </svg>
                         </a>
-                        
+
                         <button class="theme-toggle nav-action-btn" aria-label="Toggle theme" title="Toggle dark/light mode">
                             <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <circle cx="12" cy="12" r="5"></circle>
@@ -501,7 +509,7 @@ if (date("H:i:s") > "18:19:59") {
                                 </svg>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a href="modifyUserRole.php" class="dropdown-item">
+                                <a href="roleChange.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
                                         <circle cx="12" cy="7" r="4"></circle>
@@ -528,7 +536,7 @@ if (date("H:i:s") > "18:19:59") {
                 </div>
             </nav>');
         }
-*/
+
 
         // VOLUNTEER NAVBAR
         if ($_SESSION['access_level'] <= 1) {
@@ -590,6 +598,13 @@ if (date("H:i:s") > "18:19:59") {
                                         <polyline points="12 6 12 12 16 14"></polyline>
                                     </svg>
                                     Edit Hours
+                                </a>
+                                <a href="trackActivities.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 11l3 3L22 4"></path>
+                                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+                                    </svg>
+                                    Track Activities
                                 </a>
                             </div>
                         </div>

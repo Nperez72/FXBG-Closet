@@ -70,13 +70,13 @@ $access_level = $_SESSION['access_level'];
     <main class="general">
         <h2><?php echo htmlspecialchars($event_info['name']); ?></h2>
 
-        <?php if (isset($remove_success)): ?>
+        <?php if (isset($remove_success)) : ?>
             <p class="success"><?php echo htmlspecialchars($remove_success); ?></p>
-        <?php elseif (isset($remove_error)): ?>
+        <?php elseif (isset($remove_error)) : ?>
             <p class="error"><?php echo htmlspecialchars($remove_error); ?></p>
         <?php endif; ?>
 
-        <?php if (count($signups) > 0): ?>
+        <?php if (count($signups) > 0) : ?>
             <div class="table-wrapper">
                 <table class="general">
                     <thead>
@@ -85,13 +85,13 @@ $access_level = $_SESSION['access_level'];
                             <th>Last Name</th>
                             <th>User ID</th>
                             <th>Position</th>
-                            <?php if ($access_level >= 2): ?>
+                            <?php if ($access_level >= 2) : ?>
                                 <th>Actions</th>
                             <?php endif; ?>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($signups as $signup): 
+                        <?php foreach ($signups as $signup) :
                             $user_info = retrieve_person($signup['userID']);
                             $position_label = $signup['position'] === 'p' ? 'Participant' : ($signup['position'] === 'v' ? 'Volunteer' : 'Unknown');
                             ?>
@@ -100,7 +100,7 @@ $access_level = $_SESSION['access_level'];
                                 <td><?php echo htmlspecialchars($user_info->get_last_name()); ?></td>
                                 <td><a href="viewProfile.php?id=<?php echo urlencode($signup['userID']); ?>"><?php echo htmlspecialchars($signup['userID']); ?></a></td>
                                 <td><?php echo htmlspecialchars($position_label); ?></td>
-                                <?php if ($access_level >= 2): ?>
+                                <?php if ($access_level >= 2) : ?>
                                     <td>
                                         <form method="POST" style="display:inline;">
                                             <input type="hidden" name="event_id" value="<?php echo htmlspecialchars($id); ?>">
@@ -116,7 +116,7 @@ $access_level = $_SESSION['access_level'];
                     </tbody>
                 </table>
             </div>
-        <?php else: ?>
+        <?php else : ?>
             <p>No users have signed up for this event yet.</p>
         <?php endif; ?>
 

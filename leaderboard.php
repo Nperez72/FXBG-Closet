@@ -2,23 +2,21 @@
 
 session_start();
 
- 
+
 
 if (!isset($_SESSION['_id']) || $_SESSION['access_level'] < 1) {
-
     header("Location: login.php");
 
     exit;
-
 }
 
- 
+
 
 require_once('database/dbinfo.php');
 
 $con = connect();
 
- 
+
 
 $query = "
 
@@ -36,18 +34,14 @@ $query = "
 
 $result = mysqli_query($con, $query);
 
- 
+
 
 $leaders = [];
 
 if ($result) {
-
     while ($row = mysqli_fetch_assoc($result)) {
-
         $leaders[] = $row;
-
     }
-
 }
 
 mysqli_close($con);
@@ -210,8 +204,7 @@ mysqli_close($con);
 
         <tbody>
 
-            <?php foreach ($leaders as $index => $vol): ?>
-
+            <?php foreach ($leaders as $index => $vol) : ?>
                 <tr>
 
                     <td><?= $index + 1 ?></td>

@@ -114,15 +114,15 @@ if ($accessLevel < 2) {
 
         $selected_group = $_GET['group_name'] ?? '';
 
-        if ($selected_group):
+        if ($selected_group) :
             echo "<h2 class='text-xl font-bold mb-4'>Managing: " . htmlspecialchars($selected_group) . "</h2>";
 
             $members = get_users_in_group($selected_group);
-        ?>
+            ?>
             <h3 class="text-lg font-semibold">Current Members</h3>
-            <?php if (empty($members)): ?>
+            <?php if (empty($members)) : ?>
                 <p>No members in this group.</p>
-            <?php else: ?>
+            <?php else : ?>
                 <table>
                     <thead>
                         <tr>
@@ -132,10 +132,10 @@ if ($accessLevel < 2) {
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($members as $member): 
+                        <?php foreach ($members as $member) :
                             $full_name = htmlspecialchars($member['first_name']) . " " . htmlspecialchars($member['last_name'] ?? '');
                             $email = htmlspecialchars($member['email']);
-                        ?>
+                            ?>
                             <tr>
                                 <td><?= $full_name ?></td>
                                 <td><?= $email ?></td>
@@ -176,13 +176,13 @@ if ($accessLevel < 2) {
             $users_not_in_group = get_users_not_in_group($selected_group);
             ?>
             <h3 class="text-lg font-semibold mt-6">Add a User to this Group</h3>
-            <?php if (empty($users_not_in_group)): ?>
+            <?php if (empty($users_not_in_group)) : ?>
                 <p>No available users to add.</p>
-            <?php else: ?>
+            <?php else : ?>
                 <form method="POST" action="manageMembers.php?group_name=<?= urlencode($selected_group) ?>">
                     <select name="add_user_id" required>
                         <option value="" disabled selected>Select a user to add</option>
-                        <?php foreach ($users_not_in_group as $user): ?>
+                        <?php foreach ($users_not_in_group as $user) : ?>
                             <option value="<?= htmlspecialchars($user['id']) ?>">
                                 <?= htmlspecialchars($user['first_name']) . " " . htmlspecialchars($user['last_name']) ?>
                             </option>

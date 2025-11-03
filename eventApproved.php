@@ -1,4 +1,4 @@
-<?php 
+<?php
 
     // //session_cache_expire(30);
     // //session_start();
@@ -18,13 +18,13 @@
     //     //header('Location: calendar.php');
     //     //die();
     //     //echo "Success!";
-  	// }
-  	
-  	// include_once('database/dbEvents.php');
-  	
+    // }
+
+    // include_once('database/dbEvents.php');
+
     // // We need to check for a bad ID here before we query the db
     // // otherwise we may be vulnerable to SQL injection(!)
-  	// $event_info = fetch_event_by_id($id);
+    // $event_info = fetch_event_by_id($id);
     // if ($event_info == NULL) {
     //     // TODO: Need to create error page for no event found
     //     // header('Location: calendar.php');
@@ -118,13 +118,13 @@
     //     if (isset($args["request_type"])) {
     //         //if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //         $request_type = $args['request_type'];
-    //         if (!valueConstrainedTo($request_type, 
+    //         if (!valueConstrainedTo($request_type,
     //                 array('add self', 'add another', 'remove'))) {
     //             echo "Bad request";
     //             die();
     //         }
     //         $eventID = $args["id"];
-    
+
     //         // Check if Get request from user is from an organization member
     //         // (volunteer, admin/super admin)
     //         if ($request_type == 'add self' && $access_level >= 1) {
@@ -139,7 +139,7 @@
     //             require_once('database/dbMessages.php');
     //             require_once('include/output.php');
     //             $event = fetch_event_by_id($eventID);
-                
+
     //             $eventName = htmlspecialchars_decode($event['name']);
     //             $eventDate = date('l, F j, Y', strtotime($event['date']));
     //             $eventStart = time24hto12h($event['startTime']);
@@ -216,19 +216,19 @@
     <?php require_once('header.php') ?>
     <h1>View Sign-Up</h1>
     <main class="event-info">
-        <?php if (isset($_GET['createSuccess'])): ?>
+        <?php if (isset($_GET['createSuccess'])) : ?>
             <div class="happy-toast">Sign-up Approved!</div>
         <?php endif ?>
-        <?php if (isset($_GET['attachSuccess'])): ?>
+        <?php if (isset($_GET['attachSuccess'])) : ?>
             <div class="happy-toast">Media attached successfully!</div>
         <?php endif ?>
-        <?php if (isset($_GET['removeSuccess'])): ?>
+        <?php if (isset($_GET['removeSuccess'])) : ?>
             <div class="happy-toast">Media removed successfully!</div>
         <?php endif ?>
-        <?php if (isset($_GET['editSuccess'])): ?>
+        <?php if (isset($_GET['editSuccess'])) : ?>
             <div class="happy-toast">Appointment details updated successfully!</div>
         <?php endif ?>
-        <?php    
+        <?php
             require_once('include/output.php');
             $event_name = $event_info['name'];
             $event_date = date('l, F j, Y', strtotime($event_info['date']));
@@ -239,15 +239,15 @@
             //$event_animal_id = $event_info['animalID'];
             $event_id = $event_info['description'];
             require_once('include/time.php');
-            echo '<h2 class="centered">'.$event_name.'</h2>';
+            echo '<h2 class="centered">' . $event_name . '</h2>';
         ?>
         <div id="table-wrapper">
             <table class="centered">
                 <tbody>
-                <tr>	
+                <tr>    
                         <td class="label">Description </td>
                         <td>
-                            <?php 
+                            <?php
                                 echo $event_description;
                                 //$animals = get_animal($event_animal_id);
                                 //foreach($animals as $animal) {
@@ -256,41 +256,41 @@
                             ?>
                         </td>
                     </tr>
-                    <tr>	
+                    <tr>    
                         <td class="label">Date </td>
-                        <td><?php echo $event_date ?></td>     		
+                        <td><?php echo $event_date ?></td>          
                     </tr>
-                    <tr>	
+                    <tr>    
                         <td class="label">Time </td>
                         <td><?php echo $event_startTime?></td>
                     </tr>
                     
-                    <tr>	
+                    <tr>    
                         <!--<td class="label">Location </td>-->
                         <td>
-                            <?php 
+                            <?php
                                 //$locations = get_location($event_location);
                                 //foreach($locations as $location) {
                                 //    echo $location['name'];
                                 //}
                             ?>
-                        </td>     		
+                        </td>           
                     </tr>
-                    <tr>	
+                    <tr>    
                         <!--<td class="label">Location Address </td>-->
                         <td>
-                            <?php 
+                            <?php
                                 //foreach($locations as $location) {
                                 //    echo $location['address'];
                                 //}
                             ?>
-                        </td>     		
+                        </td>           
                     </tr>
-                    <!--<tr>	
+                    <!--<tr>    
                         <td class="label">Description </td><td></td>
                     </tr>
                     <tr>
-                        <td id="description-cell" colspan="2"><?php //echo $event_description ?></td>     		
+                        <td id="description-cell" colspan="2"><?php //echo $event_description ?></td>           
                     </tr>
                     
                     <tr>-->
@@ -301,16 +301,16 @@
         <!-- TODO: will figure out another way to center
                  later -->
         <?php
-		if ($access_level >= 2) {
-                	echo '
+        if ($access_level >= 2) {
+                    echo '
                         <tr>
                         	<td colspan="2">
                                 	<a href="editEvent.php?id=' . $id . '" class="button">Edit Appointment Details</a>
                                 </td>
                         </tr>
                         ';
-                 }
-	?> 
+        }
+        ?> 
 
         <?php if ($access_level >= 2) : ?>
             <!-- <form method="post" action="deleteEvent.php">
