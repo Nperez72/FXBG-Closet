@@ -35,7 +35,7 @@ See `DOCKER_SETUP.md` for details.
 php -S localhost:8000
 # Open: http://localhost:8000
 ```
-# To clear (remove) any built-in PHP server: (just press Ctrl+C in the terminal)
+To clear (remove) any built-in PHP server: (just press Ctrl+C in the terminal)
 
 ---
 
