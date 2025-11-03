@@ -66,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (!$securePassword) {
         $error2 = true; // password isn't secure
-    } if (!$password == $password_reenter) {
+    } if ($password != $password_reenter) {
         $error1 = true;
     } if( $securePassword && $password == $password_reenter) {
         $result = create_account($username, $password, $type);
