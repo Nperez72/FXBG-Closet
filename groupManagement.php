@@ -22,85 +22,96 @@ if ($accessLevel < 2) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en" style="height: auto;">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Group Management Page</title>
-  <link href="css/management_tw.css" rel="stylesheet">
+  <title>Group Management | FXBG Pride</title>
+  <link href="css/modern-management.css" rel="stylesheet">
+  <link href="css/mobile-nav.css" rel="stylesheet">
 
 <!-- BANDAID FIX FOR HEADER BEING WEIRD -->
 <?php
 $tailwind_mode = true;
 require_once('header.php');
 ?>
-<style>
-  .date-box {
-      background: var(--date-box-bg, #e8c4b8);
-      padding: 7px 30px;
-      border-radius: 50px;
-      box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.25) inset;
-      color: white;
-      font-size: 24px;
-      font-weight: 700;
-      text-align: center;
-  }
-    .dropdown {
-        padding-right: 50px;
-    }
-  
-  .button-section button {
-    display: flex;                    /* Use flexbox for alignment */
-    align-items: center;              /* Vertically center content */
-    justify-content: center;          /* Horizontally center content */
-  }
-  .button-section button div {
-    text-align: center;               /* Ensures text inside div centers */
-  }
-
-</style>
 <!-- BANDAID END, REMOVE ONCE SOME GENIUS FIXES -->
 
 </head>
 
-<body style="display: block">
+<body class="management-page">
 
-  <!-- Larger Hero Section -->
-  <header class="hero-header" style="flex: 0 0 auto; margin-top:0; margin-bottom: 50px; padding:0;"></header>
+  <section class="management-hero">
+    <div class="management-hero-content">
+      <h1>Group Management</h1>
+      <p class="management-hero-subtitle">
+        Manage your leadership team and coordinate roles across the organization
+      </p>
+    </div>
+  </section>
 
-  <!-- Main Content -->
-  <main style="flex: 1 0 auto;">
-    <div class="sections">
-
-      <!-- Buttons Section -->
-      <div class="button-section">
-        <button onclick="window.location.href='manageBoardMembers.php';">
-          <div class="button-left-gray"></div>
-          <div>Manage Board Members</div>
-          <img class="button-icon h-14 w-14" src="images/group.svg" alt="Group Icon">
-        </button>
-
-        <button onclick="window.location.href='manageVolunteerCoordinators.php';">
-          <div class="button-left-gray"></div>
-          <div>Manage Volunteer Coordinators</div>
-          <img class="button-icon h-14 w-14" src="images/group.svg" alt="Group Icon">
-        </button>
-
-        <div class="text-center mt-6">
-            <a href="index.php" class="return-button">Return to Dashboard</a>
+  <main class="management-grid">
+    <div class="card-grid">
+      <a href="manageBoardMembers.php" class="action-card">
+        <div class="card-icon-wrapper">
+          <img src="images/group.svg" alt="Board Members Icon">
         </div>
+        <div class="action-card-content">
+          <h3 class="action-card-title">Manage Board Members</h3>
+          <p class="action-card-description">
+            View and update the list of authorized board members
+          </p>
+        </div>
+        <div class="action-card-footer">
+          <span class="action-card-badge">Leadership</span>
+          <span class="card-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </div>
+      </a>
 
-     </div>
+      <a href="manageVolunteerCoordinators.php" class="action-card">
+        <div class="card-icon-wrapper">
+          <img src="images/group.svg" alt="Coordinators Icon">
+        </div>
+        <div class="action-card-content">
+          <h3 class="action-card-title">Manage Volunteer Coordinators</h3>
+          <p class="action-card-description">
+            Oversee volunteer coordinators and their responsibilities
+          </p>
+        </div>
+        <div class="action-card-footer">
+          <span class="action-card-badge">Coordinators</span>
+          <span class="card-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </div>
+      </a>
+    </div>
 
-      <!-- Text Section -->
-      <div class="text-section">
-        <h1>Group Management</h1>
-        <div class="div-blue" style="margin-top: 10px; margin-bottom:10px"></div>
-        <p>
-          Welcome to the group management hub! Use the controls on the left to manage the list of authorized board members and volunteer coordinators. Everything you need to control and configure these roles is just a click away.
+    <section class="management-info">
+      <div class="info-card">
+        <h3 class="info-card-title">About Group Management</h3>
+        <p class="info-card-text">
+          Manage your organization's leadership structure and coordinate roles effectively. 
+          This hub allows you to maintain lists of authorized board members and volunteer 
+          coordinators, ensuring smooth operations and clear communication channels across 
+          your organization.
         </p>
       </div>
+    </section>
 
+    <div class="return-button-wrapper">
+      <a href="index.php" class="return-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Return to Dashboard
+      </a>
     </div>
   </main>
 </body>
