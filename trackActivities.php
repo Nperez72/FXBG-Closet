@@ -1,5 +1,17 @@
 <?php
     session_start();
+
+    // Flash helpers
+    function set_flash(string $type, array $messages): void {
+        $_SESSION['flash'] = ['type' => $type, 'messages' => $messages];
+    }
+
+    function get_flash(): ?array {
+        if (empty($_SESSION['flash'])) return null;
+        $f = $_SESSION['flash'];
+        unset($_SESSION['flash']);
+        return $f;
+    }
     
     if (!isset($_SESSION['_id'])) {
         header("Location: login.php");
@@ -11,50 +23,53 @@
     require_once('database/dbActivity.php');
     require_once('database/dbEvents.php');
 
-    $showPopup = false;
-    $popupMessage = '';
-    $popupType = 'success';
+    $errors = [];
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $ignoreList = array();
         $args = sanitize($_POST, $ignoreList);
-
         $required = array(
             'event_id',
             'hours_spent',
             'activity_description'
         );
 
-        $errors = false;
-
         if (!wereRequiredFieldsSubmitted($args, $required)) {
-            $errors = true;
-            $popupMessage = 'Please fill out all required fields.';
-            $popupType = 'error';
+            $errors[] = "Please fill out all required fields.";
         }
-
+        
         $event_id = isset($args['event_id']) ? (int)$args['event_id'] : 0;
         if ($event_id <= 0) {
-            $errors = true;
-            $popupMessage = 'Please select a valid event.';
-            $popupType = 'error';
+            $errors[] = "Please select a valid event.";
         }
-
+        
         $hours_spent = isset($args['hours_spent']) ? (float)$args['hours_spent'] : 0;
         if ($hours_spent <= 0) {
-            $errors = true;
-            $popupMessage = 'Hours spent must be greater than 0.';
-            $popupType = 'error';
+            $errors[] = "Hours spend must be greater than 0.";
         }
 
         $activity_description = $args['activity_description'];
         $person_id = $_SESSION['_id'];
         $date = date("Y-m-d");
-        // were photos uploaded?
-        if (isset($_FILES["activity_images"]) && !$errors) {
+
+        // Check if at least one file is uploaded
+        // UPLOAD_ERR_OK means file was uploaded with no errors
+        $hasUploads = false;
+        if(isset($_FILES['activity_images'])) {
+            foreach ($_FILES['activity_images']['error'] as $e) {
+                if ($e === UPLOAD_ERR_OK) { 
+                    $hasUploads = true; 
+                    break; 
+                }
+            }
+        }
+
+        if($hasUploads) {
+            // echo "<script>console.log(" . json_encode($_FILES["activity_images"]) . ");</script>";
+
             // try to filter out non-images
             $allowed = array("jpg" => "image/jpeg", "jpeg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png");
-            echo "<script>console.log(" . json_encode($_FILES["activity_images"]) . ");</script>";
+
             // loop based on how many images
             for ($x = 0; $x < count($_FILES["activity_images"]["name"]); $x++) {
                 $fname = basename($_FILES["activity_images"]["name"][$x]);
@@ -67,9 +82,7 @@
                 // only allow the above file extensions
                 // TODO security could be better
                 if (!array_key_exists($ext, $allowed)) {
-                    $errors = true;
-                    $popupMessage = 'Invalid photo file type.';
-                    $popupType = 'error';
+                    $errors[] = 'Invalid photo file type.';
                     break;
                 }
 
@@ -78,8 +91,7 @@
                 if (in_array($ftype, $allowed)) {
                     // does it already exist?
                     if (file_exists("uploads/" . $person_id . "_" . $event_id . "_" . $date . "_" . $fname)) {
-                        $errors = true;
-                        $popupMessage = $fname . " already exists.";
+                        $errors[] = "{$fname} already exists.";
                         break;
                     } else {
                         // max image size in bytes is 10MB
@@ -89,19 +101,17 @@
                         $image = null;
                         // enforce file size
                         if ($fsize > $maxsize) {
-                            $showPopup = true;
-                            $popupMessage = 'Failed to upload photo. Max size is 10MB.';
-                            $popupType = 'error';
+                            $errors[] = "Failed to upload photo. Max size is 10MB";
                             break;
                         }
                         // compress images larger than 5MB
                         if ($fsize > $maxsize / 2) {
                             // tmp imagecreate
-                                $image = match ($ftype) {
-                                    "image/jpeg" => imagecreatefromjpeg($ftemp),
-                                    "image/gif" => imagecreatefromgif($ftemp),
-                                    "image/png" => imagecreatefrompng($ftemp),
-                                };
+                            $image = match ($ftype) {
+                                "image/jpeg" => imagecreatefromjpeg($ftemp),
+                                "image/gif" => imagecreatefromgif($ftemp),
+                                "image/png" => imagecreatefrompng($ftemp),
+                            };
                         //compress
                         }
                         // move it to the uploads folder.
@@ -109,44 +119,62 @@
                         if (imagejpeg($image, $destination)) {
                             $fresult = add_media(null, $event_id, basename($fname), $ftype, $ext, $activity_description, basename($ftemp), $date);
                             if (!$fresult) {
-                                $showPopup = true;
-                                $popupMessage = 'Failed to upload photo. Please try again.';
-                                $popupType = 'error';
+                                $errors[] = "Failed to upload photo. Please try again.";
                                 break;
                             }
-                        } else {
-                            $errors = true;
-                            $showPopup = true;
-                            $popupMessage = 'Failed to upload file: ' . htmlspecialchars($fname) . '. Please try again.';
-                            $popupType = 'error';
+                        } 
+                        else {
+                            $errors[] = "Failed to upload file: " . htmlspecialchars($fname) . " please try again";
                             break;
                         }
                     }
                 } else {
-                    $errors = true;
-                    // something went wrong with the photo.
-                    $popupMessage = "Error: " . $_FILES["activity_images"]["error"][$x];
-                    $popupType = 'error';
+                    $errors[] = "Error: " . $_FILES["activity_images"]["error"][$x];
                     break;
                 }
             }
         }
-
-        if ($errors) {
-            $showPopup = true;
-        } else {
-            $result = add_activity($person_id, $date, $event_id, $hours_spent, $activity_description);
-            if (!$result) {
-                $showPopup = true;
-                $popupMessage = 'Failed to log activity. Please try again.';
-                $popupType = 'error';
-            } else {
-                $showPopup = true;
-                $popupMessage = 'Activity logged successfully!';
-                $popupType = 'success';
-            }
+        
+        // If there are errors, save them and redirect
+        if(!empty($errors)) {
+            set_flash('error', $errors);
+            header('Location: trackActivities.php');
+            die();
         }
-    } 
+
+        $result = add_activity($person_id, $date, $event_id, $hours_spent, $activity_description);
+
+        // If failed, store message and redirect
+        if(!$result) {
+            set_flash('error', ['Failed to log activity. Please try again.']);
+            header('Location: trackActivities.php');
+            die();
+        }
+
+        // Success
+        set_flash('success', ['Activity logged successfully!']);
+        header('Location: trackActivities.php');
+        die();
+    }
+    
+    // TEMP: demo flash messages (remove after preview)
+    if (isset($_GET['demo'])) {
+        $type = (($_GET['type'] ?? 'error') === 'success') ? 'success' : 'error';
+        $samples = [
+            'Activity logged successfully!',
+            'Uploaded 3 photos.',
+            'Please fill out all required fields.',
+            'File too large (10MB max): big.png',
+            'Please select a valid event.',
+            'Hours spent must be greater than 0.',
+        ];
+        shuffle($samples);
+        $messages = array_slice($samples, 0, rand(1, 3));
+        set_flash($type, $messages);
+    }
+    // read flash to get all messages
+    $flash = get_flash();
+    require_once('activityForm.php');
 ?>
 
 <!DOCTYPE html>
@@ -172,14 +200,62 @@ require_once('header.php');
     .dropdown {
         padding-right: 50px;
     }
+    .flash-wrap { 
+        max-width: 768px; 
+        margin: 16px auto; 
+        padding: 0 12px; 
+    }
+    .flash-card {
+        background: var(--card-bg); 
+        color: var(--text-color);
+        border: 1px solid var(--border-color); 
+        border-radius: 8px;
+        box-shadow: 0 4px 12px var(--card-shadow);
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+    .flash-card.success { 
+        border-left: 4px solid #34d399; 
+    }
+    .flash-card.error { 
+        border-left: 4px solid #f87171; 
+    }
+    .flash-body { 
+        display: flex; 
+        gap: 12px; 
+        padding: 12px 14px; 
+        align-items: flex-start; 
+    }
+    .flash-dot.success { 
+        background: #34d399; 
+    }
+    .flash-dot.error { 
+        background: #f87171; 
+    }
+    .flash-list { 
+        margin: 0; 
+        flex: 1;
+        color: var(--text-color);
+    }
+    .flash-close {
+        margin-left: auto; 
+        background: none; 
+        border: 0; 
+        color: var(--text-muted);
+        font-size: 18px; 
+        line-height: 1; 
+        cursor: pointer;
+        transition: color 0.2s ease;
+        flex-shrink: 0;
+    }
+    .flash-close:hover { 
+        color: var(--text-color); 
+    }
+    @media (max-width: 640px) {
+        .flash-wrap { margin-top: 12px; }
+        .flash-body { padding: 10px 12px; }
+    }
 </style>
 </head>
 <body class="relative">
-<?php if ($showPopup) : ?>
-<div id="popupMessage" class="absolute left-[40%] top-[20%] z-50 <?php echo $popupType === 'success' ? 'bg-green-600' : 'bg-red-800'; ?> p-4 text-green rounded-xl text-xl shadow-lg">
-    <?php echo htmlspecialchars($popupMessage); ?>
-</div>
-<?php endif; ?>
-<?php require_once('activityForm.php'); ?>
 </body>
 </html>
