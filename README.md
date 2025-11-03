@@ -38,9 +38,3 @@ php -S localhost:8000
 To clear (remove) any built-in PHP server: (just press Ctrl+C in the terminal)
 
 ---
-
-
-
-**Current Branch:** `dang/pwa`  
-**Status:** ✅ PWA & Docker Setup Complete
-
