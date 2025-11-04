@@ -136,6 +136,7 @@ function create_account($username, $password, $type)
     return $success;
 }
 
-function delete_account($username) {
+function delete_account($username)
+{
     return true;
 }
