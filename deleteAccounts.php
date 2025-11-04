@@ -56,12 +56,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $username = $_POST['target'];
 
-        if (!delete_account($username)) {
-            echo "<p class='error-toast'>Failed to delete account.</p>";
-        } else {
-            header('Location: deleteAccounts.php?success=1');
-            die();
-        }
+    if (!delete_account($username)) {
+        echo "<p class='error-toast'>Failed to delete account.</p>";
+    } else {
+        header('Location: deleteAccounts.php?success=1');
+        die();
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -87,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <?php foreach ($accounts as $acct) : ?>
                             <option value="<?php echo htmlspecialchars($acct['username']); ?>" <?php if ($acct['username'] === $userID) {
                                 echo 'selected';
-                            } ?>>
+                                           } ?>>
                                 <?php echo htmlspecialchars($acct['username'] . ' (' . ($acct['type'] == 2 ? 'admin' : ($acct['type'] == 1 ? 'coordinator' : 'volunteer')) . ')'); ?>
                             </option>
                         <?php endforeach; ?>
