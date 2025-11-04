@@ -136,6 +136,41 @@ function create_account($username, $password, $type)
     return $success;
 }
 
-function delete_account($username) {
-    return true;
+function delete_account($username)
+{
+    $connection = connect();
+    if (!$connection) {
+        echo "<script>console.log('Failed to connect to the database');</script>";
+        return false;
+    }
+    $check_stmt = mysqli_prepare($connection, "SELECT `username` FROM `dbaccounts` WHERE `username` = ? LIMIT 1");
+    if (!$check_stmt) {
+        mysqli_close($connection);
+        return false;
+    }
+
+    mysqli_stmt_bind_param($check_stmt, "s", $username);
+    mysqli_stmt_execute($check_stmt);
+    mysqli_stmt_store_result($check_stmt);
+
+    if (mysqli_stmt_num_rows($check_stmt) == 0) {
+        // Username doesn't exist
+        mysqli_stmt_close($check_stmt);
+        mysqli_close($connection);
+        return false;
+    }
+
+    $stmt = mysqli_prepare($connection, "DELETE FROM `dbaccounts` WHERE `username` = ?");
+
+    if (!$stmt) {
+        mysqli_close($connection);
+        return false;
+    }
+
+    mysqli_stmt_bind_param($stmt, "s", $username);
+    $success = mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+    return $success;
 }
