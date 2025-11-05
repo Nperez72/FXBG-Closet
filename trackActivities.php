@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // were photos uploaded?
     if (isset($_FILES["activity_images"]) && !$errors) {
         // try to filter out non-images
-        $allowed = array("jpg" => "image/jpg", "jpeg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png");
+        $allowed = array("jpg" => "image/jpeg", "jpeg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png");
         // loop based on how many images
         for ($x = 0; $x < count($_FILES["activity_images"]["name"]); $x++) {
             $fname = basename($_FILES["activity_images"]["name"][$x]);
