@@ -321,6 +321,13 @@ if (date("H:i:s") > "18:19:59") {
                                     </svg>
                                     Create Account
                                 </a>
+                                <a href="deleteAccounts.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                        <path d="M7 11V7a5 5 0 0110 0v4"></path>
+                                    </svg>
+                                    Delete Account
+                                </a>
                                 <a href="logout.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path>
