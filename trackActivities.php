@@ -85,8 +85,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         for ($x = 0; $x < count($_FILES["activity_images"]["name"]); $x++) {
             $fname = basename($_FILES["activity_images"]["name"][$x]);
             $fname = strtolower($fname);
-            $ftype = $_FILES["activity_images"]["type"][$x];
             $ftemp = $_FILES["activity_images"]["tmp_name"][$x];
+            $ftype = mime_content_type($ftemp);
             $ext = pathinfo($fname, PATHINFO_EXTENSION);
 
         // only allow the above file extensions
