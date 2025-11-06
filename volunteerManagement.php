@@ -26,8 +26,9 @@ if ($accessLevel < 2) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Volunteer Management Page</title>
-  <link href="css/management_tw.css" rel="stylesheet">
+  <title>Volunteer Management | FXBG Pride</title>
+  <link href="css/modern-management.css" rel="stylesheet">
+  <link href="css/mobile-nav.css" rel="stylesheet">
 
 <!-- BANDAID FIX FOR HEADER BEING WEIRD -->
 <?php
@@ -38,62 +39,135 @@ require_once('header.php');
 
 </head>
 
-<body>
+<body class="management-page">
 
-  <!-- Larger Hero Section -->
-  <header class="hero-header"></header>
+  <section class="management-hero">
+    <div class="management-hero-content">
+      <h1>Volunteer Management</h1>
+      <p class="management-hero-subtitle">
+        Manage volunteers, track participation, and recognize outstanding contributions to your organization
+      </p>
+    </div>
+  </section>
 
   <!-- Main Content -->
-  <main>
-    <div class="sections">
+  <main class="management-grid">
+    <div class="card-grid">
+      <!-- Register Volunteer Card -->
+      <a href="VolunteerRegister.php" class="action-card">
+        <div class="card-icon-wrapper">
+          <img src="images/add-person.svg" alt="Register Icon">
+        </div>
+        <div class="action-card-content">
+          <h3 class="action-card-title">Register Volunteer</h3>
+          <p class="action-card-description">
+            Add new volunteers to the system and set up their profiles
+          </p>
+        </div>
+        <div class="action-card-footer">
+          <span class="card-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </div>
+      </a>
 
-      <!-- Buttons Section -->
-      <div class="button-section">
-        <button onclick="window.location.href='VolunteerRegister.php';">
-      <div class="button-left-gray"></div>
-      <div>Register Volunteer</div>
-      <img class="button-icon" src="images/add-person.svg" alt="Person Icon">
-        </button>
+      <a href="personSearch.php" class="action-card">
+        <div class="card-icon-wrapper">
+          <img src="images/person-search.svg" alt="Search Icon">
+        </div>
+        <div class="action-card-content">
+          <h3 class="action-card-title">Search Volunteers</h3>
+          <p class="action-card-description">
+            Find and manage volunteer information quickly
+          </p>
+        </div>
+        <div class="action-card-footer">
+          <span class="card-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </div>
+      </a>
+      <a href="checkedInVolunteers.php" class="action-card">
+        <div class="card-icon-wrapper">
+          <img src="images/clipboard-regular.svg" alt="Check-In Icon">
+        </div>
+        <div class="action-card-content">
+          <h3 class="action-card-title">Checked-In Volunteers</h3>
+          <p class="action-card-description">
+            View currently active volunteers and manage check-ins
+          </p>
+        </div>
+        <div class="action-card-footer">
+          <span class="action-card-badge">Live</span>
+          <span class="card-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </div>
+      </a>
 
-        <button onclick="window.location.href='personSearch.php';">
-      <div class="button-left-gray"></div>
-      <div>Search Volunteers</div>
-      <img class="button-icon" src="images/person-search.svg" alt="Person Icon">
-        </button>
+      <a href="selectVOTM.php" class="action-card">
+        <div class="card-icon-wrapper">
+          <img src="images/star-icon.svg" alt="Star Icon">
+        </div>
+        <div class="action-card-content">
+          <h3 class="action-card-title">Volunteer of the Month</h3>
+          <p class="action-card-description">
+            Select and recognize outstanding volunteer contributions
+          </p>
+        </div>
+        <div class="action-card-footer">
+          <span class="card-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </div>
+      </a>
 
-    <button onclick="window.location.href='checkedInVolunteers.php';">
-      <div class="button-left-gray"></div>
-      <div>Checked-In Volunteers</div>
-      <img class="button-icon h-10 w-10 left-5" src="images/clipboard-regular.svg" alt="Person Icon">
-        </button>
-
-    <button onclick="window.location.href='selectVOTM.php';">
-      <div class="button-left-gray"></div>
-      <div>Volunteer of the Month</div>
-      <img class="button-icon h-10 w-10 left-5" src="images/star-icon.svg" alt="Person Icon">
-        </button>
-
-    <button onclick="window.location.href='leaderboard.php';">
-      <div class="button-left-gray"></div>
-      <div>Leaderboard</div>
-      <img class="button-icon h-10 w-10 left-5" src="images/crown.svg.png" alt="Person Icon">
-        </button>
-    
-    <div class="text-center mt-6">
-            <a href="index.php" class="return-button">Return to Dashboard</a>
+      <a href="leaderboard.php" class="action-card">
+        <div class="card-icon-wrapper">
+          <img src="images/crown.svg.png" alt="Crown Icon">
+        </div>
+        <div class="action-card-content">
+          <h3 class="action-card-title">Leaderboard</h3>
+          <p class="action-card-description">
+            View volunteer rankings and top contributors
+          </p>
+        </div>
+        <div class="action-card-footer">
+          <span class="card-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </div>
+      </a>
     </div>
-        
-     </div>
 
-      <!-- Text Section -->
-      <div class="text-section">
-        <h1>Volunteer Management</h1>
-        <div class="div-blue"></div>
-        <p>
-          Welcome to the management hub. Use the controls on the left to manage users, content, access, and view important analytics and logs. Everything you need to control and configure your platform is just a click away.
+    <section class="management-info">
+      <div class="info-card">
+        <h3 class="info-card-title">About Volunteer Management</h3>
+        <p class="info-card-text">
+          This hub provides comprehensive tools to manage your volunteer workforce. Register new volunteers, 
+          track their participation, monitor active check-ins, and recognize outstanding contributions. 
+          All the tools you need to build and maintain a thriving volunteer community.
         </p>
       </div>
+    </section>
 
+    <div class="return-button-wrapper">
+      <a href="index.php" class="return-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Return to Dashboard
+      </a>
     </div>
   </main>
 </body>

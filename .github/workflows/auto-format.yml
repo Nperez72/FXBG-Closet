@@ -9,6 +9,8 @@ on:
 jobs:
   format:
     runs-on: ubuntu-latest
+    # Skip if the commit was made by github-actions bot (prevents infinite loop)
+    if: github.actor != 'github-actions[bot]'
     permissions:
       contents: write
     
@@ -50,6 +52,6 @@ jobs:
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git add -A
-        git diff --quiet && git diff --staged --quiet || git commit -m "Auto-format code [skip ci]"
+        git diff --quiet && git diff --staged --quiet || git commit -m "chore: auto-format code"
         git push || echo "No changes to push"
 

@@ -36,6 +36,13 @@ if (isset($_SESSION['_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/theme-toggle.css">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#6B46C1">
+    <meta name="description" content="Volunteer Management System for Fredericksburg Pride">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="FXBG Closet">
+    <link rel="apple-touch-icon" href="/images/FXBG-PrideWhiteLogo.png">
     <title>FXBG Pride Volunteer Management | Dashboard</title>
     <style>
         * {
@@ -837,5 +844,17 @@ if (isset($_SESSION['_id'])) {
 
     <?php endif; ?>
 
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then((registration) => {
+                    console.log('Service Worker registered:', registration);
+                })
+                .catch((error) => {
+                    console.log('Service Worker registration failed:', error);
+                });
+        }
+    </script>
 </body>
 </html>

@@ -1,0 +1,75 @@
+{
+  "name": "FXBG Pride Volunteer Management",
+  "short_name": "FXBG Closet",
+  "description": "Volunteer Management System for Fredericksburg Pride",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#6B46C1",
+  "icons": [
+    {
+      "src": "/images/FXBG-PrideWhiteLogo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/FXBG-PrideWhiteLogo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/FXBG-PrideWhiteLogo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/images/FXBG-PrideWhiteLogo.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/images/FXBG-PrideWhiteLogo.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "categories": ["productivity", "business"],
+  "shortcuts": [
+    {
+      "name": "View Events",
+      "short_name": "Events",
+      "description": "View all volunteer events",
+      "url": "/viewAllEvents.php",
+      "icons": [
+        {
+          "src": "/images/new-event.svg",
+          "sizes": "192x192",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "My Profile",
+      "short_name": "Profile",
+      "description": "View your volunteer profile",
+      "url": "/viewProfile.php",
+      "icons": [
+        {
+          "src": "/images/view-profile.svg",
+          "sizes": "192x192",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false
+}
