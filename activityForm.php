@@ -57,7 +57,7 @@
             <label for="activity_description"><em>* </em>Activity Description</label>
             <textarea id="activity_description" name="activity_description" rows="6" required placeholder="Describe what you did during this volunteer activity"></textarea>
         </fieldset>
-           <label for="activity_image">Choose photos (5MB limit)</label>
+           <label for="activity_image">Choose photos (10MB limit)</label>
   <input id="activity_image" name="activity_images[]" multiple accept="image/jpeg, image/png" type="file" /> 
         <input type="submit" name="activity-form" value="Submit" class="blue-button">
     </form>
