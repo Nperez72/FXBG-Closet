@@ -264,12 +264,6 @@ $flash = get_flash();
         padding: 12px 14px; 
         align-items: flex-start; 
     }
-    .flash-dot.success { 
-        background: #34d399; 
-    }
-    .flash-dot.error { 
-        background: #f87171; 
-    }
     .flash-list { 
         margin: 0; 
         flex: 1;
