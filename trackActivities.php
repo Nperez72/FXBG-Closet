@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Create uploads directory if it doesn't exist
     // Permissions: owner can read/write/execute, others can read/execute
     $uploadDir = __DIR__ . DIRECTORY_SEPARATOR . 'uploads';
-    if(!is_dir($uploadDir)) {
+    if (!is_dir($uploadDir)) {
         mkdir($uploadDir, 0755, true);
     }
 
@@ -74,35 +74,41 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // loop based on how many images
     for ($x = 0; $x < $fileCount; $x++) {
         // Skip files that have errors
-        if($files['error'][$x] !== UPLOAD_ERR_OK) continue;
+        if ($files['error'][$x] !== UPLOAD_ERR_OK) {
+            continue;
+        }
 
         $originalName = basename($files["name"][$x]);
         $ftemp = $files["tmp_name"][$x];
         $fsize = $files["size"][$x];
 
         // Make sure file < 10MB
-        if ($fsize > $maxsize) { 
+        if ($fsize > $maxsize) {
             $errors[] = "File too large (10MB max): " . htmlspecialchars($originalName);
-            continue; 
+            continue;
         }
 
         // Make sure file was actually uploaded from HTTP POST for security
-        if (!is_uploaded_file($ftemp)) { 
-            $errors[] = "Invalid upload source: " . htmlspecialchars($originalName); 
+        if (!is_uploaded_file($ftemp)) {
+            $errors[] = "Invalid upload source: " . htmlspecialchars($originalName);
             continue;
         }
 
         $mime = strtolower(mime_content_type($ftemp) ?: '');
         // normalize aliases
-        if ($mime === 'image/jpg' || $mime === 'image/pjpeg') $mime = 'image/jpeg';
-        if ($mime === 'image/x-png') $mime = 'image/png';
+        if ($mime === 'image/jpg' || $mime === 'image/pjpeg') {
+            $mime = 'image/jpeg';
+        }
+        if ($mime === 'image/x-png') {
+            $mime = 'image/png';
+        }
         if (!in_array($mime, $allowedMimes, true)) {
             $errors[] = "Unsupported image type: " . htmlspecialchars($originalName);
-            continue;   
-        } 
+            continue;
+        }
 
         // Determine file extension from MIME type
-        $ext = match($mime) {
+        $ext = match ($mime) {
             'image/jpeg' => 'jpg',
             'image/png'  => 'png',
         };
@@ -110,20 +116,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Sanitize filename: remove special characters, keep alphanumeric, dots, underscores, hyphens
         $base = preg_replace('/[^A-Za-z0-9._-]/', '_', pathinfo($originalName, PATHINFO_FILENAME));
         $savedFileName = $person_id . "_" . $event_id . "_" . $date . "_" . $base . '.' . $ext;
-        $destPath = $uploadDir . DIRECTORY_SEPARATOR . $savedFileName;   
-        
+        $destPath = $uploadDir . DIRECTORY_SEPARATOR . $savedFileName;
+
         // does it already exist?
         if (file_exists($destPath)) {
             $errors[] = "Failed to upload {$originalName}: file already exists.";
             continue;
-        } 
+        }
 
         $ok = false;
         // If image is small (<= 5MB), just move it without recompressing
         if ($fsize <= 5 * 1024 * 1024) {
             $ok = move_uploaded_file($ftemp, $destPath);
-        }
-        else {
+        } else {
             // For large files, compress them
             $img = match ($mime) {
                 'image/jpeg' => @imagecreatefromjpeg($ftemp),
@@ -135,28 +140,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 // Save in original format with compression
                 // JPEG at 85% quality
                 // PNG at level 6
-                $ok = match($mime) {
+                $ok = match ($mime) {
                     'image/jpeg' => imagejpeg($img, $destPath, 85),
                     'image/png'  => imagepng($img, $destPath, 6), // compression level 0-9
                     default      => false,
                 };
                 imagedestroy($img);
-            }
-            else {
+            } else {
                 $errors[] = "Failed to create image: " . htmlspecialchars($originalName);
             }
         }
 
         // If image was successfully put in the destination path, add it to $savedFiles
-        if($ok) {
+        if ($ok) {
             $savedFiles[] = [
                 'original' => $originalName,
                 'saved' => $savedFileName,
                 'mime' => $mime,
                 'ext' => $ext,
             ];
-        }
-        else {
+        } else {
             $errors[] = "Failed to save: " . htmlspecialchars($originalName);
         }
     }
@@ -183,10 +186,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         header('Location: trackActivities.php');
         die();
     }
-  
+
     // Loop through saved files and add them to database
     $uploadErrors = [];
-    foreach($savedFiles as $f) {
+    foreach ($savedFiles as $f) {
         $uploadOk = add_media(null, $event_id, $f['original'], $f['mime'], $f['ext'], $activity_description, $f['saved'], $date);
         if (!$uploadOk) {
             $uploadErrors[] = $f['original'];
