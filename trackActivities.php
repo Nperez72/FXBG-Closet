@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     $activity_description = trim($args['activity_description'] ?? '');
-    if($activity_description === '') {
+    if ($activity_description === '') {
         set_flash('error', ['Activity description cannot be empty. Please try again.']);
         header('Location: trackActivities.php');
         die();
@@ -82,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $err = $files['error'][$x] ?? UPLOAD_ERR_NO_FILE;
 
         // Skip empty files
-        if($err === UPLOAD_ERR_NO_FILE) {
+        if ($err === UPLOAD_ERR_NO_FILE) {
             continue;
         }
 
