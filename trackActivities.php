@@ -73,11 +73,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // loop based on how many images
     for ($x = 0; $x < $fileCount; $x++) {
-        // Skip files that have errors
-        if ($files['error'][$x] !== UPLOAD_ERR_OK) {
-            continue;
+       // Break the whole upload loop if any file has an error
+        $err = $files['error'][$x] ?? UPLOAD_ERR_NO_FILE;
+        if ($err !== UPLOAD_ERR_OK) {
+            $name = basename($files['name'][$x] ?? 'unknown');
+            $msgMap = [
+                UPLOAD_ERR_INI_SIZE   => 'exceeds php.ini upload_max_filesize',
+                UPLOAD_ERR_FORM_SIZE  => 'exceeds form MAX_FILE_SIZE',
+                UPLOAD_ERR_PARTIAL    => 'was only partially uploaded',
+                UPLOAD_ERR_NO_FILE    => 'no file was uploaded',
+                UPLOAD_ERR_NO_TMP_DIR => 'missing temporary folder on server',
+                UPLOAD_ERR_CANT_WRITE => 'failed to write to disk',
+                UPLOAD_ERR_EXTENSION  => 'blocked by a PHP extension',
+            ];
+            $reason = $msgMap[$err] ?? 'unknown upload error';
+            $errors[] = "Upload failed for {$name}: {$reason}";
+            break; // stop processing remaining files
         }
-
+        
         $originalName = basename($files["name"][$x]);
         $ftemp = $files["tmp_name"][$x];
         $fsize = $files["size"][$x];
