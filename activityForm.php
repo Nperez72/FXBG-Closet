@@ -8,7 +8,7 @@
     </div>
 </header>
 
-<?php if ($flash) : ?>
+<?php if (isset($flash) && $flash) : ?>
     <?php $isSuccess = ($flash['type'] === 'success'); ?>
   <div class="flash-wrap">
     <div id="flash" class="flash-card <?php echo $isSuccess ? 'success' : 'error'; ?>" role="alert" aria-live="polite">
