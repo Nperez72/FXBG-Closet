@@ -80,13 +80,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     for ($x = 0; $x < $fileCount; $x++) {
        // Break the whole upload loop if any file has an error
         $err = $files['error'][$x] ?? UPLOAD_ERR_NO_FILE;
+
+        // Skip empty files
+        if($err === UPLOAD_ERR_NO_FILE) {
+            continue;
+        }
+
         if ($err !== UPLOAD_ERR_OK) {
             $name = basename($files['name'][$x] ?? 'unknown');
             $msgMap = [
                 UPLOAD_ERR_INI_SIZE   => 'exceeds php.ini upload_max_filesize',
                 UPLOAD_ERR_FORM_SIZE  => 'exceeds form MAX_FILE_SIZE',
                 UPLOAD_ERR_PARTIAL    => 'was only partially uploaded',
-                UPLOAD_ERR_NO_FILE    => 'no file was uploaded',
                 UPLOAD_ERR_NO_TMP_DIR => 'missing temporary folder on server',
                 UPLOAD_ERR_CANT_WRITE => 'failed to write to disk',
                 UPLOAD_ERR_EXTENSION  => 'blocked by a PHP extension',
