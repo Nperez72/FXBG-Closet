@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $errors[] = "Upload failed for {$name}: {$reason}";
             break; // stop processing remaining files
         }
-        
+
         $originalName = basename($files["name"][$x]);
         $ftemp = $files["tmp_name"][$x];
         $fsize = $files["size"][$x];
