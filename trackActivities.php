@@ -1,18 +1,253 @@
 <?php
-    require_once('include/input-validation.php');
-    session_start();
+session_start();
+
+function set_flash(string $type, array $messages): void
+{
+    $_SESSION['flash'] = ['type' => $type, 'messages' => $messages];
+}
+
+function get_flash(): ?array
+{
+    if (empty($_SESSION['flash'])) {
+        return null;
+    }
+    $f = $_SESSION['flash'];
+    unset($_SESSION['flash']);
+    return $f;
+}
+
+if (!isset($_SESSION['_id'])) {
+    header("Location: login.php");
+    die();
+}
+
+require_once('include/input-validation.php');
+require_once('database/dbActivity.php');
+require_once('database/dbEvents.php');
+
+$errors = [];
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $ignoreList = array();
+    $args = sanitize($_POST, $ignoreList);
+    $required = array(
+        'event_id',
+        'hours_spent',
+        'activity_description'
+    );
+
+    if (!wereRequiredFieldsSubmitted($args, $required)) {
+        $errors[] = "Please fill out all required fields.";
+    }
+
+    $event_id = isset($args['event_id']) ? (int)$args['event_id'] : 0;
+    if ($event_id <= 0) {
+        $errors[] = "Please select a valid event.";
+    }
+
+    $hours_spent = isset($args['hours_spent']) ? (float)$args['hours_spent'] : 0;
+    if ($hours_spent <= 0) {
+        $errors[] = "Hours spent must be greater than 0.";
+    }
+
+    $activity_description = trim($args['activity_description'] ?? '');
+    if ($activity_description === '') {
+        set_flash('error', ['Activity description cannot be empty. Please try again.']);
+        header('Location: trackActivities.php');
+        die();
+    }
+    $person_id = (int)$_SESSION['_id'];
+    $date = date("Y-m-d");
+
+    // Create uploads directory if it doesn't exist
+    // Permissions: owner can read/write/execute, others can read/execute
+    $uploadDir = __DIR__ . DIRECTORY_SEPARATOR . 'uploads';
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0755, true);
+    }
+
+    // max image size in bytes is 10MB
+    $maxsize = 10 * 1024 * 1024;
+    $allowedMimes = ['image/jpeg', 'image/png'];
+
+    // Guard for missing files array
+    $files = $_FILES['activity_images'] ?? null;
+    $fileCount = (is_array($files) && isset($files['name']) && is_array($files['name'])) ? count($files["name"]) : 0;
+
+    $savedFiles = [];
+
+    // loop based on how many images
+    for ($x = 0; $x < $fileCount; $x++) {
+       // Break the whole upload loop if any file has an error
+        $err = $files['error'][$x] ?? UPLOAD_ERR_NO_FILE;
+
+        // Skip empty files
+        if ($err === UPLOAD_ERR_NO_FILE) {
+            continue;
+        }
+
+        if ($err !== UPLOAD_ERR_OK) {
+            $name = basename($files['name'][$x] ?? 'unknown');
+            $msgMap = [
+                UPLOAD_ERR_INI_SIZE   => 'exceeds php.ini upload_max_filesize',
+                UPLOAD_ERR_FORM_SIZE  => 'exceeds form MAX_FILE_SIZE',
+                UPLOAD_ERR_PARTIAL    => 'was only partially uploaded',
+                UPLOAD_ERR_NO_TMP_DIR => 'missing temporary folder on server',
+                UPLOAD_ERR_CANT_WRITE => 'failed to write to disk',
+                UPLOAD_ERR_EXTENSION  => 'blocked by a PHP extension',
+            ];
+            $reason = $msgMap[$err] ?? 'unknown upload error';
+            $errors[] = "Upload failed for {$name}: {$reason}";
+            break; // stop processing remaining files
+        }
+
+        $originalName = basename($files["name"][$x]);
+        $ftemp = $files["tmp_name"][$x];
+        $fsize = $files["size"][$x];
+
+        // Make sure file < 10MB
+        if ($fsize > $maxsize) {
+            $errors[] = "File too large (10MB max): " . htmlspecialchars($originalName);
+            continue;
+        }
+
+        // Make sure file was actually uploaded from HTTP POST for security
+        if (!is_uploaded_file($ftemp)) {
+            $errors[] = "Invalid upload source: " . htmlspecialchars($originalName);
+            continue;
+        }
+
+        $mime = strtolower(mime_content_type($ftemp) ?: '');
+        // normalize aliases
+        if ($mime === 'image/jpg' || $mime === 'image/pjpeg') {
+            $mime = 'image/jpeg';
+        }
+        if ($mime === 'image/x-png') {
+            $mime = 'image/png';
+        }
+        if (!in_array($mime, $allowedMimes, true)) {
+            $errors[] = "Unsupported image type: " . htmlspecialchars($originalName);
+            continue;
+        }
+
+        // Determine file extension from MIME type
+        $ext = match ($mime) {
+            'image/jpeg' => 'jpg',
+            'image/png'  => 'png',
+        };
+
+        // Sanitize filename: remove special characters, keep alphanumeric, dots, underscores, hyphens
+        $base = preg_replace('/[^A-Za-z0-9._-]/', '_', pathinfo($originalName, PATHINFO_FILENAME));
+        $savedFileName = $person_id . "_" . $event_id . "_" . $date . "_" . $base . '.' . $ext;
+        $destPath = $uploadDir . DIRECTORY_SEPARATOR . $savedFileName;
+
+        // does it already exist?
+        if (file_exists($destPath)) {
+            $errors[] = "Failed to upload {$originalName}: file already exists.";
+            continue;
+        }
+
+        $ok = false;
+        // If image is small (<= 5MB), just move it without recompressing
+        if ($fsize <= 5 * 1024 * 1024) {
+            $ok = move_uploaded_file($ftemp, $destPath);
+        } else {
+            // For large files, compress them
+            $img = match ($mime) {
+                'image/jpeg' => @imagecreatefromjpeg($ftemp),
+                'image/png'  => @imagecreatefrompng($ftemp),
+                default      => null,
+            };
+
+            if ($img) {
+                // Save in original format with compression
+                // JPEG at 85% quality
+                // PNG at level 6
+                $ok = match ($mime) {
+                    'image/jpeg' => imagejpeg($img, $destPath, 85),
+                    'image/png'  => imagepng($img, $destPath, 6), // compression level 0-9
+                    default      => false,
+                };
+                imagedestroy($img);
+            } else {
+                $errors[] = "Failed to create image: " . htmlspecialchars($originalName);
+            }
+        }
+
+        // If image was successfully put in the destination path, add it to $savedFiles
+        if ($ok) {
+            $savedFiles[] = [
+                'original' => $originalName,
+                'saved' => $savedFileName,
+                'mime' => $mime,
+                'ext' => $ext,
+            ];
+        } else {
+            $errors[] = "Failed to save: " . htmlspecialchars($originalName);
+        }
+    }
+
+    // If there are errors, cleanup saved files, and redirect
+    if (!empty($errors)) {
+        foreach ($savedFiles as $f) {
+            @unlink($uploadDir . DIRECTORY_SEPARATOR . $f['saved']);
+        }
+        $errors[] = "Please try again.";
+        set_flash('error', $errors);
+        header('Location: trackActivities.php');
+        die();
+    }
+
+    // If failed, store message and redirect
+    $result = add_activity($person_id, $date, $event_id, $hours_spent, $activity_description);
+    if (!$result) {
+        // cleanup files if DB write fails
+        foreach ($savedFiles as $f) {
+            @unlink($uploadDir . DIRECTORY_SEPARATOR . $f['saved']);
+        }
+        set_flash('error', ['Failed to log activity. Please try again.']);
+        header('Location: trackActivities.php');
+        die();
+    }
+
+    // Loop through saved files and add them to database
+    $uploadErrors = [];
+    foreach ($savedFiles as $f) {
+        $uploadOk = add_media(null, $event_id, $f['original'], $f['mime'], $f['ext'], $activity_description, $f['saved'], $date);
+        if (!$uploadOk) {
+            $uploadErrors[] = $f['original'];
+        }
+    }
+
+    // If any media failed to save, cleanup files and show error
+    if (!empty($uploadErrors)) {
+        foreach ($savedFiles as $f) {
+            @unlink($uploadDir . DIRECTORY_SEPARATOR . $f['saved']);
+        }
+        set_flash('error', [
+            'Activity created but failed to save media attachments.',
+            'Failed files: ' . implode(', ', $uploadErrors)
+        ]);
+        header('Location: trackActivities.php');
+        die();
+    }
+
+    // Success
+    set_flash('success', ['Activity logged successfully!']);
+    header('Location: trackActivities.php');
+    die();
+}
+
+// read flash to get all messages
+$flash = get_flash();
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <?php require_once('database/dbMessages.php'); ?>
     <title>FXBG Pride | Track Activities</title>
     <link href="css/normal_tw.css" rel="stylesheet">
-<?php
-$tailwind_mode = true;
-require_once('header.php');
-?>
+<?php $tailwind_mode = true; ?>
 <style>
     .date-box {
         background: #274471;
@@ -27,136 +262,58 @@ require_once('header.php');
     .dropdown {
         padding-right: 50px;
     }
+    .flash-wrap { 
+        max-width: 768px; 
+        margin: 16px auto; 
+        padding: 0 12px; 
+    }
+    .flash-card {
+        background: var(--card-bg); 
+        color: var(--text-color);
+        border: 1px solid var(--border-color); 
+        border-radius: 8px;
+        box-shadow: 0 4px 12px var(--card-shadow);
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+    .flash-card.success { 
+        border-left: 4px solid #34d399; 
+    }
+    .flash-card.error { 
+        border-left: 4px solid #f87171; 
+    }
+    .flash-body { 
+        display: flex; 
+        gap: 12px; 
+        padding: 12px 14px; 
+        align-items: flex-start; 
+    }
+    .flash-list { 
+        margin: 0; 
+        flex: 1;
+        color: var(--text-color);
+    }
+    .flash-close {
+        margin-left: auto; 
+        background: none; 
+        border: 0; 
+        color: var(--text-muted);
+        font-size: 18px; 
+        line-height: 1; 
+        cursor: pointer;
+        transition: color 0.2s ease;
+        flex-shrink: 0;
+    }
+    .flash-close:hover { 
+        color: var(--text-color); 
+    }
+    @media (max-width: 640px) {
+        .flash-wrap { margin-top: 12px; }
+        .flash-body { padding: 10px 12px; }
+    }
 </style>
 </head>
 <body class="relative">
-<?php
-    require_once('database/dbActivity.php');
-    require_once('database/dbEvents.php');
-
-    $showPopup = false;
-    $popupMessage = '';
-    $popupType = 'success';
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $ignoreList = array();
-    $args = sanitize($_POST, $ignoreList);
-
-    $required = array(
-        'event_id',
-        'hours_spent',
-        'activity_description'
-    );
-
-        $errors = false;
-
-    if (!wereRequiredFieldsSubmitted($args, $required)) {
-        $errors = true;
-        $popupMessage = 'Please fill out all required fields.';
-        $popupType = 'error';
-    }
-
-
-
-    $event_id = isset($args['event_id']) ? (int)$args['event_id'] : 0;
-    if ($event_id <= 0) {
-        echo "<p>Invalid event selected.</p>";
-        $errors = true;
-        $popupMessage = 'Please select a valid event.';
-        $popupType = 'error';
-    }
-
-    $hours_spent = isset($args['hours_spent']) ? (float)$args['hours_spent'] : 0;
-    if ($hours_spent <= 0) {
-        echo "<p>Invalid hours spent.</p>";
-        $errors = true;
-        $popupMessage = 'Hours spent must be greater than 0.';
-        $popupType = 'error';
-    }
-
-    $activity_description = $args['activity_description'];
-    $person_id = $_SESSION['_id'];
-    $date = date("Y-m-d");
-    // were photos uploaded?
-    if (isset($_FILES["activity_images"]) && !$errors) {
-        // try to filter out non-images
-        $allowed = array("jpg" => "image/jpeg", "jpeg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png");
-        // loop based on how many images
-        for ($x = 0; $x < count($_FILES["activity_images"]["name"]); $x++) {
-            $fname = basename($_FILES["activity_images"]["name"][$x]);
-            $fname = strtolower($fname);
-            $ftemp = $_FILES["activity_images"]["tmp_name"][$x];
-            $ftype = mime_content_type($ftemp);
-            $ext = pathinfo($fname, PATHINFO_EXTENSION);
-
-        // only allow the above file extensions
-        // TODO security could be better
-            if (!array_key_exists($ext, $allowed)) {
-                $errors = true;
-                $popupMessage = 'Invalid photo file type.';
-                $popupType = 'error';
-                break;
-            }
-
-        // only allow the above MIME types
-        // TODO security could be better
-            if (in_array($ftype, $allowed)) {
-                // does it already exist?
-                if (file_exists("uploads/" . $person_id . "_" . $event_id . "_" . $date . "_" . $fname)) {
-                    $errors = true;
-                    $popupMessage = $fname . " already exists.";
-                    break;
-                } else {
-                    // move it to the uploads folder.
-                    // format: person_id_event_id_date_fname
-                    move_uploaded_file($ftemp, "uploads/" . $person_id . "_" . $event_id . "_" . $date . "_" . $fname);
-                    $fresult = add_media(null, $event_id, basename($fname), $ftype, $ext, $activity_description, basename($ftemp), $date);
-                    if (!$fresult) {
-                        $showPopup = true;
-                        $popupMessage = 'Failed to log activity. Please try again.';
-                        $popupType = 'error';
-                        break;
-                    }
-                }
-            } else {
-                $errors = true;
-                // something went wrong with the photo.
-                $popupMessage = "Error: " . $_FILES["activity_images"]["error"][$x];
-                $popupType = 'error';
-                break;
-            }
-        }
-    }
-
-    if ($errors) {
-        echo '<p class="error">Your form submission contained unexpected or invalid input.</p>';
-        $showPopup = true;
-    } else {
-         $result = add_activity($person_id, $date, $event_id, $hours_spent, $activity_description);
-
-        if (!$result) {
-            $showPopup = true;
-            $popupMessage = 'Failed to log activity. Please try again.';
-            $popupType = 'error';
-        } else {
-            $showPopup = true;
-            $popupMessage = 'Activity logged successfully!';
-            $popupType = 'success';
-        }
-    }
-} else {
-    require_once('activityForm.php');
-}
-?>
-
-<?php if ($showPopup) : ?>
-<div id="popupMessage" class="absolute left-[40%] top-[20%] z-50 <?php echo $popupType === 'success' ? 'bg-green-600' : 'bg-red-800'; ?> p-4 text-green rounded-xl text-xl shadow-lg">
-    <?php echo htmlspecialchars($popupMessage); ?>
-</div>
-<?php endif; ?>
-
-<script>
-</script>
-
+    <?php require_once('header.php'); ?>
+    <?php require_once('activityForm.php'); ?>
 </body>
 </html>
