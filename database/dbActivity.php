@@ -62,3 +62,40 @@ function add_media($media_id, $activity_id, $file_name, $type, $file_format, $de
 
     return $result;
 }
+
+
+/**
+ * Get event name by event ID
+ * 
+ * @param int $event_id The event ID
+ * @return string|null The event name or null if not found
+ */
+function get_event_name_by_id($event_id)
+{
+    require_once('dbinfo.php');
+
+    $connection = connect();
+
+    if (!$connection) {
+        return null;
+    }
+
+    $query = "SELECT name FROM dbevents WHERE id = ?";
+    $stmt = mysqli_prepare($connection, $query);
+
+    if (!$stmt) {
+        mysqli_close($connection);
+        return null;
+    }
+
+    mysqli_stmt_bind_param($stmt, "i", $event_id);
+    mysqli_stmt_execute($stmt);
+    
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_assoc($result);
+
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+
+    return $row ? $row['name'] : null;
+}
