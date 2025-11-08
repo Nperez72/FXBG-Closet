@@ -225,7 +225,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             @unlink($uploadDir . DIRECTORY_SEPARATOR . $f['saved']);
         }
         set_flash('error', [
-            'Activity created but failed to save media records.',
+            'Activity created but failed to save media attachments.',
             'Failed files: ' . implode(', ', $uploadErrors)
         ]);
         header('Location: trackActivities.php');
