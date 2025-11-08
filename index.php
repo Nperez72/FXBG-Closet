@@ -856,5 +856,7 @@ if (isset($_SESSION['_id'])) {
                 });
         }
     </script>
+    
+    <script src="js/pwa-install.js"></script>
 </body>
 </html>
