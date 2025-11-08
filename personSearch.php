@@ -24,8 +24,11 @@ if ($accessLevel < 2) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Fredericksburg SPCA | Volunteer/Participant Search</title>
     <link href="css/normal_tw.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/pwa-mobile.css">
 <!-- BANDAID FIX FOR HEADER BEING WEIRD -->
 <?php
 $tailwind_mode = true;
