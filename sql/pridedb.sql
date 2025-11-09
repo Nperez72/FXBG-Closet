@@ -138,7 +138,6 @@ CREATE TABLE `dbsupplies` (
   `quantity` int(11) NOT NULL,
   `description` text NOT NULL,
   `date_submitted` date NOT NULL,
-  `status` varchar(20) NOT NULL DEFAULT 'pending',
   PRIMARY KEY (`supply_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
