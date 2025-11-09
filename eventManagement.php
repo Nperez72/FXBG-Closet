@@ -41,7 +41,6 @@ require_once('header.php');
 
 <body class="management-page">
 
-  <!-- Modern Hero Section -->
   <section class="management-hero">
     <div class="management-hero-content">
       <h1>Event Management</h1>
@@ -110,7 +109,6 @@ require_once('header.php');
         </div>
       </a>
 
-      <!-- Pending Sign-Ups Card -->
       <a href="viewAllEventSignUps.php" class="action-card">
         <div class="card-icon-wrapper">
           <img src="images/clock-regular.svg" alt="Sign-Ups Icon">
