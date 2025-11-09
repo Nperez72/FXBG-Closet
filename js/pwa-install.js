@@ -1,42 +1,44 @@
 /**
  * PWA Install Prompt
- * 
+ *
  * Provides a user-friendly install prompt for PWA installation
  * Handles iOS and Android differently due to browser limitations
  */
 
-(function() {
-  'use strict';
+(function () {
+  "use strict";
 
   let deferredPrompt;
-  const installButton = document.getElementById('pwa-install-btn');
-  
-  const isStandalone = window.matchMedia('(display-mode: standalone)').matches 
-    || window.navigator.standalone 
-    || document.referrer.includes('android-app://');
+  const installButton = document.getElementById("pwa-install-btn");
+
+  const isStandalone =
+    window.matchMedia("(display-mode: standalone)").matches ||
+    window.navigator.standalone ||
+    document.referrer.includes("android-app://");
 
   if (isStandalone) {
-    console.log('PWA is already installed');
+    console.log("PWA is already installed");
     return;
   }
 
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-  
+  const isIOS =
+    /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
   const isAndroid = /Android/.test(navigator.userAgent);
 
   /**
    * Show iOS install instructions
    */
   function showIOSInstallPrompt() {
-    const lastShown = localStorage.getItem('pwa-ios-prompt-shown');
+    const lastShown = localStorage.getItem("pwa-ios-prompt-shown");
     const now = Date.now();
-    
-    if (lastShown && (now - parseInt(lastShown)) < 7 * 24 * 60 * 60 * 1000) {
+
+    if (lastShown && now - parseInt(lastShown) < 7 * 24 * 60 * 60 * 1000) {
       return;
     }
 
-    const banner = document.createElement('div');
-    banner.id = 'ios-install-banner';
+    const banner = document.createElement("div");
+    banner.id = "ios-install-banner";
     banner.innerHTML = `
       <div style="
         position: fixed;
@@ -114,16 +116,18 @@
     document.body.appendChild(banner);
 
     // Close button
-    document.getElementById('ios-install-close').addEventListener('click', function() {
-      banner.remove();
-      localStorage.setItem('pwa-ios-prompt-shown', now.toString());
-    });
+    document
+      .getElementById("ios-install-close")
+      .addEventListener("click", function () {
+        banner.remove();
+        localStorage.setItem("pwa-ios-prompt-shown", now.toString());
+      });
 
     // Auto-hide after 15 seconds
     setTimeout(() => {
-      if (document.getElementById('ios-install-banner')) {
+      if (document.getElementById("ios-install-banner")) {
         banner.remove();
-        localStorage.setItem('pwa-ios-prompt-shown', now.toString());
+        localStorage.setItem("pwa-ios-prompt-shown", now.toString());
       }
     }, 15000);
   }
@@ -131,17 +135,17 @@
   /**
    * Show Android install prompt
    */
-  window.addEventListener('beforeinstallprompt', (e) => {
-    console.log('PWA install prompt available');
-    
+  window.addEventListener("beforeinstallprompt", (e) => {
+    console.log("PWA install prompt available");
+
     e.preventDefault();
-    
+
     deferredPrompt = e;
 
     if (installButton) {
-      installButton.style.display = 'block';
-      
-      installButton.addEventListener('click', async () => {
+      installButton.style.display = "block";
+
+      installButton.addEventListener("click", async () => {
         if (!deferredPrompt) {
           return;
         }
@@ -153,7 +157,7 @@
 
         deferredPrompt = null;
 
-        installButton.style.display = 'none';
+        installButton.style.display = "none";
       });
     } else {
       showInlineInstallPrompt();
@@ -164,15 +168,15 @@
    * Show inline install prompt for Android
    */
   function showInlineInstallPrompt() {
-    const lastShown = localStorage.getItem('pwa-android-prompt-shown');
+    const lastShown = localStorage.getItem("pwa-android-prompt-shown");
     const now = Date.now();
-    
-    if (lastShown && (now - parseInt(lastShown)) < 7 * 24 * 60 * 60 * 1000) {
+
+    if (lastShown && now - parseInt(lastShown) < 7 * 24 * 60 * 60 * 1000) {
       return;
     }
 
-    const banner = document.createElement('div');
-    banner.id = 'android-install-banner';
+    const banner = document.createElement("div");
+    banner.id = "android-install-banner";
     banner.innerHTML = `
       <div style="
         position: fixed;
@@ -262,31 +266,35 @@
     document.body.appendChild(banner);
 
     // Install button
-    document.getElementById('android-install-action').addEventListener('click', async () => {
-      if (!deferredPrompt) {
-        return;
-      }
+    document
+      .getElementById("android-install-action")
+      .addEventListener("click", async () => {
+        if (!deferredPrompt) {
+          return;
+        }
 
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      console.log(`User response: ${outcome}`);
-      
-      banner.remove();
-      localStorage.setItem('pwa-android-prompt-shown', now.toString());
-      deferredPrompt = null;
-    });
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`User response: ${outcome}`);
+
+        banner.remove();
+        localStorage.setItem("pwa-android-prompt-shown", now.toString());
+        deferredPrompt = null;
+      });
 
     // Close button
-    document.getElementById('android-install-close').addEventListener('click', function() {
-      banner.remove();
-      localStorage.setItem('pwa-android-prompt-shown', now.toString());
-    });
+    document
+      .getElementById("android-install-close")
+      .addEventListener("click", function () {
+        banner.remove();
+        localStorage.setItem("pwa-android-prompt-shown", now.toString());
+      });
 
     // Auto-hide after 20 seconds
     setTimeout(() => {
-      if (document.getElementById('android-install-banner')) {
+      if (document.getElementById("android-install-banner")) {
         banner.remove();
-        localStorage.setItem('pwa-android-prompt-shown', now.toString());
+        localStorage.setItem("pwa-android-prompt-shown", now.toString());
       }
     }, 20000);
   }
@@ -294,16 +302,15 @@
   /**
    * Track successful installation
    */
-  window.addEventListener('appinstalled', () => {
-    console.log('PWA was installed successfully');
-    
-    const iosBanner = document.getElementById('ios-install-banner');
-    const androidBanner = document.getElementById('android-install-banner');
-    
+  window.addEventListener("appinstalled", () => {
+    console.log("PWA was installed successfully");
+
+    const iosBanner = document.getElementById("ios-install-banner");
+    const androidBanner = document.getElementById("android-install-banner");
+
     if (iosBanner) iosBanner.remove();
     if (androidBanner) androidBanner.remove();
-    if (installButton) installButton.style.display = 'none';
-
+    if (installButton) installButton.style.display = "none";
   });
 
   /**
@@ -319,12 +326,11 @@
     }, 3000);
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', showInstallPrompt);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", showInstallPrompt);
   } else {
     showInstallPrompt();
   }
-
 })();
 
 
