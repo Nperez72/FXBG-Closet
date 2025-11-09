@@ -152,12 +152,12 @@ require_once('header.php');
             echo '</tr>';
             echo '</thead>';
             echo '<tbody>';
-            
+
             foreach ($supplies as $supply) {
                 $status_class = ($supply['status'] === 'fulfilled') ? 'status-fulfilled' : 'status-pending';
                 $status_text = ucfirst($supply['status']);
                 $button_text = ($supply['status'] === 'pending') ? 'Mark Fulfilled' : 'Mark Pending';
-                
+
                 echo '<tr class="' . $status_class . '">';
                 echo '<td>' . htmlspecialchars($supply['date_submitted']) . '</td>';
                 echo '<td>' . htmlspecialchars($supply['item_type']) . '</td>';
@@ -179,7 +179,7 @@ require_once('header.php');
                 echo '</td>';
                 echo '</tr>';
             }
-            
+
             echo '</tbody>';
             echo '</table>';
         }
