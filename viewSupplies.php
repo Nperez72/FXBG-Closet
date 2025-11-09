@@ -1,28 +1,28 @@
 <?php
     session_start();
     require_once('database/dbSupplies.php');
-    
-    if (isset($_POST['toggle_status'])) {
-        $supply_id = (int)$_POST['supply_id'];
-        $current_status = $_POST['current_status'];
-        $new_status = ($current_status === 'pending') ? 'fulfilled' : 'pending';
-        
-        if ($new_status === 'fulfilled') {
-            update_supply_quantity($supply_id, 0);
-        }
-        
-        toggle_supply_status($supply_id, $new_status);
-        header("Location: viewSupplies.php");
-        exit();
+
+if (isset($_POST['toggle_status'])) {
+    $supply_id = (int)$_POST['supply_id'];
+    $current_status = $_POST['current_status'];
+    $new_status = ($current_status === 'pending') ? 'fulfilled' : 'pending';
+
+    if ($new_status === 'fulfilled') {
+        update_supply_quantity($supply_id, 0);
     }
-    
-    if (isset($_POST['update_quantity'])) {
-        $supply_id = (int)$_POST['supply_id'];
-        $new_quantity = (int)$_POST['quantity'];
-        update_supply_quantity($supply_id, $new_quantity);
-        header("Location: viewSupplies.php");
-        exit();
-    }
+
+    toggle_supply_status($supply_id, $new_status);
+    header("Location: viewSupplies.php");
+    exit();
+}
+
+if (isset($_POST['update_quantity'])) {
+    $supply_id = (int)$_POST['supply_id'];
+    $new_quantity = (int)$_POST['quantity'];
+    update_supply_quantity($supply_id, $new_quantity);
+    header("Location: viewSupplies.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -114,19 +114,41 @@ require_once('header.php');
     
     <?php
         $supplies = get_all_supply_requests();
-        
-        if (empty($supplies)) {
-            echo '<p>No supply requests found.</p>';
-        } else {
-            echo '<table>';
-            echo '<thead>';
-            echo '<tr>';
-            echo '<th>Date Submitted</th>';
-            echo '<th>Item Type</th>';
-            echo '<th>Quantity</th>';
-            echo '<th>Description</th>';
-            echo '<th>Status</th>';
-            echo '<th>Action</th>';
+
+    if (empty($supplies)) {
+        echo '<p>No supply requests found.</p>';
+    } else {
+        echo '<table>';
+        echo '<thead>';
+        echo '<tr>';
+        echo '<th>Date Submitted</th>';
+        echo '<th>Item Type</th>';
+        echo '<th>Quantity</th>';
+        echo '<th>Description</th>';
+        echo '<th>Status</th>';
+        echo '<th>Action</th>';
+        echo '</tr>';
+        echo '</thead>';
+        echo '<tbody>';
+
+        foreach ($supplies as $supply) {
+            $status_class = ($supply['status'] === 'fulfilled') ? 'status-fulfilled' : 'status-pending';
+            $status_text = ucfirst($supply['status']);
+            $button_text = ($supply['status'] === 'pending') ? 'Mark Fulfilled' : 'Mark Pending';
+
+            echo '<tr class="' . $status_class . '">';
+            echo '<td>' . htmlspecialchars($supply['date_submitted']) . '</td>';
+            echo '<td>' . htmlspecialchars($supply['item_type']) . '</td>';
+            echo '<td>' . htmlspecialchars($supply['quantity']) . '</td>';
+            echo '<td>' . htmlspecialchars($supply['description']) . '</td>';
+            echo '<td><strong>' . $status_text . '</strong></td>';
+            echo '<td>';
+            echo '<form method="post" style="display:inline;">';
+            echo '<input type="hidden" name="supply_id" value="' . htmlspecialchars($supply['supply_id']) . '">';
+            echo '<input type="hidden" name="current_status" value="' . htmlspecialchars($supply['status']) . '">';
+            echo '<button type="submit" name="toggle_status" class="toggle-btn">' . $button_text . '</button>';
+            echo '</form>';
+            echo '</td>';
             echo '</tr>';
             echo '</thead>';
             echo '<tbody>';
@@ -161,6 +183,10 @@ require_once('header.php');
             echo '</tbody>';
             echo '</table>';
         }
+
+        echo '</tbody>';
+        echo '</table>';
+    }
     ?>
   </div>
 </main>
