@@ -24,6 +24,7 @@ if (!isset($_SESSION['_id'])) {
 require_once('include/input-validation.php');
 require_once('database/dbActivity.php');
 require_once('database/dbEvents.php');
+require_once('email.php');
 
 $errors = [];
 
@@ -179,6 +180,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $savedFiles[] = [
                 'original' => $originalName,
                 'saved' => $savedFileName,
+                'path' => $destPath,
                 'mime' => $mime,
                 'ext' => $ext,
             ];
@@ -228,6 +230,52 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             'Activity created but failed to save media attachments.',
             'Failed files: ' . implode(', ', $uploadErrors)
         ]);
+        header('Location: trackActivities.php');
+        die();
+    }
+
+    // Email photos to designated contact if any were uploaded
+    if (!empty($savedFiles)) {
+        $eventName = get_event_name_by_id($event_id) ?? "Unknown Event";
+
+        $subject = "Activity Documentation: {$eventName}";
+
+        $photoList = implode(', ', array_column($savedFiles, 'original'));
+        $photoCount = count($savedFiles);
+
+        $body = "VOLUNTEER ACTIVITY DOCUMENTATION\n\n";
+        $body .= "Event: {$eventName}\n";
+        $body .= "Date: {$date}\n";
+        $body .= "Hours: {$hours_spent}\n\n";
+        $body .= "Description:\n{$activity_description}\n\n";
+        $body .= "Photos Attached: {$photoCount}\n";
+        $body .= "Files: {$photoList}\n";
+
+        $attachmentPaths = array_column($savedFiles, 'path');
+
+        $emailResults = sendEmails(
+            ['mhenry.fxbgpride@gmail.com'],
+            'documentation-system',
+            $subject,
+            $body,
+            $attachmentPaths
+        );
+
+        // Check for errors 
+        if (isset($emailResults['error'])) {
+            error_log("Email attachment error: {$emailResults['error']}");
+            set_flash('error', ['Activity logged successfully, but email failed to send.', $emailResults['error']]);
+            header('Location: trackActivities.php');
+            die();            
+        }
+
+        if (!($emailResults['mhenry.fxbgpride@gmail.com'] ?? false)) {
+            set_flash('error', ['Activity logged successfully, but email failed to send.', 'Please contact an administrator.']);
+            header('Location: trackActivities.php');
+            die();
+        }
+
+        set_flash('success', ['Activity logged successfully!']);
         header('Location: trackActivities.php');
         die();
     }
