@@ -25,10 +25,10 @@ function connect()
     $database = "pridedb";
     $user = "pridedb";
     $pass = "pridedb";
-    if ($_SERVER['SERVER_NAME'] == 'jenniferp160.sg-host.com') {
-        $user = 'uknrzrk8sj1e7';
-        $database = 'dbkzrh4cfmxbt0';
-        $pass = 'fxextih7mssg';
+    if ($_SERVER['SERVER_NAME'] == 'jenniferp215.sg-host.com') {
+        $user = 'u3zksfptrf7pm';
+        $database = 'dbmixgoqrdd3m5';
+        $pass = 'pokpvwwabta3';
     }
     $con = mysqli_connect($host, $user, $pass, $database);
     if (!$con) {
