@@ -1,6 +1,10 @@
 <?php
 session_start();
 
+define('MAX_UPLOAD_FILES', 10);
+define('MAX_FILE_SIZE_MB', 10);
+define('MAX_TOTAL_SIZE_MB', 50);
+
 function set_flash(string $type, array $messages): void
 {
     $_SESSION['flash'] = ['type' => $type, 'messages' => $messages];
@@ -67,19 +71,48 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         mkdir($uploadDir, 0755, true);
     }
 
-    // max image size in bytes is 10MB
-    $maxsize = 10 * 1024 * 1024;
     $allowedMimes = ['image/jpeg', 'image/png'];
 
     // Guard for missing files array
     $files = $_FILES['activity_images'] ?? null;
     $fileCount = (is_array($files) && isset($files['name']) && is_array($files['name'])) ? count($files["name"]) : 0;
 
+    if($fileCount > MAX_UPLOAD_FILES) {
+        set_flash('error', ["Too many files. Maximum " . MAX_UPLOAD_FILES . " photos allowed."]);
+        header('Location: trackActivities.php');
+        die();
+    }
+
+    $totalSize = 0;
+    $limitPerFileBytes = MAX_FILE_SIZE_MB * 1024 * 1024;
+    $totalLimitBytes = MAX_TOTAL_SIZE_MB * 1024 * 1024;
+    
+    for ($x = 0; $x < $fileCount; $x++) {
+        if (!isset($files['size'][$x])) { continue; }
+        
+        $fsize = (int)$files['size'][$x];
+        
+        if($fsize > $limitPerFileBytes) {
+            $name = htmlspecialchars($files['name'][$x] ?? 'Unknown file');
+            set_flash('error', ["File too large (" . MAX_FILE_SIZE_MB . "MB max): {$name}"]);
+            header('Location: trackActivities.php');
+            die();
+        }
+        
+        if ($totalSize + $fsize > $totalLimitBytes) {
+            set_flash('error', ["Total upload size exceeds " . MAX_TOTAL_SIZE_MB . "MB limit. Please reduce file count or sizes."]);
+            header('Location: trackActivities.php');
+            die();
+        }
+        
+        $totalSize += $fsize;
+    }
+    
     $savedFiles = [];
 
     // loop based on how many images
     for ($x = 0; $x < $fileCount; $x++) {
-       // Break the whole upload loop if any file has an error
+        // Break the whole upload loop if any file has an error
         $err = $files['error'][$x] ?? UPLOAD_ERR_NO_FILE;
 
         // Skip empty files
@@ -105,12 +138,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $originalName = basename($files["name"][$x]);
         $ftemp = $files["tmp_name"][$x];
         $fsize = $files["size"][$x];
-
-        // Make sure file < 10MB
-        if ($fsize > $maxsize) {
-            $errors[] = "File too large (10MB max): " . htmlspecialchars($originalName);
-            continue;
-        }
 
         // Make sure file was actually uploaded from HTTP POST for security
         if (!is_uploaded_file($ftemp)) {
