@@ -107,6 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "dude, bad format";
             die();
         }
+        attach_event_training_media($eid, $url, $format, $description);
         header('Location: event.php?id=' . $id . '&attachSuccess');
         die();
     }
@@ -238,6 +239,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $event_description = $event_info['description'];
             $event_location = $event_info['location'];
             $event_capacity = $event_info['capacity'];
+            $event_volunteer_coordinator = $event_info['volunteer_coordinator'];
             require_once('include/time.php');
         ?>
 
@@ -289,6 +291,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <tr>
                     <td class="label">Capacity</td>
                     <td id="description-cell"><?php echo $event_capacity; ?></td>
+                </tr>
+                <tr>
+                    <td class="label">Volunteer Coordinator</td>
+                    <td><?php 
+                        if ($event_volunteer_coordinator === null) {
+                            echo "None";
+                        } else {
+                            $person = updated_retrieve_person($event_volunteer_coordinator);
+                            echo htmlspecialchars($person->get_full_name());
+                        }
+                        ?></td>
                 </tr>
             </table>
         </div>

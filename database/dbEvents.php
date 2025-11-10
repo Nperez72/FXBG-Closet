@@ -636,6 +636,11 @@ function update_event($eventID, $eventDetails)
     #$restricted_signup = $eventDetails["restricted_signup"];
     $location = $eventDetails["location"];
     //$services = $eventDetails["service"];
+    if (!isset($eventDetails["volunteer-coordinator"]) || $eventDetails["volunteer-coordinator"] == "None") {
+        $volunteerCoordinator = NULL;
+    } else {
+        $volunteerCoordinator = $eventDetails["volunteer-coordinator"];
+    }
 
     #$completed = $eventDetails["completed"];
     #$query = "
@@ -647,7 +652,7 @@ function update_event($eventID, $eventDetails)
     #    where id='$eventID'
     #";
     $query = "
-        update dbevents set id='$id', name='$name', date='$date', startTime='$startTime', endTime='$endTime', description='$description', location='$location', capacity=$capacity
+        update dbevents set id='$id', name='$name', date='$date', startTime='$startTime', endTime='$endTime', description='$description', location='$location', capacity=$capacity, volunteer_coordinator = " . ($volunteerCoordinator === NULL ? "NULL" : (int)$volunteerCoordinator) . "
         where id='$eventID'
     ";
     $result = mysqli_query($connection, $query);

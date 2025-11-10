@@ -24,11 +24,12 @@ if ($accessLevel < 2) {
 }
     require_once('include/input-validation.php');
     require_once('database/dbEvents.php');
+    require_once('database/dbPersons.php'); 
     $errors = '';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $args = sanitize($_POST, null);
     $required = array(
-        "id", "name", "date", "start-time", "description");
+        "id", "name", "date", "start-time", "end-time", "description");
 
     if (!wereRequiredFieldsSubmitted($args, $required)) {
         echo 'bad form data';
@@ -69,6 +70,7 @@ if (!isset($_GET['id'])) {
     $args = sanitize($_GET);
     $id = $args['id'];
     $event = fetch_event_by_id($id);
+    $volunteerCoord = getVolunteerCoordinators();
 if (!$event) {
     echo "Event does not exist";
     die();
@@ -122,6 +124,20 @@ if (!$event) {
                 <input type="text" id="location" name="location" value="<?php echo $event['location'] ?>" placeholder="Enter location">
                 <label for="name">Capacity </label>
                 <input type="number" id="capacity" name="capacity" value="<?php echo $event['capacity'] ?>" placeholder="Enter capacity (e.g. 1-99)">
+                <label for="volunteer-coordinator">Assigned Volunteer Coordinator:</label>
+                <?php if (empty($volunteerCoord)) : ?>
+                    <p>No available volunteer coordinators.</p>
+                <?php else : ?>
+                    <select id="volunteer-coordinator" name="volunteer-coordinator">
+                        <option value="None" <?= empty($event['volunteer_coordinator']) ? 'selected' : '' ?>>None</option>
+                        <?php foreach ($volunteerCoord as $vc) : ?>
+                            <option value="<?= htmlspecialchars($vc['person_id']) ?>"
+                                <?= ($event['volunteer_coordinator'] == $vc['person_id']) ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($vc['fullname']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                <?php endif; ?>
                 <!--<fieldset>
                     <label for="name">* Service </label>
                     </?php 
