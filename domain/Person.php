@@ -188,7 +188,7 @@ class Person
 
     function get_full_name()
     {
-        return $this->first_name + $this->last_name;
+        return $this->first_name . " " . $this->last_name;
     }
 
     function get_birthday()

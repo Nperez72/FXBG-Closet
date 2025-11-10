@@ -295,7 +295,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <tr>
                     <td class="label">Volunteer Coordinator</td>
                     <td><?php 
-                        if ($event_volunteer_coordinator === null) {
+                        if ($event_volunteer_coordinator == null || $event_volunteer_coordinator = '') {
                             echo "None";
                         } else {
                             $person = updated_retrieve_person($event_volunteer_coordinator);
