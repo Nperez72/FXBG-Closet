@@ -52,6 +52,8 @@
   --calendar-event-color-hover: #e8c4b8;
   --calendar-today-border: 2px solid #d4af37;
   --error-color: #d4635a;
+
+  --calendar-archived-event-color: #c4bab7ff;
 }
 
 /* Dark Mode Variables - GMK Olivia Dark Refined */
@@ -105,6 +107,8 @@
   --calendar-event-color: #b8a89d;
   --calendar-event-color-hover: #e8c4b8;
   --calendar-today-border: 2px solid #d4af37;
+
+  --calendar-archived-event-color: rgb(147, 144, 142);
 }
 
 /* Theme Toggle Button Styles */

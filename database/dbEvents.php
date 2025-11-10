@@ -569,6 +569,11 @@ function create_event($event)
     } else {
         $location = $event["location"];
     }
+    if (!isset($event["volunteer-coordinator"]) || $event["volunteer-coordinator"] == "None") {
+        $volunteerCoordinator = NULL;
+    } else {
+        $volunteerCoordinator = $event["volunteer-coordinator"];
+    }
     //$completed = $event["completed"];
     /*
     $restricted_signup = $event["role"];
@@ -586,8 +591,8 @@ function create_event($event)
     //$animal = $event["animal"];
     $completed = "no";
     $query = "
-        insert into dbevents (name, date, startTime, endTime, restricted_signup, description, capacity, completed, location, type)
-        values ('$name', '$date', '$startTime', '$endTime', $restricted, '$description', $capacity, '$completed', '$location', '$type')
+        insert into dbevents (name, date, startTime, endTime, restricted_signup, description, capacity, completed, location, type, volunteer_coordinator)
+        values ('$name', '$date', '$startTime', '$endTime', $restricted, '$description', $capacity, '$completed', '$location', '$type',  " . ($volunteerCoordinator === NULL ? "NULL" : (int)$volunteerCoordinator) . ")
     ";
     $result = mysqli_query($connection, $query);
     if (!$result) {

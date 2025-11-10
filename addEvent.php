@@ -78,6 +78,10 @@ if (isset($_GET['date'])) {
     </head>
     <body>
         <?php require_once('header.php') ?>
+        <?php
+        require_once('database/dbPersons.php'); 
+        $volunteerCoord = getVolunteerCoordinators();
+        ?>
         <h1>Create Event</h1>
         <main class="date">
             <h2>New Event Form</h2>
@@ -100,7 +104,21 @@ if (isset($_GET['date'])) {
                 <input type="text" id="location" name="location" placeholder="Enter location">
                 <label for="name">Capacity </label>
                 <input type="number" id="capacity" name="capacity" placeholder="Enter capacity (e.g. 1-99)">
+                <label for="volunteer-coordinator">Assigned Volunteer Coordinator:</label>
+                <?php if (empty($volunteerCoord)) : ?>
+                    <p>No available volunteer coordinators.</p>
+                <?php else : ?>
+                    <select id="volunteer-coordinator" name="volunteer-coordinator">
+                        <option value="None" selected>None</option>
+                        <?php foreach ($volunteerCoord as $vc) : ?>
+                            <option value="<?= htmlspecialchars($vc['person_id']) ?>">
+                                <?= htmlspecialchars($vc['fullname']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                <?php endif; ?>
                 <input type="submit" value="Create Event">
+                
             </form>
                 <?php if ($date) : ?>
                     <a class="button cancel" href="calendar.php?month=<?php echo substr($date, 0, 7) ?>" style="margin-top: -.5rem">Return to Calendar</a>
