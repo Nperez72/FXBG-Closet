@@ -107,7 +107,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "dude, bad format";
             die();
         }
-        attach_event_training_media($eid, $url, $format, $description);
         header('Location: event.php?id=' . $id . '&attachSuccess');
         die();
     }
@@ -239,7 +238,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $event_description = $event_info['description'];
             $event_location = $event_info['location'];
             $event_capacity = $event_info['capacity'];
-            $event_training_level = $event_info['training_level_required'];
             require_once('include/time.php');
         ?>
 
@@ -291,13 +289,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <tr>
                     <td class="label">Capacity</td>
                     <td id="description-cell"><?php echo $event_capacity; ?></td>
-                </tr>
-                <tr>
-                    <td class="label">Training Required</td>
-                    <td><?php if ($event_training_level == null) {
-                        $event_training_level = "N/A";
-                        }
-                        echo $event_training_level; ?></td>
                 </tr>
             </table>
         </div>
