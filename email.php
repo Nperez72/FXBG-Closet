@@ -56,6 +56,7 @@ function emailAdmins(string $fromUser, string $subject, string $body): array
  * @param string $fromUser Local-part for the From address.
  * @param string $subject  Email subject.
  * @param string $body     Email body.
+ * @param array  $attachments Optional array of file paths to attach.
  * @return array           Returns an  array where keys are emails and values are boolean statuses.
  */
 function sendEmails(array $emails, string $fromUser, string $subject, string $body, array $attachments = []): array
