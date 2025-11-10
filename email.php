@@ -88,8 +88,7 @@ function sendEmails(array $emails, string $fromUser, string $subject, string $bo
         // No attachments: use text/plain format
         $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
         $message = $body;
-    }
-    else {
+    } else {
         // Email has attachments: use multipart/mixed format
         $headers .= "Content-Type: multipart/mixed; boundary=\"{$boundary}\"\r\n";
 

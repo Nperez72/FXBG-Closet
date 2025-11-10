@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $files = $_FILES['activity_images'] ?? null;
     $fileCount = (is_array($files) && isset($files['name']) && is_array($files['name'])) ? count($files["name"]) : 0;
 
-    if($fileCount > MAX_UPLOAD_FILES) {
+    if ($fileCount > MAX_UPLOAD_FILES) {
         set_flash('error', ["Too many files. Maximum " . MAX_UPLOAD_FILES . " photos allowed."]);
         header('Location: trackActivities.php');
         die();
@@ -86,28 +86,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $totalSize = 0;
     $limitPerFileBytes = MAX_FILE_SIZE_MB * 1024 * 1024;
     $totalLimitBytes = MAX_TOTAL_SIZE_MB * 1024 * 1024;
-    
+
     for ($x = 0; $x < $fileCount; $x++) {
-        if (!isset($files['size'][$x])) { continue; }
-        
+        if (!isset($files['size'][$x])) {
+            continue;
+        }
+
         $fsize = (int)$files['size'][$x];
-        
-        if($fsize > $limitPerFileBytes) {
+
+        if ($fsize > $limitPerFileBytes) {
             $name = htmlspecialchars($files['name'][$x] ?? 'Unknown file');
             set_flash('error', ["File too large (" . MAX_FILE_SIZE_MB . "MB max): {$name}"]);
             header('Location: trackActivities.php');
             die();
         }
-        
+
         if ($totalSize + $fsize > $totalLimitBytes) {
             set_flash('error', ["Total upload size exceeds " . MAX_TOTAL_SIZE_MB . "MB limit. Please reduce file count or sizes."]);
             header('Location: trackActivities.php');
             die();
         }
-        
+
         $totalSize += $fsize;
     }
-    
+
     $savedFiles = [];
 
     // loop based on how many images
@@ -288,12 +290,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $attachmentPaths
         );
 
-        // Check for errors 
+        // Check for errors
         if (isset($emailResults['error'])) {
             error_log("Email attachment error: {$emailResults['error']}");
             set_flash('error', ['Activity logged successfully, but email failed to send.', $emailResults['error']]);
             header('Location: trackActivities.php');
-            die();            
+            die();
         }
 
         if (!($emailResults['mhenry.fxbgpride@gmail.com'] ?? false)) {
