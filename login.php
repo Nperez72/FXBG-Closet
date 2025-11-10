@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     break;
             }
             $accessLevel = $_SESSION['access_level'];
-            
+
             header('Location: index.php');
             die();
         }
