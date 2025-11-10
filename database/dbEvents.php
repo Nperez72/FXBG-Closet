@@ -570,7 +570,7 @@ function create_event($event)
         $location = $event["location"];
     }
     if (!isset($event["volunteer-coordinator"]) || $event["volunteer-coordinator"] == "None") {
-        $volunteerCoordinator = NULL;
+        $volunteerCoordinator = null;
     } else {
         $volunteerCoordinator = $event["volunteer-coordinator"];
     }
@@ -592,7 +592,7 @@ function create_event($event)
     $completed = "no";
     $query = "
         insert into dbevents (name, date, startTime, endTime, restricted_signup, description, capacity, completed, location, type, volunteer_coordinator)
-        values ('$name', '$date', '$startTime', '$endTime', $restricted, '$description', $capacity, '$completed', '$location', '$type',  " . ($volunteerCoordinator === NULL ? "NULL" : (int)$volunteerCoordinator) . ")
+        values ('$name', '$date', '$startTime', '$endTime', $restricted, '$description', $capacity, '$completed', '$location', '$type',  " . ($volunteerCoordinator === null ? "NULL" : (int)$volunteerCoordinator) . ")
     ";
     $result = mysqli_query($connection, $query);
     if (!$result) {
@@ -637,7 +637,7 @@ function update_event($eventID, $eventDetails)
     $location = $eventDetails["location"];
     //$services = $eventDetails["service"];
     if (!isset($eventDetails["volunteer-coordinator"]) || $eventDetails["volunteer-coordinator"] == "None") {
-        $volunteerCoordinator = NULL;
+        $volunteerCoordinator = null;
     } else {
         $volunteerCoordinator = $eventDetails["volunteer-coordinator"];
     }
@@ -652,7 +652,7 @@ function update_event($eventID, $eventDetails)
     #    where id='$eventID'
     #";
     $query = "
-        update dbevents set id='$id', name='$name', date='$date', startTime='$startTime', endTime='$endTime', description='$description', location='$location', capacity=$capacity, volunteer_coordinator = " . ($volunteerCoordinator === NULL ? "NULL" : (int)$volunteerCoordinator) . "
+        update dbevents set id='$id', name='$name', date='$date', startTime='$startTime', endTime='$endTime', description='$description', location='$location', capacity=$capacity, volunteer_coordinator = " . ($volunteerCoordinator === null ? "NULL" : (int)$volunteerCoordinator) . "
         where id='$eventID'
     ";
     $result = mysqli_query($connection, $query);
