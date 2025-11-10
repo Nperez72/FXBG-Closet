@@ -79,7 +79,7 @@ if (isset($_GET['date'])) {
     <body>
         <?php require_once('header.php') ?>
         <?php
-        require_once('database/dbPersons.php'); 
+        require_once('database/dbPersons.php');
         $volunteerCoord = getVolunteerCoordinators();
         ?>
         <h1>Create Event</h1>

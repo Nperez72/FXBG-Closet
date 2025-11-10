@@ -24,7 +24,7 @@ if ($accessLevel < 2) {
 }
     require_once('include/input-validation.php');
     require_once('database/dbEvents.php');
-    require_once('database/dbPersons.php'); 
+    require_once('database/dbPersons.php');
     $errors = '';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $args = sanitize($_POST, null);
