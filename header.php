@@ -22,6 +22,16 @@ if (date("H:i:s") > "18:19:59") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/theme-toggle.css">
+    <link rel="stylesheet" href="css/mobile-nav.css">
+    
+    <!-- PWA Meta Tags - Enables offline support, installation, etc. -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#6B46C1">
+    <meta name="description" content="Volunteer Management System for Fredericksburg Pride - FXBG Closet">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="FXBG Closet">
+    <link rel="apple-touch-icon" href="/images/FXBG-PrideWhiteLogo.png">
 </head>
 
 <header>
@@ -303,6 +313,20 @@ if (date("H:i:s") > "18:19:59") {
                                         <path d="M7 11V7a5 5 0 0110 0v4"></path>
                                     </svg>
                                     Change Password
+                                </a>
+                                <a href="createAccount.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                        <path d="M7 11V7a5 5 0 0110 0v4"></path>
+                                    </svg>
+                                    Create Account
+                                </a>
+                                <a href="deleteAccounts.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                        <path d="M7 11V7a5 5 0 0110 0v4"></path>
+                                    </svg>
+                                    Delete Account
                                 </a>
                                 <a href="logout.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1089,6 +1113,17 @@ if (date("H:i:s") > "18:19:59") {
                     document.body.style.overflow = '';
                 }
             });
+        }
+        
+        // PWA Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then((registration) => {
+                    console.log('Service Worker registered:', registration);
+                })
+                .catch((error) => {
+                    console.log('Service Worker registration failed:', error);
+                });
         }
     });
     </script>

@@ -8,6 +8,22 @@
     </div>
 </header>
 
+<?php if (isset($flash) && $flash) : ?>
+    <?php $isSuccess = ($flash['type'] === 'success'); ?>
+  <div class="flash-wrap">
+    <div id="flash" class="flash-card <?php echo $isSuccess ? 'success' : 'error'; ?>" role="alert" aria-live="polite">
+      <div class="flash-body">
+        <ul class="flash-list">
+          <?php foreach ((array)($flash['messages'] ?? []) as $m) : ?>
+            <li><?php echo htmlspecialchars($m, ENT_QUOTES, 'UTF-8'); ?></li>
+          <?php endforeach; ?>
+        </ul>
+        <button class="flash-close" aria-label="Dismiss" onclick="document.getElementById('flash')?.remove()">×</button>
+      </div>
+    </div>
+  </div>
+<?php endif; ?>
+
 <main>
   <div class="main-content-box w-full max-w-3xl p-8 mb-8">
     <form class="signup-form" method="post" enctype="multipart/form-data">
@@ -41,7 +57,7 @@
             <label for="activity_description"><em>* </em>Activity Description</label>
             <textarea id="activity_description" name="activity_description" rows="6" required placeholder="Describe what you did during this volunteer activity"></textarea>
         </fieldset>
-           <label for="activity_image">Choose photos (10MB limit)</label>
+           <label for="activity_image">Choose photos to send as documentation (max 10 files, 10MB limit per, 50MB total)</label>
   <input id="activity_image" name="activity_images[]" multiple accept="image/jpeg, image/png" type="file" /> 
         <input type="submit" name="activity-form" value="Submit" class="blue-button">
     </form>

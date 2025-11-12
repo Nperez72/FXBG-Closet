@@ -56,18 +56,66 @@ function emailAdmins(string $fromUser, string $subject, string $body): array
  * @param string $fromUser Local-part for the From address.
  * @param string $subject  Email subject.
  * @param string $body     Email body.
+ * @param array  $attachments Optional array of file paths to attach.
  * @return array           Returns an  array where keys are emails and values are boolean statuses.
  */
-function sendEmails(array $emails, string $fromUser, string $subject, string $body): array
+function sendEmails(array $emails, string $fromUser, string $subject, string $body, array $attachments = []): array
 {
     $domain = 'localhost';
     $fromAddress = "{$fromUser}@{$domain}";
-    $headers = "From: {$fromAddress}\r\n";
+
+    // Validate attachments
+    if (!empty($attachments)) {
+        foreach ($attachments as $filePath) {
+            $fileName = basename($filePath);
+            if (!file_exists($filePath)) {
+                return ['error' => "Attachment file does not exist: {$fileName}"];
+            }
+            if (!is_readable($filePath)) {
+                return ['error' => "Attachment file is not readable: {$fileName}"];
+            }
+        }
+    }
+
     $results = [];
+
+    // Generate a unique boundary string
+    $boundary = md5(time());
+
+    $headers = "From: {$fromAddress}\r\n";
+    $headers .= "MIME-Version: 1.0\r\n";
+
+    if (empty($attachments)) {
+        // No attachments: use text/plain format
+        $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+        $message = $body;
+    } else {
+        // Email has attachments: use multipart/mixed format
+        $headers .= "Content-Type: multipart/mixed; boundary=\"{$boundary}\"\r\n";
+
+        $message = "--{$boundary}\r\n";
+        $message .= "Content-Type: text/plain; charset=UTF-8\r\n";
+        $message .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
+        $message .= $body . "\r\n\r\n";
+
+        foreach ($attachments as $filePath) {
+            $fileName = basename($filePath);
+            $fileContent = file_get_contents($filePath);
+            $encodedContent = chunk_split(base64_encode($fileContent));
+            $mimeType = mime_content_type($filePath) ?: 'application/octet-stream';
+
+            $message .= "--{$boundary}\r\n"; // Start new part
+            $message .= "Content-Type: {$mimeType}; name=\"{$fileName}\"\r\n";
+            $message .= "Content-Transfer-Encoding: base64\r\n";
+            $message .= "Content-Disposition: attachment; filename=\"{$fileName}\"\r\n\r\n";
+            $message .= $encodedContent . "\r\n";
+        }
+        $message .= "--{$boundary}--";
+    }
 
     foreach ($emails as $email) {
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $results[$email] = mail($email, $subject, $body, $headers);
+            $results[$email] = mail($email, $subject, $message, $headers);
         } else {
             $results[$email] = false;
         }
