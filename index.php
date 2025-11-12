@@ -524,6 +524,17 @@ if (isset($_SESSION['_id'])) {
 </button>
     </div>
 
+        <div class="content-box">
+            <div class="small-text">Log transactions.</div>
+            <div class="large-text">Financial Log</div>
+            <button class="circle-arrow-button" onclick="window.location.href='createFinancialLog.php'">
+                <span class="button-text">Go</span>
+                <div class="circle">&gt;</div>
+            </button>
+        </div>
+
+    </div>
+
     </div>
 
     <div class="dashboard-title">

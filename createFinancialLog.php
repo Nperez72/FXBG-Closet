@@ -22,22 +22,22 @@ if (isset($_SESSION['_id'])) {
 }
 
     require_once('database/dbAccounts.php');
-    $isAdmin = false;
+    $accessGrant = false;
     $accounts = array();
 if ($loggedIn) {
     $accountType = get_account_type($userID);
     // 0: volunteer, 1: coordinator/board memeber, 2: admin
-    if ($accountType !== null && $accountType >= 2) {
-        $isAdmin = true;
+    if ($accountType !== null && $accountType >= 1) {
+        $accessGrant = true;
     }
 }
 
-if (!$isAdmin) {
+if (!$accessGrant) {
     header('Location: login.php');
     die();
 }
 
-if ($isAdmin) {
+if ($accessGrant) {
     $accounts = get_all_accounts();
 }
 
