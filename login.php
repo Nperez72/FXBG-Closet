@@ -45,7 +45,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // In the original code here is what the access levels are:
             // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
             // Trying to map them but might break stuff
-            $accessLevel = $_SESSION['access_level'];
             switch (get_account_type($username)) {
                 // volunteer
                 case 0:
@@ -62,6 +61,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $_SESSION['access_level'] = 3;
                     break;
             }
+            $accessLevel = $_SESSION['access_level'];
+
             header('Location: index.php');
             die();
         }
