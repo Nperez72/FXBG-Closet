@@ -14,6 +14,17 @@
     $loggedIn = false;
     $accessLevel = 0;
     $userID = null;
+require('database/dbPersons.php');
+if (isset($_SESSION['person_id'])) {
+    $person = updated_retrieve_person($_SESSION['person_id']);
+
+    // Check that the function actually returned a result
+    if ($person && $person->get_first_name()) {
+        $personName = $person->get_first_name() . $person->get_last_name();
+    } else {
+        $personName = "";
+    }
+}
 if (isset($_SESSION['_id'])) {
     $loggedIn = true;
     // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
@@ -38,7 +49,7 @@ if (!$accessGrant) {
 }
 
 if ($accessGrant) {
-    $accounts = get_all_accounts();
+    $persons = getall_coordinator_names();
 }
 
 if (!$loggedIn) {
@@ -50,37 +61,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     require_once('include/input-validation.php');
 
 
-
-    if (!wereRequiredFieldsSubmitted($_POST, array('new-password', 'new-username', 'new-password-reenter', 'type'))) {
+    if (!wereRequiredFieldsSubmitted($_POST, array('name', 'amount'))) {
         echo "Args missing";
         die();
     }
 
-    $username = $_POST['new-username'];
-    $password = $_POST['new-password'];
-    $password_reenter = $_POST['new-password-reenter'];
-    $type = $_POST['type'];
-    $securePassword = isSecurePassword($password);
+    $name = $_POST['name'];
+    $amount = $_POST['amount'];
 
-
-
-    if (!$securePassword) {
-        $error2 = true; // password isn't secure
-    } if ($password != $password_reenter) {
-        $error1 = true;
-    } if ($securePassword && $password == $password_reenter) {
-        $result = create_account($username, $password, $type);
-
-        if ($result === 'duplicate') {
-            $error3 = true; // username already exists
-        } elseif (!$result) {
-            echo "<p  class='error-toast'>Failed to create account.</p>";
-            die();
-        } else {
-            header('Location: createAccount.php?success=1');
-            die();
-        }
-    }
+    header('Location: createFinancialLog.php?success=1');
+    die();
 }
 ?>
 <!DOCTYPE html>
@@ -88,11 +78,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <head>
         <?php require_once('universal.inc') ?>
         <script src="https://cdn.tailwindcss.com"></script>
-        <title>Fredericksburg SPCA | Change Password</title>
+        <title>Fredericksburg Pride | Create Financial Log</title>
     </head>
     <body>
         <?php require_once('header.php') ?>
-        <h1>Create Account</h1>
+        <h1>Create Financial Log</h1>
         <main class="login">
             <?php if (isset($error1)) : ?>
                 <p class="error-toast">Passwords do not match.</p>
@@ -102,25 +92,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <p class="error-toast">Username already exists. Please choose a different username.</p>
             <?php elseif (isset($_GET['success']) && $_GET['success'] == 1) : ?>
             <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-                <p class="text-center">Account created successfully.</p>
+                <p class="text-center">Log created successfully.</p>
             </div>
             <?php endif ?>
             <form id="password-change" method="post">
-                <label for="type">Account type</label>
-                <select id="type" name="type">
-                    <option value="0">Volunteer</option>
-                    <option value="1">Coordinator/Board Member</option>
-                    <option value="2">Admin</option>
-                </select>
-                <label for="username">New username</label>
-                <input type="text" id="username" name="new-username" placeholder="Enter new username" required>
-                <label for="password">New password</label>
-                <input type="password" id="password" name="new-password" placeholder="Enter new password" required>
-                 <p id="password-error" class="error hidden">Password needs to be at least 8 characters long, contain at least one number, one uppercase letter, and one lowercase letter!</p>
-                <label for="reenter-password">New Password</label>
-                <input type="password" id="password-reenter" name = 'new-password-reenter' placeholder="Re-enter new password" required>
-                <p id="password-match-error" class="error hidden">Passwords must match!</p>
-                <input type="submit" id="submit" name="submit" value="Create Account">
+                <?php if ($accessGrant) : ?>
+                    <label for="name">Name</label>
+                    <select id="name" name="name">
+                        <?php foreach ($persons as $person) : ?>
+                            <option value="<?php echo ($person); ?>"<?php if ($personName = $person) echo "selected"?>> <?php
+                                echo $person;
+                             ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                <?php endif ?>
+                <label for="amount">Dollar Amount:</label>
+                <input type="text" id="amount" name="amount" placeholder = "Enter dollar amount" pattern="^\$?\d{1,3}(?:,\d{3})*(?:\.\d{2})?$" required >
+                <p id="money-error" class="error hidden">Please write amount in the form of "xx.xx"!</p>
+                <label for="type">Description:</label>
+                <input type="text" id="description" name="description" placeholder = "Enter description">
+                <input type="submit" id="submit" name="submit" value="Create Financial Log">
                 <a class="button cancel" href="index.php">Cancel</a>
             </form>
         </main>

@@ -656,6 +656,23 @@ function getall_volunteer_names()
     mysqli_close($con);
     return $names;
 }
+function getall_coordinator_names()
+{
+    $con = connect();
+    $query = "SELECT first_name, last_name FROM dbpersons";
+    $result = mysqli_query($con, $query);
+    if ($result == null || mysqli_num_rows($result) == 0) {
+        mysqli_close($con);
+        return false;
+    }
+    $result = mysqli_query($con, $query);
+    $names = array();
+    while ($result_row = mysqli_fetch_assoc($result)) {
+        $names[] = $result_row['first_name'] . ' ' . $result_row['last_name'];
+    }
+    mysqli_close($con);
+    return $names;
+}
 
 function make_a_person($result_row)
 {
