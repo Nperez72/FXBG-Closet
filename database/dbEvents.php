@@ -47,7 +47,6 @@ function add_event($event)
                 $event->getCapacity() . "," .
                 $event->getCompleted() . "," .
                 $event->getRestrictedSignup() . "," .
-                $event->getTrainingLevelRequired() . "," .
                 #$event->getID() .
                 '");');
         mysqli_close($con);
@@ -416,7 +415,6 @@ function make_an_event($result_row)
         capacity: $result_row['capacity'],
         completed: $result_row['completed'],
         restricted_signup: $result_row['restricted_signup'],
-        training_level_required: $result_row['training_level_required'],
         type: $result_row['type']
     );
     return $theEvent;
@@ -561,15 +559,20 @@ function create_event($event)
     $endTime = $event["end-time"];
     $description = $event["description"];
     $type = $event['type'];
-    if (isset($event["capacity"])) {
-        $capacity = $event["capacity"];
-    } else {
+    if (!isset($event["capacity"]) || $event["capacity"] === "") {
         $capacity = 999;
-    }
-    if (isset($event["location"])) {
-        $location = $event["location"];
     } else {
+        $capacity = (int)$event["capacity"];
+    }
+    if (!isset($event["location"]) || $event["location"] === "") {
         $location = "";
+    } else {
+        $location = $event["location"];
+    }
+    if (!isset($event["volunteer-coordinator"]) || $event["volunteer-coordinator"] == "None") {
+        $volunteerCoordinator = null;
+    } else {
+        $volunteerCoordinator = $event["volunteer-coordinator"];
     }
     //$completed = $event["completed"];
     /*
@@ -582,15 +585,14 @@ function create_event($event)
         */
     $restricted = 0;
     $description = $event["description"];
-    $training_level_required = $event["training_level_required"];
     //$location = $event["location"];
     //$services = $event["service"];
 
     //$animal = $event["animal"];
     $completed = "no";
     $query = "
-        insert into dbevents (name, date, startTime, endTime, restricted_signup, description, capacity, completed, location, training_level_required, type)
-        values ('$name', '$date', '$startTime', '$endTime', $restricted, '$description', $capacity, '$completed', '$location', '$training_level_required', '$type')
+        insert into dbevents (name, date, startTime, endTime, restricted_signup, description, capacity, completed, location, type, volunteer_coordinator)
+        values ('$name', '$date', '$startTime', '$endTime', $restricted, '$description', $capacity, '$completed', '$location', '$type',  " . ($volunteerCoordinator === null ? "NULL" : (int)$volunteerCoordinator) . ")
     ";
     $result = mysqli_query($connection, $query);
     if (!$result) {
@@ -634,6 +636,11 @@ function update_event($eventID, $eventDetails)
     #$restricted_signup = $eventDetails["restricted_signup"];
     $location = $eventDetails["location"];
     //$services = $eventDetails["service"];
+    if (!isset($eventDetails["volunteer-coordinator"]) || $eventDetails["volunteer-coordinator"] == "None") {
+        $volunteerCoordinator = null;
+    } else {
+        $volunteerCoordinator = $eventDetails["volunteer-coordinator"];
+    }
 
     #$completed = $eventDetails["completed"];
     #$query = "
@@ -645,7 +652,7 @@ function update_event($eventID, $eventDetails)
     #    where id='$eventID'
     #";
     $query = "
-        update dbevents set id='$id', name='$name', date='$date', startTime='$startTime', endTime='$endTime', description='$description', location='$location', capacity=$capacity
+        update dbevents set id='$id', name='$name', date='$date', startTime='$startTime', endTime='$endTime', description='$description', location='$location', capacity=$capacity, volunteer_coordinator = " . ($volunteerCoordinator === null ? "NULL" : (int)$volunteerCoordinator) . "
         where id='$eventID'
     ";
     $result = mysqli_query($connection, $query);

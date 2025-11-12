@@ -55,7 +55,6 @@ if (isset($_SESSION['_id'])) {
                 });
 
                 $user = retrieve_person($userID);
-                $user_training_level = $user->get_training_level();
 
                 if (sizeof($upcomingEvents) > 0) : ?>
                 <div class="table-wrapper">
@@ -63,7 +62,6 @@ if (isset($_SESSION['_id'])) {
                     <table class="general">
                         <thead>
                             <tr>
-                                <th style="width:1px">Training Required</th>
                                 <th>Title</th>
                                 <th>Event Type</th>
                                 <th style="width:1px">Date</th>
@@ -86,11 +84,7 @@ if (isset($_SESSION['_id'])) {
                                 $capacity = $event->getCapacity();
                                 $completed = $event->getCompleted();
                                 $restricted_signup = $event->getRestrictedSignup();
-                                $training_level_required = $event->getTrainingLevelRequired();
                                 $type = $event->getEventType();
-                                if ($training_level_required == null) {
-                                       $training_level_required = "N/A";
-                                }
 
                                     // Fetch signups for the event
                                     $signups = fetch_event_signups($eventID);
@@ -100,17 +94,13 @@ if (isset($_SESSION['_id'])) {
 
                                     echo "
                                     <tr data-event-id='$eventID'>
-                                        <td>$training_level_required</td>
                                         <td><a href='event.php?id=$eventID'>$title</a></td>
                                         <td>$type</td>
                                         <td>$date</td>
                                         <td>$numSignups / $capacity</td>";
 
                                     // Display Sign Up or Cancel button based on user sign-up status
-                                if ($user_training_level != $training_level_required) {
-                                    echo "
-                                            <td><a class='button sign-up' style='background-color: var(--error-color, #d4635a);'>Training Not Met!</a></td>";
-                                } elseif ($isSignedUp) {
+                                if ($isSignedUp) {
                                     echo "
                                             <td>
                                             <a class='button cancel' href='viewMyUpcomingEvents.php' >Already Signed Up!</a>

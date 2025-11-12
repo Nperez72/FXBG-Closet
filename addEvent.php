@@ -41,7 +41,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $startTime = $args['start-time'] = $validated[0];
         $endTime = $args['end-time'] = $validated[1];
         $date = $args['date'] = validateDate($args["date"]);
-        $args["training_level_required"] = $_POST['training_level_required'];
 
         if (!$startTime || !$endTime || !$date > 11) {
             echo 'bad args';
@@ -79,6 +78,10 @@ if (isset($_GET['date'])) {
     </head>
     <body>
         <?php require_once('header.php') ?>
+        <?php
+        require_once('database/dbPersons.php');
+        $volunteerCoord = getVolunteerCoordinators();
+        ?>
         <h1>Create Event</h1>
         <main class="date">
             <h2>New Event Form</h2>
@@ -95,19 +98,25 @@ if (isset($_GET['date'])) {
                 <input type="text" id="end-time" name="end-time" pattern="([1-9]|10|11|12):[0-5][0-9] ?([aApP][mM])" required placeholder="Enter end time. Ex. 1:00 PM">
                 <label for="name">* Description </label>
                 <input type="text" id="description" name="description" required placeholder="Enter description">
-                <label for="name">Event Type </label>
+                <label for="name">* Event Type </label>
                 <input type="text" id="type" name="type" required placeholder="Enter Event Type">
                 <label for="name">Location </label>
-                <input type="text" id="location" name="location" required placeholder="Enter location">
+                <input type="text" id="location" name="location" placeholder="Enter location">
                 <label for="name">Capacity </label>
-                <input type="number" id="capacity" name="capacity" required placeholder="Enter capacity (e.g. 1-99)">
-                <label for="training">* Training Type:</label>
-                <select id="training_level_required" name="training_level_required">
-                    <option value="None">None</option>
-                    <option value="Green">Green</option>
-                    <option value="Orange">Orange</option>
-                    <option value="Pink">Pink</option>
-                </select>
+                <input type="number" id="capacity" name="capacity" placeholder="Enter capacity (e.g. 1-99)">
+                <label for="volunteer-coordinator">Assigned Volunteer Coordinator:</label>
+                <?php if (empty($volunteerCoord)) : ?>
+                    <p>No available volunteer coordinators.</p>
+                <?php else : ?>
+                    <select id="volunteer-coordinator" name="volunteer-coordinator">
+                        <option value="None" selected>None</option>
+                        <?php foreach ($volunteerCoord as $vc) : ?>
+                            <option value="<?= htmlspecialchars($vc['person_id']) ?>">
+                                <?= htmlspecialchars($vc['fullname']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                <?php endif; ?>
                 <input type="submit" value="Create Event">
                 
             </form>

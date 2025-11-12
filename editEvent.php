@@ -24,11 +24,12 @@ if ($accessLevel < 2) {
 }
     require_once('include/input-validation.php');
     require_once('database/dbEvents.php');
+    require_once('database/dbPersons.php');
     $errors = '';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $args = sanitize($_POST, null);
     $required = array(
-        "id", "name", "date", "start-time", "description");
+        "id", "name", "date", "start-time", "end-time", "description");
 
     if (!wereRequiredFieldsSubmitted($args, $required)) {
         echo 'bad form data';
@@ -69,6 +70,7 @@ if (!isset($_GET['id'])) {
     $args = sanitize($_GET);
     $id = $args['id'];
     $event = fetch_event_by_id($id);
+    $volunteerCoord = getVolunteerCoordinators();
 if (!$event) {
     echo "Event does not exist";
     die();
@@ -103,25 +105,39 @@ if (!$event) {
         <?php endif ?>
             <h2>Event Details</h2>
             <form id="new-event-form" method="post">
-                <label for="name">Event Name </label>
+                <label for="name">* Event Name </label>
                 <input type="hidden" name="id" value="<?php echo $id ?>"/> 
                 <input type="text" id="name" name="name" value="<?php echo $event['name'] ?>" required placeholder="Enter name"> 
                 <!--
                 <label for="name">Abbreviated Name</label>
                 <input type="text" id="abbrev-name" name="abbrev-name" value="<//?php echo $event['abbrevName'] ?>" maxlength="11"  required placeholder="Enter name that will appear on calendar">
                 --->
-                <label for="name">Date </label>
+                <label for="name">* Date </label>
                 <input type="date" id="date" name="date" value="<?php echo $event['date'] ?>" min="<?php echo date('Y-m-d'); ?>" required>
-                <label for="name">Start Time </label>
+                <label for="name">* Start Time </label>
                 <input type="text" id="start-time" name="start-time" value="<?php echo time24hto12h($event['startTime']) ?>" pattern="([1-9]|10|11|12):[0-5][0-9] ?([aApP][mM])" required placeholder="Enter start time. Ex. 12:00 PM">
-                <label for="name">End Time </label>
+                <label for="name">* End Time </label>
                 <input type="text" id="end-time" name="end-time" value="<?php echo time24hto12h($event['endTime']) ?>" pattern="([1-9]|10|11|12):[0-5][0-9] ?([aApP][mM])" required placeholder="Enter end time. Ex. 12:00 PM">
-                <label for="name">Description </label>
+                <label for="name">* Description </label>
                 <input type="text" id="description" name="description" value="<?php echo $event['description'] ?>" required placeholder="Enter description">
                 <label for="name">Location </label>
                 <input type="text" id="location" name="location" value="<?php echo $event['location'] ?>" placeholder="Enter location">
                 <label for="name">Capacity </label>
                 <input type="number" id="capacity" name="capacity" value="<?php echo $event['capacity'] ?>" placeholder="Enter capacity (e.g. 1-99)">
+                <label for="volunteer-coordinator">Assigned Volunteer Coordinator:</label>
+                <?php if (empty($volunteerCoord)) : ?>
+                    <p>No available volunteer coordinators.</p>
+                <?php else : ?>
+                    <select id="volunteer-coordinator" name="volunteer-coordinator">
+                        <option value="None" <?= empty($event['volunteer_coordinator']) ? 'selected' : '' ?>>None</option>
+                        <?php foreach ($volunteerCoord as $vc) : ?>
+                            <option value="<?= htmlspecialchars($vc['person_id']) ?>"
+                                <?= ($event['volunteer_coordinator'] == $vc['person_id']) ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($vc['fullname']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                <?php endif; ?>
                 <!--<fieldset>
                     <label for="name">* Service </label>
                     </?php 
