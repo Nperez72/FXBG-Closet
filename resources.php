@@ -127,7 +127,7 @@ require_once('header.php');
 
         <!-- Return Button -->
         <div class="mt-6">
-	    <a href="index.php" class="return-button">Return to Dashboard</a>
+        <a href="index.php" class="return-button">Return to Dashboard</a>
         </div>
 
         <!-- Info Section -->
