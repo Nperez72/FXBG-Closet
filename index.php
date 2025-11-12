@@ -329,8 +329,8 @@ if (isset($_SESSION['_id'])) {
                 <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Document Icon">
             </div>
             <div class="background-image"></div>
-            <div class="large-text-sub">Manage Documents</div>
-            <div class="graph-text">Resources for volunteers.</div>
+            <div class="large-text-sub">Manage Media</div>
+            <div class="graph-text">Media for volunteers.</div>
             <button class="arrow-button">→</button>
         </div>
                 <?php
@@ -546,8 +546,8 @@ if (isset($_SESSION['_id'])) {
                 <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Document Icon">
             </div>
             <div class="background-image"></div>
-            <div class="large-text-sub">Manage Documents</div>
-            <div class="graph-text">Resources for volunteers.</div>
+            <div class="large-text-sub">Manage Media</div>
+            <div class="graph-text">Media for volunteers.</div>
             <button class="arrow-button">→</button>
         </div>
                 <?php
