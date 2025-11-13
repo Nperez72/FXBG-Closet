@@ -239,7 +239,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $event_description = $event_info['description'];
             $event_location = $event_info['location'];
             $event_capacity = $event_info['capacity'];
-            $event_training_level = $event_info['training_level_required'];
+            $event_volunteer_coordinator = $event_info['volunteer_coordinator'];
             require_once('include/time.php');
         ?>
 
@@ -293,11 +293,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <td id="description-cell"><?php echo $event_capacity; ?></td>
                 </tr>
                 <tr>
-                    <td class="label">Training Required</td>
-                    <td><?php if ($event_training_level == null) {
-                        $event_training_level = "N/A";
-                        }
-                        echo $event_training_level; ?></td>
+                    <td class="label">Volunteer Coordinator</td>
+                    <td><?php
+                    if ($event_volunteer_coordinator == null || $event_volunteer_coordinator == '') {
+                        echo "None";
+                    } else {
+                        $person = updated_retrieve_person($event_volunteer_coordinator);
+                        echo htmlspecialchars($person->get_full_name());
+                    }
+                    ?></td>
                 </tr>
             </table>
         </div>

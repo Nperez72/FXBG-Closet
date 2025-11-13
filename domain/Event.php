@@ -16,13 +16,12 @@ class Event
     private $capacity;
     private $completed;
     private $restricted_signup;
-    private $training_level_required;
     private $type;
     #private $trainingMedia;
     #private $postMedia;
     #private $animalId;
 
-    function __construct($id, $name, $date, $startTime, $endTime, $description, $capacity, $completed, $restricted_signup, $training_level_required, $type)
+    function __construct($id, $name, $date, $startTime, $endTime, $description, $capacity, $completed, $restricted_signup, $type)
     {
         $this->id = $id;
         $this->name = $name;
@@ -33,7 +32,6 @@ class Event
         $this->capacity = $capacity;
         $this->completed = $completed;
         $this->restricted_signup = $restricted_signup;
-        $this->training_level_required = $training_level_required;
         $this->type = $type;
     }
 
@@ -90,10 +88,6 @@ class Event
         return $this->restricted_signup;
     }
 
-    function getTrainingLevelRequired()
-    {
-        return $this->training_level_required;
-    }
     function getEventType()
     {
         return $this->type;

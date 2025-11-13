@@ -1,6 +1,37 @@
 <?php
     session_start();
     require_once('database/dbSupplies.php');
+
+if (isset($_POST['toggle_status'])) {
+    $supply_id = (int)$_POST['supply_id'];
+    $current_status = $_POST['current_status'];
+    $new_status = ($current_status === 'pending') ? 'fulfilled' : 'pending';
+
+    if ($new_status === 'fulfilled') {
+        update_supply_quantity($supply_id, 0);
+    }
+
+    toggle_supply_status($supply_id, $new_status);
+    header("Location: viewSupplies.php");
+    exit();
+}
+
+if (isset($_POST['toggle_reserve'])) {
+    $supply_id = (int)$_POST['supply_id'];
+    $current_reserve = $_POST['current_reserve'];
+    $new_reserve = ($current_reserve === 'unreserved') ? 'reserved' : 'unreserved';
+    toggle_reserve_status($supply_id, $new_reserve);
+    header("Location: viewSupplies.php");
+    exit();
+}
+
+if (isset($_POST['update_quantity'])) {
+    $supply_id = (int)$_POST['supply_id'];
+    $new_quantity = (int)$_POST['quantity'];
+    update_supply_quantity($supply_id, $new_quantity);
+    header("Location: viewSupplies.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -41,6 +72,49 @@ require_once('header.php');
     tr:hover {
         background-color: #f5f5f5;
     }
+    .status-pending {
+        background-color: #fef08a;
+    }
+    .status-fulfilled {
+        background-color: #86efac;
+    }
+    .toggle-btn {
+        padding: 6px 12px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    .toggle-btn:hover {
+        opacity: 0.8;
+    }
+    .quantity-input {
+        width: 60px;
+        padding: 4px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        text-align: center;
+    }
+    .update-btn {
+        padding: 4px 8px;
+        background-color: #294877;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        margin-left: 5px;
+    }
+    .update-btn:hover {
+        background-color: #1e3a5f;
+    }
+    .reserved-text {
+        color: red;
+        font-weight: bold;
+    }
+    .unreserved-text {
+        color: black;
+        font-weight: bold;
+    }
 </style>
 </head>
 <body>
@@ -68,16 +142,47 @@ require_once('header.php');
         echo '<th>Item Type</th>';
         echo '<th>Quantity</th>';
         echo '<th>Description</th>';
+        echo '<th>Status</th>';
+        echo '<th>Reserve Status</th>';
+        echo '<th>Actions</th>';
         echo '</tr>';
         echo '</thead>';
         echo '<tbody>';
 
         foreach ($supplies as $supply) {
-            echo '<tr>';
+            $status_class = ($supply['status'] === 'fulfilled') ? 'status-fulfilled' : 'status-pending';
+            $status_text = ucfirst($supply['status']);
+            $button_text = ($supply['status'] === 'pending') ? 'Mark Fulfilled' : 'Mark Pending';
+
+            $reserve_class = ($supply['reserve_status'] === 'reserved') ? 'reserved-text' : 'unreserved-text';
+            $reserve_text = ucfirst($supply['reserve_status']);
+            $reserve_button = ($supply['reserve_status'] === 'unreserved') ? 'Mark Reserved' : 'Mark Unreserved';
+
+            echo '<tr class="' . $status_class . '">';
             echo '<td>' . htmlspecialchars($supply['date_submitted']) . '</td>';
             echo '<td>' . htmlspecialchars($supply['item_type']) . '</td>';
-            echo '<td>' . htmlspecialchars($supply['quantity']) . '</td>';
+            echo '<td>';
+            echo '<form method="post" style="display:inline;">';
+            echo '<input type="number" name="quantity" class="quantity-input" value="' . $supply['quantity'] . '" min="0" required>';
+            echo '<input type="hidden" name="supply_id" value="' . $supply['supply_id'] . '">';
+            echo '<button type="submit" name="update_quantity" class="update-btn">Update</button>';
+            echo '</form>';
+            echo '</td>';
             echo '<td>' . htmlspecialchars($supply['description']) . '</td>';
+            echo '<td><strong>' . $status_text . '</strong></td>';
+            echo '<td class="' . $reserve_class . '">' . $reserve_text . '</td>';
+            echo '<td>';
+            echo '<form method="post" style="display:inline; margin-right: 5px;">';
+            echo '<input type="hidden" name="supply_id" value="' . $supply['supply_id'] . '">';
+            echo '<input type="hidden" name="current_status" value="' . $supply['status'] . '">';
+            echo '<button type="submit" name="toggle_status" class="toggle-btn">' . $button_text . '</button>';
+            echo '</form>';
+            echo '<form method="post" style="display:inline;">';
+            echo '<input type="hidden" name="supply_id" value="' . $supply['supply_id'] . '">';
+            echo '<input type="hidden" name="current_reserve" value="' . $supply['reserve_status'] . '">';
+            echo '<button type="submit" name="toggle_reserve" class="toggle-btn">' . $reserve_button . '</button>';
+            echo '</form>';
+            echo '</td>';
             echo '</tr>';
         }
 
