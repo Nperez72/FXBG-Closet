@@ -20,7 +20,7 @@ if (isset($_SESSION['person_id'])) {
 
     // Check that the function actually returned a result
     if ($person && $person->get_first_name()) {
-        $personName = $person->get_first_name() . $person->get_last_name();
+        $personName = $person->get_first_name() . " " . $person->get_last_name();
     } else {
         $personName = "";
     }
@@ -100,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="name">Name</label>
                     <select id="name" name="name">
                         <?php foreach ($persons as $person) : ?>
-                            <option value="<?php echo ($person); ?>"<?php if ($personName = $person) echo "selected"?>> <?php
+                            <option value="<?php echo ($person); ?>"<?php if ($personName == $person) echo "selected"?>> <?php
                                 echo $person;
                              ?>
                             </option>
