@@ -17,7 +17,7 @@ if (isset($_SESSION['_id'])) {
     $userID = $_SESSION['_id'];
 }
     // Require admin privileges
-if ($accessLevel < 4) {
+if ($accessLevel < 3) {
     header('Location: login.php');
     echo 'bad access level';
     die();
@@ -74,6 +74,18 @@ if (!isset($_GET['id'])) {
 if (!$event) {
     echo "Event does not exist";
     die();
+}
+if ($accessLevel == 3) {
+    if (!isset($_SESSION['person_id'])) {
+        header('Location: login.php');
+        die();
+    }
+    $personID = $_SESSION['person_id'];
+    if ($personID != $event['volunteer_coordinator']) {
+        header('Location: login.php');
+        echo 'bad access level';
+        die();
+    }
 }
     require_once('include/output.php');
 

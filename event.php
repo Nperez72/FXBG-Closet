@@ -33,6 +33,13 @@ if ($event_info == null) {
 
     include_once('database/dbPersons.php');
     $access_level = $_SESSION['access_level'];
+    if ($access_level == 3) {
+        if (!isset($_SESSION['person_id'])) {
+            header('Location: login.php');
+            die();
+        }
+        $personID = $_SESSION['person_id'];
+    }
     $user = retrieve_person($_SESSION['_id']);
     //$active = $user->get_status() == 'Active';
 
@@ -179,7 +186,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ?>
     <title>Fredericksburg SPCA | View Event: <?php echo $event_info['name'] ?></title>
     <link rel="stylesheet" href="css/event.css" type="text/css" />
-    <?php if ($access_level >= 2) : ?>
+    <?php if ($access_level >= 3) : ?>
         <script src="js/event.js"></script>
     <?php endif ?>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -246,9 +253,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- Event Information Table -->
         <h2 style="font-size: 2.25em; font-weight: 700; color: black;">
             <?php echo htmlspecialchars_decode($event_name); ?>
-            <?php if ($access_level >= 2) : ?>
+            <?php if (($access_level >= 4) || (($access_level == 3) && $personID == $event_info['volunteer_coordinator'])) : ?>
                 <a href="editEvent.php?id=<?= $id ?>" title="Edit Event" class="edit-icon">
                     <i class="fas fa-pencil-alt"></i>
+                </a>
+            <?php endif; ?>
+            <?php if ($access_level >= 4) : ?>
                 <a href="deleteEvent.php?id=<?= $id ?>" title="Delete Event" class="delete-icon" 
                     onclick="return confirmDelete(<?= htmlspecialchars($id) ?>);">
                         <i class="fas fa-trash"></i>
@@ -340,7 +350,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php endif ?>
             <?php endif*/ ?>
 
-            <?php if ($access_level >= 2) : ?>
+            <?php if (($access_level >= 4) || (($access_level == 3) && $personID == $event_info['volunteer_coordinator'])) : ?>
                 <a href="viewEventSignUps.php?id=<?php echo $id; ?>"class = "button signup">View Event Signups</a>
 
                 <!-- Archive and Unarchive buttons by Thomas -->
@@ -387,7 +397,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
         <!-- Confirmation Modals -->
-        <?php if ($access_level >= 2) : ?>
+        <?php if ($access_level >= 3) : ?>
             <div id="delete-confirmation-wrapper" class="modal hidden">
                 <div class="modal-content">
                     <p>Are you sure you want to delete this event?</p>

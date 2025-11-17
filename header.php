@@ -455,14 +455,10 @@ if (date("H:i:s") > "18:19:59") {
                                 </a>
                                 <a href="viewAssignedEvents.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <line x1="8" y1="6" x2="21" y2="6"></line>
-                                        <line x1="8" y1="12" x2="21" y2="12"></line>
-                                        <line x1="8" y1="18" x2="21" y2="18"></line>
-                                        <line x1="3" y1="6" x2="3.01" y2="6"></line>
-                                        <line x1="3" y1="12" x2="3.01" y2="12"></line>
-                                        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                                        <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                                     </svg>
-                                    View My Events
+                                    View/Edit My Events
                                 </a>
                                 <a href="editHours.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -478,13 +474,6 @@ if (date("H:i:s") > "18:19:59") {
                                         <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
                                     </svg>
                                     Pending Sign-Ups
-                                </a>
-                                <a href="adminViewingEvents.php" class="dropdown-item">
-                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"></path>
-                                        <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                    </svg>
-                                    Edit Event
                                 </a>
                             </div>
                         </div>
