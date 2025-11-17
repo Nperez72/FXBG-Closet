@@ -11,7 +11,7 @@ $_SESSION['person_id'] = $_POST['person_id'];
 
 if ($_POST['role'] == "Board Member") {
     $_SESSION['access_level'] = 2;
-} else if ($_POST['role'] == "Volunteer Coordinator") {
+} elseif ($_POST['role'] == "Volunteer Coordinator") {
     $_SESSION['access_level'] = 3;
 }
 

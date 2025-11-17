@@ -12,7 +12,7 @@ if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] != 3) {
     // 0 = not logged in, 1 = volunteer, 2 = board member, 3 = volunteer coordinator, 4 = admin
     header('Location: login.php');
     die();
-} else if (!isset($_SESSION['person_id'])) {
+} elseif (!isset($_SESSION['person_id'])) {
     header('Location: login.php');
     die();
 } else {

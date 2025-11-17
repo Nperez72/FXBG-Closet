@@ -33,13 +33,13 @@ if ($event_info == null) {
 
     include_once('database/dbPersons.php');
     $access_level = $_SESSION['access_level'];
-    if ($access_level == 3) {
-        if (!isset($_SESSION['person_id'])) {
-            header('Location: login.php');
-            die();
-        }
-        $personID = $_SESSION['person_id'];
+if ($access_level == 3) {
+    if (!isset($_SESSION['person_id'])) {
+        header('Location: login.php');
+        die();
     }
+    $personID = $_SESSION['person_id'];
+}
     $user = retrieve_person($_SESSION['_id']);
     //$active = $user->get_status() == 'Active';
 
