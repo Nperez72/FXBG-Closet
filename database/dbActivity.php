@@ -100,15 +100,16 @@ function get_event_name_by_id($event_id)
     return $row ? $row['name'] : null;
 }
 
-function get_weekly_volunteer_hours($start_date, $end_date) {
+function get_weekly_volunteer_hours($start_date, $end_date)
+{
     require_once('dbinfo.php');
-    
+
     $connection = connect();
-    
+
     if (!$connection) {
         return array();
     }
-    
+
     $query = "SELECT 
                 DATE_FORMAT(date, '%Y-%m-%d') as week_start,
                 WEEK(date) as week_number,
@@ -118,26 +119,26 @@ function get_weekly_volunteer_hours($start_date, $end_date) {
               WHERE date BETWEEN ? AND ?
               GROUP BY YEAR(date), WEEK(date)
               ORDER BY date ASC";
-    
+
     $stmt = mysqli_prepare($connection, $query);
-    
+
     if (!$stmt) {
         mysqli_close($connection);
         return array();
     }
-    
+
     mysqli_stmt_bind_param($stmt, "ss", $start_date, $end_date);
     mysqli_stmt_execute($stmt);
-    
+
     $result = mysqli_stmt_get_result($stmt);
-    
+
     $weekly_data = array();
     while ($row = mysqli_fetch_assoc($result)) {
         $weekly_data[] = $row;
     }
-    
+
     mysqli_stmt_close($stmt);
     mysqli_close($connection);
-    
+
     return $weekly_data;
 }
