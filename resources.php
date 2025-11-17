@@ -23,14 +23,14 @@ if (!$loggedIn) {
 
 $target_dir = 'uploads/';
 
-// List PDF files in /uploads
-function listPDFFiles($dir)
+// List Media files in /uploads
+function listMediaFiles($dir)
 {
     $pdfFiles = array();
     if (is_dir($dir)) {
         if ($open_dir = opendir($dir)) {
             while (($file = readdir($open_dir)) !== false) {
-                if (pathinfo($file, PATHINFO_EXTENSION) == 'pdf') {
+                if (!str_starts_with($file, '.')) {
                     $pdfFiles[] = $file;
                 }
             }
@@ -40,7 +40,7 @@ function listPDFFiles($dir)
     return $pdfFiles;
 }
 
-$pdfFiles = listPDFFiles($target_dir);
+$pdfFiles = listMediaFiles($target_dir);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -78,7 +78,7 @@ require_once('header.php');
     <!-- Hero Section with Title -->
     <header class="hero-header">
         <div class="center-header">
-            <h1>Manage Volunteer Documents</h1>
+            <h1>Manage Volunteer Media</h1>
         </div>
     </header>
 
@@ -107,7 +107,7 @@ require_once('header.php');
             <?php endforeach ?>
         <?php else : ?>
             <tr>
-                <td class="py-6 text-gray-500" colspan="2">No Documents Found.</td>
+                <td class="py-6 text-gray-500" colspan="2">No Media Found.</td>
             </tr>
         <?php endif; ?>
     </tbody>
@@ -117,24 +117,24 @@ require_once('header.php');
 
         <!-- Upload Form -->
         <form action="uploadResources.php" method="post" enctype="multipart/form-data" class="mt-10 w-[80%] bg-white p-6 rounded-xl border-2 border-gray-300 shadow-md">
-            <label for="fileToUpload" class="font-medium text-center">Select PDF to Upload:</label>
-            <input type="file" name="fileToUpload" id="fileToUpload" accept="application/pdf" class="block mx-auto mb-4 border border-gray-300 p-2 rounded-md w-full">
+            <label for="fileToUpload" class="font-medium text-center">Select Media to Upload:</label>
+            <input type="file" name="fileToUpload" id="fileToUpload" accept="application/pdf, image/jpeg, image/gif, image/png" class="block mx-auto mb-4 border border-gray-300 p-2 rounded-md w-full">
 
             <div class="flex justify-center space-x-4 mt-4">
-                <input type="submit" value="Upload PDF" name="submit" class="blue-button">
+                <input type="submit" value="Upload Media" name="submit" class="blue-button">
             </div>
         </form>
 
         <!-- Return Button -->
         <div class="mt-6">
-            <a href="index.php" class="return-button">Return to Dashboard</a>
+        <a href="index.php" class="return-button">Return to Dashboard</a>
         </div>
 
         <!-- Info Section -->
         <div class="info-section">
             <div class="blue-div"></div>
             <p class="info-text">
-                Welcome to the volunteer document hub. Upload, review, and manage volunteer documents from here.
+                Welcome to the volunteer media hub. Upload, review, and manage volunteer media from here.
             </p>
         </div>
     </main>
