@@ -17,11 +17,12 @@ class Event
     private $completed;
     private $restricted_signup;
     private $type;
+    private $volunteer_coordinator;
     #private $trainingMedia;
     #private $postMedia;
     #private $animalId;
 
-    function __construct($id, $name, $date, $startTime, $endTime, $description, $capacity, $completed, $restricted_signup, $type)
+    function __construct($id, $name, $date, $startTime, $endTime, $description, $capacity, $completed, $restricted_signup, $type, $volunteer_coordinator)
     {
         $this->id = $id;
         $this->name = $name;
@@ -33,6 +34,7 @@ class Event
         $this->completed = $completed;
         $this->restricted_signup = $restricted_signup;
         $this->type = $type;
+        $this->volunteer_coordinator = $volunteer_coordinator;
     }
 
     function getID()
@@ -91,6 +93,11 @@ class Event
     function getEventType()
     {
         return $this->type;
+    }
+
+    function getVolunteerCoordinator()
+    {
+        return $this->volunteer_coordinator;
     }
 
     //TODO DELETE

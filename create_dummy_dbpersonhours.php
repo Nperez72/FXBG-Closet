@@ -18,7 +18,7 @@ if (isset($_SESSION['_id'])) {
 }
 
 // Require admin privileges
-if ($accessLevel < 2) {
+if ($accessLevel < 5) {
     header('Location: login.php');
     die();
 }

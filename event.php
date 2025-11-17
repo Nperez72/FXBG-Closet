@@ -34,7 +34,7 @@ if ($event_info == null) {
     include_once('database/dbPersons.php');
     $access_level = $_SESSION['access_level'];
     $user = retrieve_person($_SESSION['_id']);
-    $active = $user->get_status() == 'Active';
+    //$active = $user->get_status() == 'Active';
 
     ini_set("display_errors", 1);
     error_reporting(E_ALL);
@@ -129,10 +129,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Check if Get request from user is from an organization member
         // (volunteer, admin/super admin)
         if ($request_type == 'add self' && $access_level >= 1) {
-            if (!$active) {
+            /* if (!$active) {
                 echo 'forbidden';
                 die();
-            }
+            } */
             $volunteerID = $args['selected_id'];
             $person = retrieve_person($volunteerID);
             $name = $person->get_first_name() . ' ' . $person->get_last_name();

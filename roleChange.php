@@ -14,7 +14,7 @@ if (isset($_SESSION['_id'])) {
     $userID = $_SESSION['_id'];
 }
 
-if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
+if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] == 0) {
     header('Location: login.php');
     die();
 }
@@ -135,17 +135,23 @@ document.getElementById("search-box").addEventListener("input", function () {
                 form.method = "POST";
                 form.action = "processRoleChange.php";
 
-                let input = document.createElement("input");
-                input.type = "hidden";
-                input.name = "person_id";
-                input.value = user.person_id;
+                let input1 = document.createElement("input");
+                input1.type = "hidden";
+                input1.name = "person_id";
+                input1.value = user.person_id;
+
+                let input2 = document.createElement("input");
+                input2.type = "hidden";
+                input2.name = "role";
+                input2.value = user.role;
 
                 let button = document.createElement("button");
                 button.type = "submit";
                 button.className = "blue-button";
                 button.textContent = "Select";
 
-                form.appendChild(input);
+                form.appendChild(input1);
+                form.appendChild(input2);
                 form.appendChild(button);
                 actionCell.appendChild(form);
 

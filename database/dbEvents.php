@@ -415,7 +415,8 @@ function make_an_event($result_row)
         capacity: $result_row['capacity'],
         completed: $result_row['completed'],
         restricted_signup: $result_row['restricted_signup'],
-        type: $result_row['type']
+        type: $result_row['type'],
+        volunteer_coordinator: $result_row['volunteer_coordinator']
     );
     return $theEvent;
 }

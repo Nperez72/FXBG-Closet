@@ -15,7 +15,7 @@ if (isset($_SESSION['_id'])) {
 }
 
 // Only allow admins (access level > 2)
-if ($accessLevel < 3) {
+if ($accessLevel < 4) {
     header('Location: index.php');
     exit;
 }
