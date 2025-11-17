@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <head>
         <?php require_once('universal.inc') ?>
         <script src="https://cdn.tailwindcss.com"></script>
-        <title>Fredericksburg SPCA | Change Password</title>
+        <title>Fredericksburg Pride | Delete Account</title>
     </head>
     <body>
         <?php require_once('header.php') ?>
