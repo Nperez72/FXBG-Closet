@@ -110,14 +110,14 @@ function get_weekly_volunteer_hours($start_date, $end_date) {
     }
     
     $query = "SELECT 
-                DATE_FORMAT(date, '%Y-%m-%d') as week_start,
-                WEEK(date) as week_number,
-                YEAR(date) as year,
-                SUM(hours) as total_hours
-              FROM dbvolunteeractivity 
-              WHERE date BETWEEN ? AND ?
-              GROUP BY YEAR(date), WEEK(date)
-              ORDER BY date ASC";
+            MIN(date) as week_start,
+            WEEK(date) as week_number,
+            YEAR(date) as year,
+            SUM(hours) as total_hours
+          FROM dbvolunteeractivity 
+          WHERE date BETWEEN ? AND ?
+          GROUP BY YEAR(date), WEEK(date)
+          ORDER BY week_start ASC";
     
     $stmt = mysqli_prepare($connection, $query);
     
