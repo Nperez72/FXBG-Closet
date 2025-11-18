@@ -89,7 +89,7 @@ foreach ($weekly_data as $week) {
             scales: {
                 y: {
                     beginAtZero: true,
-                    max: 100,
+                    min: 1,
                     title: {
                         display: true,
                         text: 'Hours'
