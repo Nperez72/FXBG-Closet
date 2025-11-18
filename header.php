@@ -98,7 +98,7 @@ if (date("H:i:s") > "18:19:59") {
             'eventfailure.php' => 1, 'signupsuccess.php' => 1, 'edittimes.php' => 1,
             'adminviewingevents.php' => 2, 'signuppending.php' => 1, 'requestfailed.php' => 1,
             'settimes.php' => 1, 'eventfailurebaddeparturetime.php' => 1, 'trackActivities.php' => 0,
-            'trackSupplies.php' => 2, 'viewSupplies.php' => 2
+            'trackSupplies.php' => 2, 'viewSupplies.php' => 2, 'viewTotalMetrics.php' => 2
         );
 
         // Check permissions
@@ -278,6 +278,14 @@ if (date("H:i:s") > "18:19:59") {
                                         <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
                                     </svg>
                                     Manage Volunteer Coordinators
+                                </a>
+                                 <a href="viewTotalMetrics.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
+                                    </svg>
+                                    View Total Volunteer Hours
                                 </a>
                             </div>
                         </div>
