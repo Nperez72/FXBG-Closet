@@ -119,7 +119,7 @@ function get_weekly_volunteer_hours($start_date, $end_date)
           WHERE date BETWEEN ? AND ?
           GROUP BY YEAR(date), WEEK(date)
           ORDER BY week_start ASC";
-    
+
     $stmt = mysqli_prepare($connection, $query);
 
     if (!$stmt) {
