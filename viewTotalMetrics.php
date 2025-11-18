@@ -54,17 +54,17 @@ require_once('header.php');
 <?php
     $end_date = date('Y-m-d');
     $start_date = date('Y-m-d', strtotime('-3 months'));
-    
+
     $weekly_data = get_weekly_volunteer_hours($start_date, $end_date);
-    
+
     $labels = array();
     $data = array();
-    
-    foreach ($weekly_data as $week) {
-        $labels[] = $week['week_start'];
-        $data[] = $week['total_hours'];
-    }
-    
+
+foreach ($weekly_data as $week) {
+    $labels[] = $week['week_start'];
+    $data[] = $week['total_hours'];
+}
+
     $labels_json = json_encode($labels);
     $data_json = json_encode($data);
 ?>
