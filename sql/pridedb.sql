@@ -679,14 +679,16 @@ CREATE TABLE `dbsupplies` (
   `quantity` int NOT NULL,
   `description` text COLLATE utf8mb4_general_ci NOT NULL,
   `date_submitted` date NOT NULL
+  `status` varchar(20) NOT NULL DEFAULT 'pending',
+  `reserve_status` varchar(20) NOT NULL DEFAULT 'unreserved',
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `dbsupplies`
 --
 
-INSERT INTO `dbsupplies` (`supply_id`, `item_type`, `quantity`, `description`, `date_submitted`) VALUES
-(1, 'flyers', 20, 'Fun and colorful!', '2025-11-03');
+INSERT INTO `dbsupplies` (`supply_id`, `item_type`, `quantity`, `description`, `date_submitted`, `status`, `reserve_status` ) VALUES
+(1, 'flyers', 20, 'Fun and colorful!', '2025-11-03', 'pending', 'reserved');
 
 -- --------------------------------------------------------
 
