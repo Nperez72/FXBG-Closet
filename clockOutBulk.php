@@ -5,7 +5,7 @@ header('Content-Type: application/json');
 include_once "database/dbShifts.php";
 
 // Authorization check
-if (!isset($_SESSION['_id']) || $_SESSION['access_level'] < 2) {
+if (!isset($_SESSION['_id']) || $_SESSION['access_level'] < 4) {
     echo json_encode(["success" => false, "error" => "Unauthorized access."]);
     exit();
 }

@@ -62,7 +62,7 @@ if (isset($_SESSION['_id'])) {
                                 $capacity = $event->getCapacity();
                                 $completed = $event->getCompleted();
                                 $restricted_signup = $event->getRestrictedSignup();
-                                if ($accessLevel < 3) {
+                                if ($accessLevel < 4) {
                                     echo "
                                         <tr data-event-id='$eventID'>
                                             <td><a href='event.php?id=$eventID'>$title</a></td> <!-- Link updated here -->

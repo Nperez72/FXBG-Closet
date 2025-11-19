@@ -160,7 +160,7 @@ if (date('m', strtotime($calendarEnd . ' +1 day')) == date('m', $first)) {
                                     $backgroundCol = 'var(--main-color, #e8c4b8)'; // default color
 
                                     if (is_archived($info['id'])) { // archived event
-                                        if ($_SESSION['access_level'] < 2) {
+                                        if ($_SESSION['access_level'] < 4) {
                                             continue; // users cannot see archived events
                                         }
                                         $backgroundCol = '#c4bab7ff'; //TODO

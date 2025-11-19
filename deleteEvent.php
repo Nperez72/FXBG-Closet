@@ -3,7 +3,7 @@
     session_cache_expire(30);
     session_start();
 
-if ($_SESSION['access_level'] < 2) {
+if ($_SESSION['access_level'] < 4) {
     header('Location: index.php');
     die();
 }

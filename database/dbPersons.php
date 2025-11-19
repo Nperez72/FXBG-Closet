@@ -151,7 +151,7 @@ function retrieve_person($id)
 
 function updated_retrieve_person($id)
 {
- // (username! not id)
+ // (personal id (number))
     $con = connect();
     $query = "SELECT * FROM dbpersons WHERE person_id = $id";
     $result = mysqli_query($con, $query);

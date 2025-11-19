@@ -9,7 +9,7 @@ if (isset($_SESSION['_id'])) {
     $accessLevel = $_SESSION['access_level'];
     $userID = $_SESSION['_id'];
 }
-if ($accessLevel < 2) {
+if ($accessLevel < 5) {
     header('Location: index.php');
     die();
 }
