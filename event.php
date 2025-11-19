@@ -246,14 +246,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $event_description = $event_info['description'];
             $event_location = $event_info['location'];
             $event_capacity = $event_info['capacity'];
-            $event_volunteer_coordinator = $event_info['volunteer_coordinator'];
+            $event_volunteer_coordinator = $event_info['volunteer_coordinator'] ?? null;
             require_once('include/time.php');
         ?>
 
         <!-- Event Information Table -->
         <h2 style="font-size: 2.25em; font-weight: 700; color: black;">
             <?php echo htmlspecialchars_decode($event_name); ?>
-            <?php if (($access_level >= 4) || (($access_level == 3) && $personID == $event_info['volunteer_coordinator'])) : ?>
+            <?php if (($access_level >= 4) || (($access_level == 3) && $personID == $event_volunteer_coordinator)) : ?>
                 <a href="editEvent.php?id=<?= $id ?>" title="Edit Event" class="edit-icon">
                     <i class="fas fa-pencil-alt"></i>
                 </a>
@@ -320,7 +320,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="action-buttons">
 
             <!--@@@ Check-In and Check-Out Buttons by Thomas -->
-            <?php if (can_check_in($user->get_id(), $event_info)) : ?>
+            <?php if (($user != false) and can_check_in($user->get_id(), $event_info)) : ?>
                 <form method="POST" action="">
                     <input type="hidden" name="checking_in" value="1">
                     <input type="hidden" name="personID" value="<?php echo $user->get_id(); ?>">
@@ -331,7 +331,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </form>
             <?php endif ?>
 
-            <?php if (can_check_out($user->get_id(), $event_info)) : ?>
+            <?php if (($user != false) and can_check_out($user->get_id(), $event_info)) : ?>
                 <form method="POST" action="">
                     <input type="hidden" name="checking_out" value="1">
                     <input type="hidden" name="personID" value="<?php echo $user->get_id(); ?>">
@@ -350,7 +350,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php endif ?>
             <?php endif*/ ?>
 
-            <?php if (($access_level >= 4) || (($access_level == 3) && $personID == $event_info['volunteer_coordinator'])) : ?>
+            <?php if (($access_level >= 4) || (($access_level == 3) && $personID == $event_volunteer_coordinator)) : ?>
                 <a href="viewEventSignUps.php?id=<?php echo $id; ?>"class = "button signup">View Event Signups</a>
 
                 <!-- Archive and Unarchive buttons by Thomas -->
