@@ -405,6 +405,10 @@ function make_an_event($result_row)
     /*
      ($en, $v, $sd, $description, $ev))
      */
+
+    // Must add this line to work on SiteGround (b/c v_c may be NULL)
+    $volunteer_coordinator = $result_row['volunteer_coordinator'] ?? null;
+
     $theEvent = new Event(
         $result_row['id'],
         $result_row['name'],
@@ -416,7 +420,7 @@ function make_an_event($result_row)
         completed: $result_row['completed'],
         restricted_signup: $result_row['restricted_signup'],
         type: $result_row['type'],
-        volunteer_coordinator: $result_row['volunteer_coordinator']
+        volunteer_coordinator: $volunteer_coordinator
     );
     return $theEvent;
 }
