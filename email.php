@@ -11,6 +11,10 @@
 *
 **/
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/autoload.php';
 
 /**
  * Fetch admin emails from dbaccounts (type >= 2).
@@ -49,76 +53,99 @@ function emailAdmins(string $fromUser, string $subject, string $body): array
 /**
  * Send emails to each address in the supplied list.
  *
- *  ------->MAY NEED FIELDS CHANGED BEFORE REAL PRODUCTION <-----------
- *   -------> DOMAIN WILL ALMOST CERTIANLY CHANGE IN PRODUCTION <------------
- *
  * @param array  $emails   List of recipient email addresses.
  * @param string $fromUser Local-part for the From address.
  * @param string $subject  Email subject.
  * @param string $body     Email body.
  * @param array  $attachments Optional array of file paths to attach.
- * @return array           Returns an  array where keys are emails and values are boolean statuses.
+ * @return array Returns ['success' => bool, 'sent_count' => int, 'error' => string|null]
  */
 function sendEmails(array $emails, string $fromUser, string $subject, string $body, array $attachments = []): array
 {
-    $domain = 'localhost';
-    $fromAddress = "{$fromUser}@{$domain}";
+    $host = '127.0.0.1';
+    $port = 1025;
+    $fromEmail = 'localhost@example.com';
+
+    // For Siteground later
+    // $username = 'sitegroundemail@example.com';
+    // $password = 'emailpassword';
+    // $fromEmail = 'sitegroundemail@example.com';
 
     // Validate attachments
     if (!empty($attachments)) {
         foreach ($attachments as $filePath) {
             $fileName = basename($filePath);
             if (!file_exists($filePath)) {
-                return ['error' => "Attachment file does not exist: {$fileName}"];
+                return [
+                    'success' => false,
+                    'sent_count' => 0,
+                    'error' => "Attachment file does not exist: {$fileName}"
+                ];
             }
             if (!is_readable($filePath)) {
-                return ['error' => "Attachment file is not readable: {$fileName}"];
+                return [
+                    'success' => false,
+                    'sent_count' => 0,
+                    'error' => "Attachment file is not readable: {$fileName}"
+                ];
             }
         }
     }
 
-    $results = [];
-
-    // Generate a unique boundary string
-    $boundary = md5(time());
-
-    $headers = "From: {$fromAddress}\r\n";
-    $headers .= "MIME-Version: 1.0\r\n";
-
-    if (empty($attachments)) {
-        // No attachments: use text/plain format
-        $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-        $message = $body;
-    } else {
-        // Email has attachments: use multipart/mixed format
-        $headers .= "Content-Type: multipart/mixed; boundary=\"{$boundary}\"\r\n";
-
-        $message = "--{$boundary}\r\n";
-        $message .= "Content-Type: text/plain; charset=UTF-8\r\n";
-        $message .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
-        $message .= $body . "\r\n\r\n";
-
-        foreach ($attachments as $filePath) {
-            $fileName = basename($filePath);
-            $fileContent = file_get_contents($filePath);
-            $encodedContent = chunk_split(base64_encode($fileContent));
-            $mimeType = mime_content_type($filePath) ?: 'application/octet-stream';
-
-            $message .= "--{$boundary}\r\n"; // Start new part
-            $message .= "Content-Type: {$mimeType}; name=\"{$fileName}\"\r\n";
-            $message .= "Content-Transfer-Encoding: base64\r\n";
-            $message .= "Content-Disposition: attachment; filename=\"{$fileName}\"\r\n\r\n";
-            $message .= $encodedContent . "\r\n";
-        }
-        $message .= "--{$boundary}--";
-    }
+    $sentCount = 0;
 
     foreach ($emails as $email) {
-        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $results[$email] = mail($email, $subject, $message, $headers);
-        } else {
-            $results[$email] = false;
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return [
+                'success' => false,
+                'sent_count' => $sentCount,
+                'error' => "Invalid email address: {$email}"
+            ];
+        }
+
+        $mail = new PHPMailer(true);
+
+        try {
+            // Settings
+            $mail->isSMTP();
+            $mail->Host = $host;
+            $mail->Port = $port;
+            $mail->SMTPAuth = false;
+
+            // SiteGround later:
+            // $mail->SMTPAuth = true;
+            // $mail->Username = $username;
+            // $mail->Password = $password;
+            // $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+
+            // Recipients
+            $mail->setFrom($fromEmail, $fromUser);
+            $mail->addAddress($email);
+
+            // Attachments
+            foreach ($attachments as $filePath) {
+                $mail->addAttachment($filePath);
+            }
+
+            // Content
+            $mail->isHTML(true);
+            $mail->Subject = $subject;
+            $mail->Body = $body;
+
+            $mail->send();
+            $sentCount++;
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'sent_count' => $sentCount,
+                'error' => "Failed to send to {$email}: {$mail->ErrorInfo}"
+            ];
         }
     }
-    return $results;
+
+    return [
+        'success' => true,
+        'sent_count' => $sentCount,
+        'error' => null
+    ];
 }

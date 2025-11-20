@@ -420,3 +420,6 @@ FodyWeavers.xsd
 # User uploaded files
 uploads/*
 !uploads/.gitkeep
+
+# Vendor folder created by composer
+/vendor/
