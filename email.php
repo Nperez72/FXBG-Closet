@@ -134,7 +134,6 @@ function sendEmails(array $emails, string $fromUser, string $subject, string $bo
 
             $mail->send();
             $sentCount++;
-            $results[$email] = true;
         } catch (Exception $e) {
             return [
                 'success' => false,
