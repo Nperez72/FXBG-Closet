@@ -37,6 +37,7 @@ if (date("H:i:s") > "18:19:59") {
     <link rel="stylesheet" href="css/theme-toggle.css">
     <link rel="stylesheet" href="css/mobile-nav.css">
     <link rel="stylesheet" href="css/pwa-mobile.css">
+    <link rel="stylesheet" href="css/accessibility-settings.css">
     
     <!-- PWA Meta Tags - Enables offline support, installation, etc. -->
     <link rel="manifest" href="/manifest.json">
@@ -311,6 +312,16 @@ if (date("H:i:s") > "18:19:59") {
                             </svg>
                         </button>
 
+                        <button class="a11y-settings-btn nav-action-btn" id="openA11ySettings" aria-label="Accessibility settings" title="Customize font & reading preferences">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M12 6v4m0 4h.01"></path>
+                                <circle cx="12" cy="12" r="1" fill="currentColor"></circle>
+                                <line x1="8.5" y1="8.5" x2="7" y2="7"></line>
+                                <line x1="15.5" y1="8.5" x2="17" y2="7"></line>
+                            </svg>
+                        </button>
+
                         <div class="nav-date"></div>
 
                         <div class="nav-dropdown user-dropdown">
@@ -559,6 +570,16 @@ if (date("H:i:s") > "18:19:59") {
                             </svg>
                         </button>
 
+                        <button class="a11y-settings-btn nav-action-btn" id="openA11ySettings" aria-label="Accessibility settings" title="Customize font & reading preferences">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M12 6v4m0 4h.01"></path>
+                                <circle cx="12" cy="12" r="1" fill="currentColor"></circle>
+                                <line x1="8.5" y1="8.5" x2="7" y2="7"></line>
+                                <line x1="15.5" y1="8.5" x2="17" y2="7"></line>
+                            </svg>
+                        </button>
+
                         <div class="nav-date"></div>
 
                         <div class="nav-dropdown user-dropdown">
@@ -719,6 +740,16 @@ if (date("H:i:s") > "18:19:59") {
                             </svg>
                             <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                            </svg>
+                        </button>
+
+                        <button class="a11y-settings-btn nav-action-btn" id="openA11ySettings" aria-label="Accessibility settings" title="Customize font & reading preferences">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M12 6v4m0 4h.01"></path>
+                                <circle cx="12" cy="12" r="1" fill="currentColor"></circle>
+                                <line x1="8.5" y1="8.5" x2="7" y2="7"></line>
+                                <line x1="15.5" y1="8.5" x2="17" y2="7"></line>
                             </svg>
                         </button>
 
@@ -972,6 +1003,38 @@ if (date("H:i:s") > "18:19:59") {
                         </svg>
                         <span>Profile</span>
                     </a>
+                    
+                    <div style="border-top: 1px solid var(--border-color, #e8c4b8); margin: 12px 0; padding-top: 12px;"></div>
+                    
+                    <button class="mobile-more-item theme-toggle" aria-label="Toggle theme" onclick="if(window.themeToggle){window.themeToggle.toggle();document.getElementById(\'mobileMoreMenu\').classList.remove(\'active\');document.body.style.overflow=\'\';}">
+                        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                        </svg>
+                        <span>Toggle Theme</span>
+                    </button>
+                    
+                    <button class="mobile-more-item" id="openA11ySettingsMobile" aria-label="Accessibility settings" onclick="document.getElementById(\'a11yModal\').classList.add(\'active\');document.getElementById(\'mobileMoreMenu\').classList.remove(\'active\');document.body.style.overflow=\'hidden\';">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 6v4m0 4h.01"></path>
+                            <circle cx="12" cy="12" r="1" fill="currentColor"></circle>
+                            <line x1="8.5" y1="8.5" x2="7" y2="7"></line>
+                            <line x1="15.5" y1="8.5" x2="17" y2="7"></line>
+                        </svg>
+                        <span>Accessibility</span>
+                    </button>
+                    
                     <a href="logout.php" class="mobile-more-item mobile-more-logout">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path>
@@ -1141,4 +1204,166 @@ if (date("H:i:s") > "18:19:59") {
         }
     });
     </script>
+    
+    <!-- Accessibility Settings Modal -->
+    <div class="a11y-modal" id="a11yModal">
+        <div class="a11y-modal-content">
+            <div class="a11y-modal-header">
+                <h2 class="a11y-modal-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 16v-4"></path>
+                        <path d="M12 8h.01"></path>
+                    </svg>
+                    Accessibility Settings
+                </h2>
+                <button class="a11y-close-btn" id="closeA11ySettings" aria-label="Close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="a11y-modal-body">
+                <!-- Font Family -->
+                <div class="a11y-setting-group">
+                    <label class="a11y-setting-label" for="a11y-fontFamily">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 7V4h16v3M9 20h6M12 4v16"></path>
+                        </svg>
+                        Font Style
+                    </label>
+                    <select id="a11y-fontFamily" class="a11y-select">
+                        <option value="quicksand">Quicksand (Default)</option>
+                        <option value="arial">Arial</option>
+                        <option value="verdana">Verdana</option>
+                        <option value="georgia">Georgia</option>
+                        <option value="times">Times New Roman</option>
+                        <option value="courier">Courier</option>
+                        <option value="comic">Comic Sans</option>
+                        <option value="opendyslexic">OpenDyslexic (Dyslexia-friendly)</option>
+                    </select>
+                </div>
+                
+                <!-- Font Size -->
+                <div class="a11y-setting-group">
+                    <label class="a11y-setting-label" for="a11y-fontSize">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 14h-5"></path>
+                            <path d="M16 16v-4"></path>
+                            <path d="M4 4h7v14M7 11h3"></path>
+                        </svg>
+                        Font Size
+                    </label>
+                    <select id="a11y-fontSize" class="a11y-select">
+                        <option value="small">Small</option>
+                        <option value="medium">Medium (Default)</option>
+                        <option value="large">Large</option>
+                        <option value="xlarge">Extra Large</option>
+                        <option value="xxlarge">XXL</option>
+                    </select>
+                </div>
+                
+                <!-- Font Weight -->
+                <div class="a11y-setting-group">
+                    <label class="a11y-setting-label" for="a11y-fontWeight">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 4h8a4 4 0 014 4 4 4 0 01-4 4H6z"></path>
+                            <path d="M6 12h9a4 4 0 014 4 4 4 0 01-4 4H6z"></path>
+                        </svg>
+                        Font Weight
+                    </label>
+                    <select id="a11y-fontWeight" class="a11y-select">
+                        <option value="light">Light</option>
+                        <option value="normal">Normal (Default)</option>
+                        <option value="medium">Medium</option>
+                        <option value="semibold">Semi-Bold</option>
+                        <option value="bold">Bold</option>
+                    </select>
+                </div>
+                
+                <!-- Line Height -->
+                <div class="a11y-setting-group">
+                    <label class="a11y-setting-label" for="a11y-lineHeight">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 3v18"></path>
+                            <path d="M21 3v18"></path>
+                            <path d="M12 6L8 10"></path>
+                            <path d="M12 18l-4-4"></path>
+                            <path d="M12 6l4 4"></path>
+                            <path d="M12 18l4-4"></path>
+                        </svg>
+                        Line Spacing
+                    </label>
+                    <select id="a11y-lineHeight" class="a11y-select">
+                        <option value="tight">Tight</option>
+                        <option value="normal">Normal (Default)</option>
+                        <option value="relaxed">Relaxed</option>
+                        <option value="loose">Loose</option>
+                    </select>
+                </div>
+                
+                <!-- Letter Spacing -->
+                <div class="a11y-setting-group">
+                    <label class="a11y-setting-label" for="a11y-letterSpacing">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 4v16M19 4v16"></path>
+                            <path d="M5 12h14"></path>
+                            <path d="M9 8l-4 4 4 4"></path>
+                            <path d="M15 8l4 4-4 4"></path>
+                        </svg>
+                        Letter Spacing
+                    </label>
+                    <select id="a11y-letterSpacing" class="a11y-select">
+                        <option value="tight">Tight</option>
+                        <option value="normal">Normal (Default)</option>
+                        <option value="wide">Wide</option>
+                        <option value="wider">Wider</option>
+                    </select>
+                </div>
+                
+                <!-- Text Alignment -->
+                <div class="a11y-setting-group">
+                    <label class="a11y-setting-label" for="a11y-textAlign">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="21" y1="10" x2="3" y2="10"></line>
+                            <line x1="21" y1="6" x2="3" y2="6"></line>
+                            <line x1="21" y1="14" x2="3" y2="14"></line>
+                            <line x1="21" y1="18" x2="3" y2="18"></line>
+                        </svg>
+                        Text Alignment
+                    </label>
+                    <select id="a11y-textAlign" class="a11y-select">
+                        <option value="default">Default</option>
+                        <option value="left">Left</option>
+                        <option value="justify">Justify</option>
+                    </select>
+                </div>
+                
+                <!-- Preview -->
+                <div class="a11y-preview-box">
+                    <div class="a11y-preview-label">Preview</div>
+                    <p id="a11y-preview" class="a11y-preview-text">
+                        The quick brown fox jumps over the lazy dog. This text shows how your settings will look across the application.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="a11y-modal-footer">
+                <button class="a11y-reset-btn" id="a11y-reset">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                        <path d="M21 3v5h-5"></path>
+                        <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                        <path d="M3 21v-5h5"></path>
+                    </svg>
+                    Reset to Defaults
+                </button>
+                <span class="a11y-info-text">Settings are saved automatically</span>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/accessibility-settings.js"></script>
 </header>

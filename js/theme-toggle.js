@@ -53,8 +53,8 @@ function applyTheme(theme) {
  * @param {string} theme - current theme
  */
 function updateToggleButton(theme) {
-  const toggleButton = document.querySelector(".theme-toggle");
-  if (toggleButton) {
+  const toggleButtons = document.querySelectorAll(".theme-toggle");
+  toggleButtons.forEach(toggleButton => {
     toggleButton.setAttribute(
       "aria-label",
       theme === "dark" ? "Switch to light mode" : "Switch to dark mode",
@@ -63,26 +63,52 @@ function updateToggleButton(theme) {
       "title",
       theme === "dark" ? "Switch to light mode" : "Switch to dark mode",
     );
-  }
+  });
 }
 
 /**
  * Setup theme toggle button event listener
  */
 function setupThemeToggle() {
-  const toggleButton = document.querySelector(".theme-toggle");
-  if (toggleButton) {
-    toggleButton.addEventListener("click", handleThemeToggle);
-  }
+  // Use event delegation for better reliability with dynamically loaded content
+  document.addEventListener("click", function(event) {
+    if (event.target.closest(".theme-toggle")) {
+      handleThemeToggle(event);
+    }
+  });
+  
+  // Also attach directly for better performance on desktop
+  const toggleButtons = document.querySelectorAll(".theme-toggle");
+  toggleButtons.forEach(button => {
+    button.addEventListener("click", handleThemeToggle);
+  });
 }
 
 /**
  * Handle theme toggle button click
  */
-function handleThemeToggle() {
+function handleThemeToggle(event) {
+  console.log('Theme toggle clicked!', event.target); // Debug log
+  
+  // Prevent default and stop propagation to ensure click works
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  
   const currentTheme = getCurrentTheme();
   const newTheme = currentTheme === "dark" ? "light" : "dark";
+  console.log('Switching from', currentTheme, 'to', newTheme); // Debug log
   applyTheme(newTheme);
+  
+  // Close mobile more menu if clicking from mobile
+  if (event && event.target.closest('.mobile-more-item')) {
+    const mobileMoreMenu = document.getElementById('mobileMoreMenu');
+    if (mobileMoreMenu) {
+      mobileMoreMenu.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
 }
 
 /**

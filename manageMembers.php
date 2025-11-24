@@ -22,27 +22,34 @@ if ($accessLevel < 2) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Manage Group Members</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FXBG Closet | Manage Group Members</title>
     <link href="css/normal_tw.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/accessibility-settings.css">
     <?php require('header.php'); ?>
     <style>
         .btn {
-            padding: 6px 12px;
-            border-radius: 5px;
+            padding: 8px 16px;
+            border-radius: 8px;
             color: white;
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
         }
 
         .btn-remove {
-            background-color: var(--error-color, #d4635a);
+            background-color: #dc2626;
         }
         .btn-remove:hover {
-            background-color: var(--accent-color, #d4af37);
+            background-color: #b91c1c;
         }
 
         .btn-add {
             background-color: var(--main-color, #e8c4b8);
+            color: var(--button-text, #363434);
         }
         .btn-add:hover {
             background-color: var(--accent-color, #d4af37);
@@ -71,29 +78,125 @@ if ($accessLevel < 2) {
 
         .main-content-box {
             background: var(--card-bg, #ffffff);
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 2rem;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             margin: 0 auto;
             margin-top: 2rem;
-            width: 80%;
+            width: 90%;
+            max-width: 1200px;
         }
 
         select, button {
-            padding: 8px 10px;
+            padding: 10px 14px;
             margin: 10px 5px 0 0;
-            border-radius: 5px;
-            border: 1px solid var(--card-border, #e8c4b8);
+            border-radius: 8px;
+            border: 2px solid var(--card-border, #e8c4b8);
+            background: white;
+            color: var(--text-color, #363434);
+            font-size: 16px;
+        }
+        
+        select:focus, button:focus {
+            outline: 2px solid var(--accent-color, #d4af37);
+            outline-offset: 2px;
         }
 
         .success {
-            color: green;
+            color: #16a34a;
+            background: #dcfce7;
+            padding: 12px;
+            border-radius: 8px;
             margin-top: 10px;
+            border-left: 4px solid #16a34a;
         }
 
         .error {
-            color: red;
+            color: #dc2626;
+            background: #fee2e2;
+            padding: 12px;
+            border-radius: 8px;
             margin-top: 10px;
+            border-left: 4px solid #dc2626;
+        }
+        
+        /* Mobile responsive improvements */
+        @media (max-width: 768px) {
+            .hero-header {
+                height: calc(var(--spacing) * 25) !important;
+            }
+            
+            main {
+                padding-inline: calc(var(--spacing) * 2) !important;
+            }
+            
+            .main-content-box {
+                width: 100%;
+                padding: 1rem !important;
+                margin-top: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.5rem !important;
+                padding: 1rem !important;
+            }
+            
+            h2, h3 {
+                font-size: 1.25rem !important;
+            }
+            
+            table {
+                font-size: 14px;
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            th, td {
+                padding: 8px !important;
+                min-width: 100px;
+            }
+            
+            th:first-child, td:first-child {
+                position: sticky;
+                left: 0;
+                background: var(--card-bg, #ffffff);
+                z-index: 1;
+            }
+            
+            th:first-child {
+                background: var(--nav-item-active-bg, #f4ede9);
+            }
+            
+            .btn {
+                padding: 6px 12px;
+                font-size: 14px;
+            }
+            
+            select {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            
+            button[type="submit"] {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-content-box {
+                padding: 0.75rem !important;
+                border-radius: 8px;
+            }
+            
+            table {
+                font-size: 12px;
+            }
+            
+            th, td {
+                padding: 6px !important;
+                min-width: 80px;
+            }
         }
 
     </style>
@@ -222,6 +325,7 @@ if ($accessLevel < 2) {
         </div>
     </div>
 </main>
+<script src="js/accessibility-settings.js"></script>
 </body>
 </html>
 <?php ob_end_flush(); ?>
