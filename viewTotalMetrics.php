@@ -36,38 +36,49 @@ require_once('header.php');
 
 <header class="hero-header"> 
     <div class="center-header">
-        <h1>View Total Volunteer Hours</h1>
+        <h1>Volunteer Hours Metrics</h1>
     </div>
 </header>
 
 <main>
+<?php
+    $end_date = date('Y-m-d');
+    $start_date = date('Y-m-d', strtotime('-6 months'));
+    
+    $weekly_data = get_weekly_volunteer_hours($start_date, $end_date);
+    
+    $labels = array();
+    $data = array();
+    
+    foreach ($weekly_data as $week) {
+        $labels[] = $week['week_start'];
+        $data[] = $week['total_hours'];
+    }
+    
+    $labels_json = json_encode($labels);
+    $data_json = json_encode($data);
+?>
+
   <div class="main-content-box w-full max-w-5xl p-8 mb-8">
-    <h2 class="mb-4">Total Volunteer Hours</h2>
+    <h2 class="mb-4">Total Volunteer Hours (Last 6 Months)</h2>
     <p class="mb-4">Weekly aggregated volunteer hours across all volunteers.</p>
     
     <div class="chart-container">
         <canvas id="hoursChart"></canvas>
     </div>
+    
+    <?php
+        $total_hours = 0;
+        foreach ($weekly_data as $week) {
+            $total_hours += $week['total_hours'];
+        }
+    ?>
+    
+    <div style="text-align: center; margin-top: 30px; font-size: 24px; font-weight: bold; color: #294877;">
+        Total Hours (6 Months): <?php echo number_format($total_hours, 2); ?>
+    </div>
   </div>
 </main>
-
-<?php
-    $end_date = date('Y-m-d');
-    $start_date = date('Y-m-d', strtotime('-3 months'));
-
-    $weekly_data = get_weekly_volunteer_hours($start_date, $end_date);
-
-    $labels = array();
-    $data = array();
-
-foreach ($weekly_data as $week) {
-    $labels[] = $week['week_start'];
-    $data[] = $week['total_hours'];
-}
-
-    $labels_json = json_encode($labels);
-    $data_json = json_encode($data);
-?>
 
 <script>
     const ctx = document.getElementById('hoursChart').getContext('2d');
@@ -88,8 +99,8 @@ foreach ($weekly_data as $week) {
             maintainAspectRatio: false,
             scales: {
                 y: {
+                    min : 1,
                     beginAtZero: true,
-                    max: 100,
                     title: {
                         display: true,
                         text: 'Hours'

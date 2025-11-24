@@ -678,7 +678,7 @@ CREATE TABLE `dbsupplies` (
   `item_type` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   `quantity` int NOT NULL,
   `description` text COLLATE utf8mb4_general_ci NOT NULL,
-  `date_submitted` date NOT NULL
+  `date_submitted` date NOT NULL,
   `status` varchar(20) NOT NULL DEFAULT 'pending',
   `reserve_status` varchar(20) NOT NULL DEFAULT 'unreserved',
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
