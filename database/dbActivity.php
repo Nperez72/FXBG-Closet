@@ -185,4 +185,3 @@ function get_monthly_volunteer_hours($start_date, $end_date)
 
     return $monthly_data;
 }
-
