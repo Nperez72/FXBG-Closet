@@ -169,13 +169,6 @@ if (date("H:i:s") > "18:19:59") {
                                     </svg>
                                     View Check-Ins
                                 </a>
-                                <a href="trackActivities.php" class="dropdown-item">
-                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M9 11l3 3L22 4"></path>
-                                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                                    </svg>
-                                    Track Activities
-                                </a>
                             </div>
                         </div>
 
@@ -232,6 +225,13 @@ if (date("H:i:s") > "18:19:59") {
                                         <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                                     </svg>
                                     Edit Event
+                                </a>
+                                <a href="trackActivities.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 11l3 3L22 4"></path>
+                                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+                                    </svg>
+                                    Track Activities
                                 </a>
                                  <a href="trackSupplies.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -483,6 +483,13 @@ if (date("H:i:s") > "18:19:59") {
                                     </svg>
                                     Pending Sign-Ups
                                 </a>
+                                <a href="trackActivities.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 11l3 3L22 4"></path>
+                                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+                                    </svg>
+                                    Track Activities
+                                </a>
                             </div>
                         </div>
 
@@ -709,6 +716,13 @@ if (date("H:i:s") > "18:19:59") {
                                         <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                                     </svg>
                                     Edit Event
+                                </a>
+                                <a href="trackActivities.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 11l3 3L22 4"></path>
+                                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+                                    </svg>
+                                    Track Activities
                                 </a>
                             </div>
                         </div>
