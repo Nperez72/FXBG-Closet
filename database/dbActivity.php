@@ -142,3 +142,47 @@ function get_weekly_volunteer_hours($start_date, $end_date)
 
     return $weekly_data;
 }
+
+function get_monthly_volunteer_hours($start_date, $end_date)
+{
+    require_once('dbinfo.php');
+
+    $connection = connect();
+
+    if (!$connection) {
+        return array();
+    }
+
+    $query = "SELECT 
+                MIN(date) as month_start,
+                YEAR(date) as year,
+                MONTH(date) as month,
+                SUM(hours) as total_hours
+              FROM dbvolunteeractivity 
+              WHERE date BETWEEN ? AND ?
+              GROUP BY YEAR(date), MONTH(date)
+              ORDER BY month_start ASC";
+
+    $stmt = mysqli_prepare($connection, $query);
+
+    if (!$stmt) {
+        mysqli_close($connection);
+        return array();
+    }
+
+    mysqli_stmt_bind_param($stmt, "ss", $start_date, $end_date);
+    mysqli_stmt_execute($stmt);
+
+    $result = mysqli_stmt_get_result($stmt);
+
+    $monthly_data = array();
+    while ($row = mysqli_fetch_assoc($result)) {
+        $monthly_data[] = $row;
+    }
+
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+
+    return $monthly_data;
+}
+

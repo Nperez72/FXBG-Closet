@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die();
     }
     $person_id = (int)$_SESSION['_id'];
-    $date = date("Y-m-d");
+    $date = get_event_date_by_id($event_id);
 
     // Create uploads directory if it doesn't exist
     // Permissions: owner can read/write/execute, others can read/execute

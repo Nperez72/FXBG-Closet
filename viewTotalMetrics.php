@@ -42,17 +42,20 @@ require_once('header.php');
 
 <main>
 <?php
+    // Define date range (last 6 months)
     $end_date = date('Y-m-d');
     $start_date = date('Y-m-d', strtotime('-6 months'));
     
-    $weekly_data = get_weekly_volunteer_hours($start_date, $end_date);
+    // Fetch monthly data
+    $monthly_data = get_monthly_volunteer_hours($start_date, $end_date);
     
     $labels = array();
     $data = array();
     
-    foreach ($weekly_data as $week) {
-        $labels[] = $week['week_start'];
-        $data[] = $week['total_hours'];
+    foreach ($monthly_data as $month) {
+        // Use MIN(date) result for labels, formatted as "Nov 2025"
+        $labels[] = date('M Y', strtotime($month['month_start']));
+        $data[] = $month['total_hours'];
     }
     
     $labels_json = json_encode($labels);
@@ -61,7 +64,7 @@ require_once('header.php');
 
   <div class="main-content-box w-full max-w-5xl p-8 mb-8">
     <h2 class="mb-4">Total Volunteer Hours (Last 6 Months)</h2>
-    <p class="mb-4">Weekly aggregated volunteer hours across all volunteers.</p>
+    <p class="mb-4">Monthly aggregated volunteer hours across all volunteers.</p>
     
     <div class="chart-container">
         <canvas id="hoursChart"></canvas>
@@ -69,8 +72,8 @@ require_once('header.php');
     
     <?php
         $total_hours = 0;
-        foreach ($weekly_data as $week) {
-            $total_hours += $week['total_hours'];
+        foreach ($monthly_data as $month) {
+            $total_hours += $month['total_hours'];
         }
     ?>
     
@@ -109,7 +112,7 @@ require_once('header.php');
                 x: {
                     title: {
                         display: true,
-                        text: 'Week Starting'
+                        text: 'Month'
                     }
                 }
             },
