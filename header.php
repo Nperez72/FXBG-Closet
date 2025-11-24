@@ -146,7 +146,7 @@ if (date("H:i:s") > "18:19:59") {
                                 </svg>
                             </button>
                             <div class="dropdown-menu">
-                                <a href="VolunteerRegister.php" class="dropdown-item">
+                                <!-- <a href="VolunteerRegister.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
                                         <circle cx="8.5" cy="7" r="4"></circle>
@@ -168,13 +168,20 @@ if (date("H:i:s") > "18:19:59") {
                                         <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
                                     </svg>
                                     View Check-Ins
-                                </a>
+                                </a> -->
                                 <a href="trackActivities.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M9 11l3 3L22 4"></path>
                                         <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
                                     </svg>
                                     Track Activities
+                                </a>
+                                <a href="viewTotalMetrics.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                    View Total Volunteer Hours
                                 </a>
                             </div>
                         </div>
@@ -211,21 +218,21 @@ if (date("H:i:s") > "18:19:59") {
                                     </svg>
                                     View Events
                                 </a>
-                                <a href="editHours.php" class="dropdown-item">
+                                <!-- <a href="editHours.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <circle cx="12" cy="12" r="10"></circle>
                                         <polyline points="12 6 12 12 16 14"></polyline>
                                     </svg>
                                     Change Event Hours
-                                </a>
-                                <a href="viewAllEventSignUps.php" class="dropdown-item">
+                                </a> -->
+                                <!-- <a href="viewAllEventSignUps.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
                                         <circle cx="9" cy="7" r="4"></circle>
                                         <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
                                     </svg>
                                     Pending Sign-Ups
-                                </a>
+                                </a> -->
                                 <a href="adminViewingEvents.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"></path>
@@ -278,14 +285,6 @@ if (date("H:i:s") > "18:19:59") {
                                         <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
                                     </svg>
                                     Manage Volunteer Coordinators
-                                </a>
-                                 <a href="viewTotalMetrics.php" class="dropdown-item">
-                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
-                                        <circle cx="9" cy="7" r="4"></circle>
-                                        <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
-                                    </svg>
-                                    View Total Volunteer Hours
                                 </a>
                             </div>
                         </div>
