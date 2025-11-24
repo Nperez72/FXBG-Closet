@@ -466,7 +466,7 @@ if (date("H:i:s") > "18:19:59") {
                                         <line x1="3" y1="12" x2="3.01" y2="12"></line>
                                         <line x1="3" y1="18" x2="3.01" y2="18"></line>
                                     </svg>
-                                    View All Events
+                                    View Upcoming
                                 </a>
                                 <a href="viewAssignedEvents.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
