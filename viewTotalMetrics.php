@@ -2,7 +2,6 @@
     session_start();
     require_once('database/dbActivity.php');
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,21 +32,29 @@ require_once('header.php');
 </style>
 </head>
 <body>
-
 <header class="hero-header"> 
     <div class="center-header">
         <h1>Volunteer Hours Metrics</h1>
     </div>
 </header>
-
 <main>
 <?php
     // Define date range (last 6 months)
     $end_date = date('Y-m-d');
     $start_date = date('Y-m-d', strtotime('-6 months'));
     
-    // Fetch monthly data
-    $monthly_data = get_monthly_volunteer_hours($start_date, $end_date);
+    // Get selected email filter (if any)
+    $selected_email = isset($_GET['email_filter']) && !empty($_GET['email_filter']) ? $_GET['email_filter'] : 'all';
+    
+    // Fetch monthly data based on filter
+    if ($selected_email === 'all') {
+        $monthly_data = get_monthly_volunteer_hours($start_date, $end_date);
+    } else {
+        $monthly_data = get_monthly_volunteer_hours_by_email($start_date, $end_date, $selected_email);
+    }
+    
+    // Get all unique emails for dropdown
+    $all_emails = get_all_activity_emails();
     
     $labels = array();
     $data = array();
@@ -61,10 +68,26 @@ require_once('header.php');
     $labels_json = json_encode($labels);
     $data_json = json_encode($data);
 ?>
-
   <div class="main-content-box w-full max-w-5xl p-8 mb-8">
     <h2 class="mb-4">Total Volunteer Hours (Last 6 Months)</h2>
     <p class="mb-4">Monthly aggregated volunteer hours across all volunteers.</p>
+    
+    <form method="get" style="margin-bottom: 20px;">
+        <label for="email_filter" style="font-weight: bold; margin-right: 10px;">Filter by Email:</label>
+        <input list="email_list" id="email_filter" name="email_filter" 
+               value="<?php echo ($selected_email === 'all') ? 'all' : htmlspecialchars($selected_email); ?>" 
+               placeholder="Type 'all' or select email..."
+               style="padding: 8px; border: 1px solid #ccc; border-radius: 5px; width: 300px;">
+        <datalist id="email_list">
+            <option value="all">All Volunteers</option>
+            <?php foreach ($all_emails as $email): ?>
+                <?php if (!empty($email)): ?>
+                    <option value="<?php echo htmlspecialchars($email); ?>">
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </datalist>
+        <button type="submit" style="padding: 8px 16px; background-color: #294877; color: white; border: none; border-radius: 5px; cursor: pointer; margin-left: 10px;">Filter</button>
+    </form>
     
     <div class="chart-container">
         <canvas id="hoursChart"></canvas>
@@ -82,7 +105,6 @@ require_once('header.php');
     </div>
   </div>
 </main>
-
 <script>
     const ctx = document.getElementById('hoursChart').getContext('2d');
     const hoursChart = new Chart(ctx, {
@@ -132,6 +154,5 @@ require_once('header.php');
         }
     });
 </script>
-
 </body>
 </html>
