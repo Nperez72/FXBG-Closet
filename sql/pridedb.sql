@@ -704,6 +704,7 @@ CREATE TABLE `dbvolunteeractivity` (
   `hours` decimal(4,2) NOT NULL,
   `event_id` int NOT NULL,
   `interactions` text COLLATE utf8mb4_general_ci,
+  `email` VARCHAR(255) NULL DEFAULT NULL,
   `photo_id` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
