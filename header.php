@@ -226,14 +226,7 @@ if (date("H:i:s") > "18:19:59") {
                                     </svg>
                                     Edit Event
                                 </a>
-                                <a href="trackActivities.php" class="dropdown-item">
-                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M9 11l3 3L22 4"></path>
-                                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                                    </svg>
-                                    Track Activities
-                                </a>
-                                 <a href="trackSupplies.php" class="dropdown-item">
+                                <a href="trackSupplies.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <circle cx="11" cy="11" r="8"></circle>
                                         <path d="M21 21l-4.35-4.35"></path>
