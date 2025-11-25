@@ -58,13 +58,13 @@ require_once('header.php');
     
     $labels = array();
     $data = array();
-    
-    foreach ($monthly_data as $month) {
-        // Use MIN(date) result for labels, formatted as "Nov 2025"
-        $labels[] = date('M Y', strtotime($month['month_start']));
-        $data[] = $month['total_hours'];
-    }
-    
+
+foreach ($monthly_data as $month) {
+    // Use MIN(date) result for labels, formatted as "Nov 2025"
+    $labels[] = date('M Y', strtotime($month['month_start']));
+    $data[] = $month['total_hours'];
+}
+
     $labels_json = json_encode($labels);
     $data_json = json_encode($data);
 ?>
@@ -95,9 +95,9 @@ require_once('header.php');
     
     <?php
         $total_hours = 0;
-        foreach ($monthly_data as $month) {
-            $total_hours += $month['total_hours'];
-        }
+    foreach ($monthly_data as $month) {
+        $total_hours += $month['total_hours'];
+    }
     ?>
     
     <div style="text-align: center; margin-top: 30px; font-size: 24px; font-weight: bold; color: #294877;">
