@@ -54,7 +54,7 @@ function applyTheme(theme) {
  */
 function updateToggleButton(theme) {
   const toggleButtons = document.querySelectorAll(".theme-toggle");
-  toggleButtons.forEach(toggleButton => {
+  toggleButtons.forEach((toggleButton) => {
     toggleButton.setAttribute(
       "aria-label",
       theme === "dark" ? "Switch to light mode" : "Switch to dark mode",
@@ -71,15 +71,15 @@ function updateToggleButton(theme) {
  */
 function setupThemeToggle() {
   // Use event delegation for better reliability with dynamically loaded content
-  document.addEventListener("click", function(event) {
+  document.addEventListener("click", function (event) {
     if (event.target.closest(".theme-toggle")) {
       handleThemeToggle(event);
     }
   });
-  
+
   // Also attach directly for better performance on desktop
   const toggleButtons = document.querySelectorAll(".theme-toggle");
-  toggleButtons.forEach(button => {
+  toggleButtons.forEach((button) => {
     button.addEventListener("click", handleThemeToggle);
   });
 }
@@ -93,17 +93,17 @@ function handleThemeToggle(event) {
     event.preventDefault();
     event.stopPropagation();
   }
-  
+
   const currentTheme = getCurrentTheme();
   const newTheme = currentTheme === "dark" ? "light" : "dark";
   applyTheme(newTheme);
-  
+
   // Close mobile more menu if clicking from mobile
-  if (event && event.target.closest('.mobile-more-item')) {
-    const mobileMoreMenu = document.getElementById('mobileMoreMenu');
+  if (event && event.target.closest(".mobile-more-item")) {
+    const mobileMoreMenu = document.getElementById("mobileMoreMenu");
     if (mobileMoreMenu) {
-      mobileMoreMenu.classList.remove('active');
-      document.body.style.overflow = '';
+      mobileMoreMenu.classList.remove("active");
+      document.body.style.overflow = "";
     }
   }
 }
