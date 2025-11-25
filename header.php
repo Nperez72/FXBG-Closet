@@ -32,12 +32,14 @@ if (date("H:i:s") > "18:19:59") {
             }
         })();
     </script>
+    <script src="js/theme-presets-init.js"></script>
     
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/theme-toggle.css">
     <link rel="stylesheet" href="css/mobile-nav.css">
     <link rel="stylesheet" href="css/pwa-mobile.css">
     <link rel="stylesheet" href="css/accessibility-settings.css">
+    <link rel="stylesheet" href="css/theme-presets.css">
     
     <!-- PWA Meta Tags - Enables offline support, installation, etc. -->
     <link rel="manifest" href="/manifest.json">
@@ -322,6 +324,13 @@ if (date("H:i:s") > "18:19:59") {
                             </svg>
                         </button>
 
+                        <button class="theme-presets-btn nav-action-btn" id="openThemePresets" aria-label="Color themes" title="Choose a color theme">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"></path>
+                            </svg>
+                        </button>
+
                         <div class="nav-date"></div>
 
                         <div class="nav-dropdown user-dropdown">
@@ -580,6 +589,13 @@ if (date("H:i:s") > "18:19:59") {
                             </svg>
                         </button>
 
+                        <button class="theme-presets-btn nav-action-btn" id="openThemePresets" aria-label="Color themes" title="Choose a color theme">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"></path>
+                            </svg>
+                        </button>
+
                         <div class="nav-date"></div>
 
                         <div class="nav-dropdown user-dropdown">
@@ -750,6 +766,13 @@ if (date("H:i:s") > "18:19:59") {
                                 <circle cx="12" cy="12" r="1" fill="currentColor"></circle>
                                 <line x1="8.5" y1="8.5" x2="7" y2="7"></line>
                                 <line x1="15.5" y1="8.5" x2="17" y2="7"></line>
+                            </svg>
+                        </button>
+
+                        <button class="theme-presets-btn nav-action-btn" id="openThemePresets" aria-label="Color themes" title="Choose a color theme">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"></path>
                             </svg>
                         </button>
 
@@ -1033,6 +1056,14 @@ if (date("H:i:s") > "18:19:59") {
                             <line x1="15.5" y1="8.5" x2="17" y2="7"></line>
                         </svg>
                         <span>Accessibility</span>
+                    </button>
+                    
+                    <button class="mobile-more-item" id="openThemePresetsMobile" aria-label="Color themes" onclick="document.getElementById(\'themePresetsModal\').classList.add(\'active\');document.getElementById(\'mobileMoreMenu\').classList.remove(\'active\');document.body.style.overflow=\'hidden\';">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"></path>
+                        </svg>
+                        <span>Color Themes</span>
                     </button>
                     
                     <a href="logout.php" class="mobile-more-item mobile-more-logout">
@@ -1365,5 +1396,76 @@ if (date("H:i:s") > "18:19:59") {
         </div>
     </div>
     
+    <!-- Theme Presets Modal -->
+    <div class="theme-presets-modal" id="themePresetsModal">
+        <div class="theme-presets-modal-content">
+            <div class="theme-presets-modal-header">
+                <h2 class="theme-presets-modal-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"></path>
+                    </svg>
+                    Color Themes
+                </h2>
+                <button class="theme-presets-close-btn" id="closeThemePresets" aria-label="Close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="theme-presets-modal-body">
+                <p class="theme-presets-description">
+                    Choose a color scheme that matches your style. Your selection will be saved and applied across all pages.
+                </p>
+                
+                <div class="theme-grid">
+                    <div class="theme-card" data-theme="default">
+                        <span class="theme-icon">🍑</span>
+                        <div class="theme-name">Classic Peach</div>
+                        <div class="theme-description">Warm and welcoming peach tones</div>
+                    </div>
+                    
+                    <div class="theme-card" data-theme="pride">
+                        <span class="theme-icon">🏳️‍🌈</span>
+                        <div class="theme-name">Pride Rainbow</div>
+                        <div class="theme-description">Vibrant pride colors</div>
+                    </div>
+                    
+                    <div class="theme-card" data-theme="ocean">
+                        <span class="theme-icon">🌊</span>
+                        <div class="theme-name">Ocean Blue</div>
+                        <div class="theme-description">Calm and professional blues</div>
+                    </div>
+                    
+                    <div class="theme-card" data-theme="forest">
+                        <span class="theme-icon">🌲</span>
+                        <div class="theme-name">Forest Green</div>
+                        <div class="theme-description">Natural and earthy greens</div>
+                    </div>
+                    
+                    <div class="theme-card" data-theme="sunset">
+                        <span class="theme-icon">🌅</span>
+                        <div class="theme-name">Sunset Purple</div>
+                        <div class="theme-description">Rich and elegant purples</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="theme-presets-modal-footer">
+                <div class="theme-presets-info">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 16v-4"></path>
+                        <path d="M12 8h.01"></path>
+                    </svg>
+                    Themes work with both light and dark modes
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <script src="js/accessibility-settings.js"></script>
+    <script src="js/theme-presets.js"></script>
 </header>

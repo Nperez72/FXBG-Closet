@@ -24,8 +24,10 @@ if ($accessLevel < 2) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FXBG Closet | Manage Volunteer Coordinators</title>
+    <script src="js/theme-presets-init.js"></script>
     <link href="css/normal_tw.css" rel="stylesheet">
     <link rel="stylesheet" href="css/accessibility-settings.css">
+    <link rel="stylesheet" href="css/theme-presets.css">
     <?php require('header.php'); ?>
     <style>
         .btn {
@@ -335,6 +337,7 @@ if ($accessLevel < 2) {
     </div>
 </main>
 <script src="js/accessibility-settings.js"></script>
+<script src="js/theme-presets.js"></script>
 </body>
 </html>
 <?php ob_end_flush(); ?>

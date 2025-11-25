@@ -38,7 +38,10 @@ if (isset($_POST['update_quantity'])) {
 <html>
 <head>
     <title>FXBG Pride | View Supply Requests</title>
+    <script src="js/theme-presets-init.js"></script>
     <link href="css/normal_tw.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/accessibility-settings.css">
+    <link rel="stylesheet" href="css/theme-presets.css">
 <?php
 $tailwind_mode = true;
 require_once('header.php');

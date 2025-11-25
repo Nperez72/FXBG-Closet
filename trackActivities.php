@@ -325,8 +325,10 @@ $flash = get_flash();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FXBG Closet | Track Activities</title>
+    <script src="js/theme-presets-init.js"></script>
     <link href="css/normal_tw.css" rel="stylesheet">
     <link rel="stylesheet" href="css/accessibility-settings.css">
+    <link rel="stylesheet" href="css/theme-presets.css">
 <?php $tailwind_mode = true; ?>
 <style>
     .flash-wrap { 
@@ -432,5 +434,6 @@ $flash = get_flash();
     <?php require_once('header.php'); ?>
     <?php require_once('activityForm.php'); ?>
     <script src="js/accessibility-settings.js"></script>
+    <script src="js/theme-presets.js"></script>
 </body>
 </html>

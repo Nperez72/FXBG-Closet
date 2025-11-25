@@ -435,6 +435,10 @@ button.mobile-more-item span {
     flex: 1;
 }
 
+button#openThemePresetsMobile svg {
+    stroke: var(--main-color, #e8c4b8);
+}
+
 @media (max-width: 480px) {
     .a11y-setting-group {
         margin-bottom: 20px;

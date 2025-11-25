@@ -24,8 +24,10 @@ include_once "database/dbShifts.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FXBG Closet | Checked In Volunteers</title>
+    <script src="js/theme-presets-init.js"></script>
     <link href="css/normal_tw.css" rel="stylesheet">
     <link rel="stylesheet" href="css/accessibility-settings.css">
+    <link rel="stylesheet" href="css/theme-presets.css">
 <?php
 $tailwind_mode = true;
 require_once('header.php');
@@ -241,6 +243,7 @@ require_once('header.php');
         });
     </script>
     <script src="js/accessibility-settings.js"></script>
+    <script src="js/theme-presets.js"></script>
 
 </body>
 </html>

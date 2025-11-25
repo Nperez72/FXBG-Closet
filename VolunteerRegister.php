@@ -20,11 +20,14 @@
             }
         })();
     </script>
+    <script src="js/theme-presets-init.js"></script>
     
     <title>Fredericksburg SPCA | Register</title>
     <link href="css/normal_tw.css" rel="stylesheet">
     <link href="css/theme-toggle.css" rel="stylesheet">
     <link href="css/pwa-mobile.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/accessibility-settings.css">
+    <link rel="stylesheet" href="css/theme-presets.css">
     
     <!-- PWA Meta Tags -->
     <link rel="manifest" href="/manifest.json">

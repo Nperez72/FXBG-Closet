@@ -88,8 +88,6 @@ function setupThemeToggle() {
  * Handle theme toggle button click
  */
 function handleThemeToggle(event) {
-  console.log('Theme toggle clicked!', event.target); // Debug log
-  
   // Prevent default and stop propagation to ensure click works
   if (event) {
     event.preventDefault();
@@ -98,7 +96,6 @@ function handleThemeToggle(event) {
   
   const currentTheme = getCurrentTheme();
   const newTheme = currentTheme === "dark" ? "light" : "dark";
-  console.log('Switching from', currentTheme, 'to', newTheme); // Debug log
   applyTheme(newTheme);
   
   // Close mobile more menu if clicking from mobile
