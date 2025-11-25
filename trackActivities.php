@@ -230,7 +230,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     // If failed, store message and redirect
-    $email = isset($args['email']) && !empty($args['email']) ? $args['email'] : NULL;
+    $email = isset($args['email']) && !empty($args['email']) ? $args['email'] : null;
     $result = add_activity_with_email($person_id, $date, $event_id, $hours_spent, $activity_description, $email);
     if (!$result) {
         // cleanup files if DB write fails

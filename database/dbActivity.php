@@ -186,48 +186,50 @@ function get_monthly_volunteer_hours($start_date, $end_date)
     return $monthly_data;
 }
 
-function add_activity_with_email($person_id, $date, $event_id, $hours_spent, $activity_description, $email = NULL) {
+function add_activity_with_email($person_id, $date, $event_id, $hours_spent, $activity_description, $email = null)
+{
     require_once('dbinfo.php');
-    
+
     $connection = connect();
-    
+
     if (!$connection) {
         return false;
     }
-    
+
     $hours = (float)$hours_spent;
-    
-    $photo_id = NULL;
-    
+
+    $photo_id = null;
+
     $query = "INSERT INTO dbvolunteeractivity (person_id, email, date, hours, event_id, interactions, photo_id) 
               VALUES (?, ?, ?, ?, ?, ?, ?)";
-    
+
     $stmt = mysqli_prepare($connection, $query);
-    
+
     if (!$stmt) {
         mysqli_close($connection);
         return false;
     }
-    
+
     mysqli_stmt_bind_param($stmt, "issdisi", $person_id, $email, $date, $hours, $event_id, $activity_description, $photo_id);
-    
+
     $result = mysqli_stmt_execute($stmt);
-    
+
     mysqli_stmt_close($stmt);
     mysqli_close($connection);
-    
+
     return $result;
 }
 
-function get_monthly_volunteer_hours_by_email($start_date, $end_date, $email) {
+function get_monthly_volunteer_hours_by_email($start_date, $end_date, $email)
+{
     require_once('dbinfo.php');
-    
+
     $connection = connect();
-    
+
     if (!$connection) {
         return array();
     }
-    
+
     $query = "SELECT 
                 MIN(date) as month_start,
                 YEAR(date) as year,
@@ -237,57 +239,55 @@ function get_monthly_volunteer_hours_by_email($start_date, $end_date, $email) {
               WHERE date BETWEEN ? AND ? AND email = ?
               GROUP BY YEAR(date), MONTH(date)
               ORDER BY year ASC, month ASC";
-    
+
     $stmt = mysqli_prepare($connection, $query);
-    
+
     if (!$stmt) {
         mysqli_close($connection);
         return array();
     }
-    
+
     mysqli_stmt_bind_param($stmt, "sss", $start_date, $end_date, $email);
     mysqli_stmt_execute($stmt);
-    
+
     $result = mysqli_stmt_get_result($stmt);
-    
+
     $monthly_data = array();
     while ($row = mysqli_fetch_assoc($result)) {
         $monthly_data[] = $row;
     }
-    
+
     mysqli_stmt_close($stmt);
     mysqli_close($connection);
-    
+
     return $monthly_data;
 }
 
-function get_all_activity_emails() {
+function get_all_activity_emails()
+{
     require_once('dbinfo.php');
-    
+
     $connection = connect();
-    
+
     if (!$connection) {
         return array();
     }
-    
+
     $query = "SELECT DISTINCT email FROM dbvolunteeractivity WHERE email IS NOT NULL AND email != '' ORDER BY email ASC";
-    
+
     $result = mysqli_query($connection, $query);
-    
+
     if (!$result) {
         mysqli_close($connection);
         return array();
     }
-    
+
     $emails = array();
     while ($row = mysqli_fetch_assoc($result)) {
         $emails[] = $row['email'];
     }
-    
+
     mysqli_close($connection);
-    
+
     return $emails;
 }
-
-?>
-

@@ -42,20 +42,20 @@ require_once('header.php');
     // Define date range (last 6 months)
     $end_date = date('Y-m-d');
     $start_date = date('Y-m-d', strtotime('-6 months'));
-    
+
     // Get selected email filter (if any)
     $selected_email = isset($_GET['email_filter']) && !empty($_GET['email_filter']) ? $_GET['email_filter'] : 'all';
-    
+
     // Fetch monthly data based on filter
-    if ($selected_email === 'all') {
-        $monthly_data = get_monthly_volunteer_hours($start_date, $end_date);
-    } else {
-        $monthly_data = get_monthly_volunteer_hours_by_email($start_date, $end_date, $selected_email);
-    }
-    
+if ($selected_email === 'all') {
+    $monthly_data = get_monthly_volunteer_hours($start_date, $end_date);
+} else {
+    $monthly_data = get_monthly_volunteer_hours_by_email($start_date, $end_date, $selected_email);
+}
+
     // Get all unique emails for dropdown
     $all_emails = get_all_activity_emails();
-    
+
     $labels = array();
     $data = array();
 
@@ -80,8 +80,8 @@ foreach ($monthly_data as $month) {
                style="padding: 8px; border: 1px solid #ccc; border-radius: 5px; width: 300px;">
         <datalist id="email_list">
             <option value="all">All Volunteers</option>
-            <?php foreach ($all_emails as $email): ?>
-                <?php if (!empty($email)): ?>
+            <?php foreach ($all_emails as $email) : ?>
+                <?php if (!empty($email)) : ?>
                     <option value="<?php echo htmlspecialchars($email); ?>">
                 <?php endif; ?>
             <?php endforeach; ?>
