@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die();
     }
     $person_id = (int)$_SESSION['_id'];
-    $date = date("Y-m-d");
+    $date = get_event_date_by_id($event_id);
 
     // Create uploads directory if it doesn't exist
     // Permissions: owner can read/write/execute, others can read/execute
@@ -230,7 +230,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     // If failed, store message and redirect
-    $result = add_activity($person_id, $date, $event_id, $hours_spent, $activity_description);
+    $email = isset($args['email']) && !empty($args['email']) ? $args['email'] : null;
+    $result = add_activity_with_email($person_id, $date, $event_id, $hours_spent, $activity_description, $email);
     if (!$result) {
         // cleanup files if DB write fails
         foreach ($savedFiles as $f) {

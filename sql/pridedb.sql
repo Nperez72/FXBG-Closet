@@ -674,13 +674,14 @@ INSERT INTO `dbshifts` (`shift_id`, `person_id`, `date`, `startTime`, `endTime`,
 --
 
 CREATE TABLE `dbsupplies` (
-  `supply_id` int NOT NULL,
-  `item_type` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `quantity` int NOT NULL,
-  `description` text COLLATE utf8mb4_general_ci NOT NULL,
-  `date_submitted` date NOT NULL
-  `status` varchar(20) NOT NULL DEFAULT 'pending',
-  `reserve_status` varchar(20) NOT NULL DEFAULT 'unreserved',
+  `supply_id` INT NOT NULL AUTO_INCREMENT,
+  `item_type` VARCHAR(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `quantity` INT NOT NULL,
+  `description` TEXT COLLATE utf8mb4_general_ci NOT NULL,
+  `date_submitted` DATE NOT NULL,
+  `status` VARCHAR(20) NOT NULL DEFAULT 'pending',
+  `reserve_status` VARCHAR(20) NOT NULL DEFAULT 'unreserved',
+  PRIMARY KEY (`supply_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -703,6 +704,7 @@ CREATE TABLE `dbvolunteeractivity` (
   `hours` decimal(4,2) NOT NULL,
   `event_id` int NOT NULL,
   `interactions` text COLLATE utf8mb4_general_ci,
+  `email` VARCHAR(255) NULL DEFAULT NULL,
   `photo_id` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -858,8 +860,6 @@ ALTER TABLE `dbshifts`
 --
 -- Indexes for table `dbsupplies`
 --
-ALTER TABLE `dbsupplies`
-  ADD PRIMARY KEY (`supply_id`);
 
 --
 -- Indexes for table `dbvolunteeractivity`
