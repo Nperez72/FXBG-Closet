@@ -1008,4 +1008,34 @@ function update_animal2($animal)
     return $id;
 }
 
+function get_event_date_by_id($event_id)
+{
+    require_once('dbinfo.php');
+
+    $connection = connect();
+
+    if (!$connection) {
+        return null;
+    }
+
+    $query = "SELECT date FROM dbevents WHERE id = ?";
+    $stmt = mysqli_prepare($connection, $query);
+
+    if (!$stmt) {
+        mysqli_close($connection);
+        return null;
+    }
+
+    mysqli_stmt_bind_param($stmt, "i", $event_id);
+    mysqli_stmt_execute($stmt);
+
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_assoc($result);
+
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+
+    return $row ? $row['date'] : null;
+}
+
 //There was a question mark followed by a > here
