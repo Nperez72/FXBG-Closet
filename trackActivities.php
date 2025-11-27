@@ -30,16 +30,34 @@ require_once('database/dbActivity.php');
 require_once('database/dbEvents.php');
 require_once('email.php');
 
+$role_names = [
+   -1 => 'coordinator not specified',
+    0 => 'not logged in',
+    1 => 'volunteer',
+    2 => 'board member',
+    3 => 'volunteer coordinator',
+    4 => 'admin'
+  ];
+$role = $role_names[$_SESSION['access_level']] ?? 'not logged in';
+
 $errors = [];
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $ignoreList = array();
     $args = sanitize($_POST, $ignoreList);
+    
+    echo '<script>console.log("User ID:", ' . json_encode($_SESSION['_id']) . ');</script>';
+    echo '<script>console.log("Args:", ' . json_encode($args) . ');</script>';
+
     $required = array(
         'event_id',
         'hours_spent',
         'activity_description'
     );
+
+    if ($role === 'volunteer') {
+        $required[] = 'volunteer_name';
+    }
 
     if (!wereRequiredFieldsSubmitted($args, $required)) {
         $errors[] = "Please fill out all required fields.";
@@ -61,8 +79,51 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         header('Location: trackActivities.php');
         die();
     }
+
+    if ($role === 'volunteer') {
+        $person_name = trim($args['volunteer_name'] ?? '');
+        if ($person_name === '') {
+            set_flash('error', ['Name field cannot be empty. Please try again.']);
+            header('Location: trackActivities.php');
+            die();
+        }
+    }
+    
     $person_id = (int)$_SESSION['_id'];
     $date = get_event_date_by_id($event_id);
+    $email = isset($args['email']) && !empty($args['email']) ? $args['email'] : null;
+
+    $new_activity_id = add_activity($person_id, $person_name, $role, $date, $hours_spent, $event_id, $activity_description, $email);
+    if (!$new_activity_id) {
+        set_flash('error', ['Failed to log activity. Please try again.']);
+        header('Location: trackActivities.php');
+        die();
+    }
+
+    if ($role === 'volunteer') {
+        $age_data = [
+            '0_12' => (int)($args['age_0_12'] ?? 0),
+            '13_17' => (int)($args['age_13_17'] ?? 0),
+            '18_24' => (int)($args['age_18_24'] ?? 0),
+            '25_54' => (int)($args['age_25_54'] ?? 0),
+            '55_plus' => (int)($args['age_55_plus'] ?? 0),
+        ];
+        
+        $ethnicity_data = [
+            'white' => (int)($args['ethnicity_white'] ?? 0),
+            'black' => (int)($args['ethnicity_black'] ?? 0),
+            'hispanic' => (int)($args['ethnicity_hispanic'] ?? 0),
+            'asian' => (int)($args['ethnicity_asian'] ?? 0),
+            'native' => (int)($args['ethnicity_native'] ?? 0),
+            'other' => (int)($args['ethnicity_other'] ?? 0),
+        ];
+
+        echo '<script>console.log("Args:", ' . json_encode($person_name) . ');</script>';
+        echo '<script>console.log("Args:", ' . json_encode($age_data) . ');</script>';
+        echo '<script>console.log("Args:", ' . json_encode($ethnicity_data) . ');</script>';
+        
+        save_interaction_demographics($new_activity_id, $age_data, $ethnicity_data);
+    }
 
     // Create uploads directory if it doesn't exist
     // Permissions: owner can read/write/execute, others can read/execute
@@ -225,19 +286,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
         $errors[] = "Please try again.";
         set_flash('error', $errors);
-        header('Location: trackActivities.php');
-        die();
-    }
-
-    // If failed, store message and redirect
-    $email = isset($args['email']) && !empty($args['email']) ? $args['email'] : null;
-    $result = add_activity_with_email($person_id, $date, $event_id, $hours_spent, $activity_description, $email);
-    if (!$result) {
-        // cleanup files if DB write fails
-        foreach ($savedFiles as $f) {
-            @unlink($uploadDir . DIRECTORY_SEPARATOR . $f['saved']);
-        }
-        set_flash('error', ['Failed to log activity. Please try again.']);
         header('Location: trackActivities.php');
         die();
     }

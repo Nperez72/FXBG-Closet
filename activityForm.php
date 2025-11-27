@@ -5,15 +5,7 @@
   }
 
   $all_events = get_all_events_sorted_by_date_not_archived();
-  $role_names = [
-   -1 => 'coordinator not specified',
-    0 => 'not logged in',
-    1 => 'volunteer',
-    2 => 'board member',
-    3 => 'volunteer coordinator',
-    4 => 'admin'
-  ];
-  $role = $role_names[$_SESSION['access_level']] ?? 'not logged in';
+  
   if ($role === 'board member') {
     $board_members = getBoardMembers();
   }
