@@ -59,7 +59,7 @@
                 $people_list = ($role === 'board member') ? $board_members : $coordinators;
                 foreach ($people_list as $person) : 
                 ?>
-                    <option value="<?php echo $person['person_id']; ?>">
+                    <option value="<?php echo $person['fullname']; ?>">
                         <?php echo htmlspecialchars($person['fullname']); ?>
                     </option>
                 <?php endforeach; ?>
@@ -70,8 +70,8 @@
             <fieldset class="section-box mb-4">
                 <h3 class="mt-2">Your Information</h3>
                 <div class="blue-div"></div>
-                <label for="volunteer_name"><em>* </em>Your Name</label>
-                <input type="text" id="volunteer_name" name="volunteer_name" required placeholder="Enter your full name">
+                <label for="person_name"><em>* </em>Your Name</label>
+                <input type="text" id="person_name" name="person_name" required placeholder="Enter your full name">
             </fieldset>
         <?php endif; ?>
         

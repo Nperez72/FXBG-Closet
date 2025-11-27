@@ -48,16 +48,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     echo '<script>console.log("User ID:", ' . json_encode($_SESSION['_id']) . ');</script>';
     echo '<script>console.log("Args:", ' . json_encode($args) . ');</script>';
-
+    echo '<script>console.log("Role:", ' . json_encode($role) . ');</script>';
+    
     $required = array(
         'event_id',
         'hours_spent',
-        'activity_description'
+        'activity_description',
+        'person_name'
     );
-
-    if ($role === 'volunteer') {
-        $required[] = 'volunteer_name';
-    }
 
     if (!wereRequiredFieldsSubmitted($args, $required)) {
         $errors[] = "Please fill out all required fields.";
@@ -79,16 +77,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         header('Location: trackActivities.php');
         die();
     }
-
-    if ($role === 'volunteer') {
-        $person_name = trim($args['volunteer_name'] ?? '');
-        if ($person_name === '') {
-            set_flash('error', ['Name field cannot be empty. Please try again.']);
-            header('Location: trackActivities.php');
-            die();
-        }
-    }
     
+    $person_name = trim($args['person_name'] ?? '');        
+    if ($person_name === '') {
+        set_flash('error', ['Name field cannot be empty. Please try again.']);
+        header('Location: trackActivities.php');
+        die();
+    }
+
     $person_id = (int)$_SESSION['_id'];
     $date = get_event_date_by_id($event_id);
     $email = isset($args['email']) && !empty($args['email']) ? $args['email'] : null;
@@ -100,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die();
     }
 
-    if ($role === 'volunteer') {
+    if ($role === 'volunteer' || $role === 'board member') {
         $age_data = [
             '0_12' => (int)($args['age_0_12'] ?? 0),
             '13_17' => (int)($args['age_13_17'] ?? 0),
