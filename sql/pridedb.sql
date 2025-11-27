@@ -698,14 +698,15 @@ INSERT INTO `dbsupplies` (`supply_id`, `item_type`, `quantity`, `description`, `
 --
 
 CREATE TABLE `dbvolunteeractivity` (
-  `activity_id` int NOT NULL,
+  `activity_id` int NOT NULL AUTO_INCREMENT,
   `person_id` int NOT NULL,
   `date` date NOT NULL,
   `hours` decimal(4,2) NOT NULL,
   `event_id` int NOT NULL,
   `interactions` text COLLATE utf8mb4_general_ci,
   `email` VARCHAR(255) NULL DEFAULT NULL,
-  `photo_id` int DEFAULT NULL
+  `photo_id` int DEFAULT NULL,
+  PRIMARY KEY (`activity_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -862,12 +863,6 @@ ALTER TABLE `dbshifts`
 --
 
 --
--- Indexes for table `dbvolunteeractivity`
---
-ALTER TABLE `dbvolunteeractivity`
-  ADD PRIMARY KEY (`activity_id`);
-
---
 -- Indexes for table `discussion_replies`
 --
 ALTER TABLE `discussion_replies`
@@ -921,18 +916,6 @@ ALTER TABLE `dbpersons`
 --
 ALTER TABLE `dbshifts`
   MODIFY `shift_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
-
---
--- AUTO_INCREMENT for table `dbsupplies`
---
-ALTER TABLE `dbsupplies`
-  MODIFY `supply_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `dbvolunteeractivity`
---
-ALTER TABLE `dbvolunteeractivity`
-  MODIFY `activity_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `discussion_replies`
