@@ -712,6 +712,29 @@ CREATE TABLE `dbvolunteeractivity` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `dbinteractiondemographics`
+--
+CREATE TABLE dbinteractiondemographics (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    activity_id INT NOT NULL,
+    age_0_12 INT DEFAULT 0,
+    age_13_17 INT DEFAULT 0,
+    age_18_24 INT DEFAULT 0,
+    age_25_54 INT DEFAULT 0,
+    age_55_plus INT DEFAULT 0,
+    ethnicity_white INT DEFAULT 0,
+    ethnicity_black INT DEFAULT 0,
+    ethnicity_hispanic INT DEFAULT 0,
+    ethnicity_asian INT DEFAULT 0,
+    ethnicity_native INT DEFAULT 0,
+    ethnicity_other INT DEFAULT 0,
+    FOREIGN KEY (activity_id) REFERENCES dbvolunteeractivity(activity_id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `discussion_replies`
 --
 

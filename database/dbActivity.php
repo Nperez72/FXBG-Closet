@@ -13,7 +13,7 @@ function add_activity($person_id, $date, $event_id, $hours_spent, $activity_desc
     $hours = (float)$hours_spent;
     $photo_id = null;
 
-     $query = "INSERT INTO dbvolunteeractivity (person_id, date, hours, event_id, interactions, photo_id) 
+    $query = "INSERT INTO dbvolunteeractivity (person_id, date, hours, event_id, interactions, photo_id) 
               VALUES (?, ?, ?, ?, ?, ?)";
 
     $stmt = mysqli_prepare($connection, $query);
@@ -290,4 +290,77 @@ function get_all_activity_emails()
     mysqli_close($connection);
 
     return $emails;
+}
+function save_interaction_demographics(int $activity_id, array $age_data, array $ethnicity_data): bool {
+    require_once('dbinfo.php');
+
+    $connection = connect();
+    
+    if ($activity_id <= 0) {
+        error_log("Invalid activity_id provided: $activity_id");
+        return false;
+    }
+    
+    $age_0_12 = (int)($age_data['0_12'] ?? 0);
+    $age_13_17 = (int)($age_data['13_17'] ?? 0);
+    $age_18_24 = (int)($age_data['18_24'] ?? 0);
+    $age_25_54 = (int)($age_data['25_54'] ?? 0);
+    $age_55_plus = (int)($age_data['55_plus'] ?? 0);
+    
+    $ethnicity_white = (int)($ethnicity_data['white'] ?? 0);
+    $ethnicity_black = (int)($ethnicity_data['black'] ?? 0);
+    $ethnicity_hispanic = (int)($ethnicity_data['hispanic'] ?? 0);
+    $ethnicity_asian = (int)($ethnicity_data['asian'] ?? 0);
+    $ethnicity_native = (int)($ethnicity_data['native'] ?? 0);
+    $ethnicity_other = (int)($ethnicity_data['other'] ?? 0);
+    
+    // Prepare the SQL statement
+    $query = "INSERT INTO dbinteractiondemographics (
+                activity_id, 
+                age_0_12, 
+                age_13_17, 
+                age_18_24, 
+                age_25_54, 
+                age_55_plus,
+                ethnicity_white,
+                ethnicity_black,
+                ethnicity_hispanic,
+                ethnicity_asian,
+                ethnicity_native,
+                ethnicity_other
+              ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    
+    $stmt = $connection->prepare($query);
+    
+    if (!$stmt) {
+        error_log("Failed to prepare statement: " . $connection->error);
+        return false;
+    }
+    
+    $stmt->bind_param(
+        "iiiiiiiiiiii",
+        $activity_id,
+        $age_0_12,
+        $age_13_17,
+        $age_18_24,
+        $age_25_54,
+        $age_55_plus,
+        $ethnicity_white,
+        $ethnicity_black,
+        $ethnicity_hispanic,
+        $ethnicity_asian,
+        $ethnicity_native,
+        $ethnicity_other
+    );
+
+    $result = $stmt->execute();
+    
+    if (!$result) {
+        error_log("Failed to save interaction demographics for activity_id $activity_id: " . $stmt->error);
+        $stmt->close();
+        return false;
+    }
+    
+    $stmt->close();
+    return true;
 }
