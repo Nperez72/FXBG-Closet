@@ -121,7 +121,7 @@ CREATE TABLE `dbeventmedia` (
   `file_name` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `file_format` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci,
   `alternate_name` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `time_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -699,13 +699,11 @@ INSERT INTO `dbsupplies` (`supply_id`, `item_type`, `quantity`, `description`, `
 
 CREATE TABLE `dbvolunteeractivity` (
   `activity_id` int NOT NULL AUTO_INCREMENT,
-  `person_id` int NOT NULL, -- MAYBE DELETE
   `name` varchar(255) NOT NULL,
   `role` varchar(50) NOT NULL,
   `date` date NOT NULL,
   `hours` decimal(4,2) NOT NULL,
   `event_id` int NOT NULL,
-  `interactions` text COLLATE utf8mb4_general_ci, -- DELETE
   `email` VARCHAR(255) NULL DEFAULT NULL,
   PRIMARY KEY (`activity_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

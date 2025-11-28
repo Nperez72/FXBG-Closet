@@ -160,11 +160,10 @@ function get_monthly_volunteer_hours($start_date, $end_date)
  * @param string $date Activity date (YYYY-MM-DD format)
  * @param float $hours_spent Hours spent on activity
  * @param int $event_id Event ID
- * @param string $activity_description Description of the activity
  * @param string|null $email Optional email address
  * @return int|false The new activity_id on success, false on failure
  */
-function add_activity($person_id, $name, $role, $date, $hours_spent, $event_id, $activity_description, $email = null)
+function add_activity($name, $role, $date, $hours_spent, $event_id, $email = null)
 {
     require_once('dbinfo.php');
 
@@ -173,17 +172,16 @@ function add_activity($person_id, $name, $role, $date, $hours_spent, $event_id, 
         return false;
     }
 
-    $query = "INSERT INTO dbvolunteeractivity (person_id, name, role, date, hours, event_id, interactions, email) 
-              VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $query = "INSERT INTO dbvolunteeractivity (name, role, date, hours, event_id, email) 
+              VALUES (?, ?, ?, ?, ?, ?)";
 
     $stmt = mysqli_prepare($connection, $query);
-
     if (!$stmt) {
         mysqli_close($connection);
         return false;
     }
 
-    mysqli_stmt_bind_param($stmt, "isssdiss", $person_id, $name, $role, $date, $hours_spent, $event_id, $activity_description, $email);
+    mysqli_stmt_bind_param($stmt, "sssdis", $name, $role, $date, $hours_spent, $event_id, $email);
 
     $activity_id = mysqli_stmt_execute($stmt) ? mysqli_insert_id($connection) : false;
 

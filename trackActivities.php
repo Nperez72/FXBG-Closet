@@ -53,7 +53,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $required = array(
         'event_id',
         'hours_spent',
-        'activity_description',
         'person_name'
     );
 
@@ -71,13 +70,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $errors[] = "Hours spent must be greater than 0.";
     }
 
-    $activity_description = trim($args['activity_description'] ?? '');
-    if ($activity_description === '') {
-        set_flash('error', ['Activity description cannot be empty. Please try again.']);
-        header('Location: trackActivities.php');
-        die();
-    }
-    
     $person_name = trim($args['person_name'] ?? '');        
     if ($person_name === '') {
         set_flash('error', ['Name field cannot be empty. Please try again.']);
@@ -85,11 +77,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die();
     }
 
-    $person_id = (int)$_SESSION['_id'];
     $date = get_event_date_by_id($event_id);
     $email = isset($args['email']) && !empty($args['email']) ? $args['email'] : null;
 
-    $new_activity_id = add_activity($person_id, $person_name, $role, $date, $hours_spent, $event_id, $activity_description, $email);
+    $new_activity_id = add_activity($person_name, $role, $date, $hours_spent, $event_id, $email);
     if (!$new_activity_id) {
         set_flash('error', ['Failed to log activity. Please try again.']);
         header('Location: trackActivities.php');
@@ -114,9 +105,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             'other' => (int)($args['ethnicity_other'] ?? 0),
         ];
 
-        echo '<script>console.log("Args:", ' . json_encode($person_name) . ');</script>';
-        echo '<script>console.log("Args:", ' . json_encode($age_data) . ');</script>';
-        echo '<script>console.log("Args:", ' . json_encode($ethnicity_data) . ');</script>';
+        // echo '<script>console.log("Args:", ' . json_encode($person_name) . ');</script>';
+        // echo '<script>console.log("Args:", ' . json_encode($age_data) . ');</script>';
+        // echo '<script>console.log("Args:", ' . json_encode($ethnicity_data) . ');</script>';
         
         save_interaction_demographics($new_activity_id, $age_data, $ethnicity_data);
     }
@@ -225,7 +216,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         // Sanitize filename: remove special characters, keep alphanumeric, dots, underscores, hyphens
         $base = preg_replace('/[^A-Za-z0-9._-]/', '_', pathinfo($originalName, PATHINFO_FILENAME));
-        $savedFileName = $person_id . "_" . $event_id . "_" . $date . "_" . $base . '.' . $ext;
+        $savedFileName = $event_id . "_" . $date . "_" . $base . '.' . $ext;
         $destPath = $uploadDir . DIRECTORY_SEPARATOR . $savedFileName;
 
         // does it already exist?
@@ -289,7 +280,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Loop through saved files and add them to database
     $uploadErrors = [];
     foreach ($savedFiles as $f) {
-        $uploadOk = add_media(null, $event_id, $f['original'], $f['mime'], $f['ext'], $activity_description, $f['saved'], $date);
+        $uploadOk = add_media(null, $event_id, $f['original'], $f['mime'], $f['ext'], null, $f['saved'], $date);
         if (!$uploadOk) {
             $uploadErrors[] = $f['original'];
         }
