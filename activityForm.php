@@ -72,6 +72,8 @@
                 <div class="blue-div"></div>
                 <label for="person_name"><em>* </em>Your Name</label>
                 <input type="text" id="person_name" name="person_name" required placeholder="Enter your full name">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email address">
             </fieldset>
         <?php endif; ?>
         
@@ -94,8 +96,6 @@
 
             <label for="hours_spent"><em>* </em>Hours Spent</label>
             <input type="number" id="hours_spent" name="hours_spent" min="0" step="0.5" required placeholder="Enter hours spent (e.g., 2.5)">
-            <label for="email">Email (Optional)</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email address (optional)">
             <label for="activity_description"><em>* </em>Activity Description</label>
             <textarea id="activity_description" name="activity_description" rows="6" required placeholder="Describe what you did during this volunteer activity"></textarea>
         </fieldset>
