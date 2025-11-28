@@ -246,7 +246,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     'image/png'  => imagepng($img, $destPath, 6), // compression level 0-9
                     default      => false,
                 };
-                imagedestroy($img);
+                unset($img);
             } else {
                 $errors[] = "Failed to create image: " . htmlspecialchars($originalName);
             }
