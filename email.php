@@ -149,3 +149,24 @@ function sendEmails(array $emails, string $fromUser, string $subject, string $bo
         'error' => null
     ];
 }
+
+
+/**
+ * Render a PHP template file with variables and return as string.
+ *
+ * @param string $path Absolute path to template file
+ * @param array  $vars Variables to extract for use inside template
+ * @return string Rendered HTML
+ */
+function render_email_template(string $path, array $vars = []): string 
+{
+    if (!file_exists($path)) {
+        throw new InvalidArgumentException("Template file not found: $path");
+    }
+
+    extract($vars, EXTR_SKIP);
+
+    ob_start();
+    include $path;
+    return ob_get_clean();
+}
