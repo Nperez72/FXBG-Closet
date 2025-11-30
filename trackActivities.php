@@ -5,27 +5,13 @@ define('MAX_UPLOAD_FILES', 10);
 define('MAX_FILE_SIZE_MB', 10);
 define('MAX_TOTAL_SIZE_MB', 50);
 
-function set_flash(string $type, array $messages): void
-{
-    $_SESSION['flash'] = ['type' => $type, 'messages' => $messages];
-}
-
-function get_flash(): ?array
-{
-    if (empty($_SESSION['flash'])) {
-        return null;
-    }
-    $f = $_SESSION['flash'];
-    unset($_SESSION['flash']);
-    return $f;
-}
-
 if (!isset($_SESSION['_id'])) {
     header("Location: login.php");
     die();
 }
 
 require_once('include/input-validation.php');
+require_once('include/flash.php');  
 require_once('database/dbActivity.php');
 require_once('database/dbEvents.php');
 require_once('email.php');
