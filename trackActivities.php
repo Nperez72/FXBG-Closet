@@ -5,16 +5,16 @@ define('MAX_UPLOAD_FILES', 10);
 define('MAX_FILE_SIZE_MB', 10);
 define('MAX_TOTAL_SIZE_MB', 50);
 
-if (!isset($_SESSION['_id'])) {
-    header("Location: login.php");
-    die();
-}
-
 require_once('include/input-validation.php');
 require_once('include/flash.php');  
+require_once('include/api.php');  
 require_once('database/dbActivity.php');
 require_once('database/dbEvents.php');
 require_once('email.php');
+
+if (!isset($_SESSION['_id'])) {
+    redirect("login.php");
+}
 
 $role_names = [
    -1 => 'coordinator not specified',
@@ -55,8 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $person_name = trim($args['person_name'] ?? '');        
     if ($person_name === '') {
         set_flash('error', ['Name field cannot be empty. Please try again.']);
-        header('Location: trackActivities.php');
-        die();
+        redirect('trackActivities.php');
     }
 
     $date = get_event_date_by_id($event_id);
@@ -65,8 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $new_activity_id = add_activity($person_name, $role, $date, $hours_spent, $event_id, $email);
     if (!$new_activity_id) {
         set_flash('error', ['Failed to log activity. Please try again.']);
-        header('Location: trackActivities.php');
-        die();
+        redirect('trackActivities.php');
     }
 
     if ($role === 'volunteer' || $role === 'board member') {
@@ -105,8 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($fileCount > MAX_UPLOAD_FILES) {
         set_flash('error', ["Too many files. Maximum " . MAX_UPLOAD_FILES . " photos allowed."]);
-        header('Location: trackActivities.php');
-        die();
+        redirect('trackActivities.php');
     }
 
     $totalSize = 0;
@@ -123,14 +120,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if ($fsize > $limitPerFileBytes) {
             $name = htmlspecialchars($files['name'][$x] ?? 'Unknown file');
             set_flash('error', ["File too large (" . MAX_FILE_SIZE_MB . "MB max): {$name}"]);
-            header('Location: trackActivities.php');
-            die();
+            redirect('trackActivities.php');
         }
 
         if ($totalSize + $fsize > $totalLimitBytes) {
             set_flash('error', ["Total upload size exceeds " . MAX_TOTAL_SIZE_MB . "MB limit. Please reduce file count or sizes."]);
-            header('Location: trackActivities.php');
-            die();
+            redirect('trackActivities.php');
         }
 
         $totalSize += $fsize;
@@ -251,8 +246,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
         $errors[] = "Please try again.";
         set_flash('error', $errors);
-        header('Location: trackActivities.php');
-        die();
+        redirect('trackActivities.php');
     }
 
     // Loop through saved files and add them to database
@@ -273,8 +267,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             'Activity created but failed to save media attachments.',
             'Failed files: ' . implode(', ', $uploadErrors)
         ]);
-        header('Location: trackActivities.php');
-        die();
+        redirect('trackActivities.php');
     }
 
     // Email photos to designated contact if any were uploaded
@@ -308,15 +301,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
          // Check for errors
         if (!$emailResults['success']) {
             set_flash('error', ['Activity logged successfully, but email(s) failed to send.', $emailResults['error']]);
-            header('Location: trackActivities.php');
-            die();
+            redirect('trackActivities.php');
         }
     }
 
     // Success
     set_flash('success', ['Activity logged successfully!']);
-    header('Location: trackActivities.php');
-    die();
+    redirect('trackActivities.php');
 }
 
 // read flash to get all messages
