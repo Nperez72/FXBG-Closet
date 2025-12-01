@@ -24,7 +24,6 @@ function update_closet($first, $last, $item_type, $quantity)
     $binded = mysqli_stmt_bind_param($stmt, "sssi", $first, $last, $item_type, $quantity);
 
     if (!$binded) {
-
         return false;
     }
 
@@ -33,7 +32,7 @@ function update_closet($first, $last, $item_type, $quantity)
     if (!$result) {
         echo 'there is a problem';
         return false;
-    }    
+    }
 
     mysqli_stmt_close($stmt);
     mysqli_close($connection);
