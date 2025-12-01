@@ -12,7 +12,7 @@ function update_closet($first, $last, $use_date, $item_type, $quantity)
 
     $query = "INSERT INTO dbclosetuse (user_first_name, user_last_name, use_date, item_taken, quantity_taken) 
               VALUES (?, ?, ?, ?, ?)";
-
+    
     $stmt = mysqli_prepare($connection, $query);
 
     if (!$stmt) {
