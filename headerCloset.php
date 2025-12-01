@@ -103,7 +103,7 @@ if (date("H:i:s") > "18:19:59") {
                     </div>
                 </div>
             </nav>');
-    ?>
+            ?>
 
     <script>
     function updateNavDate() {
@@ -228,7 +228,7 @@ if (date("H:i:s") > "18:19:59") {
                 <div class="mobile-more-content">
                 </div>
             </div>');
-    ?>
+            ?>
     
     <script>
     // Mobile Bottom Nav Active State & More Menu

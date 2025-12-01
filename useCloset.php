@@ -41,8 +41,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ignoreList = array();
     $args = sanitize($_POST, $ignoreList);
     $required = array(
-	'first_name',
-	'last_name',
+    'first_name',
+    'last_name',
         'item_type',
         'quantity',
     );
@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $resultCloset = update_closet($first, $last, $use_date, $item_type, $quantity);
         $resultInv = update_closet_quantity($item_type, $quantity * -1);
-	var_dump($resultCloset);
+        var_dump($resultCloset);
         if (!$resultCloset) {
             $showPopup = true;
             $popupMessage = 'Failed to submit closet use. Please try again.';
