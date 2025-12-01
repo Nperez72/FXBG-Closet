@@ -2,10 +2,17 @@
 -- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
+<<<<<<< Updated upstream
 -- Host: localhost:3306
 -- Generation Time: Nov 17, 2025 at 05:48 PM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.26
+=======
+-- Host: localhost
+-- Generation Time: Dec 01, 2025 at 04:39 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
+>>>>>>> Stashed changes
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,11 +35,19 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `dbaccounts` (
+<<<<<<< Updated upstream
   `username` varchar(256) COLLATE utf8mb4_general_ci NOT NULL,
   `email` varchar(256) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `password` text COLLATE utf8mb4_general_ci NOT NULL,
   `type` int NOT NULL
 ) ;
+=======
+  `username` varchar(256) NOT NULL,
+  `email` varchar(256) DEFAULT NULL,
+  `password` text NOT NULL,
+  `type` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+>>>>>>> Stashed changes
 
 --
 -- Dumping data for table `dbaccounts`
@@ -88,6 +103,31 @@ CREATE TABLE `dbarchived_volunteers` (
 
 INSERT INTO `dbarchived_volunteers` (`id`, `start_date`, `first_name`, `last_name`, `street_address`, `city`, `state`, `zip_code`, `phone1`, `phone1type`, `emergency_contact_phone`, `emergency_contact_phone_type`, `birthday`, `email`, `emergency_contact_first_name`, `contact_num`, `emergency_contact_relation`, `contact_method`, `type`, `status`, `notes`, `password`, `skills`, `interests`, `archived_date`, `emergency_contact_last_name`, `is_new_volunteer`, `is_community_service_volunteer`, `total_hours_volunteered`) VALUES
 ('stephen_davies', '2022-05-10', 'Stephen', 'Davies', '456 Maple Avenue', 'Fredericksburg', 'VA', '22401', '5405557890', 'mobile', '5405551111', 'home', '1988-11-02', 'stephendavies@email.com', 'Robert', '5405551111', 'Father', 'phone', 'volunteer', 'Inactive', 'Archived due to relocation', '$2y$10$ABC789xyz456LMN123DEF', 'Music, Painting', 'Event Coordination', '2025-03-18 16:56:44', 'Davies', 0, 1, 0.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dbclosetinventory`
+--
+
+CREATE TABLE `dbclosetinventory` (
+  `item_name` text NOT NULL,
+  `count` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dbclosetuse`
+--
+
+CREATE TABLE `dbclosetuse` (
+  `user_first_name` text NOT NULL,
+  `user_last_name` text NOT NULL,
+  `use_date` date NOT NULL,
+  `item_type` text NOT NULL,
+  `quantity_taken` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -165,9 +205,15 @@ CREATE TABLE `dbevents` (
   `capacity` int NOT NULL,
   `completed` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `restricted_signup` tinyint(1) NOT NULL,
+<<<<<<< Updated upstream
   `location` text COLLATE utf8mb4_unicode_ci,
   `type` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `volunteer_coordinator` int DEFAULT NULL
+=======
+  `location` text DEFAULT NULL,
+  `type` text NOT NULL,
+  `volunteer_coordinator` int(11) DEFAULT NULL
+>>>>>>> Stashed changes
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -557,7 +603,11 @@ INSERT INTO `dbpersonhours` (`personID`, `eventID`, `start_time`, `end_time`) VA
 CREATE TABLE `dbpersons` (
   `person_id` int NOT NULL,
   `id` varchar(256) NOT NULL,
+<<<<<<< Updated upstream
   `role_type` int NOT NULL,
+=======
+  `role_type` int(11) NOT NULL,
+>>>>>>> Stashed changes
   `role_name` varchar(256) DEFAULT NULL,
   `start_date` text,
   `first_name` text NOT NULL,
@@ -674,6 +724,7 @@ INSERT INTO `dbshifts` (`shift_id`, `person_id`, `date`, `startTime`, `endTime`,
 --
 
 CREATE TABLE `dbsupplies` (
+<<<<<<< Updated upstream
   `supply_id` INT NOT NULL AUTO_INCREMENT,
   `item_type` VARCHAR(100) COLLATE utf8mb4_general_ci NOT NULL,
   `quantity` INT NOT NULL,
@@ -682,13 +733,26 @@ CREATE TABLE `dbsupplies` (
   `status` VARCHAR(20) NOT NULL DEFAULT 'pending',
   `reserve_status` VARCHAR(20) NOT NULL DEFAULT 'unreserved',
   PRIMARY KEY (`supply_id`)
+=======
+  `supply_id` int(11) NOT NULL,
+  `item_type` varchar(100) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `description` text NOT NULL,
+  `date_submitted` date NOT NULL,
+  `status` varchar(20) NOT NULL DEFAULT 'pending',
+  `reserve_status` varchar(20) NOT NULL DEFAULT 'unreserved'
+>>>>>>> Stashed changes
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `dbsupplies`
 --
 
+<<<<<<< Updated upstream
 INSERT INTO `dbsupplies` (`supply_id`, `item_type`, `quantity`, `description`, `date_submitted`, `status`, `reserve_status` ) VALUES
+=======
+INSERT INTO `dbsupplies` (`supply_id`, `item_type`, `quantity`, `description`, `date_submitted`, `status`, `reserve_status`) VALUES
+>>>>>>> Stashed changes
 (1, 'flyers', 20, 'Fun and colorful!', '2025-11-03', 'pending', 'reserved');
 
 -- --------------------------------------------------------
@@ -702,10 +766,17 @@ CREATE TABLE `dbvolunteeractivity` (
   `person_id` int NOT NULL,
   `date` date NOT NULL,
   `hours` decimal(4,2) NOT NULL,
+<<<<<<< Updated upstream
   `event_id` int NOT NULL,
   `interactions` text COLLATE utf8mb4_general_ci,
   `email` VARCHAR(255) NULL DEFAULT NULL,
   `photo_id` int DEFAULT NULL
+=======
+  `event_id` int(11) NOT NULL,
+  `interactions` text DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `photo_id` int(11) DEFAULT NULL
+>>>>>>> Stashed changes
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -860,6 +931,11 @@ ALTER TABLE `dbshifts`
 --
 -- Indexes for table `dbsupplies`
 --
+<<<<<<< Updated upstream
+=======
+ALTER TABLE `dbsupplies`
+  ADD PRIMARY KEY (`supply_id`);
+>>>>>>> Stashed changes
 
 --
 -- Indexes for table `dbvolunteeractivity`
@@ -902,7 +978,11 @@ ALTER TABLE `dbeventmedia`
 -- AUTO_INCREMENT for table `dbevents`
 --
 ALTER TABLE `dbevents`
+<<<<<<< Updated upstream
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
+=======
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
+>>>>>>> Stashed changes
 
 --
 -- AUTO_INCREMENT for table `dbmessages`
@@ -914,25 +994,41 @@ ALTER TABLE `dbmessages`
 -- AUTO_INCREMENT for table `dbpersons`
 --
 ALTER TABLE `dbpersons`
+<<<<<<< Updated upstream
   MODIFY `person_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+=======
+  MODIFY `person_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+>>>>>>> Stashed changes
 
 --
 -- AUTO_INCREMENT for table `dbshifts`
 --
 ALTER TABLE `dbshifts`
+<<<<<<< Updated upstream
   MODIFY `shift_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+=======
+  MODIFY `shift_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+>>>>>>> Stashed changes
 
 --
 -- AUTO_INCREMENT for table `dbsupplies`
 --
 ALTER TABLE `dbsupplies`
+<<<<<<< Updated upstream
   MODIFY `supply_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+=======
+  MODIFY `supply_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+>>>>>>> Stashed changes
 
 --
 -- AUTO_INCREMENT for table `dbvolunteeractivity`
 --
 ALTER TABLE `dbvolunteeractivity`
+<<<<<<< Updated upstream
   MODIFY `activity_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+=======
+  MODIFY `activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+>>>>>>> Stashed changes
 
 --
 -- AUTO_INCREMENT for table `discussion_replies`
