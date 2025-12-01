@@ -321,6 +321,9 @@ $flash = get_flash();
     .flash-card.error { 
         border-left: 4px solid #f87171; 
     }
+    .flash-card.warning { 
+        border-left: 4px solid #fbbf24;
+    }
     .flash-body { 
         display: flex; 
         gap: 12px; 

@@ -21,9 +21,18 @@
 </header>
 
 <?php if (isset($flash) && $flash) : ?>
-    <?php $isSuccess = ($flash['type'] === 'success'); ?>
+    <?php 
+      // Map flash types to CSS classes: success, error, warning
+      $type = strtolower($flash['type'] ?? '');
+      $class = 'error';
+      if ($type === 'success') {
+        $class = 'success';
+      } elseif ($type === 'warning') {
+        $class = 'warning';
+      }
+    ?>
   <div class="flash-wrap">
-    <div id="flash" class="flash-card <?php echo $isSuccess ? 'success' : 'error'; ?>" role="alert" aria-live="polite">
+    <div id="flash" class="flash-card <?php echo $class; ?>" role="alert" aria-live="polite">
       <div class="flash-body">
         <ul class="flash-list">
           <?php foreach ((array)($flash['messages'] ?? []) as $m) : ?>
