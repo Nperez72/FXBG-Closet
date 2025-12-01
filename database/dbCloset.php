@@ -1,6 +1,6 @@
 <?php
 
-function update_closet($first, $last, $use_date, $item_type, $quantity)
+function update_closet($first, $last, $item_type, $quantity)
 {
     require_once('dbinfo.php');
 
@@ -9,9 +9,10 @@ function update_closet($first, $last, $use_date, $item_type, $quantity)
     if (!$connection) {
         return false;
     }
-
-    $query = "INSERT INTO dbclosetuse (user_first_name, user_last_name, use_date, item_taken, quantity_taken) 
-              VALUES (?, ?, ?, ?, ?)";
+    $quantity = (int)$quantity;
+    $use_date = date('Y-m-d');
+    $query = "INSERT INTO dbclosetuse (user_first_name, user_last_name, use_date, item_type, quantity_taken) 
+              VALUES (?, ?, '$use_date', ?, ?)";
 
     $stmt = mysqli_prepare($connection, $query);
 
@@ -20,9 +21,19 @@ function update_closet($first, $last, $use_date, $item_type, $quantity)
         return false;
     }
 
-    mysqli_stmt_bind_param($stmt, "ssssi", $first, $last, $use_date, $item_type, $quantity);
+    $binded = mysqli_stmt_bind_param($stmt, "sssi", $first, $last, $item_type, $quantity);
+
+    if (!$binded) {
+
+        return false;
+    }
 
     $result = mysqli_stmt_execute($stmt);
+
+    if (!$result) {
+        echo 'there is a problem';
+        return false;
+    }    
 
     mysqli_stmt_close($stmt);
     mysqli_close($connection);
