@@ -46,14 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if ($hours_spent <= 0) throw new Exception("Hours spent must be greater than 0.");
         if ($person_name === '') throw new Exception("Name field cannot be empty.");
 
-        $email = isset($args['email']) && !empty($args['email']) ? $args['email'] : null;
-        $date = get_event_date_by_id($event_id);
-        $new_activity_id = add_activity($person_name, $role, $date, $hours_spent, $event_id, $email);
-
-        if (!$new_activity_id) {
-            throw new Exception("Database error: Failed to log activity.");
-        }
-
         if ($role === 'volunteer' || $role === 'board member') {
             $age_data = [
                 '0_12' => (int)($args['age_0_12'] ?? 0),
@@ -71,7 +63,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 'native' => (int)($args['ethnicity_native'] ?? 0),
                 'other' => (int)($args['ethnicity_other'] ?? 0),
             ];
-            
+
+            $ageTotal = array_sum($age_data);
+            $ethnicityTotal = array_sum($ethnicity_data);
+            if ($ageTotal !== $ethnicityTotal) {
+                throw new Exception("Age and ethnicity counts must match. Age total: {$ageTotal}, Ethnicity total: {$ethnicityTotal}");
+            }
+        }
+
+        $email = isset($args['email']) && !empty($args['email']) ? $args['email'] : null;
+        $date = get_event_date_by_id($event_id);
+        $new_activity_id = add_activity($person_name, $role, $date, $hours_spent, $event_id, $email);
+
+        if (!$new_activity_id) {
+            throw new Exception("Database error: Failed to log activity.");
+        }
+
+        if ($role === 'volunteer' || $role === 'board member') {
             save_interaction_demographics($new_activity_id, $age_data, $ethnicity_data);
         }
 
