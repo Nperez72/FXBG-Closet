@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $showPopup = true;
     } else {
         $resultInv = update_closet_quantity($item_type, $quantity, false);
-        
+
         if (!$resultInv) {
             $showPopup = true;
             $popupMessage = 'Failed to submit closet use. Please try again.';
