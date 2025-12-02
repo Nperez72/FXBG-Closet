@@ -713,7 +713,7 @@ CREATE TABLE `dbvolunteeractivity` (
 --
 -- Table structure for table `dbinteractiondemographics`
 --
-CREATE TABLE dbinteractiondemographics (
+CREATE TABLE `dbinteractiondemographics` (
     id INT AUTO_INCREMENT PRIMARY KEY,
     activity_id INT NOT NULL,
     age_0_12 INT DEFAULT 0,
