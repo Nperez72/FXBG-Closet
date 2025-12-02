@@ -4,8 +4,10 @@
  */
 
 window.themeToggle = window.themeToggle || {
-  toggle: function() {
-    const currentTheme = document.documentElement.hasAttribute("data-theme") ? "dark" : "light";
+  toggle: function () {
+    const currentTheme = document.documentElement.hasAttribute("data-theme")
+      ? "dark"
+      : "light";
     const newTheme = currentTheme === "dark" ? "light" : "dark";
     if (newTheme === "dark") {
       document.documentElement.setAttribute("data-theme", "dark");
@@ -14,50 +16,55 @@ window.themeToggle = window.themeToggle || {
     }
     localStorage.setItem("theme", newTheme);
   },
-  getCurrentTheme: function() {
-    return document.documentElement.hasAttribute("data-theme") ? "dark" : "light";
+  getCurrentTheme: function () {
+    return document.documentElement.hasAttribute("data-theme")
+      ? "dark"
+      : "light";
   },
-  applyTheme: function(theme) {
+  applyTheme: function (theme) {
     if (theme === "dark") {
       document.documentElement.setAttribute("data-theme", "dark");
     } else {
       document.documentElement.removeAttribute("data-theme");
     }
     localStorage.setItem("theme", theme);
-  }
+  },
 };
 
 // Initialize theme on page load
 document.addEventListener("DOMContentLoaded", function () {
   initializeTheme();
   setupThemeToggle();
-  
+
   // Also set up observer to catch mobile menu if it loads late
-  const observer = new MutationObserver(function(mutations) {
+  const observer = new MutationObserver(function (mutations) {
     const mobileThemeToggle = document.getElementById("mobileThemeToggle");
-    if (mobileThemeToggle && !mobileThemeToggle.hasAttribute('data-listener-attached')) {
+    if (
+      mobileThemeToggle &&
+      !mobileThemeToggle.hasAttribute("data-listener-attached")
+    ) {
       console.log("🔄 Mobile menu detected late, attaching listener now");
-      mobileThemeToggle.setAttribute('data-listener-attached', 'true');
-      
-      mobileThemeToggle.addEventListener("click", function(event) {
+      mobileThemeToggle.setAttribute("data-listener-attached", "true");
+
+      mobileThemeToggle.addEventListener("click", function (event) {
         console.log("🖱️ Mobile theme toggle clicked (late attach)!");
         event.preventDefault();
         event.stopPropagation();
-        
+
         const currentTheme = getCurrentTheme();
         const newTheme = currentTheme === "dark" ? "light" : "dark";
         console.log(`🎨 Switching from ${currentTheme} to ${newTheme}`);
-        
+
         applyTheme(newTheme);
         updateMobileThemeLabel(newTheme);
-        
+
         console.log("✅ Theme switched successfully");
       });
-      
+
       updateMobileThemeLabel(getCurrentTheme());
     }
   });
-  
+
   observer.observe(document.body, { childList: true, subtree: true });
 });
 
@@ -116,7 +123,7 @@ function updateToggleButton(theme) {
       theme === "dark" ? "Switch to light mode" : "Switch to dark mode",
     );
   });
-  
+
   // Update mobile theme label
   updateMobileThemeLabel(theme);
 }
@@ -148,30 +155,33 @@ function setupThemeToggle() {
   toggleButtons.forEach((button) => {
     button.addEventListener("click", handleThemeToggle);
   });
-  
+
   const mobileThemeToggle = document.getElementById("mobileThemeToggle");
-  if (mobileThemeToggle && !mobileThemeToggle.hasAttribute('data-listener-attached')) {
+  if (
+    mobileThemeToggle &&
+    !mobileThemeToggle.hasAttribute("data-listener-attached")
+  ) {
     console.log("✅ Mobile theme toggle button found, attaching listener");
-    mobileThemeToggle.setAttribute('data-listener-attached', 'true');
-    
-    mobileThemeToggle.addEventListener("click", function(event) {
+    mobileThemeToggle.setAttribute("data-listener-attached", "true");
+
+    mobileThemeToggle.addEventListener("click", function (event) {
       console.log("🖱️ Mobile theme toggle clicked!");
       event.preventDefault();
       event.stopPropagation();
-      
+
       const currentTheme = getCurrentTheme();
       const newTheme = currentTheme === "dark" ? "light" : "dark";
       console.log(`🎨 Switching from ${currentTheme} to ${newTheme}`);
-      
+
       applyTheme(newTheme);
-      
+
       // Update the label text
       updateMobileThemeLabel(newTheme);
-      
+
       console.log("✅ Theme switched successfully");
       // DON'T close the mobile menu - user can toggle multiple times
     });
-    
+
     // Set initial label
     updateMobileThemeLabel(getCurrentTheme());
   } else if (!mobileThemeToggle) {
