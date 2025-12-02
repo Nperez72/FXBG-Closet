@@ -23,7 +23,7 @@ class FileUploader
 
         if (!is_dir($uploadDir)) {
             if (!mkdir($this->uploadDir, 0755, true)) {
-                 throw new Exception("Failed to create upload directory: " . $this->uploadDir);
+                throw new Exception("Failed to create upload directory: " . $this->uploadDir);
             }
         }
 

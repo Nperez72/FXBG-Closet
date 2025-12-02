@@ -157,7 +157,7 @@ function get_monthly_volunteer_hours($start_date, $end_date)
  * Add a new activity record
  *
  * @param string $name Person's name
- * @param string $role Person's role ('volunteer', 'board member', 'volunteer scoordinator')
+ * @param string $role Person's role ('volunteer', 'board member', 'volunteer coordinator')
  * @param string $date Activity date (YYYY-MM-DD format)
  * @param float $hours_spent Hours spent on activity
  * @param int $event_id Event ID
