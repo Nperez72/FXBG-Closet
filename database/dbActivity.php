@@ -263,6 +263,7 @@ function get_all_activity_emails()
 
     return $emails;
 }
+
 function save_interaction_demographics(int $activity_id, array $age_data, array $ethnicity_data): bool
 {
     require_once('dbinfo.php');
@@ -271,6 +272,7 @@ function save_interaction_demographics(int $activity_id, array $age_data, array 
 
     if ($activity_id <= 0) {
         error_log("Invalid activity_id provided: $activity_id");
+        mysqli_close($connection);
         return false;
     }
 
@@ -307,6 +309,7 @@ function save_interaction_demographics(int $activity_id, array $age_data, array 
 
     if (!$stmt) {
         error_log("Failed to prepare statement: " . $connection->error);
+        mysqli_close($connection);
         return false;
     }
 
@@ -331,9 +334,11 @@ function save_interaction_demographics(int $activity_id, array $age_data, array 
     if (!$result) {
         error_log("Failed to save interaction demographics for activity_id $activity_id: " . $stmt->error);
         $stmt->close();
+        mysqli_close($connection);
         return false;
     }
 
     $stmt->close();
+    mysqli_close($connection);
     return true;
 }
