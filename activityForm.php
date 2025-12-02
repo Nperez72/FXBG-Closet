@@ -68,8 +68,8 @@ if ($role === 'volunteer coordinator') {
                 $people_list = ($role === 'board member') ? $board_members : $coordinators;
                 foreach ($people_list as $person) :
                     ?>
-                    <option value="<?php echo $person['fullname']; ?>">
-                        <?php echo htmlspecialchars($person['fullname']); ?>
+                    <option value="<?= htmlspecialchars($person['fullname'], ENT_QUOTES, 'UTF-8') ?>">
+                        <?= htmlspecialchars($person['fullname'], ENT_QUOTES, 'UTF-8') ?>
                     </option>
                 <?php endforeach; ?>
             </select>
