@@ -100,6 +100,7 @@ function sendEmails(array $emails, string $fromUser, string $subject, string $bo
     foreach ($emails as $email) {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $failures[] = "Invalid email: {$email}";
+            continue;
         }
 
         $mail = new PHPMailer(true);
