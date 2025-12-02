@@ -7,11 +7,15 @@
 <html>
 <head>
     <?php require_once('database/dbMessages.php'); ?>
-    <title>FXBG Pride | Closet Form</title>
+    <title>FXBG Pride | Closet Admin Form</title>
     <link href="css/normal_tw.css" rel="stylesheet">
 <?php
 $tailwind_mode = true;
-require_once('header.php');
+
+if (!isset($_SESSION['_id'])) {
+    header("Location: login.php");
+    die();
+}
 ?>
 <style>
     .date-box {
@@ -36,15 +40,11 @@ require_once('header.php');
     $showPopup = false;
     $popupMessage = '';
     $popupType = 'success';
-if (!isset($_SESSION['_id'])) {
-    header("Location: login.php");
-    die();
-}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    require_once('header.php');
     $ignoreList = array();
     $args = sanitize($_POST, $ignoreList);
-
     $required = array(
         'item_type',
         'quantity',
@@ -68,27 +68,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $popupType = 'error';
     }
 
-    $use_date = date("Y-m-d");
-
     if ($errors) {
         echo '<p class="error">Your form submission contained unexpected or invalid input.</p>';
         $showPopup = true;
     } else {
-        $result = update_closet_quantity($item_type, $quantity);
-
-        if (!$result) {
+        $resultInv = update_closet_quantity($item_type, $quantity, false);
+        
+        if (!$resultInv) {
             $showPopup = true;
             $popupMessage = 'Failed to submit closet use. Please try again.';
             $popupType = 'error';
         } else {
             $showPopup = true;
-            $popupMessage = 'Closet addition submitted successfully!';
+            $popupMessage = 'Closet use submitted successfully!';
             $popupType = 'success';
         }
     }
 }
 
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
+    require_once('header.php');
     require_once('closetFormAdmin.php');
 }
 ?>

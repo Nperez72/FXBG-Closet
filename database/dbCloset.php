@@ -68,18 +68,21 @@ function get_all_closet_usage()
     return $usage;
 }
 
-function update_closet_quantity($item_name, $quantity)
+function update_closet_quantity($item_name, $quantity, $user)
 {
     require_once('dbinfo.php');
-
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
     $connection = connect();
 
     if (!$connection) {
         return false;
     }
-
-    $query = "UPDATE dbclosetinventory SET quantity = ? WHERE item_name = ?";
-
+    if ($user) {
+        $query = "UPDATE dbclosetinventory SET quantity = quantity - ? WHERE item_name = ?";
+    } else {
+        $query = "UPDATE dbclosetinventory SET quantity = quantity + ? WHERE item_name = ?";
+    }
     $stmt = mysqli_prepare($connection, $query);
 
     if (!$stmt) {

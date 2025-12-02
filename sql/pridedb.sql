@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 01, 2025 at 06:33 PM
+-- Generation Time: Dec 02, 2025 at 04:41 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -100,6 +100,16 @@ CREATE TABLE `dbclosetinventory` (
   `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `dbclosetinventory`
+--
+
+INSERT INTO `dbclosetinventory` (`item_name`, `quantity`) VALUES
+('clothing', 1000000),
+('shoes', 1000000),
+('accessories', 1000500),
+('hygiene', 1000000);
+
 -- --------------------------------------------------------
 
 --
@@ -108,11 +118,18 @@ CREATE TABLE `dbclosetinventory` (
 
 CREATE TABLE `dbclosetuse` (
   `user_first_name` varchar(24) NOT NULL,
-  `user_last_name` int(24) NOT NULL,
+  `user_last_name` varchar(24) NOT NULL,
   `use_date` date NOT NULL,
   `item_type` varchar(12) NOT NULL,
   `quantity_taken` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `dbclosetuse`
+--
+
+INSERT INTO `dbclosetuse` (`user_first_name`, `user_last_name`, `use_date`, `item_type`, `quantity_taken`) VALUES
+('Nicolas', 'Perez-merino', '2025-12-01', 'clothing', 500);
 
 -- --------------------------------------------------------
 

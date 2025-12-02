@@ -72,8 +72,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $showPopup = true;
     } else {
         $resultCloset = update_closet($first, $last, $item_type, $quantity);
-        //$resultInv = update_closet_quantity($item_type, $quantity * -1);
-        var_dump($resultCloset);
+        $resultInv = update_closet_quantity($item_type, $quantity, true);
+
         if (!$resultCloset) {
             $showPopup = true;
             $popupMessage = 'Failed to submit closet use. Please try again.';
@@ -83,15 +83,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $popupMessage = 'Closet use submitted successfully!';
             $popupType = 'success';
         }
-        //if (!$resultCloset) {
-        //    $showPopup = true;
-        //    $popupMessage = 'Failed to submit closet use. Please try again.';
-        //    $popupType = 'error';
-        //} else {
-        //    $showPopup = true;
-        //    $popupMessage = 'Closet use submitted successfully!';
-        //    $popupType = 'success';
-        //}
+        if (!$resultInv) {
+            $showPopup = true;
+            $popupMessage = 'Failed to submit closet use. Please try again.';
+            $popupType = 'error';
+        } else {
+            $showPopup = true;
+            $popupMessage = 'Closet use submitted successfully!';
+            $popupType = 'success';
+        }
     }
 }
 
