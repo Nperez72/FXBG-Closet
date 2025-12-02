@@ -153,7 +153,7 @@ function sendEmails(array $emails, string $fromUser, string $subject, string $bo
  * @param array  $vars Variables to extract for use inside template
  * @return string Rendered HTML
  */
-function render_email_template(string $path, array $vars = []): string 
+function render_email_template(string $path, array $vars = []): string
 {
     if (!file_exists($path)) {
         throw new InvalidArgumentException("Template file not found: $path");

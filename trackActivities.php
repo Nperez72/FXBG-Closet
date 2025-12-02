@@ -7,8 +7,8 @@ define('MAX_TOTAL_SIZE_MB', 50);
 define('DOCUMENTATION_EMAIL', 'mhenry.fxbgpride@gmail.com');
 
 require_once('include/input-validation.php');
-require_once('include/flash.php');  
-require_once('include/api.php');  
+require_once('include/flash.php');
+require_once('include/api.php');
 require_once('database/dbActivity.php');
 require_once('database/dbEvents.php');
 require_once('email.php');
@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $required = ['event_id','hours_spent','person_name'];
     $savedFiles = [];
 
-    try { 
+    try {
         if (!wereRequiredFieldsSubmitted($args, $required)) {
             throw new Exception("Please fill out all required fields.");
         }
@@ -42,9 +42,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $hours_spent = isset($args['hours_spent']) ? (float)$args['hours_spent'] : 0;
         $person_name = trim($args['person_name'] ?? '');
 
-        if ($event_id <= 0) throw new Exception("Please select a valid event.");
-        if ($hours_spent <= 0) throw new Exception("Hours spent must be greater than 0.");
-        if ($person_name === '') throw new Exception("Name field cannot be empty.");
+        if ($event_id <= 0) {
+            throw new Exception("Please select a valid event.");
+        }
+        if ($hours_spent <= 0) {
+            throw new Exception("Hours spent must be greater than 0.");
+        }
+        if ($person_name === '') {
+            throw new Exception("Name field cannot be empty.");
+        }
 
         if ($role === 'volunteer' || $role === 'board member') {
             $age_data = [
@@ -54,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 '25_54' => (int)($args['age_25_54'] ?? 0),
                 '55_plus' => (int)($args['age_55_plus'] ?? 0),
             ];
-            
+
             $ethnicity_data = [
                 'white' => (int)($args['ethnicity_white'] ?? 0),
                 'black' => (int)($args['ethnicity_black'] ?? 0),
@@ -114,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $photoList = implode(', ', array_column($savedFiles, 'name'));
         $photoCount = count($savedFiles);
         $body = render_email_template(
-            __DIR__ . DIRECTORY_SEPARATOR . 'email_templates' . DIRECTORY_SEPARATOR . 'activity_documentation_email.php', 
+            __DIR__ . DIRECTORY_SEPARATOR . 'email_templates' . DIRECTORY_SEPARATOR . 'activity_documentation_email.php',
             [
                 'eventName'   => $eventName,
                 'person_name' => $person_name,
@@ -124,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 'photoList'   => $photoList,
                 'photoCount'  => $photoCount,
             ]
-        ); 
+        );
         $attachmentPaths = array_column($savedFiles, 'path');
         $emailResults = sendEmails(
             [DOCUMENTATION_EMAIL],
@@ -141,7 +147,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 "However, all email deliveries failed.",
             ]);
             redirect('trackActivities.php');
-        } else if ($emailResults['sent_count'] < $emailResults['total_count']) {
+        } elseif ($emailResults['sent_count'] < $emailResults['total_count']) {
             // Partial success
             $sent = $emailResults['sent_count'];
             $total = $emailResults['total_count'];
@@ -160,9 +166,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             ]);
             redirect('trackActivities.php');
         }
-                
     } catch (Exception $error) {
-        if(!empty($savedFiles)) {
+        if (!empty($savedFiles)) {
             foreach ($savedFiles as $file) {
                 if (isset($file['path']) && is_file($file['path'])) {
                     unlink($file['path']);
@@ -170,7 +175,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
         }
         set_flash('error', [$error->getMessage()]);
-        redirect('trackActivities.php');    
+        redirect('trackActivities.php');
     }
 }
 

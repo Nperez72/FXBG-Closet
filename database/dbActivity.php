@@ -1,4 +1,5 @@
 <?php
+
 function add_media($media_id, $activity_id, $file_name, $type, $file_format, $description, $alternate_name, $time_created)
 {
     require_once('dbinfo.php');
@@ -154,7 +155,7 @@ function get_monthly_volunteer_hours($start_date, $end_date)
 
 /**
  * Add a new activity record
- * 
+ *
  * @param string $name Person's name
  * @param string $role Person's role ('volunteer', 'board member', 'volunteer scoordinator')
  * @param string $date Activity date (YYYY-MM-DD format)
@@ -262,29 +263,30 @@ function get_all_activity_emails()
 
     return $emails;
 }
-function save_interaction_demographics(int $activity_id, array $age_data, array $ethnicity_data): bool {
+function save_interaction_demographics(int $activity_id, array $age_data, array $ethnicity_data): bool
+{
     require_once('dbinfo.php');
 
     $connection = connect();
-    
+
     if ($activity_id <= 0) {
         error_log("Invalid activity_id provided: $activity_id");
         return false;
     }
-    
+
     $age_0_12 = (int)($age_data['0_12'] ?? 0);
     $age_13_17 = (int)($age_data['13_17'] ?? 0);
     $age_18_24 = (int)($age_data['18_24'] ?? 0);
     $age_25_54 = (int)($age_data['25_54'] ?? 0);
     $age_55_plus = (int)($age_data['55_plus'] ?? 0);
-    
+
     $ethnicity_white = (int)($ethnicity_data['white'] ?? 0);
     $ethnicity_black = (int)($ethnicity_data['black'] ?? 0);
     $ethnicity_hispanic = (int)($ethnicity_data['hispanic'] ?? 0);
     $ethnicity_asian = (int)($ethnicity_data['asian'] ?? 0);
     $ethnicity_native = (int)($ethnicity_data['native'] ?? 0);
     $ethnicity_other = (int)($ethnicity_data['other'] ?? 0);
-    
+
     // Prepare the SQL statement
     $query = "INSERT INTO dbinteractiondemographics (
                 activity_id, 
@@ -300,14 +302,14 @@ function save_interaction_demographics(int $activity_id, array $age_data, array 
                 ethnicity_native,
                 ethnicity_other
               ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    
+
     $stmt = $connection->prepare($query);
-    
+
     if (!$stmt) {
         error_log("Failed to prepare statement: " . $connection->error);
         return false;
     }
-    
+
     $stmt->bind_param(
         "iiiiiiiiiiii",
         $activity_id,
@@ -325,13 +327,13 @@ function save_interaction_demographics(int $activity_id, array $age_data, array 
     );
 
     $result = $stmt->execute();
-    
+
     if (!$result) {
         error_log("Failed to save interaction demographics for activity_id $activity_id: " . $stmt->error);
         $stmt->close();
         return false;
     }
-    
+
     $stmt->close();
     return true;
 }

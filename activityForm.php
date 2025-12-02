@@ -1,17 +1,17 @@
 <?php
-  if (!isset($_SESSION['_id'])) {
+if (!isset($_SESSION['_id'])) {
     header("Location: login.php");
     die();
-  }
+}
 
   $all_events = get_all_events_sorted_by_date_not_archived();
-  
-  if ($role === 'board member') {
+
+if ($role === 'board member') {
     $board_members = getBoardMembers();
-  }
-  if ($role === 'volunteer coordinator') {
+}
+if ($role === 'volunteer coordinator') {
     $coordinators = getVolunteerCoordinators();
-  }
+}
 ?>
 
 <header class="hero-header"> 
@@ -21,15 +21,15 @@
 </header>
 
 <?php if (isset($flash) && $flash) : ?>
-    <?php 
+    <?php
       // Map flash types to CSS classes: success, error, warning
       $type = strtolower($flash['type'] ?? '');
       $class = 'error';
-      if ($type === 'success') {
+    if ($type === 'success') {
         $class = 'success';
-      } elseif ($type === 'warning') {
+    } elseif ($type === 'warning') {
         $class = 'warning';
-      }
+    }
     ?>
   <div class="flash-wrap">
     <div id="flash" class="flash-card <?php echo $class; ?>" role="alert" aria-live="polite">
@@ -64,10 +64,10 @@
             <label for="person_name"><em>* </em>Your Name</label>
             <select id="person_name" name="person_name" required>
                 <option value="">Select your name</option>
-                <?php 
+                <?php
                 $people_list = ($role === 'board member') ? $board_members : $coordinators;
-                foreach ($people_list as $person) : 
-                ?>
+                foreach ($people_list as $person) :
+                    ?>
                     <option value="<?php echo $person['fullname']; ?>">
                         <?php echo htmlspecialchars($person['fullname']); ?>
                     </option>
