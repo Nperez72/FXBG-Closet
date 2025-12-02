@@ -1421,34 +1421,34 @@ if (date("H:i:s") > "18:19:59") {
                 </p>
                 
                 <div class="theme-grid">
-                    <div class="theme-card" data-theme="default">
-                        <span class="theme-icon">🍑</span>
-                        <div class="theme-name">Classic Peach</div>
-                        <div class="theme-description">Warm and welcoming peach tones</div>
+                    <div class="theme-card" data-theme="olivia">
+                        <span class="theme-icon">⌨️</span>
+                        <div class="theme-name">GMK Olivia</div>
+                        <div class="theme-description">Soft peach with cream accents</div>
                     </div>
                     
-                    <div class="theme-card" data-theme="pride">
-                        <span class="theme-icon">🏳️‍🌈</span>
-                        <div class="theme-name">Pride Rainbow</div>
-                        <div class="theme-description">Vibrant pride colors</div>
+                    <div class="theme-card" data-theme="laser">
+                        <span class="theme-icon">🔮</span>
+                        <div class="theme-name">GMK Laser</div>
+                        <div class="theme-description">Cyberpunk purple and cyan</div>
                     </div>
                     
-                    <div class="theme-card" data-theme="ocean">
-                        <span class="theme-icon">🌊</span>
-                        <div class="theme-name">Ocean Blue</div>
-                        <div class="theme-description">Calm and professional blues</div>
+                    <div class="theme-card" data-theme="nautilus">
+                        <span class="theme-icon">⚓</span>
+                        <div class="theme-name">GMK Nautilus</div>
+                        <div class="theme-description">Deep navy with gold details</div>
                     </div>
                     
-                    <div class="theme-card" data-theme="forest">
-                        <span class="theme-icon">🌲</span>
-                        <div class="theme-name">Forest Green</div>
-                        <div class="theme-description">Natural and earthy greens</div>
+                    <div class="theme-card" data-theme="striker">
+                        <span class="theme-icon">⚡</span>
+                        <div class="theme-name">GMK Striker</div>
+                        <div class="theme-description">Bold orange and black</div>
                     </div>
                     
-                    <div class="theme-card" data-theme="sunset">
-                        <span class="theme-icon">🌅</span>
-                        <div class="theme-name">Sunset Purple</div>
-                        <div class="theme-description">Rich and elegant purples</div>
+                    <div class="theme-card" data-theme="cafe">
+                        <span class="theme-icon">☕</span>
+                        <div class="theme-name">GMK Café</div>
+                        <div class="theme-description">Warm coffee browns</div>
                     </div>
                 </div>
             </div>
