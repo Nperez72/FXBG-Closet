@@ -1029,7 +1029,7 @@ if (date("H:i:s") > "18:19:59") {
                     
                     <div style="border-top: 1px solid var(--border-color, #e8c4b8); margin: 12px 0; padding-top: 12px;"></div>
                     
-                    <button class="mobile-more-item theme-toggle" aria-label="Toggle theme" onclick="if(window.themeToggle){window.themeToggle.toggle();document.getElementById(\'mobileMoreMenu\').classList.remove(\'active\');document.body.style.overflow=\'\';}">
+                    <button class="mobile-more-item theme-toggle-mobile" id="mobileThemeToggle" aria-label="Toggle theme">
                         <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="5"></circle>
                             <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -1044,7 +1044,7 @@ if (date("H:i:s") > "18:19:59") {
                         <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
                         </svg>
-                        <span>Toggle Theme</span>
+                        <span id="mobileThemeLabel">Light Mode</span>
                     </button>
                     
                     <button class="mobile-more-item" id="openA11ySettingsMobile" aria-label="Accessibility settings" onclick="document.getElementById(\'a11yModal\').classList.add(\'active\');document.getElementById(\'mobileMoreMenu\').classList.remove(\'active\');document.body.style.overflow=\'hidden\';">

@@ -159,31 +159,31 @@
             }
             cssRules += '}\n\n';
             
-            // ALSO apply to [data-theme="dark"] with HIGH SPECIFICITY
-            // AND override dark-mode-specific variables
             cssRules += 'html[data-theme="dark"]:root, [data-theme="dark"]:root, html[data-theme="dark"], [data-theme="dark"] {\n';
-            for (const [property, value] of Object.entries(themeColors)) {
-                cssRules += `  ${property}: ${value} !important;\n`;
-            }
-            // Override additional dark mode variables to use theme colors
-            cssRules += `  --navbar-bg: var(--main-color) !important;\n`;
-            cssRules += `  --full-width-bar-bg: var(--main-color) !important;\n`;
-            cssRules += `  --dropdown-border: var(--main-color) !important;\n`;
-            cssRules += `  --content-box-border: var(--main-color) !important;\n`;
-            cssRules += `  --card-border: var(--main-color) !important;\n`;
-            cssRules += `  --logo-bg: var(--main-color) !important;\n`;
-            cssRules += `  --button-bg: var(--main-color) !important;\n`;
-            // Background and text colors for dark mode
+            cssRules += `  --main-color: ${themeColors['--main-color']} !important;\n`;
+            cssRules += `  --accent-color: ${themeColors['--accent-color']} !important;\n`;
+            cssRules += `  --button-bg: ${themeColors['--main-color']} !important;\n`;
+            cssRules += `  --border-color: ${themeColors['--main-color']} !important;\n`;
+            cssRules += `  --card-border: ${themeColors['--main-color']} !important;\n`;
+            cssRules += `  --content-box-border: ${themeColors['--main-color']} !important;\n`;
+            cssRules += `  --dropdown-border: ${themeColors['--main-color']} !important;\n`;
+            cssRules += `  --nav-item-hover: ${themeColors['--main-color']} !important;\n`;
+            cssRules += `  --shadow-and-border-color: ${themeColors['--main-color']} !important;\n`;
+            cssRules += `  --svg-fill: ${themeColors['--main-color']} !important;\n`;
+            cssRules += `  --calendar-event-color-hover: ${themeColors['--main-color']} !important;\n`;
+            cssRules += `  --button-text: ${themeColors['--button-text']} !important;\n`;
             cssRules += `  --bg-color: #1a1a1a !important;\n`;
-            cssRules += `  --card-bg: #2a2a2a !important;\n`;
-            cssRules += `  --content-box-bg: #2a2a2a !important;\n`;
-            cssRules += `  --dropdown-bg: #2a2a2a !important;\n`;
-            cssRules += `  --standout-background: #2a2a2a !important;\n`;
+            cssRules += `  --navbar-bg: #2a2826 !important;\n`;
+            cssRules += `  --card-bg: #2a2826 !important;\n`;
+            cssRules += `  --content-box-bg: #2a2826 !important;\n`;
+            cssRules += `  --dropdown-bg: #2a2826 !important;\n`;
+            cssRules += `  --standout-background: #2a2826 !important;\n`;
             cssRules += `  --page-background-color: #1a1a1a !important;\n`;
+            cssRules += `  --full-width-bar-bg: #2a2826 !important;\n`;
+            // Keep light text in dark mode
             cssRules += `  --text-color: #e0e0e0 !important;\n`;
             cssRules += `  --text-secondary: #c0c0c0 !important;\n`;
             cssRules += `  --page-font-color: #e0e0e0 !important;\n`;
-            cssRules += `  --button-font-color: var(--button-text) !important;\n`;
             cssRules += '}';
             
             // Inject style tag - will be at end of head when stylesheets finish loading

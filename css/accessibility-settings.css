@@ -397,8 +397,25 @@ article {
   }
 }
 
+/* Mobile Theme Toggle Icon Visibility */
+.mobile-more-item.theme-toggle-mobile .sun-icon,
+.mobile-more-item.theme-toggle-mobile .moon-icon {
+  display: none;
+}
+
+/* Show sun icon in light mode */
+:root .mobile-more-item.theme-toggle-mobile .sun-icon {
+  display: block;
+}
+
+/* Show moon icon in dark mode */
+[data-theme="dark"] .mobile-more-item.theme-toggle-mobile .moon-icon {
+  display: block;
+}
+
 /* Mobile More Menu Button Styles */
 .mobile-more-item.theme-toggle,
+.mobile-more-item.theme-toggle-mobile,
 button.mobile-more-item {
   cursor: pointer;
   border: none;
@@ -421,12 +438,14 @@ button.mobile-more-item {
 }
 
 button.mobile-more-item:active,
-.mobile-more-item.theme-toggle:active {
+.mobile-more-item.theme-toggle:active,
+.mobile-more-item.theme-toggle-mobile:active {
   background: var(--nav-item-hover-bg, rgba(0, 0, 0, 0.04));
   transform: scale(0.98);
 }
 
 .mobile-more-item.theme-toggle svg,
+.mobile-more-item.theme-toggle-mobile svg,
 button.mobile-more-item svg {
   width: 22px;
   height: 22px;
@@ -461,6 +480,7 @@ button#openA11ySettingsMobile svg circle[fill] {
 
 /* Ensure button text/span doesn't block clicks */
 .mobile-more-item.theme-toggle span,
+.mobile-more-item.theme-toggle-mobile span,
 button.mobile-more-item span {
   pointer-events: none;
   flex: 1;
