@@ -87,7 +87,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         if ($role === 'volunteer' || $role === 'board member') {
-            save_interaction_demographics($new_activity_id, $age_data, $ethnicity_data);
+            $demographicsSaved = save_interaction_demographics($new_activity_id, $age_data, $ethnicity_data);
+            if (!$demographicsSaved) {
+                throw new Exception("Failed to save demographic information for this activity.");
+            }
         }
 
         $uploadDir = __DIR__ . DIRECTORY_SEPARATOR . 'uploads';
