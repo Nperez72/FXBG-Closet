@@ -25,6 +25,10 @@ class FileUploader {
                  throw new Exception("Failed to create upload directory: " . $this->uploadDir);
             }
         }
+
+        if (!is_writable($uploadDir)) {
+            throw new Exception("Upload directory is not writable: {$this->uploadDir}");
+        }
     }
 
     public function upload(array $files, string $prefix): array {
@@ -198,7 +202,7 @@ class FileUploader {
         return "{$prefix}_" . date('Y-m-d') . "_{$base}_{$hash}.{$ext}";
     }
 
-    public function cleanup(array $savedFiles): void {
+    private function cleanup(array $savedFiles): void {
         foreach ($savedFiles as $file) {
             if (isset($file['path']) && is_file($file['path'])) {
                 @unlink($file['path']);
