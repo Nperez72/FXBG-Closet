@@ -13,6 +13,7 @@ require_once('database/dbActivity.php');
 require_once('database/dbEvents.php');
 require_once('email.php');
 require_once('utilities/FileUploader.php');
+require_once('database/dbPersons.php');
 
 if (!isset($_SESSION['_id'])) {
     redirect("login.php");
