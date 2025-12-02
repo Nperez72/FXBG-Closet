@@ -250,11 +250,21 @@
 }
 
 /* Theme preview colors for the ::before stripe */
-.theme-card[data-theme="olivia"] { --theme-preview-color: #e8c4b8; }
-.theme-card[data-theme="laser"] { --theme-preview-color: #b967ff; }
-.theme-card[data-theme="nautilus"] { --theme-preview-color: #1e3a5f; }
-.theme-card[data-theme="striker"] { --theme-preview-color: #ff6b35; }
-.theme-card[data-theme="cafe"] { --theme-preview-color: #8b5e3c; }
+.theme-card[data-theme="olivia"] {
+  --theme-preview-color: #e8c4b8;
+}
+.theme-card[data-theme="laser"] {
+  --theme-preview-color: #b967ff;
+}
+.theme-card[data-theme="nautilus"] {
+  --theme-preview-color: #1e3a5f;
+}
+.theme-card[data-theme="striker"] {
+  --theme-preview-color: #ff6b35;
+}
+.theme-card[data-theme="cafe"] {
+  --theme-preview-color: #8b5e3c;
+}
 
 /* Modal Footer */
 .theme-presets-modal-footer {
