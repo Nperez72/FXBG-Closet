@@ -96,10 +96,22 @@ if (isset($_GET['date'])) {
                 <input type="text" id="start-time" name="start-time" pattern="([1-9]|10|11|12):[0-5][0-9] ?([aApP][mM])" required placeholder="Enter start time. Ex. 12:00 PM">
                 <label for="name">* End Time </label>
                 <input type="text" id="end-time" name="end-time" pattern="([1-9]|10|11|12):[0-5][0-9] ?([aApP][mM])" required placeholder="Enter end time. Ex. 1:00 PM">
+                <label for="type">* Event Type </label>
+                <select id="type" name="type" required>
+                    <option value="" disabled selected hidden>Select Event Type</option>
+                    <option value="Outreach">Outreach</option>
+                    <option value="Festival">Festival</option>
+                    <option value="Fundraiser">Fundraiser</option>
+                    <option value="Youth Program">Youth Program</option>
+                    <option value="Womxns Program">Womxns Program</option>
+                    <option value="Silver Pride Program">Silver Pride Program</option>
+                    <option value="Game Night Program">Game Night Program</option>
+                    <option value="Youth Reading Program">Youth Reading Program</option>
+                    <option value="Adult Reading Program">Adult Reading Program</option>
+                    <option value="Other">Other</option>
+                </select>
                 <label for="name">* Description </label>
                 <input type="text" id="description" name="description" required placeholder="Enter description">
-                <label for="name">* Event Type </label>
-                <input type="text" id="type" name="type" required placeholder="Enter Event Type">
                 <label for="name">Location </label>
                 <input type="text" id="location" name="location" placeholder="Enter location">
                 <label for="name">Capacity </label>

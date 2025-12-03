@@ -635,6 +635,7 @@ function update_event($eventID, $eventDetails)
     $startTime = $eventDetails["start-time"];
     #$restricted = $eventDetails["restricted"];
     $endTime = $eventDetails["end-time"];
+    $type = $eventDetails["type"];
     $description = $eventDetails["description"];
     $capacity = $eventDetails["capacity"];
     #$completed = $eventDetails["completed"];
@@ -657,7 +658,7 @@ function update_event($eventID, $eventDetails)
     #    where id='$eventID'
     #";
     $query = "
-        update dbevents set id='$id', name='$name', date='$date', startTime='$startTime', endTime='$endTime', description='$description', location='$location', capacity=$capacity, volunteer_coordinator = " . ($volunteerCoordinator === null ? "NULL" : (int)$volunteerCoordinator) . "
+        update dbevents set id='$id', name='$name', date='$date', startTime='$startTime', endTime='$endTime', type='$type', description='$description', location='$location', capacity=$capacity, volunteer_coordinator = " . ($volunteerCoordinator === null ? "NULL" : (int)$volunteerCoordinator) . "
         where id='$eventID'
     ";
     $result = mysqli_query($connection, $query);

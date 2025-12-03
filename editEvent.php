@@ -130,6 +130,23 @@ if ($accessLevel == 3) {
                 <input type="text" id="start-time" name="start-time" value="<?php echo time24hto12h($event['startTime']) ?>" pattern="([1-9]|10|11|12):[0-5][0-9] ?([aApP][mM])" required placeholder="Enter start time. Ex. 12:00 PM">
                 <label for="name">* End Time </label>
                 <input type="text" id="end-time" name="end-time" value="<?php echo time24hto12h($event['endTime']) ?>" pattern="([1-9]|10|11|12):[0-5][0-9] ?([aApP][mM])" required placeholder="Enter end time. Ex. 12:00 PM">
+                <label for="type">* Event Type </label>
+                <select id="type" name="type" required>
+                    <?php
+                        $options = array("Outreach", "Festival", "Fundraiser", "Youth Program", "Womxns Program", "Silver Pride Program", 
+                            "Game Night Program", "Youth Reading Program", "Adult Reading Program", "Other");
+                        // Check if current event type is valid
+                        $selected_type = isset($event['type']) ? $event['type'] : '';
+                        $is_valid_type = in_array($selected_type, $options);
+                        // Default "Select Event Type" option
+                        echo '<option value="" ' . (!$is_valid_type ? 'selected' : '') . '>Select Event Type</option>';
+                        // Generate all event type options
+                        foreach ($options as $option) {
+                            $selected = ($is_valid_type && $option == $selected_type) ? 'selected' : '';
+                            echo "<option value=\"{$option}\" {$selected}>{$option}</option>";
+                        }
+                    ?>
+                </select>
                 <label for="name">* Description </label>
                 <input type="text" id="description" name="description" value="<?php echo $event['description'] ?>" required placeholder="Enter description">
                 <label for="name">Location </label>
