@@ -48,7 +48,10 @@ $pdfFiles = listMediaFiles($target_dir);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Manage Volunteer Documents</title>
+  <script src="js/theme-presets-init.js"></script>
   <link href="css/normal_tw.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/accessibility-settings.css">
+  <link rel="stylesheet" href="css/theme-presets.css">
 
 <!-- BANDAID FIX FOR HEADER BEING WEIRD -->
 <?php

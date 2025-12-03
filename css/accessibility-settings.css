@@ -1,0 +1,547 @@
+/**
+ * Accessibility Settings Styles
+ * Provides styling for the accessibility settings modal and applies user preferences
+ */
+
+/* ============================================
+   ACCESSIBILITY CSS VARIABLES APPLICATION
+   ============================================ */
+
+/* Apply accessibility settings to body and common elements */
+body,
+body * {
+  font-family: var(
+    --accessibility-font-family,
+    var(--default-font-family, "Quicksand", sans-serif)
+  ) !important;
+}
+
+/* Apply to text elements with higher specificity */
+body,
+body *,
+p,
+span,
+div,
+a,
+button,
+input,
+select,
+textarea,
+label,
+li,
+td,
+th,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--accessibility-font-weight, 400) !important;
+  line-height: var(--accessibility-line-height, 1.5) !important;
+  letter-spacing: var(--accessibility-letter-spacing, 0) !important;
+}
+
+/* Apply font scaling */
+html {
+  font-size: calc(18px * var(--accessibility-font-scale, 1)) !important;
+}
+
+/* Apply text alignment to paragraphs and content */
+p,
+.main-content-box,
+.info-text,
+div,
+section,
+article {
+  text-align: var(--accessibility-text-align, inherit) !important;
+}
+
+/* OpenDyslexic font support */
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Bold.woff")
+    format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ============================================
+   ACCESSIBILITY BUTTON IN HEADER
+   ============================================ */
+
+.a11y-settings-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: var(--card-bg, #ffffff);
+  color: var(--main-color, #e8c4b8);
+  border: 2px solid var(--border-color, rgba(0, 0, 0, 0.1));
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.a11y-settings-btn svg {
+  width: 22px;
+  height: 22px;
+  stroke-width: 2;
+  stroke: currentColor;
+  fill: none;
+}
+
+.a11y-settings-btn:hover {
+  background: var(--main-color, #e8c4b8);
+  color: var(--button-text, #363434);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.a11y-settings-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Badge indicator when settings are customized */
+.a11y-settings-btn.customized::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 8px;
+  height: 8px;
+  background: var(--accent-color, #d4af37);
+  border-radius: 50%;
+  border: 2px solid var(--card-bg, #ffffff);
+}
+
+/* ============================================
+   ACCESSIBILITY MODAL
+   ============================================ */
+
+.a11y-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+  padding: 20px;
+}
+
+.a11y-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.a11y-modal-content {
+  background: var(--card-bg, #ffffff);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  transform: scale(0.9);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.a11y-modal.active .a11y-modal-content {
+  transform: scale(1);
+}
+
+/* Modal Header */
+.a11y-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 28px;
+  border-bottom: 2px solid var(--border-color, rgba(0, 0, 0, 0.1));
+}
+
+.a11y-modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-color, #363434);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+}
+
+.a11y-modal-title svg {
+  width: 28px;
+  height: 28px;
+  color: var(--main-color, #e8c4b8);
+}
+
+.a11y-close-btn {
+  background: var(--nav-item-hover-bg, rgba(0, 0, 0, 0.05));
+  border: none;
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--text-color, #363434);
+}
+
+.a11y-close-btn:hover {
+  background: var(--nav-item-active-bg, #f4ede9);
+  transform: rotate(90deg);
+}
+
+.a11y-close-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Modal Body */
+.a11y-modal-body {
+  padding: 24px 28px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.a11y-setting-group {
+  margin-bottom: 24px;
+}
+
+.a11y-setting-group:last-child {
+  margin-bottom: 0;
+}
+
+.a11y-setting-label {
+  display: block;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-color, #363434);
+  margin-bottom: 8px;
+}
+
+.a11y-setting-label svg {
+  width: 18px;
+  height: 18px;
+  vertical-align: middle;
+  margin-right: 8px;
+  color: var(--main-color, #e8c4b8);
+}
+
+.a11y-select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--border-color, rgba(0, 0, 0, 0.1));
+  border-radius: 8px;
+  background: var(--card-bg, #ffffff);
+  color: var(--text-color, #363434);
+  font-size: 1rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.a11y-select:hover {
+  border-color: var(--main-color, #e8c4b8);
+}
+
+.a11y-select:focus {
+  outline: none;
+  border-color: var(--accent-color, #d4af37);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+}
+
+/* Preview Box */
+.a11y-preview-box {
+  margin-top: 24px;
+  padding: 20px;
+  background: var(--nav-item-active-bg, #f4ede9);
+  border-radius: 12px;
+  border: 2px solid var(--border-color, rgba(0, 0, 0, 0.1));
+}
+
+.a11y-preview-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-muted, #8a8280);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.a11y-preview-text {
+  color: var(--text-color, #363434);
+  margin: 0;
+}
+
+/* Modal Footer */
+.a11y-modal-footer {
+  padding: 20px 28px;
+  border-top: 2px solid var(--border-color, rgba(0, 0, 0, 0.1));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.a11y-reset-btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 2px solid var(--border-color, rgba(0, 0, 0, 0.1));
+  background: transparent;
+  color: var(--text-color, #363434);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.a11y-reset-btn:hover {
+  background: var(--nav-item-active-bg, #f4ede9);
+  border-color: var(--main-color, #e8c4b8);
+}
+
+.a11y-reset-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.a11y-info-text {
+  font-size: 0.875rem;
+  color: var(--text-muted, #8a8280);
+  font-style: italic;
+}
+
+/* ============================================
+   MOBILE RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .a11y-modal {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .a11y-modal-content {
+    max-width: 100%;
+    border-radius: 20px 20px 0 0;
+    max-height: 85vh;
+  }
+
+  .a11y-modal-header {
+    padding: 20px;
+  }
+
+  .a11y-modal-title {
+    font-size: 1.25rem;
+  }
+
+  .a11y-modal-body {
+    padding: 20px;
+  }
+
+  .a11y-modal-footer {
+    padding: 16px 20px;
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .a11y-reset-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .a11y-info-text {
+    text-align: center;
+  }
+
+  /* Hide accessibility button text on mobile if needed */
+  .a11y-settings-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .a11y-settings-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Mobile Theme Toggle Icon Visibility */
+.mobile-more-item.theme-toggle-mobile .sun-icon,
+.mobile-more-item.theme-toggle-mobile .moon-icon {
+  display: none;
+}
+
+/* Show sun icon in light mode */
+:root .mobile-more-item.theme-toggle-mobile .sun-icon {
+  display: block;
+}
+
+/* Show moon icon in dark mode */
+[data-theme="dark"] .mobile-more-item.theme-toggle-mobile .moon-icon {
+  display: block;
+}
+
+/* Mobile More Menu Button Styles */
+.mobile-more-item.theme-toggle,
+.mobile-more-item.theme-toggle-mobile,
+button.mobile-more-item {
+  cursor: pointer;
+  border: none;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  padding: 16px 16px;
+  margin: 4px 0;
+  text-decoration: none;
+  color: var(--text-color, #363434);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  font-size: 16px;
+  font-weight: 500;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button.mobile-more-item:active,
+.mobile-more-item.theme-toggle:active,
+.mobile-more-item.theme-toggle-mobile:active {
+  background: var(--nav-item-hover-bg, rgba(0, 0, 0, 0.04));
+  transform: scale(0.98);
+}
+
+.mobile-more-item.theme-toggle svg,
+.mobile-more-item.theme-toggle-mobile svg,
+button.mobile-more-item svg {
+  width: 22px;
+  height: 22px;
+  margin-right: 16px;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.mobile-more-item.theme-toggle .sun-icon,
+.mobile-more-item.theme-toggle .moon-icon {
+  display: none;
+}
+
+/* Show appropriate icon based on theme */
+[data-theme="light"] .mobile-more-item.theme-toggle .sun-icon,
+:not([data-theme]) .mobile-more-item.theme-toggle .sun-icon {
+  display: block;
+}
+
+[data-theme="dark"] .mobile-more-item.theme-toggle .moon-icon {
+  display: block;
+}
+
+/* Ensure mobile accessibility button SVG displays correctly */
+button#openA11ySettingsMobile svg {
+  stroke: var(--accent-color, #d4af37);
+}
+
+button#openA11ySettingsMobile svg circle[fill] {
+  fill: var(--accent-color, #d4af37);
+}
+
+/* Ensure button text/span doesn't block clicks */
+.mobile-more-item.theme-toggle span,
+.mobile-more-item.theme-toggle-mobile span,
+button.mobile-more-item span {
+  pointer-events: none;
+  flex: 1;
+}
+
+button#openThemePresetsMobile svg {
+  stroke: var(--main-color, #e8c4b8);
+}
+
+@media (max-width: 480px) {
+  .a11y-setting-group {
+    margin-bottom: 20px;
+  }
+
+  .a11y-select {
+    padding: 10px 12px;
+    font-size: 0.9375rem;
+  }
+
+  .a11y-preview-box {
+    padding: 16px;
+  }
+}
+
+/* ============================================
+   SMOOTH TRANSITIONS
+   ============================================ */
+
+body,
+p,
+span,
+div,
+a,
+button,
+input,
+select,
+textarea,
+label {
+  transition:
+    font-size 0.3s ease,
+    font-weight 0.3s ease,
+    line-height 0.3s ease,
+    letter-spacing 0.3s ease;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .a11y-modal,
+  .a11y-modal-content,
+  .a11y-settings-btn,
+  .a11y-close-btn,
+  body,
+  p,
+  span,
+  div,
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  label {
+    transition: none !important;
+  }
+}

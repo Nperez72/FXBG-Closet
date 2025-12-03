@@ -493,36 +493,28 @@ $flash = get_flash();
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>FXBG Pride | Track Activities</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FXBG Closet | Track Activities</title>
+    <script src="js/theme-presets-init.js"></script>
     <link href="css/normal_tw.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/accessibility-settings.css">
+    <link rel="stylesheet" href="css/theme-presets.css">
 <?php $tailwind_mode = true; ?>
 <style>
-    .date-box {
-        background: #274471;
-        padding: 7px 30px;
-        border-radius: 50px;
-        box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.25) inset;
-        color: white;
-        font-size: 24px;
-        font-weight: 700;
-        text-align: center;
-    }
-    .dropdown {
-        padding-right: 50px;
-    }
     .flash-wrap { 
         max-width: 768px; 
         margin: 16px auto; 
         padding: 0 12px; 
     }
     .flash-card {
-        background: var(--card-bg); 
-        color: var(--text-color);
-        border: 1px solid var(--border-color); 
+        background: var(--card-bg, #ffffff); 
+        color: var(--text-color, #363434);
+        border: 1px solid var(--border-color, #e8c4b8); 
         border-radius: 8px;
-        box-shadow: 0 4px 12px var(--card-shadow);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     }
     .flash-card.success { 
@@ -540,13 +532,14 @@ $flash = get_flash();
     .flash-list { 
         margin: 0; 
         flex: 1;
-        color: var(--text-color);
+        color: var(--text-color, #363434);
+        list-style-position: inside;
     }
     .flash-close {
         margin-left: auto; 
         background: none; 
         border: 0; 
-        color: var(--text-muted);
+        color: var(--text-muted, #8a8280);
         font-size: 18px; 
         line-height: 1; 
         cursor: pointer;
@@ -554,16 +547,66 @@ $flash = get_flash();
         flex-shrink: 0;
     }
     .flash-close:hover { 
-        color: var(--text-color); 
+        color: var(--text-color, #363434); 
     }
-    @media (max-width: 640px) {
-        .flash-wrap { margin-top: 12px; }
-        .flash-body { padding: 10px 12px; }
+    
+    /* Mobile responsive improvements */
+    @media (max-width: 768px) {
+        .flash-wrap { 
+            margin-top: 12px; 
+            padding: 0 8px;
+        }
+        .flash-body { 
+            padding: 10px 12px; 
+        }
+        
+        .hero-header {
+            height: calc(var(--spacing) * 25) !important;
+        }
+        
+        main {
+            padding-inline: calc(var(--spacing) * 2) !important;
+            margin-top: calc(var(--spacing) * -6) !important;
+        }
+        
+        .main-content-box {
+            padding: 1rem !important;
+        }
+        
+        h1 {
+            font-size: 1.5rem !important;
+            padding: 1rem !important;
+        }
+        
+        label {
+            font-size: 1rem !important;
+        }
+        
+        input, select, textarea {
+            font-size: 16px !important; /* Prevents zoom on iOS */
+        }
+        
+        .blue-button, .return-button {
+            width: 100%;
+            padding: 0.75rem 1rem !important;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .flash-wrap {
+            padding: 0 4px;
+        }
+        
+        .flash-list {
+            font-size: 14px;
+        }
     }
 </style>
 </head>
 <body class="relative">
     <?php require_once('header.php'); ?>
     <?php require_once('activityForm.php'); ?>
+    <script src="js/accessibility-settings.js"></script>
+    <script src="js/theme-presets.js"></script>
 </body>
 </html>

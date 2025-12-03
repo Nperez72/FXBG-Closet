@@ -397,6 +397,16 @@ if (isset($_SESSION['_id'])) {
             <div class="graph-text">See the latest.</div>
             <button class="arrow-button">→</button>
         </div> -->
+        
+        <div class="content-box-test" onclick="window.location.href='useClosetAdmin.php'">
+            <div class="icon-overlay">
+                <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Report Icon">
+            </div>
+            <div class="background-image"></div>
+            <div class="large-text-sub">Update Closet Inventory</div>
+            <div class="graph-text">Raise inventory count.</div>
+            <button class="arrow-button">→</button>
+        </div>
     </div>
 
 

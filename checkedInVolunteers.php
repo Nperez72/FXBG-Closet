@@ -21,32 +21,71 @@ include_once "database/dbShifts.php";
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Fredericksburg SPCA | Checked In Volunteers</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FXBG Closet | Checked In Volunteers</title>
+    <script src="js/theme-presets-init.js"></script>
     <link href="css/normal_tw.css" rel="stylesheet">
-
-<!-- BANDAID FIX FOR HEADER BEING WEIRD -->
+    <link rel="stylesheet" href="css/accessibility-settings.css">
+    <link rel="stylesheet" href="css/theme-presets.css">
 <?php
 $tailwind_mode = true;
 require_once('header.php');
 ?>
 <style>
-        .date-box {
-            background: var(--date-box-bg, #e8c4b8);
-            padding: 7px 30px;
-            border-radius: 50px;
-            box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.25) inset;
-            color: white;
-            font-size: 24px;
-            font-weight: 700;
-            text-align: center;
+    /* Mobile responsive improvements */
+    @media (max-width: 768px) {
+        .hero-header {
+            height: calc(var(--spacing) * 25) !important;
         }
-        .dropdown {
-            padding-right: 50px;
+        
+        main {
+            padding-inline: calc(var(--spacing) * 2) !important;
         }
-
+        
+        .main-content-box {
+            padding: 1rem !important;
+        }
+        
+        table {
+            font-size: 14px;
+        }
+        
+        th, td {
+            padding-inline: calc(var(--spacing) * 2) !important;
+            padding-block: calc(var(--spacing) * 2) !important;
+        }
+        
+        .blue-button {
+            padding-inline: calc(var(--spacing) * 3) !important;
+            padding-block: calc(var(--spacing) * 1.5) !important;
+            font-size: 14px;
+        }
+        
+        #bulk-actions {
+            flex-direction: column;
+            align-items: flex-start !important;
+        }
+        
+        #bulk-actions span {
+            margin-bottom: 0.5rem;
+        }
+    }
+    
+    /* Ensure checkboxes are visible and properly sized */
+    input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+    }
+    
+    @media (max-width: 640px) {
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+        }
+    }
 </style>
-<!-- BANDAID END, REMOVE ONCE SOME GENIUS FIXES -->
-
 </head>
 <body>
 
@@ -203,6 +242,8 @@ require_once('header.php');
             }
         });
     </script>
+    <script src="js/accessibility-settings.js"></script>
+    <script src="js/theme-presets.js"></script>
 
 </body>
 </html>

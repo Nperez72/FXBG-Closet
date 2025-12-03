@@ -98,10 +98,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     })();
   </script>
+  <script src="js/theme-presets-init.js"></script>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="css/theme-toggle.css">
   <link rel="stylesheet" href="css/pwa-mobile.css">
+  <link rel="stylesheet" href="css/accessibility-settings.css">
+  <link rel="stylesheet" href="css/theme-presets.css">
   <script>
     function showSection(sectionId) {
       const sections = document.querySelectorAll('.profile-section');
