@@ -243,6 +243,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $event_date = date('l, F j, Y', strtotime($event_info['date']));
             $event_startTime = time24hto12h($event_info['startTime']);
             $event_endTime = time24hto12h($event_info['endTime']);
+            $event_type = $event_info['type'];
             $event_description = $event_info['description'];
             $event_location = $event_info['location'];
             $event_capacity = $event_info['capacity'];
@@ -284,6 +285,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <tr>
                     <td class="label">Time</td>
                     <td><?php echo $event_startTime . " - " . $event_endTime; ?></td>
+                </tr>
+                <tr>  
+                    <td class="label">Type</td>
+                    <td><?php echo $event_type; ?></td>
                 </tr>
                 <tr>
                     <td class="label">Location</td>
