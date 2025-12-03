@@ -17,11 +17,16 @@ if (!isset($_SESSION['_id']) || $_SESSION['access_level'] < 4) {
     <?php require_once('header.php'); ?>
 
 <style>
+.chart-scroll-wrapper {
+    width: 100%;
+    overflow-x: auto;       /* enable horizontal scroll */
+    padding-bottom: 10px;   /* room for scrollbar */
+}
 .chart-container {
     position: relative;
     height: 450px;
-    width: 100%;
-    margin-top: 40px;
+    width: 1200px;          /* base width — expands if needed */
+    min-width: 900px;       /* ensure readability for fewer events */
 }
 .metrics-section {
     margin: 0 auto;
@@ -142,16 +147,22 @@ $ethnicity_json = json_encode($ethnicity_data);
 <h3>Total Attendance (All Events): <?php echo array_sum($total_data); ?></h3>
 
 <!-- Charts -->
-<div class="chart-container">
-    <canvas id="totalChart"></canvas>
+<div class="chart-scroll-wrapper">
+    <div class="chart-container">
+        <canvas id="totalChart"></canvas>
+    </div>
 </div>
 
-<div class="chart-container">
-    <canvas id="ageChart"></canvas>
+<div class="chart-scroll-wrapper">
+    <div class="chart-container">
+        <canvas id="ageChart"></canvas>
+    </div>
 </div>
 
-<div class="chart-container">
-    <canvas id="ethnicityChart"></canvas>
+<div class="chart-scroll-wrapper">
+    <div class="chart-container">
+        <canvas id="ethnicityChart"></canvas>
+    </div>
 </div>
 
 </main>
