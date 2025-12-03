@@ -1,11 +1,13 @@
 <?php
+
 require_once('dbinfo.php');
 
 /**
  * Inserts a new event report into the database.
  * Returns true on success, false on failure.
  */
-function add_event_report($data) {
+function add_event_report($data)
+{
     $con = connect();
 
     // Check if a report exists for this event
@@ -30,11 +32,21 @@ function add_event_report($data) {
         $stmt->bind_param(
             "iiiiiiiiiiiiiiddi",
             $data['total_attendance'],
-            $data['age_under_18'], $data['age_18_24'], $data['age_25_34'], $data['age_35_44'],
-            $data['age_45_54'], $data['age_55_64'], $data['age_65_plus'],
-            $data['ethnicity_american_indian'], $data['ethnicity_asian'], $data['ethnicity_black'], $data['ethnicity_hispanic'],
-            $data['ethnicity_pacific_islander'], $data['ethnicity_white'],
-            $data['event_cost'], $data['reimbursement_cost'],
+            $data['age_under_18'],
+            $data['age_18_24'],
+            $data['age_25_34'],
+            $data['age_35_44'],
+            $data['age_45_54'],
+            $data['age_55_64'],
+            $data['age_65_plus'],
+            $data['ethnicity_american_indian'],
+            $data['ethnicity_asian'],
+            $data['ethnicity_black'],
+            $data['ethnicity_hispanic'],
+            $data['ethnicity_pacific_islander'],
+            $data['ethnicity_white'],
+            $data['event_cost'],
+            $data['reimbursement_cost'],
             $data['event_id']
         );
     } else {
@@ -51,11 +63,21 @@ function add_event_report($data) {
             "iiiiiiiiiiiiiiidd",
             $data['event_id'],
             $data['total_attendance'],
-            $data['age_under_18'], $data['age_18_24'], $data['age_25_34'], $data['age_35_44'],
-            $data['age_45_54'], $data['age_55_64'], $data['age_65_plus'],
-            $data['ethnicity_american_indian'], $data['ethnicity_asian'], $data['ethnicity_black'], $data['ethnicity_hispanic'],
-            $data['ethnicity_pacific_islander'], $data['ethnicity_white'],
-            $data['event_cost'], $data['reimbursement_cost']
+            $data['age_under_18'],
+            $data['age_18_24'],
+            $data['age_25_34'],
+            $data['age_35_44'],
+            $data['age_45_54'],
+            $data['age_55_64'],
+            $data['age_65_plus'],
+            $data['ethnicity_american_indian'],
+            $data['ethnicity_asian'],
+            $data['ethnicity_black'],
+            $data['ethnicity_hispanic'],
+            $data['ethnicity_pacific_islander'],
+            $data['ethnicity_white'],
+            $data['event_cost'],
+            $data['reimbursement_cost']
         );
     }
 
@@ -65,7 +87,8 @@ function add_event_report($data) {
     return $result;
 }
 
-function fetch_event_report($event_id) {
+function fetch_event_report($event_id)
+{
     $con = connect();
     $stmt = $con->prepare("
         SELECT *
