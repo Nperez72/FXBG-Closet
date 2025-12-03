@@ -29,7 +29,7 @@
                 <option value="clothing">Clothing</option>
                 <option value="shoes">Shoes</option>
                 <option value="accessories">Accessories</option>
-                <option value="hygiene">Hygiene</option>
+                <option value="hygiene">Hygiene Products</option>
             </select>
 
             <label for="quantity"><em>* </em>Quantity</label>
