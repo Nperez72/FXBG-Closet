@@ -91,7 +91,13 @@ if ($accessLevel == 3) {
         die();
     }
     $personID = $_SESSION['person_id'];
-    if ($personID != $event['volunteer_coordinator']) {
+    // Get an array of coordinators assigned to this event
+    $coordinator_ids = get_event_coordinators($id);
+    $isAssignedCoordinator = false;
+    if (isset($_SESSION['person_id']) && is_array($coordinator_ids)) {
+        $isAssignedCoordinator = in_array($_SESSION['person_id'], $coordinator_ids);
+    }
+    if (!$isAssignedCoordinator) {
         header('Location: login.php');
         echo 'bad access level';
         die();

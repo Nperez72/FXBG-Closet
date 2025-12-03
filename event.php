@@ -17,6 +17,17 @@ if (isset($args["id"])) {
     die();
 }
 
+include_once('database/dbPersons.php');
+$access_level = $_SESSION['access_level'];
+if ($access_level == 3) {
+    if (!isset($_SESSION['person_id'])) {
+        header('Location: login.php');
+        die();
+    }
+    $personID = $_SESSION['person_id'];
+}
+    $user = retrieve_person($_SESSION['_id']);
+
     include_once('database/dbEvents.php');
     require_once('database/dbEventCoordinators.php');
 
@@ -25,6 +36,11 @@ if (isset($args["id"])) {
     $event_info = fetch_event_by_id($id);
     // Get an array of coordinators assigned to this event
     $coordinator_ids = get_event_coordinators($id);
+    $isAssignedCoordinator = false;
+    if (isset($_SESSION['person_id']) && is_array($coordinator_ids)) {
+        $isAssignedCoordinator = in_array($_SESSION['person_id'], $coordinator_ids);
+    }
+
 if ($event_info == null) {
     // TODO: Need to create error page for no event found
     // header('Location: calendar.php');
@@ -34,16 +50,6 @@ if ($event_info == null) {
     die();
 }
 
-    include_once('database/dbPersons.php');
-    $access_level = $_SESSION['access_level'];
-if ($access_level == 3) {
-    if (!isset($_SESSION['person_id'])) {
-        header('Location: login.php');
-        die();
-    }
-    $personID = $_SESSION['person_id'];
-}
-    $user = retrieve_person($_SESSION['_id']);
     //$active = $user->get_status() == 'Active';
 
     ini_set("display_errors", 1);
@@ -257,7 +263,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- Event Information Table -->
         <h2 style="font-size: 2.25em; font-weight: 700; color: black;">
             <?php echo htmlspecialchars_decode($event_name); ?>
-            <?php if (($access_level >= 4) || (($access_level == 3) && $personID == $event_volunteer_coordinator)) : ?>
+            <?php if (($access_level >= 4) || (($access_level == 3) && $isAssignedCoordinator)) : ?>
                 <a href="editEvent.php?id=<?= $id ?>" title="Edit Event" class="edit-icon">
                     <i class="fas fa-pencil-alt"></i>
                 </a>
@@ -366,7 +372,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php endif ?>
             <?php endif*/ ?>
 
-            <?php if (($access_level >= 4) || (($access_level == 3) && $personID == $event_volunteer_coordinator)) : ?>
+            <?php if (($access_level >= 4) || (($access_level == 3) && $isAssignedCoordinator)) : ?>
 
                 <!-- Archive and Unarchive buttons by Thomas -->
 
