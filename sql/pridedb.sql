@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 03, 2025 at 06:16 AM
+-- Generation Time: Dec 03, 2025 at 07:41 AM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.26
 
@@ -180,13 +180,13 @@ INSERT INTO `dbevents` (`id`, `name`, `date`, `startTime`, `endTime`, `descripti
 (119, 'party :)', '2026-01-14', '01:00', '01:01', 'dancin', 1, 'no', 0, 'my house', 'party :)'),
 (120, 'SDLFjkafs', '2025-09-10', '12:00', '14:00', 'j;aksdfj', 99999, 'no', 0, 'asdf;j', 'sadj'),
 (121, 'Whikey Valor Tasting', '2025-09-24', '15:00', '18:00', 'Come have a taste of fine barrel aged whiskey with fellow Vets.', 25, 'no', 0, 'Old Silk Mill', 'Tasting'),
-(122, 'Event', '2025-12-01', '13:00', '14:00', 'Use Case Event', 77, 'no', 0, 'UMW', 'Group'),
+(122, 'Program5', '2025-12-01', '13:00', '14:00', 'Use Case Event', 77, 'no', 0, 'UMW', 'Group'),
 (123, 'Ethans Birthday Party', '2025-12-11', '07:30', '19:30', 'Ethan is going to eat my cake.', 211, 'no', 0, 'Eagle 225', 'Womxns Program'),
 (124, 'Example event', '2025-09-11', '12:00', '14:00', 'This is a test event', 42, 'no', 0, 'UMW', 'A test'),
 (125, 'Pet Adoption', '2025-09-13', '11:00', '17:00', 'Pet Adoption', 50, 'no', 0, 'Fredericksburg, Virginia', 'Pet Adoption'),
 (126, 'Squirrel Watching', '2025-09-22', '06:00', '09:00', 'Watch the squirrels to make sure they do not eat the bird seed', 6, 'no', 0, '275 Butler Rd, Fredericksburg, VA 22405', 'Squirrel'),
 (127, 'Whoosky Volar Tasting', '2025-09-15', '09:00', '13:00', 'Test Event', 42, 'no', 0, 'House', 'Get-Together'),
-(128, 'Event', '2025-12-01', '13:30', '14:00', 'Use Case Event', 77, 'no', 0, 'UMW', 'Person'),
+(128, 'Fundraising', '2025-12-01', '13:30', '14:00', 'Use Case Event', 77, 'no', 0, 'UMW', 'Person'),
 (129, 'Test event Woak', '2025-10-31', '15:00', '18:00', 'testing thsi woa', 99, 'no', 0, 'required but not listed', 'not listed as req'),
 (130, 'Class Example', '2025-09-24', '12:00', '14:00', 'This is an example', 10, 'no', 0, 'Farmer', 'Shit storm'),
 (131, 'FXBG Tester', '2025-11-11', '18:00', '20:30', 'First test event!!!!', 100, 'yes', 0, 'UMW Campus', 'Test'),
@@ -195,7 +195,7 @@ INSERT INTO `dbevents` (`id`, `name`, `date`, `startTime`, `endTime`, `descripti
 (134, 'New Test', '2025-11-12', '06:00', '07:00', 'AAA', 999, 'no', 0, '', 'AAA'),
 (135, 'Next Test', '2025-11-14', '18:00', '20:30', 'AAAA', 999, 'no', 0, 'UMW Campus', 'AAA'),
 (137, 'Thanksgiving', '2025-11-27', '16:00', '19:00', 'Description!!!', 50, 'no', 0, 'Fredericksburg, VA', 'Holiday'),
-(138, 'VCTest1-NewVersion', '2025-12-01', '18:00', '20:30', 'First test event!!!!', 400, 'no', 0, '', 'Test'),
+(138, 'VCTest1', '2025-12-01', '18:00', '20:30', 'First test event!!!!', 400, 'no', 0, '', 'Test'),
 (139, 'VCTest2', '2025-11-30', '06:00', '07:00', 'AAA', 999, 'no', 0, '', 'Test'),
 (140, 'VCTest3', '2025-12-16', '06:00', '07:00', 'AAAA', 999, 'no', 0, '', 'Test'),
 (141, 'VCTest4', '2025-12-02', '18:00', '20:30', 'AAA', 999, 'no', 0, 'UMW Campus', 'Test'),
@@ -257,7 +257,10 @@ CREATE TABLE `dbevent_reports` (
 --
 
 INSERT INTO `dbevent_reports` (`id`, `event_id`, `total_attendance`, `age_under_18`, `age_18_24`, `age_25_34`, `age_35_44`, `age_45_54`, `age_55_64`, `age_65_plus`, `ethnicity_american_indian`, `ethnicity_asian`, `ethnicity_black`, `ethnicity_hispanic`, `ethnicity_pacific_islander`, `ethnicity_white`, `event_cost`, `reimbursement_cost`) VALUES
-(1, 119, 20, 10, 0, 5, 0, 5, 0, 0, 2, 2, 2, 2, 2, 10, 90.50, 85.00);
+(1, 119, 20, 10, 0, 5, 0, 5, 0, 0, 2, 2, 2, 2, 2, 10, 90.50, 85.00),
+(2, 128, 25, 1, 1, 1, 1, 1, 20, 0, 0, 5, 5, 5, 5, 5, 800.00, 0.00),
+(3, 138, 100, 25, 25, 0, 25, 0, 20, 5, 5, 20, 20, 20, 25, 10, 90.00, 0.00),
+(4, 118, 40, 35, 2, 3, 0, 0, 0, 0, 5, 10, 10, 10, 5, 0, 1000.00, 0.00);
 
 -- --------------------------------------------------------
 
@@ -981,7 +984,7 @@ ALTER TABLE `dbevents`
 -- AUTO_INCREMENT for table `dbevent_reports`
 --
 ALTER TABLE `dbevent_reports`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `dbmessages`
