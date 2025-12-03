@@ -51,6 +51,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!$id) {
             die();
         } else {
+            // Handle selected coordinators (checkboxes)
+            if (isset($_POST['volunteer-coordinator']) && is_array($_POST['volunteer-coordinator'])) {
+                require_once('database/dbEventCoordinators.php');
+                foreach ($_POST['volunteer-coordinator'] as $coord_id) {
+                    add_event_coordinator($id, (int)$coord_id);
+                }
+            }
             header('Location: eventSuccess.php');
             exit();
         }
@@ -116,18 +123,18 @@ if (isset($_GET['date'])) {
                 <input type="text" id="location" name="location" placeholder="Enter location">
                 <label for="name">Capacity </label>
                 <input type="number" id="capacity" name="capacity" placeholder="Enter capacity (e.g. 1-99)">
-                <label for="volunteer-coordinator">Assigned Volunteer Coordinator:</label>
+                <label for="volunteer-coordinator">Assigned Volunteer Coordinators:</label>
                 <?php if (empty($volunteerCoord)) : ?>
                     <p>No available volunteer coordinators.</p>
                 <?php else : ?>
-                    <select id="volunteer-coordinator" name="volunteer-coordinator">
-                        <option value="None" selected>None</option>
-                        <?php foreach ($volunteerCoord as $vc) : ?>
-                            <option value="<?= htmlspecialchars($vc['person_id']) ?>">
+                    <div class="coordinator-checkboxes">
+                        <?php foreach ($volunteerCoord as $vc): ?>
+                            <label>
+                                <input type="checkbox" name="volunteer-coordinator[]" value="<?= htmlspecialchars($vc['person_id']) ?>">
                                 <?= htmlspecialchars($vc['fullname']) ?>
-                            </option>
+                            </label><br>
                         <?php endforeach; ?>
-                    </select>
+                    </div>
                 <?php endif; ?>
                 <input type="submit" value="Create Event">
                 

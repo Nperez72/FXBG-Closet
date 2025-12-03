@@ -407,7 +407,6 @@ function make_an_event($result_row)
      */
 
     // Must add this line to work on SiteGround (b/c v_c may be NULL)
-    $volunteer_coordinator = $result_row['volunteer_coordinator'] ?? null;
 
     $theEvent = new Event(
         $result_row['id'],
@@ -419,8 +418,7 @@ function make_an_event($result_row)
         capacity: $result_row['capacity'],
         completed: $result_row['completed'],
         restricted_signup: $result_row['restricted_signup'],
-        type: $result_row['type'],
-        volunteer_coordinator: $volunteer_coordinator
+        type: $result_row['type']
     );
     return $theEvent;
 }
@@ -574,11 +572,6 @@ function create_event($event)
     } else {
         $location = $event["location"];
     }
-    if (!isset($event["volunteer-coordinator"]) || $event["volunteer-coordinator"] == "None") {
-        $volunteerCoordinator = null;
-    } else {
-        $volunteerCoordinator = $event["volunteer-coordinator"];
-    }
     //$completed = $event["completed"];
     /*
     $restricted_signup = $event["role"];
@@ -596,8 +589,8 @@ function create_event($event)
     //$animal = $event["animal"];
     $completed = "no";
     $query = "
-        insert into dbevents (name, date, startTime, endTime, restricted_signup, description, capacity, completed, location, type, volunteer_coordinator)
-        values ('$name', '$date', '$startTime', '$endTime', $restricted, '$description', $capacity, '$completed', '$location', '$type',  " . ($volunteerCoordinator === null ? "NULL" : (int)$volunteerCoordinator) . ")
+        insert into dbevents (name, date, startTime, endTime, restricted_signup, description, capacity, completed, location, type)
+        values ('$name', '$date', '$startTime', '$endTime', $restricted, '$description', $capacity, '$completed', '$location', '$type')
     ";
     $result = mysqli_query($connection, $query);
     if (!$result) {
@@ -642,11 +635,6 @@ function update_event($eventID, $eventDetails)
     #$restricted_signup = $eventDetails["restricted_signup"];
     $location = $eventDetails["location"];
     //$services = $eventDetails["service"];
-    if (!isset($eventDetails["volunteer-coordinator"]) || $eventDetails["volunteer-coordinator"] == "None") {
-        $volunteerCoordinator = null;
-    } else {
-        $volunteerCoordinator = $eventDetails["volunteer-coordinator"];
-    }
 
     #$completed = $eventDetails["completed"];
     #$query = "
@@ -658,7 +646,7 @@ function update_event($eventID, $eventDetails)
     #    where id='$eventID'
     #";
     $query = "
-        update dbevents set id='$id', name='$name', date='$date', startTime='$startTime', endTime='$endTime', type='$type', description='$description', location='$location', capacity=$capacity, volunteer_coordinator = " . ($volunteerCoordinator === null ? "NULL" : (int)$volunteerCoordinator) . "
+        update dbevents set id='$id', name='$name', date='$date', startTime='$startTime', endTime='$endTime', type='$type', description='$description', location='$location', capacity=$capacity
         where id='$eventID'
     ";
     $result = mysqli_query($connection, $query);
