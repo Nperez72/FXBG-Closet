@@ -104,10 +104,10 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
 <div id="popupMessage" class="absolute left-[40%] top-[20%] z-50 <?php echo $popupType === 'success' ? 'bg-green-600' : 'bg-red-800'; ?> p-4 text-green rounded-xl text-xl shadow-lg">
     <?php echo htmlspecialchars($popupMessage); ?>
 </div>
-<?php 
+    <?php
 endif; ?>
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST"){
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo '<meta http-equiv="refresh" content="5;url=useCloset.php" />';
 }
 ?>
