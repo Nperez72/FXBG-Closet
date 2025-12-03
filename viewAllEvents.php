@@ -86,32 +86,12 @@ if (isset($_SESSION['_id'])) {
                                 $restricted_signup = $event->getRestrictedSignup();
                                 $type = $event->getEventType();
 
-                                    // Fetch signups for the event
-                                    $signups = fetch_event_signups($eventID);
-                                    $numSignups = count($signups); // Number of people signed up
-                                    // Check if the user is signed up for this event
-                                    $isSignedUp = check_if_signed_up($eventID, $userID);
-
                                     echo "
                                     <tr data-event-id='$eventID'>
                                         <td><a href='event.php?id=$eventID'>$title</a></td>
                                         <td>$type</td>
                                         <td>$date</td>
-                                        <td>$numSignups / $capacity</td>";
-
-                                    // Display Sign Up or Cancel button based on user sign-up status
-                                if ($isSignedUp) {
-                                    echo "
-                                            <td>
-                                            <a class='button cancel' href='viewMyUpcomingEvents.php' >Already Signed Up!</a>
-                                            </td>";
-                                } elseif ($numSignups >= $capacity) {
-                                    echo "
-                                                <td><a class='button sign-up' style='background-color: var(--error-color, #d4635a);'>Sign Ups Closed!</a></td>";
-                                } else {
-                                    echo "<td><a class='button sign-up' href='eventSignUp.php?event_name=" . urlencode($title) . "&restricted=" . urlencode($restricted_signup) . "'>Sign Up</a></td>";
-                                }
-                                    echo "</tr>";
+                                        <td>$capacity</td><td></td></tr>";
 
                                     /*echo "
                                     <td>
@@ -192,35 +172,6 @@ if (isset($_SESSION['_id'])) {
                                 $description = $event->getDescription();
                                 $capacity = $event->getCapacity();
                                 $completed = $event->getCompleted();
-                                $restricted_signup = $event->getRestrictedSignup();
-                                if ($restricted_signup == 0) {
-                                    $restricted_signup = "No";
-                                } else {
-                                    $restricted_signup = "Yes";
-                                }
-
-                                // Fetch signups for the event
-                                $signups = fetch_event_signups($eventID);
-                                $numSignups = count($signups); // Number of people signed up
-                                //if($accessLevel < 3) {
-                                    echo "
-                                        <tr data-event-id='$eventID'>
-                                            <td>$restricted_signup</td>
-                                            <td><a href='event.php?id=$eventID'>$title</a></td>
-                                            <td>$date</td>
-                                            <td>$numSignups / $capacity</td>
-                                            <td><a class='button sign-up' href='eventSignUp.php?event_name=" . urlencode($title) . '&restricted=' . urlencode($restricted_signup) . "'>Sign Up</a></td>
-                                        </tr>";
-                                //} else {
-                                    /*echo "
-                                    <tr data-event-id='$eventID'>
-                                        <td>$restricted_signup</td>
-                                        <td><a href='Event.php?id=$eventID'>$title</a></td> <!-- Link updated here -->
-                                        <td>$date</td>
-                                        <td></td>
-                                    </tr>";
-                                }
-                                */
                             }
                             ?>
                         </tbody>
