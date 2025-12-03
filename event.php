@@ -50,7 +50,7 @@ if ($event_info == null) {
     die();
 }
 
-require_once('database/dbEventReports.php'); 
+require_once('database/dbEventReports.php');
 // Fetch the report for this event
 $existingReport = fetch_event_report($event_info['id']);
 $reportButtonText = $existingReport ? "View/Edit Event Report" : "Complete Event Report";
