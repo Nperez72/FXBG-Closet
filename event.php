@@ -50,6 +50,11 @@ if ($event_info == null) {
     die();
 }
 
+require_once('database/dbEventReports.php'); 
+// Fetch the report for this event
+$existingReport = fetch_event_report($event_info['id']);
+$reportButtonText = $existingReport ? "View/Edit Event Report" : "Complete Event Report";
+
     //$active = $user->get_status() == 'Active';
 
     ini_set("display_errors", 1);
@@ -373,8 +378,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif*/ ?>
 
             <?php if (($access_level >= 4) || (($access_level == 3) && $isAssignedCoordinator)) : ?>
-                <!-- Archive and Unarchive buttons by Thomas -->
+                <!-- Complete Report Button -->
+                <form method="GET" action="eventReport.php">
+                    <input type="hidden" name="id" value="<?= $event_info['id'] ?>">
+                    <button type="submit" class="button"><?= $reportButtonText ?></button>
+                </form>
 
+                <!-- Archive and Unarchive buttons by Thomas -->
                 <?php if (is_archived($event_info['id'])) : ?>
                     <form method="POST" action="" onsubmit="return confirmAction('unarchive')">
                         <input type="hidden" name="unarchiving" value="1">
