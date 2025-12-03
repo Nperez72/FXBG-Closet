@@ -111,7 +111,8 @@ function fetch_event_report($event_id)
     return $report ?: null;
 }
 
-function get_attendance_per_event($start_date, $end_date) {
+function get_attendance_per_event($start_date, $end_date)
+{
     $con = connect();
 
     $sql = "SELECT e.id, e.name, e.date,

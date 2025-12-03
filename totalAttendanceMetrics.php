@@ -103,7 +103,7 @@ foreach ($events as $event) {
     $label = htmlspecialchars($event['name']) . " ($date_str)";
     $labels[] = $label;
     $total_data[] = intval($event['total_attendance']);
-    
+
     // Age
     $age_data['Under 18'][] = intval($event['age_under_18']);
     $age_data['18–24'][] = intval($event['age_18_24']);
