@@ -209,7 +209,7 @@ new Chart(document.getElementById('totalChart').getContext('2d'), {
                 title: { display: true, text: 'Attendees' }
             },
             x: {
-                ticks: { autoSkip: false, maxRotation: 90, minRotation: 45 }
+                ticks: { autoSkip: false }
             }
         }
     }
