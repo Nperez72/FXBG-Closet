@@ -27,8 +27,11 @@ if ($accessLevel < 2) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Event Management | FXBG Pride</title>
+  <script src="js/theme-presets-init.js"></script>
   <link href="css/modern-management.css" rel="stylesheet">
   <link href="css/mobile-nav.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/accessibility-settings.css">
+  <link rel="stylesheet" href="css/theme-presets.css">
 
 <!-- BANDAID FIX FOR HEADER BEING WEIRD -->
 <?php
