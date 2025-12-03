@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 03, 2025 at 03:34 AM
+-- Generation Time: Dec 03, 2025 at 06:16 AM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.26
 
@@ -224,6 +224,40 @@ INSERT INTO `dbevent_coordinators` (`event_id`, `coordinator_id`) VALUES
 (143, 17),
 (144, 17),
 (143, 18);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dbevent_reports`
+--
+
+CREATE TABLE `dbevent_reports` (
+  `id` int UNSIGNED NOT NULL,
+  `event_id` int NOT NULL,
+  `total_attendance` int UNSIGNED NOT NULL DEFAULT '0',
+  `age_under_18` int UNSIGNED NOT NULL DEFAULT '0',
+  `age_18_24` int UNSIGNED NOT NULL DEFAULT '0',
+  `age_25_34` int UNSIGNED NOT NULL DEFAULT '0',
+  `age_35_44` int UNSIGNED NOT NULL DEFAULT '0',
+  `age_45_54` int UNSIGNED NOT NULL DEFAULT '0',
+  `age_55_64` int UNSIGNED NOT NULL DEFAULT '0',
+  `age_65_plus` int UNSIGNED NOT NULL DEFAULT '0',
+  `ethnicity_american_indian` int UNSIGNED NOT NULL DEFAULT '0',
+  `ethnicity_asian` int UNSIGNED NOT NULL DEFAULT '0',
+  `ethnicity_black` int UNSIGNED NOT NULL DEFAULT '0',
+  `ethnicity_hispanic` int UNSIGNED NOT NULL DEFAULT '0',
+  `ethnicity_pacific_islander` int UNSIGNED NOT NULL DEFAULT '0',
+  `ethnicity_white` int UNSIGNED NOT NULL DEFAULT '0',
+  `event_cost` decimal(10,2) DEFAULT '0.00',
+  `reimbursement_cost` decimal(10,2) DEFAULT '0.00'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `dbevent_reports`
+--
+
+INSERT INTO `dbevent_reports` (`id`, `event_id`, `total_attendance`, `age_under_18`, `age_18_24`, `age_25_34`, `age_35_44`, `age_45_54`, `age_55_64`, `age_65_plus`, `ethnicity_american_indian`, `ethnicity_asian`, `ethnicity_black`, `ethnicity_hispanic`, `ethnicity_pacific_islander`, `ethnicity_white`, `event_cost`, `reimbursement_cost`) VALUES
+(1, 119, 20, 10, 0, 5, 0, 5, 0, 0, 2, 2, 2, 2, 2, 10, 90.50, 85.00);
 
 -- --------------------------------------------------------
 
@@ -703,8 +737,8 @@ CREATE TABLE `dbsupplies` (
   `quantity` int NOT NULL,
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `date_submitted` date NOT NULL,
-  `status` varchar(20) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'pending',
-  `reserve_status` varchar(20) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'unreserved'
+  `status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'pending',
+  `reserve_status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'unreserved'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -727,7 +761,7 @@ CREATE TABLE `dbvolunteeractivity` (
   `hours` decimal(4,2) NOT NULL,
   `event_id` int NOT NULL,
   `interactions` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
-  `email` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `photo_id` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -857,6 +891,13 @@ ALTER TABLE `dbevent_coordinators`
   ADD KEY `coordinatorIDForeignKey` (`coordinator_id`) USING BTREE;
 
 --
+-- Indexes for table `dbevent_reports`
+--
+ALTER TABLE `dbevent_reports`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_event_report` (`event_id`);
+
+--
 -- Indexes for table `dbgroups`
 --
 ALTER TABLE `dbgroups`
@@ -937,6 +978,12 @@ ALTER TABLE `dbevents`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=146;
 
 --
+-- AUTO_INCREMENT for table `dbevent_reports`
+--
+ALTER TABLE `dbevent_reports`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `dbmessages`
 --
 ALTER TABLE `dbmessages`
@@ -988,6 +1035,12 @@ ALTER TABLE `monthly_hours_snapshot`
 ALTER TABLE `dbevent_coordinators`
   ADD CONSTRAINT `coordinatorIDForeignKey` FOREIGN KEY (`coordinator_id`) REFERENCES `dbpersons` (`person_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `eventIDForeignKey` FOREIGN KEY (`event_id`) REFERENCES `dbevents` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `dbevent_reports`
+--
+ALTER TABLE `dbevent_reports`
+  ADD CONSTRAINT `fk_event` FOREIGN KEY (`event_id`) REFERENCES `dbevents` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
