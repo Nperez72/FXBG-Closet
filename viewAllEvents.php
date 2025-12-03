@@ -49,9 +49,9 @@ if (isset($_SESSION['_id'])) {
                     return $eventDate >= $today; // Only include events on or after today
                 });
 
-                $upcomingArchivedEvents = array_filter($archivedevents, function ($event) use ($today) {
+                $pastEvents = array_filter($events, function ($event) use ($today) {
                     $eventDate = new DateTime($event->getDate());
-                    return $eventDate >= $today; // Only include events on or after today
+                    return $eventDate < $today; // Only include events before today
                 });
 
                 $user = retrieve_person($userID);
@@ -145,42 +145,82 @@ if (isset($_SESSION['_id'])) {
                         </tbody>
                     </table>
                 </div>
+                <?php else: ?>
+                    <p class="no-events standout">No upcoming events available.</p>
+                <?php endif; ?>
 
-                <div class="table-wrapper">
-                    <h2>Archived Events</h2>
-                    <table class="general">
-                        <thead>
-                            <tr>
-                                <th style="width:1px">Restricted</th>
-                                <th>Title</th>
-                                <th style="width:1px">Date</th>
-                                <th style="width:1px">Capacity</th>
-                                <th style="width:1px"></th>
-                            </tr>
-                        </thead>
-                        <tbody class="standout">
-                            <?php
-                                #require_once('database/dbPersons.php');
-                                #require_once('include/output.php');
-                                #$id_to_name_hash = [];
-                            foreach ($upcomingArchivedEvents as $event) {
-                                $eventID = $event->getID();
-                                $title = $event->getName();
-                                $date = $event->getDate();
-                                $startTime = $event->getStartTime();
-                                $endTime = $event->getEndTime();
-                                $description = $event->getDescription();
-                                $capacity = $event->getCapacity();
-                                $completed = $event->getCompleted();
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
+                <?php if ($accessLevel > 1 && sizeof($pastEvents) > 0): ?>
+                    <div class="table-wrapper">
+                        <h2>Past Events</h2>
+                        <table class="general">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Event Type</th>
+                                    <th style="width:1px">Date</th>
+                                    <th style="width:1px">Capacity</th>
+                                    <th style="width:1px"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="standout">
+                                <?php foreach ($pastEvents as $event): ?>
+                                    <?php
+                                        $eventID = $event->getID();
+                                        $title = htmlspecialchars($event->getName());
+                                        $type = htmlspecialchars($event->getEventType());
+                                        $date = htmlspecialchars($event->getDate());
+                                        $capacity = htmlspecialchars($event->getCapacity());
+                                    ?>
+                                    <tr data-event-id="<?= $eventID ?>">
+                                        <td><a href="event.php?id=<?= $eventID ?>"><?= $title ?></a></td>
+                                        <td><?= $type ?></td>
+                                        <td><?= $date ?></td>
+                                        <td><?= $capacity ?></td><td></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php elseif ($accessLevel > 1): ?>
+                    <p class="no-events standout">No past events available.</p>
+                <?php endif; ?>
 
-                <?php else : ?>
-                <p class="no-events standout">There are currently no events available to view.<a class="button add" href="addEvent.php">Create a New Event</a> </p>
-                <?php endif ?>
+                <?php if ($accessLevel > 1 && sizeof($archivedevents) > 0): ?>
+                    <div class="table-wrapper">
+                        <h2>All Archived Events</h2>
+                        <table class="general">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Event Type</th>
+                                    <th style="width:1px">Date</th>
+                                    <th style="width:1px">Capacity</th>
+                                    <th style="width:1px"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="standout">
+                                <?php foreach ($archivedevents as $event): ?>
+                                    <?php
+                                        $eventID = $event->getID();
+                                        $title = htmlspecialchars($event->getName());
+                                        $date = htmlspecialchars($event->getDate());
+                                        $type = htmlspecialchars($event->getEventType());
+                                        $capacity = htmlspecialchars($event->getCapacity());
+                                        $restricted_signup = $event->getRestrictedSignup();
+                                    ?>
+                                    <tr data-event-id="<?= $eventID ?>">
+                                        <td><a href="event.php?id=<?= $eventID ?>"><?= $title ?></a></td>
+                                        <td><?= $type ?></td>
+                                        <td><?= $date ?></td>
+                                        <td><?= $capacity ?></td><td></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php elseif ($accessLevel > 1): ?>
+                    <p class="no-events standout">There are no archived events to display.</p>
+                <?php endif; ?>
             <a class="button cancel" href="index.php">Return to Dashboard</a>
         </main>
     

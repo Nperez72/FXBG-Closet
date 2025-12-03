@@ -367,7 +367,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif*/ ?>
 
             <?php if (($access_level >= 4) || (($access_level == 3) && $personID == $event_volunteer_coordinator)) : ?>
-                <a href="viewEventSignUps.php?id=<?php echo $id; ?>"class = "button signup">View Event Signups</a>
 
                 <!-- Archive and Unarchive buttons by Thomas -->
 
