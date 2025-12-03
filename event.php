@@ -37,9 +37,9 @@ if ($access_level == 3) {
     // Get an array of coordinators assigned to this event
     $coordinator_ids = get_event_coordinators($id);
     $isAssignedCoordinator = false;
-    if (isset($_SESSION['person_id']) && is_array($coordinator_ids)) {
-        $isAssignedCoordinator = in_array($_SESSION['person_id'], $coordinator_ids);
-    }
+if (isset($_SESSION['person_id']) && is_array($coordinator_ids)) {
+    $isAssignedCoordinator = in_array($_SESSION['person_id'], $coordinator_ids);
+}
 
 if ($event_info == null) {
     // TODO: Need to create error page for no event found
@@ -373,7 +373,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif*/ ?>
 
             <?php if (($access_level >= 4) || (($access_level == 3) && $isAssignedCoordinator)) : ?>
-
                 <!-- Archive and Unarchive buttons by Thomas -->
 
                 <?php if (is_archived($event_info['id'])) : ?>

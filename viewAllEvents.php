@@ -145,11 +145,11 @@ if (isset($_SESSION['_id'])) {
                         </tbody>
                     </table>
                 </div>
-                <?php else: ?>
+                <?php else : ?>
                     <p class="no-events standout">No upcoming events available.</p>
                 <?php endif; ?>
 
-                <?php if ($accessLevel > 1 && sizeof($pastEvents) > 0): ?>
+                <?php if ($accessLevel > 1 && sizeof($pastEvents) > 0) : ?>
                     <div class="table-wrapper">
                         <h2>Past Events</h2>
                         <table class="general">
@@ -163,7 +163,7 @@ if (isset($_SESSION['_id'])) {
                                 </tr>
                             </thead>
                             <tbody class="standout">
-                                <?php foreach ($pastEvents as $event): ?>
+                                <?php foreach ($pastEvents as $event) : ?>
                                     <?php
                                         $eventID = $event->getID();
                                         $title = htmlspecialchars($event->getName());
@@ -181,11 +181,11 @@ if (isset($_SESSION['_id'])) {
                             </tbody>
                         </table>
                     </div>
-                <?php elseif ($accessLevel > 1): ?>
+                <?php elseif ($accessLevel > 1) : ?>
                     <p class="no-events standout">No past events available.</p>
                 <?php endif; ?>
 
-                <?php if ($accessLevel > 1 && sizeof($archivedevents) > 0): ?>
+                <?php if ($accessLevel > 1 && sizeof($archivedevents) > 0) : ?>
                     <div class="table-wrapper">
                         <h2>All Archived Events</h2>
                         <table class="general">
@@ -199,7 +199,7 @@ if (isset($_SESSION['_id'])) {
                                 </tr>
                             </thead>
                             <tbody class="standout">
-                                <?php foreach ($archivedevents as $event): ?>
+                                <?php foreach ($archivedevents as $event) : ?>
                                     <?php
                                         $eventID = $event->getID();
                                         $title = htmlspecialchars($event->getName());
@@ -218,7 +218,7 @@ if (isset($_SESSION['_id'])) {
                             </tbody>
                         </table>
                     </div>
-                <?php elseif ($accessLevel > 1): ?>
+                <?php elseif ($accessLevel > 1) : ?>
                     <p class="no-events standout">There are no archived events to display.</p>
                 <?php endif; ?>
             <a class="button cancel" href="index.php">Return to Dashboard</a>

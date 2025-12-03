@@ -43,7 +43,8 @@ function delete_event_coordinators($event_id)
     $con->close();
 }
 
-function get_events_for_coordinator($person_id) {
+function get_events_for_coordinator($person_id)
+{
     $con = connect();
     $stmt = $con->prepare("
         SELECT e.* 

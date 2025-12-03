@@ -151,11 +151,11 @@ if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] != 3) {
                         </tbody>
                     </table>
                 </div>
-                <?php else: ?>
+                <?php else : ?>
                     <p class="no-events standout">You currently have no upcoming assigned events.</p>
                 <?php endif; ?>
                 
-                <?php if (sizeof($archivedEventsAssignedToMe) > 0): ?>
+                <?php if (sizeof($archivedEventsAssignedToMe) > 0) : ?>
                     <div class="table-wrapper">
                         <h2>Archived Events</h2>
                         <table class="general">
@@ -205,7 +205,7 @@ if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] != 3) {
                             </tbody>
                         </table>
                     </div>
-                <?php else: ?>
+                <?php else : ?>
                     <p class="no-events standout">You currently have no archived events.</p>
                 <?php endif; ?>
             <a class="button cancel" href="index.php">Return to Dashboard</a>
