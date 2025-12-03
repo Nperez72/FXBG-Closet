@@ -87,3 +87,33 @@ function fetch_event_report($event_id) {
     $stmt->close();
     return $report ?: null;
 }
+
+function get_attendance_per_event($start_date, $end_date) {
+    $con = connect();
+
+    $sql = "SELECT e.id, e.name, e.date,
+                   r.total_attendance,
+                   r.age_under_18, r.age_18_24, r.age_25_34, r.age_35_44,
+                   r.age_45_54, r.age_55_64, r.age_65_plus,
+                   r.ethnicity_american_indian, r.ethnicity_asian,
+                   r.ethnicity_black, r.ethnicity_hispanic,
+                   r.ethnicity_pacific_islander, r.ethnicity_white
+            FROM dbevents e
+            INNER JOIN dbevent_reports r ON e.id = r.event_id
+            WHERE e.date BETWEEN ? AND ?
+            ORDER BY e.date ASC";
+
+    $stmt = $con->prepare($sql);
+    $stmt->bind_param("ss", $start_date, $end_date);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $data = [];
+    while ($row = $result->fetch_assoc()) {
+        $data[] = $row;
+    }
+
+    $stmt->close();
+    $con->close();
+    return $data;
+}
