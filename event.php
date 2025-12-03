@@ -18,10 +18,13 @@ if (isset($args["id"])) {
 }
 
     include_once('database/dbEvents.php');
+    require_once('database/dbEventCoordinators.php');
 
     // We need to check for a bad ID here before we query the db
     // otherwise we may be vulnerable to SQL injection(!)
     $event_info = fetch_event_by_id($id);
+    // Get an array of coordinators assigned to this event
+    $coordinator_ids = get_event_coordinators($id);
 if ($event_info == null) {
     // TODO: Need to create error page for no event found
     // header('Location: calendar.php');
@@ -308,15 +311,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <td id="description-cell"><?php echo $event_capacity; ?></td>
                 </tr>
                 <tr>
-                    <td class="label">Volunteer Coordinator</td>
-                    <td><?php
-                    if ($event_volunteer_coordinator == null || $event_volunteer_coordinator == '') {
-                        echo "None";
-                    } else {
-                        $person = updated_retrieve_person($event_volunteer_coordinator);
-                        echo htmlspecialchars($person->get_full_name());
-                    }
-                    ?></td>
+                    <td class="label">Volunteer Coordinators</td>
+                    <td>
+                        <?php
+                        if (empty($coordinator_ids)) {
+                            echo "None";
+                        } else {
+                            $names = [];
+                            foreach ($coordinator_ids as $coordID) {
+                                $person = updated_retrieve_person($coordID);
+                                if ($person) {
+                                    $names[] = htmlspecialchars($person->get_full_name());
+                                }
+                            }
+                            echo implode("<br>", $names);
+                        }
+                        ?>
+                    </td>
                 </tr>
             </table>
         </div>
