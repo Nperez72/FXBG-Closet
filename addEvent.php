@@ -128,7 +128,7 @@ if (isset($_GET['date'])) {
                     <p>No available volunteer coordinators.</p>
                 <?php else : ?>
                     <div class="coordinator-checkboxes">
-                        <?php foreach ($volunteerCoord as $vc): ?>
+                        <?php foreach ($volunteerCoord as $vc) : ?>
                             <label>
                                 <input type="checkbox" name="volunteer-coordinator[]" value="<?= htmlspecialchars($vc['person_id']) ?>">
                                 <?= htmlspecialchars($vc['fullname']) ?>

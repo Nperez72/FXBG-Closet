@@ -143,7 +143,7 @@ if ($accessLevel == 3) {
                 <label for="type">* Event Type </label>
                 <select id="type" name="type" required>
                     <?php
-                        $options = array("Outreach", "Festival", "Fundraiser", "Youth Program", "Womxns Program", "Silver Pride Program", 
+                        $options = array("Outreach", "Festival", "Fundraiser", "Youth Program", "Womxns Program", "Silver Pride Program",
                             "Game Night Program", "Youth Reading Program", "Adult Reading Program", "Other");
                         // Check if current event type is valid
                         $selected_type = isset($event['type']) ? $event['type'] : '';
@@ -155,7 +155,7 @@ if ($accessLevel == 3) {
                             $selected = ($is_valid_type && $option == $selected_type) ? 'selected' : '';
                             echo "<option value=\"{$option}\" {$selected}>{$option}</option>";
                         }
-                    ?>
+                        ?>
                 </select>
                 <label for="name">* Description </label>
                 <input type="text" id="description" name="description" value="<?php echo $event['description'] ?>" required placeholder="Enter description">
@@ -168,7 +168,7 @@ if ($accessLevel == 3) {
                         <p>No available volunteer coordinators.</p>
                     <?php else : ?>
                         <div class="coordinator-checkboxes">
-                            <?php foreach ($volunteerCoord as $vc): ?>
+                            <?php foreach ($volunteerCoord as $vc) : ?>
                                 <?php
                                     $checked = in_array($vc['person_id'], $assignedCoordinators) ? 'checked' : '';
                                 ?>

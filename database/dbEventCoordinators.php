@@ -1,7 +1,9 @@
 <?php
+
 require_once('dbinfo.php');
 
-function add_event_coordinator($event_id, $coordinator_id) {
+function add_event_coordinator($event_id, $coordinator_id)
+{
     $con = connect();
 
     $stmt = $con->prepare("INSERT INTO dbevent_coordinators (event_id, coordinator_id) VALUES (?, ?)");
@@ -12,7 +14,8 @@ function add_event_coordinator($event_id, $coordinator_id) {
     $con->close();
 }
 
-function get_event_coordinators($event_id) {
+function get_event_coordinators($event_id)
+{
     $con = connect();
     $stmt = $con->prepare("SELECT coordinator_id FROM dbevent_coordinators WHERE event_id = ?");
     $stmt->bind_param("i", $event_id);
@@ -30,7 +33,8 @@ function get_event_coordinators($event_id) {
     return $ids;
 }
 
-function delete_event_coordinators($event_id) {
+function delete_event_coordinators($event_id)
+{
     $con = connect();
     $stmt = $con->prepare("DELETE FROM dbevent_coordinators WHERE event_id = ?");
     $stmt->bind_param("i", $event_id);
