@@ -40,6 +40,20 @@ $allCoordinators = array_merge($boardMembers, $coordinators);
 <head>
     <title>Select Your Role</title>
     <link href="css/normal_tw.css" rel="stylesheet">
+    <style>
+        /* This ensures column widths are respected when scrolling */
+        #results-table {
+            table-layout: fixed;
+            max-width: 680px;
+        }
+
+        /* Set a max height and enable vertical scrolling for the container */
+        .scrollable-table-container {
+            max-height: 400px; /* Adjust this value for desired fixed height */
+            overflow-y: auto;
+            border: 1px solid var(--border-color, #ccc); /* Optional: Adds a border around the scroll area */
+        }
+    </style>
 </head>
 <body>
 
@@ -65,18 +79,17 @@ $allCoordinators = array_merge($boardMembers, $coordinators);
         <div class="space-y-6">
             <input type="text" id="search-box" placeholder="Search by name..." class="form-input w-full">
 
-            <div class="overflow-x-auto">
+            <div class="scrollable-table-container">
                 <table class="w-full" id="results-table">
                     <thead style="color: var(--text-color); background-color: var(--main-color, #e8c4b8);">
                         <tr>
-                            <th class="text-left p-2">Name</th>
-                            <th class="text-left p-2">Role</th>
-                            <th class="text-left p-2">Action</th>
+                            <th class="text-left p-2 w-[40%]">Name</th>
+                            <th class="text-left p-2 w-[40%]">Role</th>
+                            <th class="text-left p-2 w-[20%]">Action</th>
                         </tr>
                     </thead>
                     <tbody id="search-results">
-                        <!-- Results injected here -->
-                    </tbody>
+                        </tbody>
                 </table>
             </div>
         </div>
