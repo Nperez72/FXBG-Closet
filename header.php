@@ -1341,7 +1341,7 @@ if (date("H:i:s") > "18:19:59") {
                     </a>
                 </div>
             </div>');
-        } else if ($_SESSION['access_level'] == 3) {
+        } elseif ($_SESSION['access_level'] == 3) {
             // VOLUNTEER COORDINATOR MOBILE NAV
             echo('
             <nav class="mobile-bottom-nav">
@@ -1468,7 +1468,7 @@ if (date("H:i:s") > "18:19:59") {
                     </a>
                 </div>
             </div>');
-        } else if ($_SESSION['access_level'] == 2) {
+        } elseif ($_SESSION['access_level'] == 2) {
             // BOARD MEMBER MOBILE NAV
             echo('
             <nav class="mobile-bottom-nav">
