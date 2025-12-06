@@ -993,7 +993,7 @@ if (isset($_SESSION['_id'])) {
                     $inboxIcon = 'inbox-unread.svg';
                 }
                 ?>  
-
+        <!--
         <div class="content-box-test" onclick="window.location.href='viewResources.php'">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Calendar Icon">
@@ -1003,8 +1003,7 @@ if (isset($_SESSION['_id'])) {
             <div class="graph-text">View documents & the volunteer handbook.</div>
             <button class="arrow-button">→</button>
         </div>
-
-        <!--
+        
         <div class="content-box-test" onclick="window.location.href='viewDiscussions.php'">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Report Icon">
