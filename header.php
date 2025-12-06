@@ -124,17 +124,22 @@ if (date("H:i:s") > "18:19:59") {
                                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
                             </svg>
                         </a>
+                        <div class="nav-divider"></div>
+                        <a href="index.php">
+                            <img src="images/FXBG-PrideLogo.png" alt="Logo" class="nav-logo logo-lightMode">
+                            <img src="images/FXBG-PrideWhiteLogo.png" alt="Logo (Dark Mode)" class="nav-logo logo-darkMode">
+                        </a>
                     </div>
 
                     <!-- Main Navigation -->
                     <div class="nav-menu" id="navMenu">
-                        <a href="viewCheckInOut.php" class="nav-link nav-link-special">
+                        <!-- <a href="viewCheckInOut.php" class="nav-link nav-link-special">
                             <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M9 11l3 3L22 4"></path>
                                 <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
                             </svg>
                             <span>Check In/Out</span>
-                        </a>
+                        </a> -->
 
                         <div class="nav-dropdown">
                             <button class="nav-link">
@@ -412,17 +417,22 @@ if (date("H:i:s") > "18:19:59") {
                                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
                             </svg>
                         </a>
+                        <div class="nav-divider"></div>
+                        <a href="index.php">
+                            <img src="images/FXBG-PrideLogo.png" alt="Logo" class="nav-logo logo-lightMode">
+                            <img src="images/FXBG-PrideWhiteLogo.png" alt="Logo (Dark Mode)" class="nav-logo logo-darkMode">
+                        </a>
                     </div>
 
                     <!-- Main Navigation -->
                     <div class="nav-menu" id="navMenu">
-                        <a href="viewCheckInOut.php" class="nav-link nav-link-special">
+                        <!-- <a href="viewCheckInOut.php" class="nav-link nav-link-special">
                             <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M9 11l3 3L22 4"></path>
                                 <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
                             </svg>
                             <span>Check In/Out</span>
-                        </a>
+                        </a> -->
 
                         <div class="nav-dropdown">
                             <button class="nav-link">
@@ -493,7 +503,7 @@ if (date("H:i:s") > "18:19:59") {
                                         <line x1="3" y1="12" x2="3.01" y2="12"></line>
                                         <line x1="3" y1="18" x2="3.01" y2="18"></line>
                                     </svg>
-                                    View Upcoming
+                                    View All Events
                                 </a>
                                 <a href="viewAssignedEvents.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -718,7 +728,7 @@ if (date("H:i:s") > "18:19:59") {
                                         <line x1="3" y1="12" x2="3.01" y2="12"></line>
                                         <line x1="3" y1="18" x2="3.01" y2="18"></line>
                                     </svg>
-                                    View Upcoming
+                                    View All Events
                                 </a>
                                 <a href="trackSupplies.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
