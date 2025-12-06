@@ -539,20 +539,27 @@ if (isset($_SESSION['_id'])) {
         </div>
     </div>
 
-      <div class="content-box">
-          <div class="small-text">Let's have some fun!</div>
-        <div class="large-text">Event Management</div>
-<button class="circle-arrow-button" onclick="window.location.href='eventManagement.php'">
-    <span class="button-text"><?php
-                        require_once('database/dbEvents.php');
-                        require_once('database/dbPersons.php');
-                        $pendingsignups = all_pending_names();
-    if (sizeof($pendingsignups) > 0) {
-        echo '<span class="colored-box">' . sizeof($pendingsignups) . '</span>';
-    }
-    ?> Go </span>
-    <div class="circle">&gt;</div>
-</button>
+    <div class="content-box">
+        <div class="small-text">Let's have some fun!</div>
+        <div class="large-text">Events</div>
+        <div class="nav-buttons">
+            <button class="nav-button" onclick="window.location.href='viewAllEvents.php'">
+                <span class="arrow"><img src="images/new-event.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 10px;"></span>
+                <span class="text">View All</span>
+            </button>
+            <button class="nav-button" onclick="window.location.href='viewAssignedEvents.php'">
+                <span class="arrow"><img src="images/new-event.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 10px;"></span>
+                <span class="text">My Events</span>
+            </button>
+            <!-- <button class="nav-button" onclick="window.location.href='viewMyUpcomingEvents.php'">
+                <span class="arrow"><img src="images/list-solid.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 10px;"></span>
+                <span class="text">Upcoming</span>
+            </button> -->
+            <!-- <button class="nav-button" onclick="window.location.href='editHours.php'">
+                <span class="arrow"><img src="images/clock-regular.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 10px;"></span>
+                <span class="text">Hours</span>
+            </button> -->
+        </div>
     </div>
 
       <!-- <div class="content-box">
