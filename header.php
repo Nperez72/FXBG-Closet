@@ -1193,7 +1193,7 @@ if (date("H:i:s") > "18:19:59") {
     <?php
     // Mobile Bottom Navigation (PWA-optimized)
     if ($_SESSION['logged_in']) {
-        if ($_SESSION['access_level'] >= 2) {
+        if ($_SESSION['access_level'] >= 4) {
             // ADMIN MOBILE NAV
             echo('
             <nav class="mobile-bottom-nav">
@@ -1260,14 +1260,14 @@ if (date("H:i:s") > "18:19:59") {
                         </svg>
                         <span>Groups</span>
                     </a>
-                    <a href="resources.php" class="mobile-more-item">
+                    <a href="trackSupplies.php" class="mobile-more-item">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"></path>
                             <polyline points="13 2 13 9 20 9"></polyline>
                         </svg>
-                        <span>Resources</span>
+                        <span>Material Request Form</span>
                     </a>
-                    <a href="generateReport.php" class="mobile-more-item">
+                    <a href="viewSupplies.php" class="mobile-more-item">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path>
                             <polyline points="14 2 14 8 20 8"></polyline>
@@ -1275,21 +1275,21 @@ if (date("H:i:s") > "18:19:59") {
                             <line x1="16" y1="17" x2="8" y2="17"></line>
                             <polyline points="10 9 9 9 8 9"></polyline>
                         </svg>
-                        <span>Reports</span>
+                        <span>View Material Requests</span>
                     </a>
-                    <a href="inbox.php" class="mobile-more-item">
+                    <!-- <a href="inbox.php" class="mobile-more-item">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                             <polyline points="22,6 12,13 2,6"></polyline>
                         </svg>
                         <span>Notifications</span>
-                    </a>
-                    <a href="viewProfile.php" class="mobile-more-item">
+                    </a> -->
+                    <a href="useClosetAdmin.php" class="mobile-more-item">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
                             <circle cx="12" cy="7" r="4"></circle>
                         </svg>
-                        <span>Profile</span>
+                        <span>Closet Inventory</span>
                     </a>
                     
                     <div style="border-top: 1px solid var(--border-color, #e8c4b8); margin: 12px 0; padding-top: 12px;"></div>
