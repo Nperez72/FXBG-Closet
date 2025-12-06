@@ -149,7 +149,7 @@ if (isset($_SESSION['_id'])) {
                     <p class="no-events standout">No upcoming events available.</p>
                 <?php endif; ?>
 
-                <?php if ($accessLevel > 1 && sizeof($pastEvents) > 0) : ?>
+                <?php if (sizeof($pastEvents) > 0) : ?>
                     <div class="table-wrapper">
                         <h2>Past Events</h2>
                         <table class="general">
