@@ -306,7 +306,7 @@ if (isset($_SESSION['_id'])) {
     if (sizeof($pendingsignups) > 0) {
         echo '<span class="colored-box">' . sizeof($pendingsignups) . '</span>';
     }
-    ?> Sign-Ups </span>
+    ?> Go </span>
     <div class="circle">&gt;</div>
 </button>
     </div>
@@ -388,7 +388,7 @@ if (isset($_SESSION['_id'])) {
             <button class="arrow-button">→</button>
         </div>
 
-        <div class="content-box-test" onclick="window.location.href='viewDiscussions.php'">
+        <!-- <div class="content-box-test" onclick="window.location.href='viewDiscussions.php'">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Report Icon">
             </div>
@@ -396,7 +396,7 @@ if (isset($_SESSION['_id'])) {
             <div class="large-text-sub">Discussions</div>
             <div class="graph-text">See the latest.</div>
             <button class="arrow-button">→</button>
-        </div>
+        </div> -->
         
         <div class="content-box-test" onclick="window.location.href='useClosetAdmin.php'">
             <div class="icon-overlay">
@@ -435,7 +435,7 @@ if (isset($_SESSION['_id'])) {
                 <a href="eventManagement.php">Programs & Events</a>
                 <a href="volunteerManagement.php">Volunteer</a>
                 <a href="resources.php">Resources</a>
-                <a href="viewProfile.php">My Profile</a>
+                <!-- <a href="viewProfile.php">My Profile</a> -->
             </div>
             <div class="footer-section">
                 <div class="footer-topic">Contact</div>
@@ -533,19 +533,19 @@ if (isset($_SESSION['_id'])) {
     if (sizeof($pendingsignups) > 0) {
         echo '<span class="colored-box">' . sizeof($pendingsignups) . '</span>';
     }
-    ?> Sign-Ups </span>
+    ?> Go </span>
     <div class="circle">&gt;</div>
 </button>
     </div>
 
-      <div class="content-box">
+      <!-- <div class="content-box">
           <div class="small-text">Our team makes this all possible.</div>
-        <div class="large-text">Group Management</div>
-<button class="circle-arrow-button" onclick="window.location.href='groupManagement.php'">
-    <span class="button-text">Go</span>
-    <div class="circle">&gt;</div>
-</button>
-    </div>
+          <div class="large-text">Group Management</div>
+          <button class="circle-arrow-button" onclick="window.location.href='groupManagement.php'">
+            <span class="button-text">Go</span>
+            <div class="circle">&gt;</div>
+          </button>
+      </div> -->
 
     </div>
 
@@ -564,13 +564,13 @@ if (isset($_SESSION['_id'])) {
         </div>
 
 
-        <div class="content-box-test" onclick="window.location.href='resources.php'">
+        <div class="content-box-test" onclick="window.location.href='viewResources.php'">
             <div class="icon-overlay">
-                <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Document Icon">
+                <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Calendar Icon">
             </div>
             <div class="background-image"></div>
-            <div class="large-text-sub">Manage Media</div>
-            <div class="graph-text">Media for volunteers.</div>
+            <div class="large-text-sub">Documents</div>
+            <div class="graph-text">View documents & the volunteer handbook.</div>
             <button class="arrow-button">→</button>
         </div>
                 <?php
@@ -615,7 +615,7 @@ if (isset($_SESSION['_id'])) {
             <button class="arrow-button">→</button>
         </div>
 
-        <div class="content-box-test" onclick="window.location.href='viewDiscussions.php'">
+        <!-- <div class="content-box-test" onclick="window.location.href='viewDiscussions.php'">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Report Icon">
             </div>
@@ -623,7 +623,7 @@ if (isset($_SESSION['_id'])) {
             <div class="large-text-sub">Discussions</div>
             <div class="graph-text">See the latest.</div>
             <button class="arrow-button">→</button>
-        </div>
+        </div> -->
     </div>
 
 
@@ -651,8 +651,8 @@ if (isset($_SESSION['_id'])) {
                 <div class="footer-topic">Get Involved</div>
                 <a href="eventManagement.php">Programs & Events</a>
                 <a href="volunteerManagement.php">Volunteer</a>
-                <a href="resources.php">Resources</a>
-                <a href="viewProfile.php">My Profile</a>
+                <a href="viewResources.php">Resources</a>
+                <!-- <a href="viewProfile.php">My Profile</a> -->
             </div>
             <div class="footer-section">
                 <div class="footer-topic">Contact</div>
@@ -719,7 +719,7 @@ if (isset($_SESSION['_id'])) {
     <div class="full-width-bar">
       <div class="content-box">
           <div class="small-text">Make a difference.</div>
-        <div class="large-text">Volunteer Management</div>
+        <div class="large-text">Volunteer</div>
     <button class="circle-arrow-button" onclick="window.location.href='volunteerManagement.php'">
         <span class="button-text">Go</span>
         <div class="circle">&gt;</div>
@@ -740,7 +740,7 @@ if (isset($_SESSION['_id'])) {
 
       <div class="content-box">
           <div class="small-text">Let's have some fun!</div>
-        <div class="large-text">Event Management</div>
+        <div class="large-text">Events</div>
 <button class="circle-arrow-button" onclick="window.location.href='eventManagement.php'">
     <span class="button-text"><?php
                         require_once('database/dbEvents.php');
@@ -749,19 +749,19 @@ if (isset($_SESSION['_id'])) {
     if (sizeof($pendingsignups) > 0) {
         echo '<span class="colored-box">' . sizeof($pendingsignups) . '</span>';
     }
-    ?> Sign-Ups </span>
+    ?> Go </span>
     <div class="circle">&gt;</div>
 </button>
     </div>
 
-      <div class="content-box">
-          <div class="small-text">Our team makes this all possible.</div>
+      <!-- <div class="content-box">
+        <div class="small-text">Our team makes this all possible.</div>
         <div class="large-text">Group Management</div>
-<button class="circle-arrow-button" onclick="window.location.href='groupManagement.php'">
-    <span class="button-text">Go</span>
-    <div class="circle">&gt;</div>
-</button>
-    </div>
+        <button class="circle-arrow-button" onclick="window.location.href='groupManagement.php'">
+          <span class="button-text">Go</span>
+          <div class="circle">&gt;</div>
+        </button>
+      </div> -->
 
     </div>
 
@@ -780,13 +780,13 @@ if (isset($_SESSION['_id'])) {
         </div>
 
 
-        <div class="content-box-test" onclick="window.location.href='resources.php'">
+        <div class="content-box-test" onclick="window.location.href='viewResources.php'">
             <div class="icon-overlay">
-                <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Document Icon">
+                <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Calendar Icon">
             </div>
             <div class="background-image"></div>
-            <div class="large-text-sub">Manage Documents</div>
-            <div class="graph-text">Resources for volunteers.</div>
+            <div class="large-text-sub">Documents</div>
+            <div class="graph-text">View documents & the volunteer handbook.</div>
             <button class="arrow-button">→</button>
         </div>
                 <?php
@@ -831,7 +831,7 @@ if (isset($_SESSION['_id'])) {
             <button class="arrow-button">→</button>
         </div>
 
-        <div class="content-box-test" onclick="window.location.href='viewDiscussions.php'">
+        <!-- <div class="content-box-test" onclick="window.location.href='viewDiscussions.php'">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Report Icon">
             </div>
@@ -839,7 +839,7 @@ if (isset($_SESSION['_id'])) {
             <div class="large-text-sub">Discussions</div>
             <div class="graph-text">See the latest.</div>
             <button class="arrow-button">→</button>
-        </div>
+        </div> -->
     </div>
 
 <div class="divider-line"></div>
@@ -863,8 +863,8 @@ if (isset($_SESSION['_id'])) {
                 <div class="footer-topic">Get Involved</div>
                 <a href="eventManagement.php">Programs & Events</a>
                 <a href="volunteerManagement.php">Volunteer</a>
-                <a href="resources.php">Resources</a>
-                <a href="viewProfile.php">My Profile</a>
+                <a href="viewResources.php">Resources</a>
+                <!-- <a href="viewProfile.php">My Profile</a> -->
             </div>
             <div class="footer-section">
                 <div class="footer-topic">Contact</div>
@@ -894,9 +894,9 @@ if (isset($_SESSION['_id'])) {
 
     <!-- ONLY VOLUNTEERS WILL SEE THIS -->
     <?php elseif ($_SESSION['access_level'] == 1) : ?>
-     <!-- Icon Container -->
+     <!-- Icon Container
     <div class="icon-container">
-        <!-- Volunteer of the Month Icon -->
+        Volunteer of the Month Icon
         <a href="selectVOTM.php">
             <div class="icon-label">
                 🎖 Volunteer of the Month
@@ -904,16 +904,14 @@ if (isset($_SESSION['_id'])) {
             <img src="images/star-icon.svg" alt="Volunteer of the Month Icon" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
         </a>
 
-    <!-- Leaderboard Icon -->
-    <a href="leaderboard.php">
-        <div class="icon-label">
-            👑 Leaderboard
-        </div>
-        <img src="images/crown.png" alt="Leaderboard Icon" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-    </a>
-</div>
-
-
+        Leaderboard Icon
+        <a href="leaderboard.php">
+            <div class="icon-label">
+                👑 Leaderboard
+            </div>
+            <img src="images/crown.png" alt="Leaderboard Icon" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+        </a>
+    </div> -->
 
         <!-- Dummy content to enable scrolling -->
         <div style="margin-top: 0px; padding: 30px 20px;">
@@ -924,43 +922,43 @@ if (isset($_SESSION['_id'])) {
     <div class="full-width-bar">
       <div class="content-box">
           <div class="small-text">Make a difference.</div>
-        <div class="large-text">My Profile</div>
+        <div class="large-text">Volunteer</div>
         <div class="nav-buttons">
-            <button class="nav-button" onclick="window.location.href='viewProfile.php'">
+            <!-- <button class="nav-button" onclick="window.location.href='viewProfile.php'">
                 <span class="arrow"><img src="images/view-profile.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 20px;"></span>
                 <span class="text">View</span>
-            </button>
-            <button class="nav-button" onclick="window.location.href='editProfile.php'">
+            </button> -->
+            <!-- <button class="nav-button" onclick="window.location.href='editProfile.php'">
                 <span class="arrow"><img src="images/manage-account.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 20px;"></span>
                 <span class="text">Edit</span>
-            </button>
-            <button class="nav-button" onclick="window.location.href='volunteerReport.php'">
+            </button> -->
+            <button class="nav-button" onclick="window.location.href='trackActivities.php'">
                 <span class="arrow"><img src="images/volunteer-history.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 20px;"></span>
-                <span class="text">My Hours</span>
+                <span class="text">Track</span>
             </button>
         </div>
     </div>
 
       <div class="content-box">
           <div class="small-text">Let's have some fun!</div>
-        <div class="large-text">My Events</div>
+        <div class="large-text">Events</div>
         <div class="nav-buttons">
             <button class="nav-button" onclick="window.location.href='viewAllEvents.php'">
                 <span class="arrow"><img src="images/new-event.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 10px;"></span>
-                <span class="text">Sign-Up</span>
+                <span class="text">View</span>
             </button>
-            <button class="nav-button" onclick="window.location.href='viewMyUpcomingEvents.php'">
+            <!-- <button class="nav-button" onclick="window.location.href='viewMyUpcomingEvents.php'">
                 <span class="arrow"><img src="images/list-solid.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 10px;"></span>
                 <span class="text">Upcoming</span>
-            </button>
-            <button class="nav-button" onclick="window.location.href='editHours.php'">
+            </button> -->
+            <!-- <button class="nav-button" onclick="window.location.href='editHours.php'">
                 <span class="arrow"><img src="images/clock-regular.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 10px;"></span>
                 <span class="text">Hours</span>
-            </button>
+            </button> -->
         </div>
     </div>
 
-      <div class="content-box">
+      <!-- <div class="content-box">
           <div class="small-text">Our team makes this all possible.</div>
         <div class="large-text">My Group</div>
         <div class="nav-buttons">
@@ -969,7 +967,7 @@ if (isset($_SESSION['_id'])) {
                 <span class="text">View</span>
             </button>
         </div>
-    </div>
+    </div> -->
     </div>
 
     <div class="dashboard-title">
@@ -1006,6 +1004,7 @@ if (isset($_SESSION['_id'])) {
             <button class="arrow-button">→</button>
         </div>
 
+        <!--
         <div class="content-box-test" onclick="window.location.href='viewDiscussions.php'">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Report Icon">
@@ -1024,7 +1023,7 @@ if (isset($_SESSION['_id'])) {
             <div class="large-text-sub">Notifications</div>
             <div class="graph-text">Stay up to date.</div>
             <button class="arrow-button">→</button>
-        </div>
+        </div> -->
 
         </div>
 
@@ -1048,9 +1047,9 @@ if (isset($_SESSION['_id'])) {
             <div class="footer-section">
                 <div class="footer-topic">Get Involved</div>
                 <a href="viewAllEvents.php">Programs & Events</a>
-                <a href="volunteerViewGroup.php">Volunteer</a>
+                <a href="trackActivities.php">Volunteer</a>
                 <a href="viewResources.php">Resources</a>
-                <a href="viewProfile.php">My Profile</a>
+                <!-- <a href="viewProfile.php">My Profile</a> -->
             </div>
             <div class="footer-section">
                 <div class="footer-topic">Contact</div>

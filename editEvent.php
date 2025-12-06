@@ -25,6 +25,7 @@ if ($accessLevel < 3) {
     require_once('include/input-validation.php');
     require_once('database/dbEvents.php');
     require_once('database/dbPersons.php');
+    require_once('database/dbEventCoordinators.php');
     $errors = '';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $args = sanitize($_POST, null);
@@ -59,6 +60,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo "Oopsy!";
                 die();
             }
+            // Clear existing coordinators for this event
+            delete_event_coordinators($id);
+            // Add the selected coordinators back
+            if (isset($_POST['volunteer-coordinator']) && is_array($_POST['volunteer-coordinator'])) {
+                foreach ($_POST['volunteer-coordinator'] as $coord_id) {
+                    add_event_coordinator($id, (int)$coord_id);
+                }
+            }
             header('Location: event.php?id=' . $id . '&editSuccess');
         }
     }
@@ -71,6 +80,7 @@ if (!isset($_GET['id'])) {
     $id = $args['id'];
     $event = fetch_event_by_id($id);
     $volunteerCoord = getVolunteerCoordinators();
+    $assignedCoordinators = get_event_coordinators($id);
 if (!$event) {
     echo "Event does not exist";
     die();
@@ -81,7 +91,13 @@ if ($accessLevel == 3) {
         die();
     }
     $personID = $_SESSION['person_id'];
-    if ($personID != $event['volunteer_coordinator']) {
+    // Get an array of coordinators assigned to this event
+    $coordinator_ids = get_event_coordinators($id);
+    $isAssignedCoordinator = false;
+    if (isset($_SESSION['person_id']) && is_array($coordinator_ids)) {
+        $isAssignedCoordinator = in_array($_SESSION['person_id'], $coordinator_ids);
+    }
+    if (!$isAssignedCoordinator) {
         header('Location: login.php');
         echo 'bad access level';
         die();
@@ -130,26 +146,48 @@ if ($accessLevel == 3) {
                 <input type="text" id="start-time" name="start-time" value="<?php echo time24hto12h($event['startTime']) ?>" pattern="([1-9]|10|11|12):[0-5][0-9] ?([aApP][mM])" required placeholder="Enter start time. Ex. 12:00 PM">
                 <label for="name">* End Time </label>
                 <input type="text" id="end-time" name="end-time" value="<?php echo time24hto12h($event['endTime']) ?>" pattern="([1-9]|10|11|12):[0-5][0-9] ?([aApP][mM])" required placeholder="Enter end time. Ex. 12:00 PM">
+                <label for="type">* Event Type </label>
+                <select id="type" name="type" required>
+                    <?php
+                        $options = array("Outreach", "Festival", "Fundraiser", "Youth Program", "Womxns Program", "Silver Pride Program",
+                            "Game Night Program", "Youth Reading Program", "Adult Reading Program", "Other");
+                        // Check if current event type is valid
+                        $selected_type = isset($event['type']) ? $event['type'] : '';
+                        $is_valid_type = in_array($selected_type, $options);
+                        // Default "Select Event Type" option
+                        echo '<option value="" ' . (!$is_valid_type ? 'selected' : '') . '>Select Event Type</option>';
+                        // Generate all event type options
+                        foreach ($options as $option) {
+                            $selected = ($is_valid_type && $option == $selected_type) ? 'selected' : '';
+                            echo "<option value=\"{$option}\" {$selected}>{$option}</option>";
+                        }
+                        ?>
+                </select>
                 <label for="name">* Description </label>
                 <input type="text" id="description" name="description" value="<?php echo $event['description'] ?>" required placeholder="Enter description">
                 <label for="name">Location </label>
                 <input type="text" id="location" name="location" value="<?php echo $event['location'] ?>" placeholder="Enter location">
                 <label for="name">Capacity </label>
                 <input type="number" id="capacity" name="capacity" value="<?php echo $event['capacity'] ?>" placeholder="Enter capacity (e.g. 1-99)">
-                <label for="volunteer-coordinator">Assigned Volunteer Coordinator:</label>
-                <?php if (empty($volunteerCoord)) : ?>
-                    <p>No available volunteer coordinators.</p>
-                <?php else : ?>
-                    <select id="volunteer-coordinator" name="volunteer-coordinator">
-                        <option value="None" <?= empty($event['volunteer_coordinator']) ? 'selected' : '' ?>>None</option>
-                        <?php foreach ($volunteerCoord as $vc) : ?>
-                            <option value="<?= htmlspecialchars($vc['person_id']) ?>"
-                                <?= ($event['volunteer_coordinator'] == $vc['person_id']) ? 'selected' : '' ?>>
-                                <?= htmlspecialchars($vc['fullname']) ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                <?php endif; ?>
+                <label for="volunteer-coordinator">Assigned Volunteer Coordinators:</label>
+                    <?php if (empty($volunteerCoord)) : ?>
+                        <p>No available volunteer coordinators.</p>
+                    <?php else : ?>
+                        <div class="coordinator-checkboxes">
+                            <?php foreach ($volunteerCoord as $vc) : ?>
+                                <?php
+                                    $checked = in_array($vc['person_id'], $assignedCoordinators) ? 'checked' : '';
+                                ?>
+                                <label>
+                                    <input type="checkbox"
+                                        name="volunteer-coordinator[]"
+                                        value="<?= htmlspecialchars($vc['person_id']) ?>"
+                                        <?= $checked ?>>
+                                    <?= htmlspecialchars($vc['fullname']) ?>
+                                </label><br>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
                 <!--<fieldset>
                     <label for="name">* Service </label>
                     </?php 

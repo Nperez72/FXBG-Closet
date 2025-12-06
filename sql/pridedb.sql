@@ -216,32 +216,94 @@ CREATE TABLE `dbevents` (
 -- Dumping data for table `dbevents`
 --
 
-INSERT INTO `dbevents` (`id`, `name`, `date`, `startTime`, `endTime`, `description`, `capacity`, `completed`, `restricted_signup`, `location`, `type`, `volunteer_coordinator`) VALUES
-(112, 'DOGGIE WALKIES', '2025-04-30', '13:00', '15:00', 'walking the doggies in the woods', 20, 'yes', 0, 'Miami, USA', 'blah', NULL),
-(117, 'Color Test', '2025-11-11', '13:00', '14:00', 'Testing the colors in the calendar', 12, 'yes', 0, '', 'Test', 16),
-(118, 'Halloween Event', '2025-10-31', '18:00', '20:30', 'It is halloween!!', 50, 'no', 0, 'Fredericksburg, VA', 'Holiday', NULL),
-(119, 'party :)', '2026-01-14', '01:00', '01:01', 'dancin', 1, 'no', 0, 'my house', 'party :)', NULL),
-(120, 'SDLFjkafs', '2025-09-10', '12:00', '14:00', 'j;aksdfj', 99999, 'no', 0, 'asdf;j', 'sadj', NULL),
-(121, 'Whikey Valor Tasting', '2025-09-24', '15:00', '18:00', 'Come have a taste of fine barrel aged whiskey with fellow Vets.', 25, 'no', 0, 'Old Silk Mill', 'Tasting', NULL),
-(122, 'Event', '2025-12-01', '13:00', '14:00', 'Use Case Event', 77, 'no', 0, 'UMW', 'Group', NULL),
-(123, 'Ethan&#039;s Birthday Party', '2025-10-03', '07:30', '19:30', 'Ethan is going to eat my cake.', 2147483647, 'no', 0, 'Eagle 225', 'Party', NULL),
-(124, 'Example event', '2025-09-11', '12:00', '14:00', 'This is a test event', 42, 'no', 0, 'UMW', 'A test', NULL),
-(125, 'Pet Adoption', '2025-09-13', '11:00', '17:00', 'Pet Adoption', 50, 'no', 0, 'Fredericksburg, Virginia', 'Pet Adoption', NULL),
-(126, 'Squirrel Watching', '2025-09-22', '06:00', '09:00', 'Watch the squirrels to make sure they do not eat the bird seed', 6, 'no', 0, '275 Butler Rd, Fredericksburg, VA 22405', 'Squirrel', NULL),
-(127, 'Whoosky Volar Tasting', '2025-09-15', '09:00', '13:00', 'Test Event', 42, 'no', 0, 'House', 'Get-Together', NULL),
-(128, 'Event', '2025-12-01', '13:30', '14:00', 'Use Case Event', 77, 'no', 0, 'UMW', 'Person', NULL),
-(129, 'Test event Woak', '2025-10-31', '15:00', '18:00', 'testing thsi woa', 99, 'no', 0, 'required but not listed', 'not listed as req', NULL),
-(130, 'Class Example', '2025-09-24', '12:00', '14:00', 'This is an example', 10, 'no', 0, 'Farmer', 'Shit storm', NULL),
-(131, 'FXBG Tester', '2025-11-11', '18:00', '20:30', 'First test event!!!!', 100, 'yes', 0, 'UMW Campus', 'Test', NULL),
-(132, 'FXBG Fix', '2025-11-25', '06:00', '07:00', 'Test Desc', 999, 'yes', 0, '', 'Random Stuff', NULL),
-(133, 'Test', '2025-11-10', '18:00', '20:30', 'a', 999, 'no', 0, '', 'a', NULL),
-(134, 'New Test', '2025-11-12', '06:00', '07:00', 'AAA', 999, 'no', 0, '', 'AAA', 18),
-(135, 'Next Test', '2025-11-14', '18:00', '20:30', 'AAAA', 999, 'no', 0, 'UMW Campus', 'AAA', NULL),
-(137, 'Thanksgiving', '2025-11-27', '16:00', '19:00', 'Description!!!', 50, 'no', 0, 'Fredericksburg, VA', 'Holiday', NULL),
-(138, 'VCTest1-NewVersion', '2025-12-01', '18:00', '20:30', 'First test event!!!!', 400, 'no', 0, '', 'Test', 18),
-(139, 'VCTest2', '2025-11-30', '06:00', '07:00', 'AAA', 999, 'no', 0, '', 'Test', 18),
-(140, 'VCTest3', '2025-12-16', '06:00', '07:00', 'AAAA', 999, 'no', 0, '', 'Test', 18),
-(141, 'VCTest4', '2025-12-02', '18:00', '20:30', 'AAA', 999, 'no', 0, 'UMW Campus', 'Test', 18);
+INSERT INTO `dbevents` (`id`, `name`, `date`, `startTime`, `endTime`, `description`, `capacity`, `completed`, `restricted_signup`, `location`, `type`) VALUES
+(112, 'DOGGIE WALKIES', '2025-04-30', '13:00', '15:00', 'walking the doggies in the woods', 20, 'yes', 0, 'Miami, USA', 'blah'),
+(117, 'Color Test', '2025-11-11', '13:00', '14:00', 'Testing the colors in the calendar', 12, 'yes', 0, '', 'Test'),
+(118, 'Halloween Event', '2025-10-31', '18:00', '20:30', 'It is halloween!!', 50, 'no', 0, 'Fredericksburg, VA', 'Holiday'),
+(119, 'party :)', '2026-01-14', '01:00', '01:01', 'dancin', 1, 'no', 0, 'my house', 'party :)'),
+(120, 'SDLFjkafs', '2025-09-10', '12:00', '14:00', 'j;aksdfj', 99999, 'no', 0, 'asdf;j', 'sadj'),
+(121, 'Whikey Valor Tasting', '2025-09-24', '15:00', '18:00', 'Come have a taste of fine barrel aged whiskey with fellow Vets.', 25, 'no', 0, 'Old Silk Mill', 'Tasting'),
+(122, 'Program5', '2025-12-01', '13:00', '14:00', 'Use Case Event', 77, 'no', 0, 'UMW', 'Group'),
+(123, 'Ethans Birthday Party', '2025-12-11', '07:30', '19:30', 'Ethan is going to eat my cake.', 211, 'no', 0, 'Eagle 225', 'Womxns Program'),
+(124, 'Example event', '2025-09-11', '12:00', '14:00', 'This is a test event', 42, 'no', 0, 'UMW', 'A test'),
+(125, 'Pet Adoption', '2025-09-13', '11:00', '17:00', 'Pet Adoption', 50, 'no', 0, 'Fredericksburg, Virginia', 'Pet Adoption'),
+(126, 'Squirrel Watching', '2025-09-22', '06:00', '09:00', 'Watch the squirrels to make sure they do not eat the bird seed', 6, 'no', 0, '275 Butler Rd, Fredericksburg, VA 22405', 'Squirrel'),
+(127, 'Whoosky Volar Tasting', '2025-09-15', '09:00', '13:00', 'Test Event', 42, 'no', 0, 'House', 'Get-Together'),
+(128, 'Fundraising', '2025-12-01', '13:30', '14:00', 'Use Case Event', 77, 'no', 0, 'UMW', 'Person'),
+(129, 'Test event Woak', '2025-10-31', '15:00', '18:00', 'testing thsi woa', 99, 'no', 0, 'required but not listed', 'not listed as req'),
+(130, 'Class Example', '2025-09-24', '12:00', '14:00', 'This is an example', 10, 'no', 0, 'Farmer', 'Shit storm'),
+(131, 'FXBG Tester', '2025-11-11', '18:00', '20:30', 'First test event!!!!', 100, 'yes', 0, 'UMW Campus', 'Test'),
+(132, 'FXBG Fix', '2025-11-25', '06:00', '07:00', 'Test Desc', 999, 'yes', 0, '', 'Random Stuff'),
+(133, 'Test', '2025-11-10', '18:00', '20:30', 'a', 999, 'no', 0, '', 'a'),
+(134, 'New Test', '2025-11-12', '06:00', '07:00', 'AAA', 999, 'no', 0, '', 'AAA'),
+(135, 'Next Test', '2025-11-14', '18:00', '20:30', 'AAAA', 999, 'no', 0, 'UMW Campus', 'AAA'),
+(137, 'Thanksgiving', '2025-11-27', '16:00', '19:00', 'Description!!!', 50, 'no', 0, 'Fredericksburg, VA', 'Holiday'),
+(138, 'VCTest1', '2025-12-01', '18:00', '20:30', 'First test event!!!!', 400, 'no', 0, '', 'Test'),
+(139, 'VCTest2', '2025-11-30', '06:00', '07:00', 'AAA', 999, 'no', 0, '', 'Test'),
+(140, 'VCTest3', '2025-12-16', '06:00', '07:00', 'AAAA', 999, 'no', 0, '', 'Test'),
+(141, 'VCTest4', '2025-12-02', '18:00', '20:30', 'AAA', 999, 'no', 0, 'UMW Campus', 'Test'),
+(143, 'coords', '2025-12-31', '06:00', '20:30', 'AAA', 999, 'no', 0, '', 'Fundraiser'),
+(144, 'coordTest', '2025-12-24', '06:00', '07:00', 'coord test', 55, 'no', 0, 'Fredericksburg, VA', 'Youth Reading Program'),
+(145, 'noncoords', '2025-12-18', '18:00', '19:00', 'test', 999, 'no', 0, '', 'Youth Program');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dbevent_coordinators`
+--
+
+CREATE TABLE `dbevent_coordinators` (
+  `event_id` int NOT NULL,
+  `coordinator_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `dbevent_coordinators`
+--
+
+INSERT INTO `dbevent_coordinators` (`event_id`, `coordinator_id`) VALUES
+(144, 14),
+(144, 15),
+(143, 17),
+(144, 17),
+(143, 18);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dbevent_reports`
+--
+
+CREATE TABLE `dbevent_reports` (
+  `id` int UNSIGNED NOT NULL,
+  `event_id` int NOT NULL,
+  `total_attendance` int UNSIGNED NOT NULL DEFAULT '0',
+  `age_under_18` int UNSIGNED NOT NULL DEFAULT '0',
+  `age_18_24` int UNSIGNED NOT NULL DEFAULT '0',
+  `age_25_34` int UNSIGNED NOT NULL DEFAULT '0',
+  `age_35_44` int UNSIGNED NOT NULL DEFAULT '0',
+  `age_45_54` int UNSIGNED NOT NULL DEFAULT '0',
+  `age_55_64` int UNSIGNED NOT NULL DEFAULT '0',
+  `age_65_plus` int UNSIGNED NOT NULL DEFAULT '0',
+  `ethnicity_american_indian` int UNSIGNED NOT NULL DEFAULT '0',
+  `ethnicity_asian` int UNSIGNED NOT NULL DEFAULT '0',
+  `ethnicity_black` int UNSIGNED NOT NULL DEFAULT '0',
+  `ethnicity_hispanic` int UNSIGNED NOT NULL DEFAULT '0',
+  `ethnicity_pacific_islander` int UNSIGNED NOT NULL DEFAULT '0',
+  `ethnicity_white` int UNSIGNED NOT NULL DEFAULT '0',
+  `event_cost` decimal(10,2) DEFAULT '0.00',
+  `reimbursement_cost` decimal(10,2) DEFAULT '0.00'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `dbevent_reports`
+--
+
+INSERT INTO `dbevent_reports` (`id`, `event_id`, `total_attendance`, `age_under_18`, `age_18_24`, `age_25_34`, `age_35_44`, `age_45_54`, `age_55_64`, `age_65_plus`, `ethnicity_american_indian`, `ethnicity_asian`, `ethnicity_black`, `ethnicity_hispanic`, `ethnicity_pacific_islander`, `ethnicity_white`, `event_cost`, `reimbursement_cost`) VALUES
+(1, 119, 20, 10, 0, 5, 0, 5, 0, 0, 2, 2, 2, 2, 2, 10, 90.50, 85.00),
+(2, 128, 25, 1, 1, 1, 1, 1, 20, 0, 0, 5, 5, 5, 5, 5, 800.00, 0.00),
+(3, 138, 100, 25, 25, 0, 25, 0, 20, 5, 5, 20, 20, 20, 25, 10, 90.00, 0.00),
+(4, 118, 40, 35, 2, 3, 0, 0, 0, 0, 5, 10, 10, 10, 5, 0, 1000.00, 0.00);
 
 -- --------------------------------------------------------
 
@@ -866,6 +928,20 @@ ALTER TABLE `dbeventpersons`
 --
 ALTER TABLE `dbevents`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `dbevent_coordinators`
+--
+ALTER TABLE `dbevent_coordinators`
+  ADD PRIMARY KEY (`event_id`,`coordinator_id`),
+  ADD KEY `coordinatorIDForeignKey` (`coordinator_id`) USING BTREE;
+
+--
+-- Indexes for table `dbevent_reports`
+--
+ALTER TABLE `dbevent_reports`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_event_report` (`event_id`);
 
 --
 -- Indexes for table `dbgroups`
