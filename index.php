@@ -503,24 +503,22 @@ if (isset($_SESSION['_id'])) {
     <div class="full-width-bar">
       <div class="content-box">
           <div class="small-text">Make a difference.</div>
-        <div class="large-text">Volunteer Management</div>
-    <button class="circle-arrow-button" onclick="window.location.href='volunteerManagement.php'">
-        <span class="button-text">Go</span>
-        <div class="circle">&gt;</div>
-    </button>
-    <!--
-            <div class="nav-buttons">
-                <button class="nav-button" onclick="window.location.href='personSearch.php'">
-                    <span>Find</span>
-                    <span class="arrow"><img src="images/person-search.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 20px;"></span>
-                </button>
-                <button class="nav-button" onclick="window.location.href='VolunteerRegister.php'">
-                    <span>Register</span>
-                    <span class="arrow"><img src="images/add-person.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 20px;"></span>
-                </button>
-            </div>
-    -->
+        <div class="large-text">Volunteer</div>
+        <div class="nav-buttons">
+            <!-- <button class="nav-button" onclick="window.location.href='viewProfile.php'">
+                <span class="arrow"><img src="images/view-profile.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 20px;"></span>
+                <span class="text">View</span>
+            </button> -->
+            <!-- <button class="nav-button" onclick="window.location.href='editProfile.php'">
+                <span class="arrow"><img src="images/manage-account.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 20px;"></span>
+                <span class="text">Edit</span>
+            </button> -->
+            <button class="nav-button" onclick="window.location.href='trackActivities.php'">
+                <span class="arrow"><img src="images/volunteer-history.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 20px;"></span>
+                <span class="text">Track</span>
+            </button>
         </div>
+    </div>
 
       <div class="content-box">
           <div class="small-text">Let's have some fun!</div>
@@ -563,7 +561,7 @@ if (isset($_SESSION['_id'])) {
             <button class="arrow-button">→</button>
         </div>
 
-
+        <!--
         <div class="content-box-test" onclick="window.location.href='viewResources.php'">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Calendar Icon">
@@ -615,7 +613,7 @@ if (isset($_SESSION['_id'])) {
             <button class="arrow-button">→</button>
         </div>
 
-        <!-- <div class="content-box-test" onclick="window.location.href='viewDiscussions.php'">
+         <div class="content-box-test" onclick="window.location.href='viewDiscussions.php'">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Report Icon">
             </div>
