@@ -336,8 +336,27 @@ if (isset($_SESSION['_id'])) {
             <button class="arrow-button">→</button>
         </div>
 
+        <div class="content-box-test" onclick="window.location.href='trackSupplies.php'">
+            <div class="icon-overlay">
+                <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Calendar Icon">
+            </div>
+            <div class="background-image"></div>
+            <div class="large-text-sub">Material Request Form</div>
+            <div class="graph-text">Complete a request for needed materials.</div>
+            <button class="arrow-button">→</button>
+        </div>
 
-        <div class="content-box-test" onclick="window.location.href='resources.php'">
+        <div class="content-box-test" onclick="window.location.href='viewSupplies.php'">
+            <div class="icon-overlay">
+                <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Calendar Icon">
+            </div>
+            <div class="background-image"></div>
+            <div class="large-text-sub">View Material Requests</div>
+            <div class="graph-text">Review submitted requests for needed materials.</div>
+            <button class="arrow-button">→</button>
+        </div>
+
+        <!-- <div class="content-box-test" onclick="window.location.href='resources.php'">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Document Icon">
             </div>
@@ -388,7 +407,7 @@ if (isset($_SESSION['_id'])) {
             <button class="arrow-button">→</button>
         </div>
 
-        <!-- <div class="content-box-test" onclick="window.location.href='viewDiscussions.php'">
+         <div class="content-box-test" onclick="window.location.href='viewDiscussions.php'">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Report Icon">
             </div>
