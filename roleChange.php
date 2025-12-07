@@ -38,47 +38,77 @@ $allCoordinators = array_merge($boardMembers, $coordinators);
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Select Your Role</title>
     <link href="css/normal_tw.css" rel="stylesheet">
     <style>
-        /* This ensures column widths are respected when scrolling */
         #results-table {
             table-layout: fixed;
             max-width: 680px;
         }
-
-        /* Set a max height and enable vertical scrolling for the container */
         .scrollable-table-container {
-            max-height: 400px; /* Adjust this value for desired fixed height */
+            max-height: 400px;
             overflow-y: auto;
-            border: 1px solid var(--border-color, #ccc); /* Optional: Adds a border around the scroll area */
+            border: 1px solid var(--border-color, #ccc);
+        }
+        
+        /* Mobile responsive styles */
+        @media (max-width: 640px) {
+            .scrollable-table-container {
+                max-height: 300px;
+            }
+            
+            #results-table th,
+            #results-table td {
+                padding: 0.5rem;
+                font-size: 0.875rem;
+            }
+            
+            #results-table th:first-child,
+            #results-table td:first-child {
+                width: 35%;
+            }
+            
+            #results-table th:nth-child(2),
+            #results-table td:nth-child(2) {
+                width: 35%;
+            }
+            
+            #results-table th:last-child,
+            #results-table td:last-child {
+                width: 30%;
+            }
+            
+            .blue-button {
+                font-size: 0.875rem;
+                padding: 0.375rem 0.75rem;
+            }
+            
+            .main-content-box {
+                padding: 1rem !important;
+            }
         }
     </style>
 </head>
 <body>
-
 <header class="hero-header">
     <div class="center-header">
         <h1>Select Your Identity</h1>
     </div>
 </header>
-
 <main class="w-[90%] max-w-6xl mx-auto">
     <?php if (isset($_SESSION['access_level'])) : ?>
     <div style="display:none" id="debug-access">
         Access level: <?= htmlspecialchars($_SESSION['access_level']) ?>
     </div>
     <?php endif; ?>
-
     <div class="main-content-box w-full p-8">
         <div class="text-center mb-8">
             <h2>Find Your Name to Update Your Role</h2>
             <p class="sub-text">Start typing your full name below.</p>
         </div>
-
         <div class="space-y-6">
             <input type="text" id="search-box" placeholder="Search by name..." class="form-input w-full">
-
             <div class="scrollable-table-container">
                 <table class="w-full" id="results-table">
                     <thead style="color: var(--text-color); background-color: var(--main-color, #e8c4b8);">
@@ -94,7 +124,6 @@ $allCoordinators = array_merge($boardMembers, $coordinators);
             </div>
         </div>
     </div>
-
     <div class="info-section">
         <div class="blue-div"></div>
         <p class="info-text">
