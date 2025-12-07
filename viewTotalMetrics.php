@@ -111,7 +111,7 @@ require_once('header.php');
             <?php endforeach; ?>
         </datalist>
         
-        <label for="event_filter" style="font-weight: bold; margin-left: 20px; margin-right: 10px;">Filter by Event:</label>
+        <label for="event_filter" style="font-weight: bold; margin-right: 10px;">Filter by Event:</label>
         <input list="event_list" id="event_filter" name="event_filter" 
                value="<?php echo ($selected_event === 'all') ? 'all' : htmlspecialchars($selected_event); ?>" 
                data-display-value="<?php echo htmlspecialchars($selected_event_name); ?>"

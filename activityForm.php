@@ -38,6 +38,7 @@
         <fieldset class="section-box mb-4">
             <h3 class="mt-2">Activity Details</h3>
             <p class="mb-2">Please provide information about your volunteer activity.</p>
+            <p style="font-size: 18px; margin-bottom: 10px;">Today's Date: <strong><?php echo date('l, F j, Y'); ?></strong></p>
             <div class="blue-div"></div>
 
             <label for="event_id"><em>* </em>Event Name</label>
