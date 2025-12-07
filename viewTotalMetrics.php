@@ -42,53 +42,53 @@ require_once('header.php');
     // Define date range (last 6 months)
     $end_date = date('Y-m-d');
     $start_date = date('Y-m-d', strtotime('-6 months'));
-    
+
     // Get selected email filter (if any)
     $selected_email = isset($_GET['email_filter']) && !empty($_GET['email_filter']) ? $_GET['email_filter'] : 'all';
-    
+
     // Get selected event filter (if any)
     $selected_event = isset($_GET['event_filter']) && !empty($_GET['event_filter']) ? $_GET['event_filter'] : 'all';
-    
+
     // Get selected event name for display
     $selected_event_name = 'all';
-    if ($selected_event !== 'all') {
-        require_once('database/dbEvents.php');
-        $event = fetch_event_by_id($selected_event);
-        if ($event) {
-            $selected_event_name = $event['name'];
-        }
+if ($selected_event !== 'all') {
+    require_once('database/dbEvents.php');
+    $event = fetch_event_by_id($selected_event);
+    if ($event) {
+        $selected_event_name = $event['name'];
     }
-    
+}
+
     // Fetch monthly data based on filters
-    if ($selected_email === 'all' && $selected_event === 'all') {
-        // All volunteers, all events
-        $monthly_data = get_monthly_volunteer_hours($start_date, $end_date);
-    } elseif ($selected_email !== 'all' && $selected_event === 'all') {
-        // Specific email, all events
-        $monthly_data = get_monthly_volunteer_hours_by_email($start_date, $end_date, $selected_email);
-    } elseif ($selected_email === 'all' && $selected_event !== 'all') {
-        // All volunteers, specific event
-        $monthly_data = get_monthly_volunteer_hours_by_event($start_date, $end_date, $selected_event);
-    } else {
-        // Specific email AND specific event
-        $monthly_data = get_monthly_volunteer_hours_by_email_and_event($start_date, $end_date, $selected_email, $selected_event);
-    }
-    
+if ($selected_email === 'all' && $selected_event === 'all') {
+    // All volunteers, all events
+    $monthly_data = get_monthly_volunteer_hours($start_date, $end_date);
+} elseif ($selected_email !== 'all' && $selected_event === 'all') {
+    // Specific email, all events
+    $monthly_data = get_monthly_volunteer_hours_by_email($start_date, $end_date, $selected_email);
+} elseif ($selected_email === 'all' && $selected_event !== 'all') {
+    // All volunteers, specific event
+    $monthly_data = get_monthly_volunteer_hours_by_event($start_date, $end_date, $selected_event);
+} else {
+    // Specific email AND specific event
+    $monthly_data = get_monthly_volunteer_hours_by_email_and_event($start_date, $end_date, $selected_email, $selected_event);
+}
+
     // Get all unique emails for dropdown
     $all_emails = get_all_activity_emails();
-    
+
     // Get all unique events for dropdown
     $all_events = get_all_activity_events();
-    
+
     $labels = array();
     $data = array();
-    
-    foreach ($monthly_data as $month) {
-        // Use MIN(date) result for labels, formatted as "Nov 2025"
-        $labels[] = date('M Y', strtotime($month['month_start']));
-        $data[] = $month['total_hours'];
-    }
-    
+
+foreach ($monthly_data as $month) {
+    // Use MIN(date) result for labels, formatted as "Nov 2025"
+    $labels[] = date('M Y', strtotime($month['month_start']));
+    $data[] = $month['total_hours'];
+}
+
     $labels_json = json_encode($labels);
     $data_json = json_encode($data);
 ?>
@@ -104,8 +104,8 @@ require_once('header.php');
                style="padding: 8px; border: 1px solid #ccc; border-radius: 5px; width: 300px;">
         <datalist id="email_list">
             <option value="all">All Volunteers</option>
-            <?php foreach ($all_emails as $email): ?>
-                <?php if (!empty($email)): ?>
+            <?php foreach ($all_emails as $email) : ?>
+                <?php if (!empty($email)) : ?>
                     <option value="<?php echo htmlspecialchars($email); ?>">
                 <?php endif; ?>
             <?php endforeach; ?>
@@ -119,8 +119,8 @@ require_once('header.php');
                style="padding: 8px; border: 1px solid #ccc; border-radius: 5px; width: 300px;">
         <datalist id="event_list">
             <option value="all">All Events</option>
-            <?php foreach ($all_events as $event_id => $event_name): ?>
-                <?php if (!empty($event_id)): ?>
+            <?php foreach ($all_events as $event_id => $event_name) : ?>
+                <?php if (!empty($event_id)) : ?>
                     <option value="<?php echo htmlspecialchars($event_id); ?>" data-name="<?php echo htmlspecialchars($event_name); ?>"><?php echo htmlspecialchars($event_name); ?></option>
                 <?php endif; ?>
             <?php endforeach; ?>
@@ -135,9 +135,9 @@ require_once('header.php');
     
     <?php
         $total_hours = 0;
-        foreach ($monthly_data as $month) {
-            $total_hours += $month['total_hours'];
-        }
+    foreach ($monthly_data as $month) {
+        $total_hours += $month['total_hours'];
+    }
     ?>
     
     <div style="text-align: center; margin-top: 30px; font-size: 24px; font-weight: bold; color: #294877;">
