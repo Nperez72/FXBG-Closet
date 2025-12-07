@@ -113,9 +113,9 @@ $allCoordinators = array_merge($boardMembers, $coordinators);
                 <table class="w-full" id="results-table">
                     <thead style="color: var(--text-color); background-color: var(--main-color, #e8c4b8);">
                         <tr>
-                            <th class="text-left p-2 w-[40%]">Name</th>
-                            <th class="text-left p-2 w-[40%]">Role</th>
-                            <th class="text-left p-2 w-[20%]">Action</th>
+                            <th class="text-center p-2 w-[40%]">Name</th>
+                            <th class="text-center p-2 w-[40%]">Role</th>
+                            <th class="text-center p-2 w-[20%]">Action</th>
                         </tr>
                     </thead>
                     <tbody id="search-results">
@@ -168,15 +168,15 @@ function renderUsers(data) {
         let row = document.createElement("tr");
 
         let fullnameCell = document.createElement("td");
-        fullnameCell.className = "p-2";
+        fullnameCell.className = "p-2 text-center";
         fullnameCell.textContent = user.fullname;
 
         let roleCell = document.createElement("td");
-        roleCell.className = "p-2";
+        roleCell.className = "p-2 text-center";
         roleCell.textContent = user.role;
 
         let actionCell = document.createElement("td");
-        actionCell.className = "p-2";
+        actionCell.className = "p-2 text-center";
 
         let form = document.createElement("form");
         form.method = "POST";
