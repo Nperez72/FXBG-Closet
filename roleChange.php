@@ -133,7 +133,7 @@ $allCoordinators = array_merge($boardMembers, $coordinators);
 </main>
 
 <script>
-const allCoordinatorData = <?php echo json_encode($allCoordinators); ?>;
+const allCoordinatorData = <?php echo json_encode($allCoordinators, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>;
 
 // Intercept all link clicks
 document.addEventListener('click', function (e) {
@@ -212,7 +212,7 @@ function renderUsers(data) {
 
 document.getElementById("search-box").addEventListener("input", function () {
     let query = this.value.trim();
-    if (!query || query.length === 0) {
+    if (!query) {
         renderUsers(allCoordinatorData);
         return;
     }
@@ -225,7 +225,7 @@ document.getElementById("search-box").addEventListener("input", function () {
 
 window.addEventListener('DOMContentLoaded', function() {
     renderUsers(allCoordinatorData);
-})
+});
 
 </script>
 
