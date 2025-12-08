@@ -134,7 +134,16 @@ if ($accessLevel < 4) {
             margin-top: 10px;
             border-left: 4px solid #dc2626;
         }
-        
+
+        .create-header {
+            display: flex;
+            justify-content: space-between;
+            justify-content: flex-start;
+            gap: 12px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
         /* Mobile responsive improvements */
         @media (max-width: 768px) {
             .hero-header {
@@ -290,46 +299,13 @@ if ($accessLevel < 4) {
                 exit();
             }
 
-            // ADD USER SECTION
-            $users_not_in_group = getNonVolunteerCoordinators();
             ?>
-            <h3 class="text-lg font-semibold mt-6">Promote an Existing User to Volunteer Coordinator</h3>
-            <?php if (empty($users_not_in_group)) : ?>
-                <p>No available users to add.</p>
-            <?php else : ?>
-                <form method="POST" action="manageVolunteerCoordinators.php" class="inline-form">
-                    <select name="add_user_id" required>
-                        <option value="" disabled selected>Select a user to add</option>
-                        <?php foreach ($users_not_in_group as $user) : ?>
-                            <option value="<?= htmlspecialchars($user['person_id']) ?>">
-                                <?= htmlspecialchars($user['fullname']) ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                    <button type="submit" name="add_member" class="btn btn-add">Add</button>
-                </form>
-            <?php endif; ?>
 
-            <?php
-            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_member'])) {
-                $user_id = $_POST['add_user_id'];
-
-                if (!empty($user_id)) {
-                    $success = addVolunteerCoordinator($user_id);
-                    if ($success) {
-                        /* //message user that got added
-                        $title = 'You have been added as Volunteer Coordinator.';
-                        $body = ' View under Groups page.';
-                        send_system_message($user_id, $title, $body); */
-                        echo "<p class='success'>User added successfully to Volunteer Coordinators.</p>";
-                    } else {
-                        echo "<p class='error'>Failed to add user.</p>";
-                    }
-                }
-                header("Location: manageVolunteerCoordinators.php");
-                exit();
-            }
-            ?>
+            <!-- ADD USER SECTION -->
+            <div class="create-header">
+                <h3 class="text-lg font-semibold mt-6">Create a New Volunteer Coordinator: </h3>
+                <a href="createCoord.php" class="btn btn-add">Create</a>
+            </div>
 
         <div class="mt-6">
             <a href="groupManagement.php" class="btn btn-add">Back to Groups</a>

@@ -43,6 +43,7 @@ if ($accessLevel < 4) {
 
         .btn-add {
             background-color: var(--main-color, #e8c4b8);
+            color: var(--button-text, #363434);
         }
         .btn-add:hover {
             background-color: var(--accent-color, #d4af37);
@@ -101,6 +102,15 @@ if ($accessLevel < 4) {
         .error {
             color: red;
             margin-top: 10px;
+        }
+
+        .create-header {
+            display: flex;
+            justify-content: space-between;
+            justify-content: flex-start;
+            gap: 12px;
+            margin-top: 25px;
+            margin-bottom: 15px;
         }
 
     </style>
@@ -171,47 +181,14 @@ if ($accessLevel < 4) {
                 header("Location: manageBoardMembers.php");
                 exit();
             }
-
-            // ADD USER SECTION
-            $users_not_in_group = getNonBoardMembers();
             ?>
-            <h3 class="text-lg font-semibold mt-6">Promote an Existing User to Board Member</h3>
-            <?php if (empty($users_not_in_group)) : ?>
-                <p>No available users to add.</p>
-            <?php else : ?>
-                <form method="POST" action="manageBoardMembers.php" class="inline-form">
-                    <select name="add_user_id" required>
-                        <option value="" disabled selected>Select a user to add</option>
-                        <?php foreach ($users_not_in_group as $user) : ?>
-                            <option value="<?= htmlspecialchars($user['person_id']) ?>">
-                                <?= htmlspecialchars($user['fullname']) ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                    <button type="submit" name="add_member" class="btn btn-add">Add</button>
-                </form>
-            <?php endif; ?>
 
-            <?php
-            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_member'])) {
-                $user_id = $_POST['add_user_id'];
-
-                if (!empty($user_id)) {
-                    $success = addBoardMember($user_id);
-                    if ($success) {
-                        /* //message user that got added
-                        $title = 'You have been added as Board Member.';
-                        $body = ' View under Groups page.';
-                        send_system_message($user_id, $title, $body); */
-                        echo "<p class='success'>User added successfully to Board Members.</p>";
-                    } else {
-                        echo "<p class='error'>Failed to add user.</p>";
-                    }
-                }
-                header("Location: manageBoardMembers.php");
-                exit();
-            }
-            ?>
+            <!-- ADD USER SECTION -->
+            <div class="create-header">
+                <h3 class="text-lg font-semibold mt-6">Create a New Board Member: </h3>
+                <a href="createBoardMem.php" class="btn btn-add">Create</a>
+            </div>
+            
 
         <div class="mt-6">
             <a href="groupManagement.php" class="btn btn-add">Back to Groups</a>
