@@ -46,7 +46,7 @@ function create_coordinator_board($type, $first_name, $last_name, $phone1, $phon
         $con->close();
         return false;
     }
-    
+
     $person_id = $con->insert_id;
     $anid = "";
     if ($type === "coord") {
