@@ -58,7 +58,7 @@ function emailAdmins(string $fromUser, string $subject, string $body): array
  * @param string $subject  Email subject.
  * @param string $body     Email body.
  * @param array  $attachments Optional array of file paths to attach.
- * @return array Returns ['success' => bool, 'sent_count' => int, 'error' => string|null]
+ * @return array Returns ['success' => bool, 'sent_count' => int, 'total_count' => int, 'error' => string|null]
  */
 function sendEmails(array $emails, string $fromUser, string $subject, string $body, array $attachments = []): array
 {
@@ -79,32 +79,31 @@ function sendEmails(array $emails, string $fromUser, string $subject, string $bo
                 return [
                     'success' => false,
                     'sent_count' => 0,
-                    'error' => "Attachment file does not exist: {$fileName}"
+                    'total_count' => count($emails),
+                    'error' => "Attachment not found: {$fileName}",
                 ];
             }
             if (!is_readable($filePath)) {
                 return [
                     'success' => false,
                     'sent_count' => 0,
-                    'error' => "Attachment file is not readable: {$fileName}"
+                    'total_count' => count($emails),
+                    'error' => "Attachment not readable: {$fileName}",
                 ];
             }
         }
     }
 
     $sentCount = 0;
+    $failures = [];
 
     foreach ($emails as $email) {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return [
-                'success' => false,
-                'sent_count' => $sentCount,
-                'error' => "Invalid email address: {$email}"
-            ];
+            $failures[] = "Invalid email: {$email}";
+            continue;
         }
 
         $mail = new PHPMailer(true);
-
         try {
             // Settings
             $mail->isSMTP();
@@ -135,17 +134,41 @@ function sendEmails(array $emails, string $fromUser, string $subject, string $bo
             $mail->send();
             $sentCount++;
         } catch (Exception $e) {
-            return [
-                'success' => false,
-                'sent_count' => $sentCount,
-                'error' => "Failed to send to {$email}: {$mail->ErrorInfo}"
-            ];
+            $failures[] = "Failed to send to {$email}: {$mail->ErrorInfo}";
         }
     }
 
     return [
-        'success' => true,
+        'success' => $sentCount > 0,
         'sent_count' => $sentCount,
-        'error' => null
+        'total_count' => count($emails),
+        'error' => !empty($failures) ? implode('; ', $failures) : null,
     ];
+}
+
+
+/**
+ * Render a PHP template file with variables and return as string.
+ *
+ * @param string $path Absolute path to template file
+ * @param array  $vars Variables to extract for use inside template
+ * @return string Rendered HTML
+ */
+function render_email_template(string $path, array $vars = []): string
+{
+    // Only allow templates from the email_templates directory
+    $baseDir = realpath(__DIR__ . DIRECTORY_SEPARATOR . 'email_templates');
+    $realPath = realpath($path);
+    if ($realPath === false || strpos($realPath, $baseDir) !== 0) {
+        throw new InvalidArgumentException("Invalid template path");
+    }
+    if (!file_exists($realPath)) {
+        throw new InvalidArgumentException("Template file not found: $path");
+    }
+
+    extract($vars, EXTR_SKIP);
+
+    ob_start();
+    include $realPath;
+    return ob_get_clean();
 }

@@ -1,5 +1,17 @@
 <?php
-  $all_events = get_all_events_sorted_by_date_not_archived(); // grab active events to display in dropdown table
+if (!isset($_SESSION['_id'])) {
+    header("Location: login.php");
+    die();
+}
+
+  $all_events = get_all_events_sorted_by_date_not_archived();
+
+if ($role === 'board member') {
+    $board_members = getBoardMembers();
+}
+if ($role === 'volunteer coordinator') {
+    $coordinators = getVolunteerCoordinators();
+}
 ?>
 
 <header class="hero-header"> 
@@ -9,9 +21,18 @@
 </header>
 
 <?php if (isset($flash) && $flash) : ?>
-    <?php $isSuccess = ($flash['type'] === 'success'); ?>
+    <?php
+      // Map flash types to CSS classes: success, error, warning
+      $type = strtolower($flash['type'] ?? '');
+      $class = 'error';
+    if ($type === 'success') {
+        $class = 'success';
+    } elseif ($type === 'warning') {
+        $class = 'warning';
+    }
+    ?>
   <div class="flash-wrap">
-    <div id="flash" class="flash-card <?php echo $isSuccess ? 'success' : 'error'; ?>" role="alert" aria-live="polite">
+    <div id="flash" class="flash-card <?php echo $class; ?>" role="alert" aria-live="polite">
       <div class="flash-body">
         <ul class="flash-list">
           <?php foreach ((array)($flash['messages'] ?? []) as $m) : ?>
@@ -34,7 +55,38 @@
               <p>An asterisk (<em>*</em>) indicates a required field.</p>
             </div>
         </div>
+
+        <!-- PERSON IDENTIFICATION (for board members and coordinators) -->
+        <?php if ($role === 'board member' || $role === 'volunteer coordinator') : ?>
+        <fieldset class="section-box mb-4">
+            <h3 class="mt-2">Your Information</h3>
+            <div class="blue-div"></div>
+            <label for="person_name"><em>* </em>Your Name</label>
+            <select id="person_name" name="person_name" required>
+                <option value="">Select your name</option>
+                <?php
+                $people_list = ($role === 'board member') ? $board_members : $coordinators;
+                foreach ($people_list as $person) :
+                    ?>
+                    <option value="<?= htmlspecialchars($person['fullname'], ENT_QUOTES, 'UTF-8') ?>">
+                        <?= htmlspecialchars($person['fullname'], ENT_QUOTES, 'UTF-8') ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </fieldset>
+        <?php else : ?>
+            <!-- For volunteers, just collect name as text -->
+            <fieldset class="section-box mb-4">
+                <h3 class="mt-2">Your Information</h3>
+                <div class="blue-div"></div>
+                <label for="person_name"><em>* </em>Your Name</label>
+                <input type="text" id="person_name" name="person_name" required placeholder="Enter your full name">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email address">
+            </fieldset>
+        <?php endif; ?>
         
+         <!-- ACTIVITY DETAILS (common to all) -->
         <fieldset class="section-box mb-4">
             <h3 class="mt-2">Activity Details</h3>
             <p class="mb-2">Please provide information about your volunteer activity.</p>
@@ -54,13 +106,83 @@
 
             <label for="hours_spent"><em>* </em>Hours Spent</label>
             <input type="number" id="hours_spent" name="hours_spent" min="0" step="0.5" required placeholder="Enter hours spent (e.g., 2.5)">
-            <label for="email">Email (Optional)</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email address (optional)">
-            <label for="activity_description"><em>* </em>Activity Description</label>
-            <textarea id="activity_description" name="activity_description" rows="6" required placeholder="Describe what you did during this volunteer activity"></textarea>
         </fieldset>
-           <label for="activity_image">Choose photos to send as documentation (max 10 files, 10MB limit per, 50MB total)</label>
-  <input id="activity_image" name="activity_images[]" multiple accept="image/jpeg, image/png" type="file" /> 
+        
+        <!-- COMMUNITY INTERACTIONS (volunteers and board members only) -->
+        <?php if ($role === 'volunteer' || $role === 'board member') : ?>
+        <fieldset class="section-box mb-4">
+            <h3 class="mt-2">Community Interactions</h3>
+            <div class="blue-div"></div>
+            <p class="mb-6 text-gray-600">Estimate the number of community members you interacted with during this activity.</p>
+            
+            <!-- Age Ranges -->
+            <div class="mb-8">
+                <h4 class="text-base font-semibold mb-4 text-gray-700">Age Ranges</h4>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+                    <div>
+                        <label for="age_0_12" class="block text-sm mb-1 text-gray-600">0-12 years</label>
+                        <input type="number" id="age_0_12" name="age_0_12" min="0" value="0" class="w-full px-3 py-2 border border-gray-300 rounded focus:border-blue-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label for="age_13_17" class="block text-sm mb-1 text-gray-600">13-17 years</label>
+                        <input type="number" id="age_13_17" name="age_13_17" min="0" value="0" class="w-full px-3 py-2 border border-gray-300 rounded focus:border-blue-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label for="age_18_24" class="block text-sm mb-1 text-gray-600">18-24 years</label>
+                        <input type="number" id="age_18_24" name="age_18_24" min="0" value="0" class="w-full px-3 py-2 border border-gray-300 rounded focus:border-blue-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label for="age_25_54" class="block text-sm mb-1 text-gray-600">25-54 years</label>
+                        <input type="number" id="age_25_54" name="age_25_54" min="0" value="0" class="w-full px-3 py-2 border border-gray-300 rounded focus:border-blue-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label for="age_55_plus" class="block text-sm mb-1 text-gray-600">55+ years</label>
+                        <input type="number" id="age_55_plus" name="age_55_plus" min="0" value="0" class="w-full px-3 py-2 border border-gray-300 rounded focus:border-blue-500 focus:outline-none">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ethnicity -->
+            <div>
+                <h4 class="text-base font-semibold mb-4 text-gray-700">Ethnicity</h4>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    <div>
+                        <label for="ethnicity_white" class="block text-sm mb-1 text-gray-600">White/Caucasian</label>
+                        <input type="number" id="ethnicity_white" name="ethnicity_white" min="0" value="0" class="w-full px-3 py-2 border border-gray-300 rounded focus:border-blue-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label for="ethnicity_black" class="block text-sm mb-1 text-gray-600">Black/African American</label>
+                        <input type="number" id="ethnicity_black" name="ethnicity_black" min="0" value="0" class="w-full px-3 py-2 border border-gray-300 rounded focus:border-blue-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label for="ethnicity_hispanic" class="block text-sm mb-1 text-gray-600">Hispanic/Latino</label>
+                        <input type="number" id="ethnicity_hispanic" name="ethnicity_hispanic" min="0" value="0" class="w-full px-3 py-2 border border-gray-300 rounded focus:border-blue-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label for="ethnicity_asian" class="block text-sm mb-1 text-gray-600">Asian</label>
+                        <input type="number" id="ethnicity_asian" name="ethnicity_asian" min="0" value="0" class="w-full px-3 py-2 border border-gray-300 rounded focus:border-blue-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label for="ethnicity_native" class="block text-sm mb-1 text-gray-600">Native American/Indigenous</label>
+                        <input type="number" id="ethnicity_native" name="ethnicity_native" min="0" value="0" class="w-full px-3 py-2 border border-gray-300 rounded focus:border-blue-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label for="ethnicity_other" class="block text-sm mb-1 text-gray-600">Other/Multiracial</label>
+                        <input type="number" id="ethnicity_other" name="ethnicity_other" min="0" value="0" class="w-full px-3 py-2 border border-gray-300 rounded focus:border-blue-500 focus:outline-none">
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <?php endif; ?>
+
+        <!-- PHOTO UPLOAD (common to all) -->
+        <fieldset class="section-box mb-4">
+            <h3 class="mt-2">Documentation Photos</h3>
+            <div class="blue-div"></div>
+            <label for="activity_image">Choose photos to send as documentation (max 10 files, 10MB per file, 50MB total)</label>
+            <input id="activity_image" name="activity_images[]" multiple accept="image/jpeg, image/png" type="file" /> 
+        </fieldset>
+
         <input type="submit" name="activity-form" value="Submit" class="blue-button">
     </form>
    </div> 

@@ -801,15 +801,39 @@ INSERT INTO `dbsupplies` (`supply_id`, `item_type`, `quantity`, `description`, `
 --
 
 CREATE TABLE `dbvolunteeractivity` (
-  `activity_id` int(11) NOT NULL,
-  `person_id` int(11) NOT NULL,
+  `activity_id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `role` varchar(50) NOT NULL,
   `date` date NOT NULL,
   `hours` decimal(4,2) NOT NULL,
-  `event_id` int(11) NOT NULL,
-  `interactions` text DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `photo_id` int(11) DEFAULT NULL
+  `event_id` int NOT NULL,
+  `email` VARCHAR(255) NULL DEFAULT NULL,
+  PRIMARY KEY (`activity_id`),
+  FOREIGN KEY (`event_id`) REFERENCES `dbevents`(`event_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dbinteractiondemographics`
+--
+CREATE TABLE `dbinteractiondemographics` (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    activity_id INT NOT NULL,
+    age_0_12 INT DEFAULT 0,
+    age_13_17 INT DEFAULT 0,
+    age_18_24 INT DEFAULT 0,
+    age_25_54 INT DEFAULT 0,
+    age_55_plus INT DEFAULT 0,
+    ethnicity_white INT DEFAULT 0,
+    ethnicity_black INT DEFAULT 0,
+    ethnicity_hispanic INT DEFAULT 0,
+    ethnicity_asian INT DEFAULT 0,
+    ethnicity_native INT DEFAULT 0,
+    ethnicity_other INT DEFAULT 0,
+    FOREIGN KEY (activity_id) REFERENCES dbvolunteeractivity(activity_id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 
 -- --------------------------------------------------------
 
@@ -981,12 +1005,6 @@ ALTER TABLE `dbsupplies`
   ADD PRIMARY KEY (`supply_id`);
 
 --
--- Indexes for table `dbvolunteeractivity`
---
-ALTER TABLE `dbvolunteeractivity`
-  ADD PRIMARY KEY (`activity_id`);
-
---
 -- Indexes for table `discussion_replies`
 --
 ALTER TABLE `discussion_replies`
@@ -1046,12 +1064,6 @@ ALTER TABLE `dbshifts`
 --
 ALTER TABLE `dbsupplies`
   MODIFY `supply_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `dbvolunteeractivity`
---
-ALTER TABLE `dbvolunteeractivity`
-  MODIFY `activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `discussion_replies`

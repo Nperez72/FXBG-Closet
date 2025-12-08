@@ -1,38 +1,5 @@
 <?php
 
-function add_activity($person_id, $date, $event_id, $hours_spent, $activity_description)
-{
-    require_once('dbinfo.php');
-
-    $connection = connect();
-
-    if (!$connection) {
-        return false;
-    }
-
-    $hours = (float)$hours_spent;
-    $photo_id = null;
-
-     $query = "INSERT INTO dbvolunteeractivity (person_id, date, hours, event_id, interactions, photo_id) 
-              VALUES (?, ?, ?, ?, ?, ?)";
-
-    $stmt = mysqli_prepare($connection, $query);
-
-    if (!$stmt) {
-        mysqli_close($connection);
-        return false;
-    }
-
-    mysqli_stmt_bind_param($stmt, "isdisi", $person_id, $date, $hours, $event_id, $activity_description, $photo_id);
-
-    $result = mysqli_stmt_execute($stmt);
-
-    mysqli_stmt_close($stmt);
-    mysqli_close($connection);
-
-    return $result;
-}
-
 function add_media($media_id, $activity_id, $file_name, $type, $file_format, $description, $alternate_name, $time_created)
 {
     require_once('dbinfo.php');
@@ -186,38 +153,43 @@ function get_monthly_volunteer_hours($start_date, $end_date)
     return $monthly_data;
 }
 
-function add_activity_with_email($person_id, $date, $event_id, $hours_spent, $activity_description, $email = null)
+/**
+ * Add a new activity record
+ *
+ * @param string $name Person's name
+ * @param string $role Person's role ('volunteer', 'board member', 'volunteer coordinator')
+ * @param string $date Activity date (YYYY-MM-DD format)
+ * @param float $hours_spent Hours spent on activity
+ * @param int $event_id Event ID
+ * @param string|null $email Optional email address
+ * @return int|false The new activity_id on success, false on failure
+ */
+function add_activity($name, $role, $date, $hours_spent, $event_id, $email = null)
 {
     require_once('dbinfo.php');
 
     $connection = connect();
-
     if (!$connection) {
         return false;
     }
 
-    $hours = (float)$hours_spent;
-
-    $photo_id = null;
-
-    $query = "INSERT INTO dbvolunteeractivity (person_id, email, date, hours, event_id, interactions, photo_id) 
-              VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $query = "INSERT INTO dbvolunteeractivity (name, role, date, hours, event_id, email) 
+              VALUES (?, ?, ?, ?, ?, ?)";
 
     $stmt = mysqli_prepare($connection, $query);
-
     if (!$stmt) {
         mysqli_close($connection);
         return false;
     }
 
-    mysqli_stmt_bind_param($stmt, "issdisi", $person_id, $email, $date, $hours, $event_id, $activity_description, $photo_id);
+    mysqli_stmt_bind_param($stmt, "sssdis", $name, $role, $date, $hours_spent, $event_id, $email);
 
-    $result = mysqli_stmt_execute($stmt);
+    $activity_id = mysqli_stmt_execute($stmt) ? mysqli_insert_id($connection) : false;
 
     mysqli_stmt_close($stmt);
     mysqli_close($connection);
 
-    return $result;
+    return $activity_id;
 }
 
 function get_monthly_volunteer_hours_by_email($start_date, $end_date, $email)
@@ -290,6 +262,90 @@ function get_all_activity_emails()
     mysqli_close($connection);
 
     return $emails;
+}
+
+function save_interaction_demographics(int $activity_id, array $age_data, array $ethnicity_data): bool
+{
+    require_once('dbinfo.php');
+
+    $connection = connect();
+
+    if (!$connection) {
+        error_log("Failed to connect to database");
+        return false;
+    }
+
+    if ($activity_id <= 0) {
+        error_log("Invalid activity_id provided: $activity_id");
+        mysqli_close($connection);
+        return false;
+    }
+
+    $age_0_12 = (int)($age_data['0_12'] ?? 0);
+    $age_13_17 = (int)($age_data['13_17'] ?? 0);
+    $age_18_24 = (int)($age_data['18_24'] ?? 0);
+    $age_25_54 = (int)($age_data['25_54'] ?? 0);
+    $age_55_plus = (int)($age_data['55_plus'] ?? 0);
+
+    $ethnicity_white = (int)($ethnicity_data['white'] ?? 0);
+    $ethnicity_black = (int)($ethnicity_data['black'] ?? 0);
+    $ethnicity_hispanic = (int)($ethnicity_data['hispanic'] ?? 0);
+    $ethnicity_asian = (int)($ethnicity_data['asian'] ?? 0);
+    $ethnicity_native = (int)($ethnicity_data['native'] ?? 0);
+    $ethnicity_other = (int)($ethnicity_data['other'] ?? 0);
+
+    // Prepare the SQL statement
+    $query = "INSERT INTO dbinteractiondemographics (
+                activity_id, 
+                age_0_12, 
+                age_13_17, 
+                age_18_24, 
+                age_25_54, 
+                age_55_plus,
+                ethnicity_white,
+                ethnicity_black,
+                ethnicity_hispanic,
+                ethnicity_asian,
+                ethnicity_native,
+                ethnicity_other
+              ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    $stmt = $connection->prepare($query);
+
+    if (!$stmt) {
+        error_log("Failed to prepare statement: " . $connection->error);
+        mysqli_close($connection);
+        return false;
+    }
+
+    $stmt->bind_param(
+        "iiiiiiiiiiii",
+        $activity_id,
+        $age_0_12,
+        $age_13_17,
+        $age_18_24,
+        $age_25_54,
+        $age_55_plus,
+        $ethnicity_white,
+        $ethnicity_black,
+        $ethnicity_hispanic,
+        $ethnicity_asian,
+        $ethnicity_native,
+        $ethnicity_other
+    );
+
+    $result = $stmt->execute();
+
+    if (!$result) {
+        error_log("Failed to save interaction demographics for activity_id $activity_id: " . $stmt->error);
+        $stmt->close();
+        mysqli_close($connection);
+        return false;
+    }
+
+    $stmt->close();
+    mysqli_close($connection);
+    return true;
 }
 
 // Get monthly hours filtered by event only
