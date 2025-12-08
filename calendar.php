@@ -58,19 +58,16 @@ if (date('m', strtotime($calendarEnd . ' +1 day')) == date('m', $first)) {
         <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="css/theme-toggle.css">
         <?php require('universal.inc'); ?>
-        <?php require('header.php'); ?>
         <script src="js/calendar.js"></script>
         <title>Fredericksburg SPCA | Events Calendar</title>
         <style>
             .happy-toast { 
                 margin: 0 1rem 1rem 1rem; 
             }
-            body {
-                font-family: 'Quicksand', sans-serif;
-            }
         </style>
     </head>
     <body>
+        <?php require('header.php'); ?>
         <div id="month-jumper-wrapper" class="hidden">
             <form id="month-jumper">
                 <p>Choose a month to jump to</p>

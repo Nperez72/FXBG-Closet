@@ -124,17 +124,22 @@ if (date("H:i:s") > "18:19:59") {
                                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
                             </svg>
                         </a>
+                        <div class="nav-divider"></div>
+                        <a href="index.php">
+                            <img src="images/FXBG-PrideLogo.png" alt="Logo" class="nav-logo logo-lightMode">
+                            <img src="images/FXBG-PrideWhiteLogo.png" alt="Logo (Dark Mode)" class="nav-logo logo-darkMode">
+                        </a>
                     </div>
 
                     <!-- Main Navigation -->
                     <div class="nav-menu" id="navMenu">
-                        <a href="viewCheckInOut.php" class="nav-link nav-link-special">
+                        <!-- <a href="viewCheckInOut.php" class="nav-link nav-link-special">
                             <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M9 11l3 3L22 4"></path>
                                 <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
                             </svg>
                             <span>Check In/Out</span>
-                        </a>
+                        </a> -->
 
                         <div class="nav-dropdown">
                             <button class="nav-link">
@@ -149,7 +154,7 @@ if (date("H:i:s") > "18:19:59") {
                                 </svg>
                             </button>
                             <div class="dropdown-menu">
-                                <a href="VolunteerRegister.php" class="dropdown-item">
+                                <!-- <a href="VolunteerRegister.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
                                         <circle cx="8.5" cy="7" r="4"></circle>
@@ -171,6 +176,20 @@ if (date("H:i:s") > "18:19:59") {
                                         <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
                                     </svg>
                                     View Check-Ins
+                                </a> -->
+                                <a href="trackActivities.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 11l3 3L22 4"></path>
+                                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+                                    </svg>
+                                    Track Activities
+                                </a>
+                                <a href="viewTotalMetrics.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                    View Total Volunteer Hours
                                 </a>
                             </div>
                         </div>
@@ -205,31 +224,39 @@ if (date("H:i:s") > "18:19:59") {
                                         <line x1="3" y1="12" x2="3.01" y2="12"></line>
                                         <line x1="3" y1="18" x2="3.01" y2="18"></line>
                                     </svg>
-                                    View Events
+                                    View/Edit Events
                                 </a>
-                                <a href="editHours.php" class="dropdown-item">
+                                <a href="totalAttendanceMetrics.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
+                                    </svg>
+                                    Event Attendance Metrics
+                                </a>
+                                <!-- <a href="editHours.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <circle cx="12" cy="12" r="10"></circle>
                                         <polyline points="12 6 12 12 16 14"></polyline>
                                     </svg>
                                     Change Event Hours
-                                </a>
-                                <a href="viewAllEventSignUps.php" class="dropdown-item">
+                                </a> -->
+                                <!-- <a href="viewAllEventSignUps.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
                                         <circle cx="9" cy="7" r="4"></circle>
                                         <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
                                     </svg>
                                     Pending Sign-Ups
-                                </a>
-                                <a href="adminViewingEvents.php" class="dropdown-item">
+                                </a> -->
+                                <!-- <a href="adminViewingEvents.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"></path>
                                         <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                                     </svg>
                                     Edit Event
-                                </a>
-                                <a href="trackSupplies.php" class="dropdown-item">
+                                </a> -->
+                                <!-- <a href="trackSupplies.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <circle cx="11" cy="11" r="8"></circle>
                                         <path d="M21 21l-4.35-4.35"></path>
@@ -242,7 +269,7 @@ if (date("H:i:s") > "18:19:59") {
                                         <path d="M21 21l-4.35-4.35"></path>
                                     </svg>
                                     View Material Requests
-                                </a>
+                                </a> -->
                             </div>
                         </div>
 
@@ -274,14 +301,6 @@ if (date("H:i:s") > "18:19:59") {
                                         <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
                                     </svg>
                                     Manage Volunteer Coordinators
-                                </a>
-                                 <a href="viewTotalMetrics.php" class="dropdown-item">
-                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
-                                        <circle cx="9" cy="7" r="4"></circle>
-                                        <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
-                                    </svg>
-                                    View Total Volunteer Hours
                                 </a>
                             </div>
                         </div>
@@ -398,17 +417,22 @@ if (date("H:i:s") > "18:19:59") {
                                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
                             </svg>
                         </a>
+                        <div class="nav-divider"></div>
+                        <a href="index.php">
+                            <img src="images/FXBG-PrideLogo.png" alt="Logo" class="nav-logo logo-lightMode">
+                            <img src="images/FXBG-PrideWhiteLogo.png" alt="Logo (Dark Mode)" class="nav-logo logo-darkMode">
+                        </a>
                     </div>
 
                     <!-- Main Navigation -->
                     <div class="nav-menu" id="navMenu">
-                        <a href="viewCheckInOut.php" class="nav-link nav-link-special">
+                        <!-- <a href="viewCheckInOut.php" class="nav-link nav-link-special">
                             <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M9 11l3 3L22 4"></path>
                                 <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
                             </svg>
                             <span>Check In/Out</span>
-                        </a>
+                        </a> -->
 
                         <div class="nav-dropdown">
                             <button class="nav-link">
@@ -417,13 +441,20 @@ if (date("H:i:s") > "18:19:59") {
                                     <circle cx="9" cy="7" r="4"></circle>
                                     <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
                                 </svg>
-                                <span>Volunteers</span>
+                                <span>Volunteer</span>
                                 <svg class="dropdown-arrow" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
                                 </svg>
                             </button>
                             <div class="dropdown-menu">
-                                <a href="VolunteerRegister.php" class="dropdown-item">
+                                <a href="trackActivities.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 11l3 3L22 4"></path>
+                                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+                                    </svg>
+                                    Track Activities
+                                </a>
+                                <!-- <a href="VolunteerRegister.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
                                         <circle cx="8.5" cy="7" r="4"></circle>
@@ -445,7 +476,7 @@ if (date("H:i:s") > "18:19:59") {
                                         <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
                                     </svg>
                                     View Check-Ins
-                                </a>
+                                </a> -->
                             </div>
                         </div>
 
@@ -481,7 +512,7 @@ if (date("H:i:s") > "18:19:59") {
                                     </svg>
                                     View/Edit My Events
                                 </a>
-                                <a href="editHours.php" class="dropdown-item">
+                                <!-- <a href="editHours.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <circle cx="12" cy="12" r="10"></circle>
                                         <polyline points="12 6 12 12 16 14"></polyline>
@@ -495,18 +526,11 @@ if (date("H:i:s") > "18:19:59") {
                                         <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
                                     </svg>
                                     Pending Sign-Ups
-                                </a>
-                                <a href="trackActivities.php" class="dropdown-item">
-                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M9 11l3 3L22 4"></path>
-                                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                                    </svg>
-                                    Track Activities
-                                </a>
+                                </a> -->
                             </div>
                         </div>
 
-                        <div class="nav-dropdown">
+                        <!-- <div class="nav-dropdown">
                             <button class="nav-link">
                                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <circle cx="12" cy="12" r="10"></circle>
@@ -535,7 +559,7 @@ if (date("H:i:s") > "18:19:59") {
                                     View Groups
                                 </a>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
 
                     <!-- Right Actions -->
@@ -618,17 +642,22 @@ if (date("H:i:s") > "18:19:59") {
                                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
                             </svg>
                         </a>
+                        <div class="nav-divider"></div>
+                        <a href="index.php">
+                            <img src="images/FXBG-PrideLogo.png" alt="Logo" class="nav-logo logo-lightMode">
+                            <img src="images/FXBG-PrideWhiteLogo.png" alt="Logo (Dark Mode)" class="nav-logo logo-darkMode">
+                        </a>
                     </div>
 
                     <!-- Main Navigation -->
                     <div class="nav-menu" id="navMenu">
-                        <a href="viewCheckInOut.php" class="nav-link nav-link-special">
+                        <!-- <a href="viewCheckInOut.php" class="nav-link nav-link-special">
                             <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M9 11l3 3L22 4"></path>
                                 <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
                             </svg>
                             <span>Check In/Out</span>
-                        </a>
+                        </a> -->
 
                         <div class="nav-dropdown">
                             <button class="nav-link">
@@ -637,13 +666,20 @@ if (date("H:i:s") > "18:19:59") {
                                     <circle cx="9" cy="7" r="4"></circle>
                                     <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
                                 </svg>
-                                <span>Volunteers</span>
+                                <span>Volunteer</span>
                                 <svg class="dropdown-arrow" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
                                 </svg>
                             </button>
                             <div class="dropdown-menu">
-                                <a href="VolunteerRegister.php" class="dropdown-item">
+                                <a href="trackActivities.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 11l3 3L22 4"></path>
+                                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+                                    </svg>
+                                    Track Activities
+                                </a>
+                                <!-- <a href="VolunteerRegister.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
                                         <circle cx="8.5" cy="7" r="4"></circle>
@@ -665,21 +701,7 @@ if (date("H:i:s") > "18:19:59") {
                                         <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
                                     </svg>
                                     View Check-Ins
-                                </a>
-                                <a href="trackSupplies.php" class="dropdown-item">
-                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="11" cy="11" r="8"></circle>
-                                        <path d="M21 21l-4.35-4.35"></path>
-                                    </svg>
-                                    Material Request Form
-                                </a>
-                                <a href="viewSupplies.php" class="dropdown-item">
-                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="11" cy="11" r="8"></circle>
-                                        <path d="M21 21l-4.35-4.35"></path>
-                                    </svg>
-                                    View Material Requests
-                                </a>
+                                </a> -->
                             </div>
                         </div>
 
@@ -706,9 +728,23 @@ if (date("H:i:s") > "18:19:59") {
                                         <line x1="3" y1="12" x2="3.01" y2="12"></line>
                                         <line x1="3" y1="18" x2="3.01" y2="18"></line>
                                     </svg>
-                                    View Events
+                                    View All Events
                                 </a>
-                                <a href="editHours.php" class="dropdown-item">
+                                <!-- <a href="trackSupplies.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <path d="M21 21l-4.35-4.35"></path>
+                                    </svg>
+                                    Material Request Form
+                                </a>
+                                <a href="viewSupplies.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <path d="M21 21l-4.35-4.35"></path>
+                                    </svg>
+                                    View Material Requests
+                                </a> -->
+                                <!-- <a href="editHours.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <circle cx="12" cy="12" r="10"></circle>
                                         <polyline points="12 6 12 12 16 14"></polyline>
@@ -729,18 +765,11 @@ if (date("H:i:s") > "18:19:59") {
                                         <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                                     </svg>
                                     Edit Event
-                                </a>
-                                <a href="trackActivities.php" class="dropdown-item">
-                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M9 11l3 3L22 4"></path>
-                                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                                    </svg>
-                                    Track Activities
-                                </a>
+                                </a> -->
                             </div>
                         </div>
 
-                        <div class="nav-dropdown">
+                        <!-- <div class="nav-dropdown">
                             <button class="nav-link">
                                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <circle cx="12" cy="12" r="10"></circle>
@@ -769,7 +798,7 @@ if (date("H:i:s") > "18:19:59") {
                                     View Groups
                                 </a>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
 
                     <!-- Right Actions -->
@@ -881,6 +910,28 @@ if (date("H:i:s") > "18:19:59") {
                         <div class="nav-dropdown">
                             <button class="nav-link">
                                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
+                                </svg>
+                                <span>Volunteer</span>
+                                <svg class="dropdown-arrow" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a href="trackActivities.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 11l3 3L22 4"></path>
+                                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+                                    </svg>
+                                    Track Activities
+                                </a>
+                            </div>
+                        </div>
+                        <div class="nav-dropdown">
+                            <button class="nav-link">
+                                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                                     <line x1="16" y1="2" x2="16" y2="6"></line>
                                     <line x1="8" y1="2" x2="8" y2="6"></line>
@@ -892,7 +943,14 @@ if (date("H:i:s") > "18:19:59") {
                                 </svg>
                             </button>
                             <div class="dropdown-menu">
-                                <a href="viewMyUpcomingEvents.php" class="dropdown-item">
+                                <!-- <a href="viewMyUpcomingEvents.php" class="dropdown-item">
+                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    </svg>
+                                    My Upcoming
+                                </a> -->
+                                <a href="viewAllEvents.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <line x1="8" y1="6" x2="21" y2="6"></line>
                                         <line x1="8" y1="12" x2="21" y2="12"></line>
@@ -901,33 +959,19 @@ if (date("H:i:s") > "18:19:59") {
                                         <line x1="3" y1="12" x2="3.01" y2="12"></line>
                                         <line x1="3" y1="18" x2="3.01" y2="18"></line>
                                     </svg>
-                                    My Upcoming
+                                    View Upcoming
                                 </a>
-                                <a href="viewAllEvents.php" class="dropdown-item">
-                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"></path>
-                                        <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                    </svg>
-                                    Sign-Up
-                                </a>
-                                <a href="editHours.php" class="dropdown-item">
+                                <!-- <a href="editHours.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <circle cx="12" cy="12" r="10"></circle>
                                         <polyline points="12 6 12 12 16 14"></polyline>
                                     </svg>
                                     Edit Hours
-                                </a>
-                                <a href="trackActivities.php" class="dropdown-item">
-                                    <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M9 11l3 3L22 4"></path>
-                                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                                    </svg>
-                                    Track Activities
-                                </a>
+                                </a> -->
                             </div>
                         </div>
 
-                        <div class="nav-dropdown">
+                        <!-- <div class="nav-dropdown">
                             <button class="nav-link">
                                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <circle cx="12" cy="12" r="10"></circle>
@@ -949,7 +993,7 @@ if (date("H:i:s") > "18:19:59") {
                                     My Groups
                                 </a>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
 
                     <!-- Right Actions -->
@@ -1007,7 +1051,7 @@ if (date("H:i:s") > "18:19:59") {
                                 </svg>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a href="viewProfile.php" class="dropdown-item">
+                                <!-- <a href="viewProfile.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
                                         <circle cx="12" cy="7" r="4"></circle>
@@ -1034,7 +1078,7 @@ if (date("H:i:s") > "18:19:59") {
                                         <polyline points="22,6 12,13 2,6"></polyline>
                                     </svg>
                                     Notifications
-                                </a>
+                                </a> -->
                                 <a href="logout.php" class="dropdown-item">
                                     <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path>
@@ -1149,7 +1193,7 @@ if (date("H:i:s") > "18:19:59") {
     <?php
     // Mobile Bottom Navigation (PWA-optimized)
     if ($_SESSION['logged_in']) {
-        if ($_SESSION['access_level'] >= 2) {
+        if ($_SESSION['access_level'] >= 4) {
             // ADMIN MOBILE NAV
             echo('
             <nav class="mobile-bottom-nav">
@@ -1216,14 +1260,14 @@ if (date("H:i:s") > "18:19:59") {
                         </svg>
                         <span>Groups</span>
                     </a>
-                    <a href="resources.php" class="mobile-more-item">
+                    <a href="trackSupplies.php" class="mobile-more-item">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"></path>
                             <polyline points="13 2 13 9 20 9"></polyline>
                         </svg>
-                        <span>Resources</span>
+                        <span>Material Request Form</span>
                     </a>
-                    <a href="generateReport.php" class="mobile-more-item">
+                    <a href="viewSupplies.php" class="mobile-more-item">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path>
                             <polyline points="14 2 14 8 20 8"></polyline>
@@ -1231,21 +1275,282 @@ if (date("H:i:s") > "18:19:59") {
                             <line x1="16" y1="17" x2="8" y2="17"></line>
                             <polyline points="10 9 9 9 8 9"></polyline>
                         </svg>
-                        <span>Reports</span>
+                        <span>View Material Requests</span>
                     </a>
-                    <a href="inbox.php" class="mobile-more-item">
+                    <!-- <a href="inbox.php" class="mobile-more-item">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                             <polyline points="22,6 12,13 2,6"></polyline>
                         </svg>
                         <span>Notifications</span>
-                    </a>
-                    <a href="viewProfile.php" class="mobile-more-item">
+                    </a> -->
+                    <a href="useClosetAdmin.php" class="mobile-more-item">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
                             <circle cx="12" cy="7" r="4"></circle>
                         </svg>
-                        <span>Profile</span>
+                        <span>Closet Inventory</span>
+                    </a>
+                    
+                    <div style="border-top: 1px solid var(--border-color, #e8c4b8); margin: 12px 0; padding-top: 12px;"></div>
+                    
+                    <button class="mobile-more-item theme-toggle-mobile" id="mobileThemeToggle" aria-label="Toggle theme">
+                        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                        </svg>
+                        <span id="mobileThemeLabel">Light Mode</span>
+                    </button>
+                    
+                    <button class="mobile-more-item" id="openA11ySettingsMobile" aria-label="Accessibility settings" onclick="document.getElementById(\'a11yModal\').classList.add(\'active\');document.getElementById(\'mobileMoreMenu\').classList.remove(\'active\');document.body.style.overflow=\'hidden\';">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 6v4m0 4h.01"></path>
+                            <circle cx="12" cy="12" r="1" fill="currentColor"></circle>
+                            <line x1="8.5" y1="8.5" x2="7" y2="7"></line>
+                            <line x1="15.5" y1="8.5" x2="17" y2="7"></line>
+                        </svg>
+                        <span>Accessibility</span>
+                    </button>
+                    
+                    <button class="mobile-more-item" id="openThemePresetsMobile" aria-label="Color themes" onclick="document.getElementById(\'themePresetsModal\').classList.add(\'active\');document.getElementById(\'mobileMoreMenu\').classList.remove(\'active\');document.body.style.overflow=\'hidden\';">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"></path>
+                        </svg>
+                        <span>Color Themes</span>
+                    </button>
+                    
+                    <a href="logout.php" class="mobile-more-item mobile-more-logout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>');
+        } elseif ($_SESSION['access_level'] == 3) {
+            // VOLUNTEER COORDINATOR MOBILE NAV
+            echo('
+            <nav class="mobile-bottom-nav">
+                <a href="index.php" class="mobile-nav-item" data-page="index">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span>Home</span>
+                </a>
+                <a href="trackActivities.php" class="mobile-nav-item" data-page="volunteer">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
+                    </svg>
+                    <span>Track</span>
+                </a>
+                <a href="viewAllEvents.php" class="mobile-nav-item" data-page="events">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <span>Events</span>
+                </a>
+                <a href="calendar.php" class="mobile-nav-item" data-page="calendar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <span>Calendar</span>
+                </a>
+                <!-- <a href="volunteerViewGroup.php" class="mobile-nav-item" data-page="groups">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"></path>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                    </svg>
+                    <span>Groups</span>
+                </a> -->
+                <button class="mobile-nav-item mobile-nav-more" id="mobileMoreBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="1"></circle>
+                        <circle cx="12" cy="5" r="1"></circle>
+                        <circle cx="12" cy="19" r="1"></circle>
+                    </svg>
+                    <span>More</span>
+                </button>
+            </nav>
+            
+            <!-- Mobile More Menu -->
+            <div class="mobile-more-menu" id="mobileMoreMenu">
+                <div class="mobile-more-header">
+                    <h3>More Options</h3>
+                    <button class="mobile-more-close" id="mobileMoreClose">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div class="mobile-more-content">
+                    <a href="viewAssignedEvents.php" class="mobile-more-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                        <span>View/Edit My Events</span>
+                    </a>
+                    
+                    <div style="border-top: 1px solid var(--border-color, #e8c4b8); margin: 12px 0; padding-top: 12px;"></div>
+                    
+                    <button class="mobile-more-item theme-toggle-mobile" id="mobileThemeToggle" aria-label="Toggle theme">
+                        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                        </svg>
+                        <span id="mobileThemeLabel">Light Mode</span>
+                    </button>
+                    
+                    <button class="mobile-more-item" id="openA11ySettingsMobile" aria-label="Accessibility settings" onclick="document.getElementById(\'a11yModal\').classList.add(\'active\');document.getElementById(\'mobileMoreMenu\').classList.remove(\'active\');document.body.style.overflow=\'hidden\';">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 6v4m0 4h.01"></path>
+                            <circle cx="12" cy="12" r="1" fill="currentColor"></circle>
+                            <line x1="8.5" y1="8.5" x2="7" y2="7"></line>
+                            <line x1="15.5" y1="8.5" x2="17" y2="7"></line>
+                        </svg>
+                        <span>Accessibility</span>
+                    </button>
+                    
+                    <button class="mobile-more-item" id="openThemePresetsMobile" aria-label="Color themes" onclick="document.getElementById(\'themePresetsModal\').classList.add(\'active\');document.getElementById(\'mobileMoreMenu\').classList.remove(\'active\');document.body.style.overflow=\'hidden\';">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"></path>
+                        </svg>
+                        <span>Color Themes</span>
+                    </button>
+                    
+                    <a href="logout.php" class="mobile-more-item mobile-more-logout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>');
+        } elseif ($_SESSION['access_level'] == 2) {
+            // BOARD MEMBER MOBILE NAV
+            echo('
+            <nav class="mobile-bottom-nav">
+                <a href="index.php" class="mobile-nav-item" data-page="index">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span>Home</span>
+                </a>
+                <a href="trackActivities.php" class="mobile-nav-item" data-page="volunteer">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
+                    </svg>
+                    <span>Track</span>
+                </a>
+                <a href="viewAllEvents.php" class="mobile-nav-item" data-page="events">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <span>Events</span>
+                </a>
+                <a href="calendar.php" class="mobile-nav-item" data-page="calendar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <span>Calendar</span>
+                </a>
+                <!-- <a href="volunteerViewGroup.php" class="mobile-nav-item" data-page="groups">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"></path>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                    </svg>
+                    <span>Groups</span>
+                </a> -->
+                <button class="mobile-nav-item mobile-nav-more" id="mobileMoreBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="1"></circle>
+                        <circle cx="12" cy="5" r="1"></circle>
+                        <circle cx="12" cy="19" r="1"></circle>
+                    </svg>
+                    <span>More</span>
+                </button>
+            </nav>
+            
+            <!-- Mobile More Menu -->
+            <div class="mobile-more-menu" id="mobileMoreMenu">
+                <div class="mobile-more-header">
+                    <h3>More Options</h3>
+                    <button class="mobile-more-close" id="mobileMoreClose">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div class="mobile-more-content">
+                    <a href="trackSupplies.php" class="mobile-more-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"></path>
+                            <polyline points="13 2 13 9 20 9"></polyline>
+                        </svg>
+                        <span>Material Request Form</span>
+                    </a>
+                    <a href="viewSupplies.php" class="mobile-more-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                        <span>View Material Requests</span>
                     </a>
                     
                     <div style="border-top: 1px solid var(--border-color, #e8c4b8); margin: 12px 0; padding-top: 12px;"></div>
@@ -1308,6 +1613,14 @@ if (date("H:i:s") > "18:19:59") {
                     </svg>
                     <span>Home</span>
                 </a>
+                <a href="trackActivities.php" class="mobile-nav-item" data-page="volunteer">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
+                    </svg>
+                    <span>Track</span>
+                </a>
                 <a href="viewAllEvents.php" class="mobile-nav-item" data-page="events">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
@@ -1326,14 +1639,14 @@ if (date("H:i:s") > "18:19:59") {
                     </svg>
                     <span>Calendar</span>
                 </a>
-                <a href="volunteerViewGroup.php" class="mobile-nav-item" data-page="groups">
+                <!-- <a href="volunteerViewGroup.php" class="mobile-nav-item" data-page="groups">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="12" cy="12" r="10"></circle>
                         <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"></path>
                         <line x1="2" y1="12" x2="22" y2="12"></line>
                     </svg>
                     <span>Groups</span>
-                </a>
+                </a> -->
                 <button class="mobile-nav-item mobile-nav-more" id="mobileMoreBtn">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="12" cy="12" r="1"></circle>
@@ -1356,7 +1669,7 @@ if (date("H:i:s") > "18:19:59") {
                     </button>
                 </div>
                 <div class="mobile-more-content">
-                    <a href="viewResources.php" class="mobile-more-item">
+                    <!-- <a href="viewResources.php" class="mobile-more-item">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"></path>
                             <polyline points="13 2 13 9 20 9"></polyline>
@@ -1398,7 +1711,54 @@ if (date("H:i:s") > "18:19:59") {
                         </svg>
                         <span>Logout</span>
                     </a>
+                </div> -->                    
+                    <button class="mobile-more-item theme-toggle-mobile" id="mobileThemeToggle" aria-label="Toggle theme">
+                        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                        </svg>
+                        <span id="mobileThemeLabel">Light Mode</span>
+                    </button>
+                    
+                    <button class="mobile-more-item" id="openA11ySettingsMobile" aria-label="Accessibility settings" onclick="document.getElementById(\'a11yModal\').classList.add(\'active\');document.getElementById(\'mobileMoreMenu\').classList.remove(\'active\');document.body.style.overflow=\'hidden\';">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 6v4m0 4h.01"></path>
+                            <circle cx="12" cy="12" r="1" fill="currentColor"></circle>
+                            <line x1="8.5" y1="8.5" x2="7" y2="7"></line>
+                            <line x1="15.5" y1="8.5" x2="17" y2="7"></line>
+                        </svg>
+                        <span>Accessibility</span>
+                    </button>
+                    
+                    <button class="mobile-more-item" id="openThemePresetsMobile" aria-label="Color themes" onclick="document.getElementById(\'themePresetsModal\').classList.add(\'active\');document.getElementById(\'mobileMoreMenu\').classList.remove(\'active\');document.body.style.overflow=\'hidden\';">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"></path>
+                        </svg>
+                        <span>Color Themes</span>
+                    </button>
+                    
+                    <a href="logout.php" class="mobile-more-item mobile-more-logout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                        <span>Logout</span>
+                    </a>
                 </div>
+
             </div>');
         }
     }
@@ -1494,7 +1854,6 @@ if (date("H:i:s") > "18:19:59") {
                         <option value="times">Times New Roman</option>
                         <option value="courier">Courier</option>
                         <option value="comic">Comic Sans</option>
-                        <option value="opendyslexic">OpenDyslexic (Dyslexia-friendly)</option>
                     </select>
                 </div>
                 

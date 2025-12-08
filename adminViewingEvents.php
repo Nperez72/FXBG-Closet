@@ -15,6 +15,13 @@ if (isset($_SESSION['_id'])) {
     $accessLevel = $_SESSION['access_level'];
     $userID = $_SESSION['_id'];
 }
+
+if ($accessLevel < 4) {
+    header('Location: login.php');
+    echo 'bad access level';
+    die();
+}
+
     include 'database/dbEvents.php';
     //include 'domain/Event.php';
 ?>
@@ -62,21 +69,12 @@ if (isset($_SESSION['_id'])) {
                                 $capacity = $event->getCapacity();
                                 $completed = $event->getCompleted();
                                 $restricted_signup = $event->getRestrictedSignup();
-                                if ($accessLevel < 4) {
                                     echo "
                                         <tr data-event-id='$eventID'>
                                             <td><a href='event.php?id=$eventID'>$title</a></td> <!-- Link updated here -->
                                             <td>$date</td>
-                                            <td><a class='button sign-up' href='eventSignUp.php'>Sign Up</a></td>
+                                            <td><a class='button sign-up' href='eventReport.php'>Complete Event Report</a></td>
                                         </tr>";
-                                } else {
-                                    echo "
-                                        <tr data-event-id='$eventID'>
-                                            <td><a href='event.php?id=$eventID'>$title</a></td> <!-- Link updated here -->
-                                            <td>$date</td>
-                                            <td></td>
-                                        </tr>";
-                                }
                             }
                             ?>
                         </tbody>

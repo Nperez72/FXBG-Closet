@@ -342,3 +342,127 @@ function save_interaction_demographics(int $activity_id, array $age_data, array 
     mysqli_close($connection);
     return true;
 }
+
+// Get monthly hours filtered by event only
+function get_monthly_volunteer_hours_by_event($start_date, $end_date, $event_id)
+{
+    require_once('dbinfo.php');
+
+    $connection = connect();
+
+    if (!$connection) {
+        return array();
+    }
+
+    $query = "SELECT 
+                MIN(date) as month_start,
+                YEAR(date) as year,
+                MONTH(date) as month,
+                SUM(hours) as total_hours
+              FROM dbvolunteeractivity 
+              WHERE date BETWEEN ? AND ? AND event_id = ?
+              GROUP BY YEAR(date), MONTH(date)
+              ORDER BY year ASC, month ASC";
+
+    $stmt = mysqli_prepare($connection, $query);
+
+    if (!$stmt) {
+        mysqli_close($connection);
+        return array();
+    }
+
+    mysqli_stmt_bind_param($stmt, "ssi", $start_date, $end_date, $event_id);
+    mysqli_stmt_execute($stmt);
+
+    $result = mysqli_stmt_get_result($stmt);
+
+    $monthly_data = array();
+    while ($row = mysqli_fetch_assoc($result)) {
+        $monthly_data[] = $row;
+    }
+
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+
+    return $monthly_data;
+}
+
+// Get monthly hours filtered by both email and event
+function get_monthly_volunteer_hours_by_email_and_event($start_date, $end_date, $email, $event_id)
+{
+    require_once('dbinfo.php');
+
+    $connection = connect();
+
+    if (!$connection) {
+        return array();
+    }
+
+    $query = "SELECT 
+                MIN(date) as month_start,
+                YEAR(date) as year,
+                MONTH(date) as month,
+                SUM(hours) as total_hours
+              FROM dbvolunteeractivity 
+              WHERE date BETWEEN ? AND ? AND email = ? AND event_id = ?
+              GROUP BY YEAR(date), MONTH(date)
+              ORDER BY year ASC, month ASC";
+
+    $stmt = mysqli_prepare($connection, $query);
+
+    if (!$stmt) {
+        mysqli_close($connection);
+        return array();
+    }
+
+    mysqli_stmt_bind_param($stmt, "sssi", $start_date, $end_date, $email, $event_id);
+    mysqli_stmt_execute($stmt);
+
+    $result = mysqli_stmt_get_result($stmt);
+
+    $monthly_data = array();
+    while ($row = mysqli_fetch_assoc($result)) {
+        $monthly_data[] = $row;
+    }
+
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+
+    return $monthly_data;
+}
+
+// Get all unique event IDs from activities
+function get_all_activity_events()
+{
+    require_once('dbinfo.php');
+    require_once('database/dbEvents.php');
+
+    $connection = connect();
+
+    if (!$connection) {
+        return array();
+    }
+
+    $query = "SELECT DISTINCT event_id FROM dbvolunteeractivity WHERE event_id IS NOT NULL ORDER BY event_id ASC";
+
+    $result = mysqli_query($connection, $query);
+
+    if (!$result) {
+        mysqli_close($connection);
+        return array();
+    }
+
+    $event_ids = array();
+    while ($row = mysqli_fetch_assoc($result)) {
+        $event_id = $row['event_id'];
+        // Get event name from dbevents
+        $event = fetch_event_by_id($event_id);
+        if ($event) {
+            $event_ids[$event_id] = $event['name'];
+        }
+    }
+
+    mysqli_close($connection);
+
+    return $event_ids;
+}
