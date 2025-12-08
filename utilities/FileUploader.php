@@ -12,7 +12,7 @@ class FileUploader
         string $uploadDir,
         array $allowedMimes = ['image/jpeg', 'image/png'],
         int $maxFiles = 10,
-        int $maxFileSizeMB = 5,
+        int $maxFileSizeMB = 10,
         int $maxTotalSizeMB = 50
     ) {
         $this->uploadDir = $uploadDir;
