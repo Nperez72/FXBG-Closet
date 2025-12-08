@@ -109,7 +109,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="type">Account type</label>
                 <select id="type" name="type">
                     <option value="0">Volunteer</option>
-                    <option value="1">Coordinator/Board Member</option>
                     <option value="2">Admin</option>
                 </select>
                 <label for="username">New username</label>
