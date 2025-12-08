@@ -270,6 +270,11 @@ function save_interaction_demographics(int $activity_id, array $age_data, array 
 
     $connection = connect();
 
+    if (!$connection) {
+        error_log("Failed to connect to database");
+        return false;
+    }
+
     if ($activity_id <= 0) {
         error_log("Invalid activity_id provided: $activity_id");
         mysqli_close($connection);
