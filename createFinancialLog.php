@@ -74,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $event = $_POST['event'];
     $personid = retrieve_personid_by_name($name);
 
-    $submission = Array("reporter_id" => "$personid",
+    $submission = array("reporter_id" => "$personid",
             "amount" => "$amount",
             "description" => "$description",
             "event_id" => "$event");
@@ -116,9 +116,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="name">Name</label>
                     <select id="name" name="name">
                         <?php foreach ($persons as $person) : ?>
-                            <option value="<?php echo ($person); ?>"<?php if ($personName == $person) echo "selected"?>> <?php
+                            <option value="<?php echo ($person); ?>"<?php if ($personName == $person) {
+                                echo "selected";
+                                           }?>> <?php
                                 echo $person;
-                             ?>
+?>
                             </option>
                         <?php endforeach; ?>
                     </select>
