@@ -1,9 +1,6 @@
 <?php
 session_start();
 
-define('MAX_UPLOAD_FILES', 10);
-define('MAX_FILE_SIZE_MB', 10);
-define('MAX_TOTAL_SIZE_MB', 50);
 define('DOCUMENTATION_EMAIL', 'mhenry.fxbgpride@gmail.com');
 
 require_once('include/input-validation.php');
