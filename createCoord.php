@@ -69,8 +69,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $emergency_phone = isset($_POST['emergency_phone']) ? $_POST['emergency_phone'] : "";
     $emergency_phone_type = isset($_POST['emergency_phone_type']) ? $_POST['emergency_phone_type'] : "";
     $emergency_relation = isset($_POST['emergency_relation']) ? $_POST['emergency_relation'] : "";
-    $phone1 = preg_replace("/[^0-9 ]/",'',$phone1);
-    $emergency_phone = preg_replace("/[^0-9 ]/",'',$emergency_phone);
+    $phone1 = preg_replace("/[^0-9 ]/", '', $phone1);
+    $emergency_phone = preg_replace("/[^0-9 ]/", '', $emergency_phone);
 
     $result = create_coordinator_board($type, $first_name, $last_name, $phone1, $phone1type, $emergency_phone, $emergency_phone_type, $email, $emergency_first_name, $emergency_last_name, $emergency_relation);
     if ($result === 'duplicate') {
@@ -81,7 +81,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header('Location: createCoord.php?success=1');
         die();
     }
-
 }
 
 

@@ -28,14 +28,12 @@ function create_coordinator_board($type, $first_name, $last_name, $phone1, $phon
 
     $id = 99;
     if ($res = mysqli_query($con, "SELECT * FROM dbpersons")) {
-
-        $id = mysqli_num_rows( $res ) + 1;
-    
+        $id = mysqli_num_rows($res) + 1;
     } else {
         mysqli_close($con);
         return false;
     }
-    
+
     $anid = "";
     $role_name = "";
     if ($type === "coord") {
@@ -49,7 +47,7 @@ function create_coordinator_board($type, $first_name, $last_name, $phone1, $phon
     mysqli_stmt_close($check_stmt);
 
     $rid = 1;
-    
+
     $stmt = $con->prepare("INSERT INTO dbpersons (person_id, id, role_type, role_name, first_name, last_name, phone1, phone1type, emergency_contact_phone, emergency_contact_phone_type, email, emergency_contact_first_name, emergency_contact_relation, emergency_contact_last_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("isisssssssssss", $id, $anid, $rid, $role_name, $first_name, $last_name, $phone1, $phone1type, $emergency_phone, $emergency_phone_type, $email, $emergency_first_name, $emergency_relation, $emergency_last_name);
 
@@ -58,4 +56,3 @@ function create_coordinator_board($type, $first_name, $last_name, $phone1, $phon
     $con->close();
     return true;
 }
-
