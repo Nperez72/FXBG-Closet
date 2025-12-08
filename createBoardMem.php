@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
 
-    $type = "coord";
+    $type = "board";
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
     $email = $_POST['email'];
@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif (!$result) {
          $error3 = true;
     } else {
-        header('Location: createCoord.php?success=1');
+        header('Location: createBoardMem.php?success=1');
         die();
     }
 }
@@ -90,19 +90,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <head>
         <?php require_once('universal.inc') ?>
         <script src="https://cdn.tailwindcss.com"></script>
-        <title>Fredericksburg SPCA | Create Coordinator</title>
+        <title>Fredericksburg SPCA | Create Board Member</title>
     </head>
     <body>
         <?php require_once('header.php') ?>
         <h1></h1>
         <h1></h1>
-        <h1>Create Volunteer Coordinator</h1>
+        <h1>Create Board Member</h1>
         <main class="login">
             <?php if (isset($error3)) : ?>
                 <p class="error-toast">Name already exists. Please choose a different name.</p>
             <?php elseif (isset($_GET['success']) && $_GET['success'] == 1) : ?>
             <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-                <p class="text-center">Volunteer coordinator created successfully.</p>
+                <p class="text-center">Board member created successfully.</p>
             </div>
             <?php endif ?>
             <form id="coordinator_board_add" method="post">

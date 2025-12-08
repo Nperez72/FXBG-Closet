@@ -26,33 +26,50 @@ function create_coordinator_board($type, $first_name, $last_name, $phone1, $phon
         return 'duplicate';
     }
 
-    $id = 99;
-    if ($res = mysqli_query($con, "SELECT * FROM dbpersons")) {
-        $id = mysqli_num_rows($res) + 1;
-    } else {
-        mysqli_close($con);
-        return false;
-    }
-
-    $anid = "";
     $role_name = "";
     if ($type === "coord") {
         $role_name = "Volunteer Coordinator";
-        $anid = "coordinator" . (string)$id;
     } else {
         $role_name = "Board Member";
-        $anid = "boardm" . (string)$id;
     }
+    $rid = 1;
+
+    $placeholder = uniqid("temp_", true); // temp value for $id, to be updated to ensure uniqueness
 
     mysqli_stmt_close($check_stmt);
 
-    $rid = 1;
+    $stmt = $con->prepare("INSERT INTO dbpersons (id, role_type, role_name, first_name, last_name, phone1, phone1type, emergency_contact_phone, emergency_contact_phone_type, email, emergency_contact_first_name, emergency_contact_relation, emergency_contact_last_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sisssssssssss", $placeholder, $rid, $role_name, $first_name, $last_name, $phone1, $phone1type, $emergency_phone, $emergency_phone_type, $email, $emergency_first_name, $emergency_relation, $emergency_last_name);
 
-    $stmt = $con->prepare("INSERT INTO dbpersons (person_id, id, role_type, role_name, first_name, last_name, phone1, phone1type, emergency_contact_phone, emergency_contact_phone_type, email, emergency_contact_first_name, emergency_contact_relation, emergency_contact_last_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("isisssssssssss", $id, $anid, $rid, $role_name, $first_name, $last_name, $phone1, $phone1type, $emergency_phone, $emergency_phone_type, $email, $emergency_first_name, $emergency_relation, $emergency_last_name);
+    if (!$stmt->execute()) {
+        $stmt->close();
+        $con->close();
+        return false;
+    }
+    
+    $person_id = $con->insert_id;
+    $anid = "";
+    if ($type === "coord") {
+        $anid = "coord" . $person_id;
+    } else {
+        $anid = "boardm" . $person_id;
+    }
 
-    $stmt->execute();
+    $update = $con->prepare(
+        "UPDATE dbpersons SET id = ? WHERE person_id = ?"
+    );
+
+    if (!$update) {
+        $stmt->close();
+        $con->close();
+        return false;
+    }
+
+    $update->bind_param("si", $anid, $person_id);
+    $update->execute();
+
     $stmt->close();
+    $update->close();
     $con->close();
     return true;
 }
