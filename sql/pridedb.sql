@@ -808,7 +808,8 @@ CREATE TABLE `dbvolunteeractivity` (
   `hours` decimal(4,2) NOT NULL,
   `event_id` int NOT NULL,
   `email` VARCHAR(255) NULL DEFAULT NULL,
-  PRIMARY KEY (`activity_id`)
+  PRIMARY KEY (`activity_id`),
+  FOREIGN KEY (`event_id`) REFERENCES `dbevents`(`event_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
