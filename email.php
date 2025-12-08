@@ -156,13 +156,19 @@ function sendEmails(array $emails, string $fromUser, string $subject, string $bo
  */
 function render_email_template(string $path, array $vars = []): string
 {
-    if (!file_exists($path)) {
+    // Only allow templates from the email_templates directory
+    $baseDir = realpath(__DIR__ . DIRECTORY_SEPARATOR . 'email_templates');
+    $realPath = realpath($path);
+    if ($realPath === false || strpos($realPath, $baseDir) !== 0) {
+        throw new InvalidArgumentException("Invalid template path");
+    }
+    if (!file_exists($realPath)) {
         throw new InvalidArgumentException("Template file not found: $path");
     }
 
     extract($vars, EXTR_SKIP);
 
     ob_start();
-    include $path;
+    include $realPath;
     return ob_get_clean();
 }
