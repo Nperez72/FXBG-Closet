@@ -457,7 +457,7 @@ label {
 
 body {
   font-family: "Quicksand", sans-serif;
-  padding-top: 70px;
+  padding-top: 70px !important;
   background-color: var(--bg-color);
   color: var(--text-color);
   transition:
@@ -1785,7 +1785,7 @@ h2 {
 
 /* Global body padding for fixed navbar */
 body {
-  padding-top: 70px; /* Height of the fixed navbar */
+  padding-top: 70px !important; /* Height of the fixed navbar */
 }
 
 /* Mobile Responsive Adjustments */
