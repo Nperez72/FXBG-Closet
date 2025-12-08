@@ -166,6 +166,25 @@ function updated_retrieve_person($id)
     return $thePerson;
 }
 
+function retrieve_personid_by_name($name)
+{
+    $persons = array();
+    if (!isset($name) || $name == "" || $name == null) {
+        return $persons;
+    }
+    $con = connect();
+    $name = explode(" ", $name);
+    $first_name = $name[0];
+    $last_name = $name[1];
+    $query = 'SELECT person_id FROM dbpersons WHERE first_name = "' . $first_name . '" AND last_name = "' . $last_name . '"';
+    $result = mysqli_query($con, $query);
+    while ($result_row = mysqli_fetch_assoc($result)) {
+        $persons[] = $result_row['person_id'];
+    }
+    return $persons[0];
+
+}
+
 // Name is first concat with last name. Example 'James Jones'
 // return array of Persons.
 function retrieve_persons_by_name($name)

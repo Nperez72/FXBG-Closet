@@ -33,11 +33,14 @@ if (isset($_SESSION['_id'])) {
 }
 
     require_once('database/dbAccounts.php');
+    require_once('database/dbEvents.php');
+    require_once('domain/Event.php');
+    require_once('database/dbFinancialLogs.php');
     $accessGrant = false;
     $accounts = array();
 if ($loggedIn) {
     $accountType = get_account_type($userID);
-    // 0: volunteer, 1: coordinator/board memeber, 2: admin
+    // 0: volunteer, 1: coordinator/board member, 2: admin
     if ($accountType !== null && $accountType >= 1) {
         $accessGrant = true;
     }
@@ -48,9 +51,8 @@ if (!$accessGrant) {
     die();
 }
 
-if ($accessGrant) {
-    $persons = getall_coordinator_names();
-}
+$persons = getall_coordinator_names();
+$events = fetch_all_events();
 
 if (!$loggedIn) {
     header('Location: login.php');
@@ -61,20 +63,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     require_once('include/input-validation.php');
 
 
-    if (!wereRequiredFieldsSubmitted($_POST, array('name', 'amount'))) {
+    if (!wereRequiredFieldsSubmitted($_POST, array('name', 'amount', 'description'))) {
         echo "Args missing";
         die();
     }
 
     $name = $_POST['name'];
     $amount = $_POST['amount'];
+    $description = $_POST['description'];
+    $event = $_POST['event'];
+    $personid = retrieve_personid_by_name($name);
 
-    header('Location: createFinancialLog.php?success=1');
-    die();
+    $submission = Array("reporter_id" => "$personid",
+            "amount" => "$amount",
+            "description" => "$description",
+            "event_id" => "$event");
+
+    $result = add_financial_log($submission);
+    if (!$result) {
+        echo "<p  class='error-toast'>Failed to create financial log.</p>";
+        die();
+    } else {
+        header('Location: createFinancialLog.php?success=1');
+        die();
+    }
 }
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="English">
     <head>
         <?php require_once('universal.inc') ?>
         <script src="https://cdn.tailwindcss.com"></script>
@@ -107,10 +123,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <?php endforeach; ?>
                     </select>
                 <?php endif ?>
+                <?php if ($accessGrant) : ?>
+                    <label for="event">Event</label>
+                    <select id="event" name="event">
+                        <?php foreach ($events as $event) : ?>
+                            <option value="<?php echo ($event['id']); ?>"><?php echo($event['name']);?></option>
+                        <?php endforeach; ?>
+                    </select>
+                <?php endif ?>
                 <label for="amount">Dollar Amount:</label>
                 <input type="text" id="amount" name="amount" placeholder = "Enter dollar amount" pattern="^\$?\d{1,3}(?:,\d{3})*(?:\.\d{2})?$" required >
                 <p id="money-error" class="error hidden">Please write amount in the form of "xx.xx"!</p>
-                <label for="type">Description:</label>
+                <label for="description">Description:</label>
                 <input type="text" id="description" name="description" placeholder = "Enter description">
                 <input type="submit" id="submit" name="submit" value="Create Financial Log">
                 <a class="button cancel" href="index.php">Cancel</a>
