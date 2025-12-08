@@ -1854,7 +1854,6 @@ if (date("H:i:s") > "18:19:59") {
                         <option value="times">Times New Roman</option>
                         <option value="courier">Courier</option>
                         <option value="comic">Comic Sans</option>
-                        <option value="opendyslexic">OpenDyslexic (Dyslexia-friendly)</option>
                     </select>
                 </div>
                 
