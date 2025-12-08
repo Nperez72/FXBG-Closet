@@ -72,6 +72,14 @@ if (isset($_SESSION['_id'])) {
             transition: background-color 0.3s ease, color 0.3s ease;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            padding-top: 70px;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding-top: 0;
+                padding-bottom: calc(65px + env(safe-area-inset-bottom));
+            }
         }
 
         h2 {
