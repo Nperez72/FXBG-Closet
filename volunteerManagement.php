@@ -16,7 +16,7 @@ if (isset($_SESSION['_id'])) {
     $userID = $_SESSION['_id'];
 }
     // admin-only access
-if ($accessLevel < 2) {
+if ($accessLevel < 4) {
     header('Location: index.php');
     die();
 }
@@ -45,7 +45,7 @@ require_once('header.php');
     <div class="management-hero-content">
       <h1>Volunteer Management</h1>
       <p class="management-hero-subtitle">
-        Manage volunteers, track participation, and recognize outstanding contributions to your organization
+        Track volunteer activities and view volunteer metrics related to your organization
       </p>
     </div>
   </section>
@@ -54,7 +54,7 @@ require_once('header.php');
   <main class="management-grid">
     <div class="card-grid">
       <!-- Register Volunteer Card -->
-      <a href="VolunteerRegister.php" class="action-card">
+      <!-- <a href="VolunteerRegister.php" class="action-card">
         <div class="card-icon-wrapper">
           <img src="images/add-person.svg" alt="Register Icon">
         </div>
@@ -71,38 +71,20 @@ require_once('header.php');
             </svg>
           </span>
         </div>
-      </a>
+      </a> -->
 
-      <a href="personSearch.php" class="action-card">
-        <div class="card-icon-wrapper">
-          <img src="images/person-search.svg" alt="Search Icon">
-        </div>
-        <div class="action-card-content">
-          <h3 class="action-card-title">Search Volunteers</h3>
-          <p class="action-card-description">
-            Find and manage volunteer information quickly
-          </p>
-        </div>
-        <div class="action-card-footer">
-          <span class="card-arrow">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </span>
-        </div>
-      </a>
-      <a href="checkedInVolunteers.php" class="action-card">
+      <a href="trackActivities.php" class="action-card">
         <div class="card-icon-wrapper">
           <img src="images/clipboard-regular.svg" alt="Check-In Icon">
         </div>
         <div class="action-card-content">
-          <h3 class="action-card-title">Checked-In Volunteers</h3>
+          <h3 class="action-card-title">Track Activities</h3>
           <p class="action-card-description">
-            View currently active volunteers and manage check-ins
+            Record volunteer hours and contributions
           </p>
         </div>
         <div class="action-card-footer">
-          <span class="action-card-badge">Live</span>
+          <span class="action-card-badge">Track</span>
           <span class="card-arrow">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -111,7 +93,27 @@ require_once('header.php');
         </div>
       </a>
 
-      <a href="selectVOTM.php" class="action-card">
+      <a href="viewTotalMetrics.php" class="action-card">
+        <div class="card-icon-wrapper">
+          <img src="images/person-search.svg" alt="Search Icon">
+        </div>
+        <div class="action-card-content">
+          <h3 class="action-card-title">Volunteer Metrics</h3>
+          <p class="action-card-description">
+            View total and individual volunteer hours completed
+          </p>
+        </div>
+        <div class="action-card-footer">
+          <span class="action-card-badge">View</span>
+          <span class="card-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- <a href="selectVOTM.php" class="action-card">
         <div class="card-icon-wrapper">
           <img src="images/star-icon.svg" alt="Star Icon">
         </div>
@@ -147,15 +149,15 @@ require_once('header.php');
             </svg>
           </span>
         </div>
-      </a>
+      </a> -->
     </div>
 
     <section class="management-info">
       <div class="info-card">
         <h3 class="info-card-title">About Volunteer Management</h3>
         <p class="info-card-text">
-          This hub provides comprehensive tools to manage your volunteer workforce. Register new volunteers, 
-          track their participation, monitor active check-ins, and recognize outstanding contributions. 
+          This hub provides comprehensive tools to manage your organization's volunteer contributions. Track volunteer activities
+          and view data on total volunteer hours completed, as well as hours completed by each individual volunteer. 
           All the tools you need to build and maintain a thriving volunteer community.
         </p>
       </div>

@@ -15,7 +15,7 @@ if (isset($_SESSION['_id'])) {
     $accessLevel = $_SESSION['access_level'];
     $userID = $_SESSION['_id'];
 }
-    // admin-only access
+    // admin and volunteer coordinator only access
 if ($accessLevel < 2) {
     header('Location: index.php');
     die();
@@ -76,12 +76,12 @@ require_once('header.php');
 
       <a href="viewAllEvents.php" class="action-card">
         <div class="card-icon-wrapper">
-          <img src="images/new-event.svg" alt="View Events Icon">
+          <img src="images/list-solid.svg" alt="Hours Icon">
         </div>
         <div class="action-card-content">
-          <h3 class="action-card-title">View Events</h3>
+          <h3 class="action-card-title">View/Edit Events</h3>
           <p class="action-card-description">
-            Browse all upcoming and past events in the system
+            Browse all upcoming and past events in the system, and update their details as needed
           </p>
         </div>
         <div class="action-card-footer">
@@ -93,7 +93,7 @@ require_once('header.php');
         </div>
       </a>
 
-      <a href="editHours.php" class="action-card">
+      <!-- <a href="editHours.php" class="action-card">
         <div class="card-icon-wrapper">
           <img src="images/list-solid.svg" alt="Hours Icon">
         </div>
@@ -137,16 +137,16 @@ require_once('header.php');
             </svg>
           </span>
         </div>
-      </a>
+      </a> -->
 
-      <a href="adminViewingEvents.php" class="action-card">
+      <a href="totalAttendanceMetrics.php" class="action-card">
         <div class="card-icon-wrapper">
           <img src="images/users-solid.svg" alt="Edit Icon">
         </div>
         <div class="action-card-content">
-          <h3 class="action-card-title">Edit Event</h3>
+          <h3 class="action-card-title">Event Attendance</h3>
           <p class="action-card-description">
-            Modify existing event details and attendee lists
+            View attendance details for all events, categorized by demographic group
           </p>
         </div>
         <div class="action-card-footer">
@@ -164,7 +164,7 @@ require_once('header.php');
         <h3 class="info-card-title">About Event Management</h3>
         <p class="info-card-text">
           Organize impactful events and trainings that engage your volunteer community. Create new events, 
-          manage registrations, track volunteer hours, and keep everything running smoothly. This hub gives 
+          edit existing events, view event attendance information, and keep everything running smoothly. This hub gives 
           you complete control over your event lifecycle from planning to completion.
         </p>
       </div>

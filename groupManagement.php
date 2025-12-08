@@ -16,7 +16,7 @@ if (isset($_SESSION['_id'])) {
     $userID = $_SESSION['_id'];
 }
     // admin-only access
-if ($accessLevel < 2) {
+if ($accessLevel < 4) {
     header('Location: index.php');
     die();
 }
@@ -79,7 +79,7 @@ require_once('header.php');
         <div class="action-card-content">
           <h3 class="action-card-title">Manage Volunteer Coordinators</h3>
           <p class="action-card-description">
-            Oversee volunteer coordinators and their responsibilities
+            View and update the list of authorized volunteer coordinators
           </p>
         </div>
         <div class="action-card-footer">
