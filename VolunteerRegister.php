@@ -6,9 +6,36 @@
 <html>
 <head>
     <?php require_once('database/dbMessages.php'); ?>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+            
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
+    <script src="js/theme-presets-init.js"></script>
+    
     <title>Fredericksburg SPCA | Register</title>
     <link href="css/normal_tw.css" rel="stylesheet">
     <link href="css/theme-toggle.css" rel="stylesheet">
+    <link href="css/pwa-mobile.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/accessibility-settings.css">
+    <link rel="stylesheet" href="css/theme-presets.css">
+    
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#6B46C1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="FXBG Closet">
+    <link rel="apple-touch-icon" href="/images/FXBG-PrideWhiteLogo.png">
 <!-- BANDAID FIX FOR HEADER BEING WEIRD -->
 <?php
 $tailwind_mode = true;

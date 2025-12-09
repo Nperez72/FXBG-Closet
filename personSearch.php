@@ -16,7 +16,7 @@ if (isset($_SESSION['_id'])) {
     $userID = $_SESSION['_id'];
 }
     // admin-only access
-if ($accessLevel < 2) {
+if ($accessLevel < 4) {
     header('Location: index.php');
     die();
 }
@@ -24,8 +24,14 @@ if ($accessLevel < 2) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Fredericksburg SPCA | Volunteer/Participant Search</title>
+    <script src="js/theme-presets-init.js"></script>
     <link href="css/normal_tw.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/pwa-mobile.css">
+    <link rel="stylesheet" href="css/accessibility-settings.css">
+    <link rel="stylesheet" href="css/theme-presets.css">
 <!-- BANDAID FIX FOR HEADER BEING WEIRD -->
 <?php
 $tailwind_mode = true;

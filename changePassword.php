@@ -119,15 +119,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 'initiator' => $userID,
             ];
 
-            $when = date('Y-m-d H:i:s');
+            $when = date('Y-m-d g:i:s A');
             $subject = 'FXBG Closet: Password Change Verification Code';
-            $body = "A password change has been requested.\n\n" .
-                    "Initiated by: {$userID}\n" .
-                    "Target account: {$targetUser}\n" .
-                    "Time: {$when}\n\n" .
-                    "Your verification code (expires in 10 minutes):\n\n" .
-                    "{$code}\n\n" .
-                    "If you did not request this change, please contact your system administrator immediately.";
+            $body = render_email_template(
+                __DIR__ . DIRECTORY_SEPARATOR . 'email_templates' . DIRECTORY_SEPARATOR . 'password_verification_email.php',
+                [
+                    'userID' => $userID,
+                    'targetUser' => $targetUser,
+                    'when' => $when,
+                    'code' => $code,
+                ]
+            );
 
             emailAdmins('security', $subject, $body);
             header('Location: changePassword.php');

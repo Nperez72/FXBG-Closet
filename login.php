@@ -52,13 +52,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     break;
                 // coordinator/board member
                 case 1:
-                    $_SESSION['access_level'] = 2;
+                    $_SESSION['access_level'] = -1;
                     header('Location: roleChange.php');
                     die();
                     break;
                 // admin
                 case 2:
-                    $_SESSION['access_level'] = 3;
+                    $_SESSION['access_level'] = 4;
                     break;
             }
             $accessLevel = $_SESSION['access_level'];
@@ -75,9 +75,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
 
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <script>
+    (function() {
+        const savedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+        
+        if (theme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    })();
+  </script>
+  
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/theme-toggle.css">
+  <link rel="stylesheet" href="css/pwa-mobile.css">
+  
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#6B46C1">
+  <meta name="description" content="Volunteer Management System for Fredericksburg Pride - FXBG Closet">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="FXBG Closet">
+  <link rel="apple-touch-icon" href="/images/FXBG-PrideWhiteLogo.png">
+  
   <script src="js/theme-toggle.js"></script>
   <style>
     /* Found this on codepen :D */
@@ -138,33 +162,129 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       padding: 0;
       height: 100%;
     }
+
+    @media (min-width: 769px) {
+      .login-container {
+        height: 100vh;
+        display: flex;
+      }
+
+      .login-image-section {
+        display: block !important;
+        width: 50%;
+        background-image: url(images/PrideFlagInWind.png);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-radius: 0 50px 50px 0;
+      }
+
+      .login-form-section {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 40px;
+      }
+
+      .login-form-container {
+        width: 66.666667%;
+        max-width: 28rem;
+      }
+
+      .login-logo {
+        width: 100%;
+        max-width: 24rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .login-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .login-image-section {
+        display: none !important;
+      }
+
+      .login-form-section {
+        width: 100%;
+        padding: 20px;
+      }
+
+      .login-form-container {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .login-logo {
+        max-width: 200px !important;
+        width: 100%;
+      }
+
+      h2.text-3xl {
+        font-size: 1.5rem !important;
+      }
+
+      .login-theme-toggle {
+        top: 16px;
+        right: 16px;
+      }
+    }
+
+    .login-theme-toggle {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 1000;
+    }
   </style>
   <title>FXBG Pride Volunteer System | Log In</title>
 </head>
 
 <body>
-  <div class="h-screen flex" style="background-color: var(--bg-color);">
+  <!-- Theme Toggle Button -->
+  <button class="theme-toggle login-theme-toggle" aria-label="Toggle theme" title="Toggle dark/light mode">
+    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+    </svg>
+  </button>
+
+  <div class="login-container" style="background-color: var(--bg-color);">
 
     <!-- Left: Image Section (Hidden on small screens) -->
-    <div class="hidden md:block md:w-1/2 bg-center rounded-r-[50px]"
-      style="background-image: url(images/PrideFlagInWind.png); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <div class="login-image-section">
     </div>
 
     <!-- Right: Form Section -->
+    <div class="login-form-section" style="background-color: var(--bg-color);">
 
-    <div class="w-full md:w-1/2 flex flex-col justify-center items-center bg-[var(--bg-color)] relative ">
-
-
-      <div class="w-2/3 max-w-md flex flex-col items-center">
+      <div class="login-form-container flex flex-col items-center">
 
         <!-- Logo Placeholder (Now the same width as inputs and centered) -->
         <div class="w-full flex justify-center mb-6">
           <img src="images/FXBG-PrideLogo.png" 
             alt="Logo" 
-            class="logo-lightMode w-full max-w-xs">
+            class="logo-lightMode login-logo">
           <img src="images/FXBG-PrideWhiteLogo.png" 
             alt="Logo (Dark Mode)" 
-            class="logo-darkMode w-full max-w-xs">
+            class="logo-darkMode login-logo">
         </div>
 
         <h2 class="text-3xl font-bold mb-6 text-gray-800 text-center">

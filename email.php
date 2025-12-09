@@ -11,6 +11,10 @@
 *
 **/
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/autoload.php';
 
 /**
  * Fetch admin emails from dbaccounts (type >= 2).
@@ -49,28 +53,122 @@ function emailAdmins(string $fromUser, string $subject, string $body): array
 /**
  * Send emails to each address in the supplied list.
  *
- *  ------->MAY NEED FIELDS CHANGED BEFORE REAL PRODUCTION <-----------
- *   -------> DOMAIN WILL ALMOST CERTIANLY CHANGE IN PRODUCTION <------------
- *
  * @param array  $emails   List of recipient email addresses.
  * @param string $fromUser Local-part for the From address.
  * @param string $subject  Email subject.
  * @param string $body     Email body.
- * @return array           Returns an  array where keys are emails and values are boolean statuses.
+ * @param array  $attachments Optional array of file paths to attach.
+ * @return array Returns ['success' => bool, 'sent_count' => int, 'total_count' => int, 'error' => string|null]
  */
-function sendEmails(array $emails, string $fromUser, string $subject, string $body): array
+function sendEmails(array $emails, string $fromUser, string $subject, string $body, array $attachments = []): array
 {
-    $domain = 'localhost';
-    $fromAddress = "{$fromUser}@{$domain}";
-    $headers = "From: {$fromAddress}\r\n";
-    $results = [];
+    $host = '127.0.0.1';
+    $port = 1025;
+    $fromEmail = 'localhost@example.com';
 
-    foreach ($emails as $email) {
-        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $results[$email] = mail($email, $subject, $body, $headers);
-        } else {
-            $results[$email] = false;
+    // For Siteground later
+    // $username = 'sitegroundemail@example.com';
+    // $password = 'emailpassword';
+    // $fromEmail = 'sitegroundemail@example.com';
+
+    // Validate attachments
+    if (!empty($attachments)) {
+        foreach ($attachments as $filePath) {
+            $fileName = basename($filePath);
+            if (!file_exists($filePath)) {
+                return [
+                    'success' => false,
+                    'sent_count' => 0,
+                    'total_count' => count($emails),
+                    'error' => "Attachment not found: {$fileName}",
+                ];
+            }
+            if (!is_readable($filePath)) {
+                return [
+                    'success' => false,
+                    'sent_count' => 0,
+                    'total_count' => count($emails),
+                    'error' => "Attachment not readable: {$fileName}",
+                ];
+            }
         }
     }
-    return $results;
+
+    $sentCount = 0;
+    $failures = [];
+
+    foreach ($emails as $email) {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $failures[] = "Invalid email: {$email}";
+            continue;
+        }
+
+        $mail = new PHPMailer(true);
+        try {
+            // Settings
+            $mail->isSMTP();
+            $mail->Host = $host;
+            $mail->Port = $port;
+            $mail->SMTPAuth = false;
+
+            // SiteGround later:
+            // $mail->SMTPAuth = true;
+            // $mail->Username = $username;
+            // $mail->Password = $password;
+            // $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+
+            // Recipients
+            $mail->setFrom($fromEmail, $fromUser);
+            $mail->addAddress($email);
+
+            // Attachments
+            foreach ($attachments as $filePath) {
+                $mail->addAttachment($filePath);
+            }
+
+            // Content
+            $mail->isHTML(true);
+            $mail->Subject = $subject;
+            $mail->Body = $body;
+
+            $mail->send();
+            $sentCount++;
+        } catch (Exception $e) {
+            $failures[] = "Failed to send to {$email}: {$mail->ErrorInfo}";
+        }
+    }
+
+    return [
+        'success' => $sentCount > 0,
+        'sent_count' => $sentCount,
+        'total_count' => count($emails),
+        'error' => !empty($failures) ? implode('; ', $failures) : null,
+    ];
+}
+
+
+/**
+ * Render a PHP template file with variables and return as string.
+ *
+ * @param string $path Absolute path to template file
+ * @param array  $vars Variables to extract for use inside template
+ * @return string Rendered HTML
+ */
+function render_email_template(string $path, array $vars = []): string
+{
+    // Only allow templates from the email_templates directory
+    $baseDir = realpath(__DIR__ . DIRECTORY_SEPARATOR . 'email_templates');
+    $realPath = realpath($path);
+    if ($realPath === false || strpos($realPath, $baseDir) !== 0) {
+        throw new InvalidArgumentException("Invalid template path");
+    }
+    if (!file_exists($realPath)) {
+        throw new InvalidArgumentException("Template file not found: $path");
+    }
+
+    extract($vars, EXTR_SKIP);
+
+    ob_start();
+    include $realPath;
+    return ob_get_clean();
 }

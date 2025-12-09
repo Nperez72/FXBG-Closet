@@ -26,7 +26,11 @@ function connect()
     $database = "pridedb";
     $user = "pridedb";
     $pass = "pridedb";
-
+    if ($_SERVER['SERVER_NAME'] == 'jenniferp215.sg-host.com') {
+        $user = 'u3zksfptrf7pm';
+        $database = 'dbmixgoqrdd3m5';
+        $pass = 'pokpvwwabta3';
+    }
     // Auto-detect Docker environment
     // Docker containers have .dockerenv file
     if (file_exists('/.dockerenv')) {

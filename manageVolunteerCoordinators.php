@@ -12,7 +12,7 @@ if (isset($_SESSION['_id'])) {
     $userID = $_SESSION['_id'];
 }
 
-if ($accessLevel < 2) {
+if ($accessLevel < 4) {
     header('Location: index.php');
     die();
 }
@@ -22,27 +22,36 @@ if ($accessLevel < 2) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Manage Volunteer Coordinators</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FXBG Closet | Manage Volunteer Coordinators</title>
+    <script src="js/theme-presets-init.js"></script>
     <link href="css/normal_tw.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/accessibility-settings.css">
+    <link rel="stylesheet" href="css/theme-presets.css">
     <?php require('header.php'); ?>
     <style>
         .btn {
-            padding: 6px 12px;
-            border-radius: 5px;
+            padding: 8px 16px;
+            border-radius: 8px;
             color: white;
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
         }
 
         .btn-remove {
-            background-color: var(--error-color, #d4635a);
+            background-color: #dc2626;
         }
         .btn-remove:hover {
-            background-color: var(--accent-color, #d4af37);
+            background-color: #b91c1c;
         }
 
         .btn-add {
             background-color: var(--main-color, #e8c4b8);
+            color: var(--button-text, #363434);
         }
         .btn-add:hover {
             background-color: var(--accent-color, #d4af37);
@@ -71,36 +80,154 @@ if ($accessLevel < 2) {
 
         .main-content-box {
             background: var(--card-bg, #ffffff);
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 2rem;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             margin: 0 auto;
             margin-top: 2rem;
-            width: 80%;
+            width: 90%;
+            max-width: 1200px;
         }
 
         select, button {
-            padding: 8px 10px;
+            padding: 10px 14px;
             margin: 10px 5px 0 0;
-            border-radius: 5px;
-            border: 1px solid var(--card-border, #e8c4b8);
+            border-radius: 8px;
+            border: 2px solid var(--card-border, #e8c4b8);
+            background: white;
+            color: var(--text-color, #363434);
+            font-size: 16px;
+        }
+        
+        select:focus, button:focus {
+            outline: 2px solid var(--accent-color, #d4af37);
+            outline-offset: 2px;
         }
 
         .inline-form {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
             margin-bottom: 30px;
+        }
+        
+        .inline-form select {
+            flex: 1;
+            min-width: 250px;
         }
 
         .success {
-            color: green;
+            color: #16a34a;
+            background: #dcfce7;
+            padding: 12px;
+            border-radius: 8px;
             margin-top: 10px;
+            border-left: 4px solid #16a34a;
         }
 
         .error {
-            color: red;
+            color: #dc2626;
+            background: #fee2e2;
+            padding: 12px;
+            border-radius: 8px;
             margin-top: 10px;
+            border-left: 4px solid #dc2626;
+        }
+
+        .create-header {
+            display: flex;
+            justify-content: space-between;
+            justify-content: flex-start;
+            gap: 12px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        /* Mobile responsive improvements */
+        @media (max-width: 768px) {
+            .hero-header {
+                height: calc(var(--spacing) * 25) !important;
+            }
+            
+            main {
+                padding-inline: calc(var(--spacing) * 2) !important;
+            }
+            
+            .main-content-box {
+                width: 100%;
+                padding: 1rem !important;
+                margin-top: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.5rem !important;
+                padding: 1rem !important;
+            }
+            
+            h2, h3 {
+                font-size: 1.25rem !important;
+            }
+            
+            table {
+                font-size: 14px;
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            th, td {
+                padding: 8px !important;
+                min-width: 100px;
+            }
+            
+            th:first-child, td:first-child {
+                position: sticky;
+                left: 0;
+                background: var(--card-bg, #ffffff);
+                z-index: 1;
+            }
+            
+            th:first-child {
+                background: var(--nav-item-active-bg, #f4ede9);
+            }
+            
+            .btn {
+                padding: 6px 12px;
+                font-size: 14px;
+            }
+            
+            .inline-form {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.5rem;
+            }
+            
+            .inline-form select {
+                width: 100%;
+                min-width: unset;
+                margin-bottom: 10px;
+            }
+            
+            .inline-form button {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-content-box {
+                padding: 0.75rem !important;
+                border-radius: 8px;
+            }
+            
+            table {
+                font-size: 12px;
+            }
+            
+            th, td {
+                padding: 6px !important;
+                min-width: 80px;
+            }
         }
 
     </style>
@@ -172,52 +299,21 @@ if ($accessLevel < 2) {
                 exit();
             }
 
-            // ADD USER SECTION
-            $users_not_in_group = getNonVolunteerCoordinators();
             ?>
-            <h3 class="text-lg font-semibold mt-6">Promote an Existing User to Volunteer Coordinator</h3>
-            <?php if (empty($users_not_in_group)) : ?>
-                <p>No available users to add.</p>
-            <?php else : ?>
-                <form method="POST" action="manageVolunteerCoordinators.php" class="inline-form">
-                    <select name="add_user_id" required>
-                        <option value="" disabled selected>Select a user to add</option>
-                        <?php foreach ($users_not_in_group as $user) : ?>
-                            <option value="<?= htmlspecialchars($user['person_id']) ?>">
-                                <?= htmlspecialchars($user['fullname']) ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                    <button type="submit" name="add_member" class="btn btn-add">Add</button>
-                </form>
-            <?php endif; ?>
 
-            <?php
-            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_member'])) {
-                $user_id = $_POST['add_user_id'];
-
-                if (!empty($user_id)) {
-                    $success = addVolunteerCoordinator($user_id);
-                    if ($success) {
-                        /* //message user that got added
-                        $title = 'You have been added as Volunteer Coordinator.';
-                        $body = ' View under Groups page.';
-                        send_system_message($user_id, $title, $body); */
-                        echo "<p class='success'>User added successfully to Volunteer Coordinators.</p>";
-                    } else {
-                        echo "<p class='error'>Failed to add user.</p>";
-                    }
-                }
-                header("Location: manageVolunteerCoordinators.php");
-                exit();
-            }
-            ?>
+            <!-- ADD USER SECTION -->
+            <div class="create-header">
+                <h3 class="text-lg font-semibold mt-6">Create a New Volunteer Coordinator: </h3>
+                <a href="createCoord.php" class="btn btn-add">Create</a>
+            </div>
 
         <div class="mt-6">
             <a href="groupManagement.php" class="btn btn-add">Back to Groups</a>
         </div>
     </div>
 </main>
+<script src="js/accessibility-settings.js"></script>
+<script src="js/theme-presets.js"></script>
 </body>
 </html>
 <?php ob_end_flush(); ?>

@@ -47,7 +47,6 @@ function add_event($event)
                 $event->getCapacity() . "," .
                 $event->getCompleted() . "," .
                 $event->getRestrictedSignup() . "," .
-                $event->getTrainingLevelRequired() . "," .
                 #$event->getID() .
                 '");');
         mysqli_close($con);
@@ -406,6 +405,9 @@ function make_an_event($result_row)
     /*
      ($en, $v, $sd, $description, $ev))
      */
+
+    // Must add this line to work on SiteGround (b/c v_c may be NULL)
+
     $theEvent = new Event(
         $result_row['id'],
         $result_row['name'],
@@ -416,7 +418,6 @@ function make_an_event($result_row)
         capacity: $result_row['capacity'],
         completed: $result_row['completed'],
         restricted_signup: $result_row['restricted_signup'],
-        training_level_required: $result_row['training_level_required'],
         type: $result_row['type']
     );
     return $theEvent;
@@ -561,15 +562,15 @@ function create_event($event)
     $endTime = $event["end-time"];
     $description = $event["description"];
     $type = $event['type'];
-    if (isset($event["capacity"])) {
-        $capacity = $event["capacity"];
-    } else {
+    if (!isset($event["capacity"]) || $event["capacity"] === "") {
         $capacity = 999;
-    }
-    if (isset($event["location"])) {
-        $location = $event["location"];
     } else {
+        $capacity = (int)$event["capacity"];
+    }
+    if (!isset($event["location"]) || $event["location"] === "") {
         $location = "";
+    } else {
+        $location = $event["location"];
     }
     //$completed = $event["completed"];
     /*
@@ -582,15 +583,14 @@ function create_event($event)
         */
     $restricted = 0;
     $description = $event["description"];
-    $training_level_required = $event["training_level_required"];
     //$location = $event["location"];
     //$services = $event["service"];
 
     //$animal = $event["animal"];
     $completed = "no";
     $query = "
-        insert into dbevents (name, date, startTime, endTime, restricted_signup, description, capacity, completed, location, training_level_required, type)
-        values ('$name', '$date', '$startTime', '$endTime', $restricted, '$description', $capacity, '$completed', '$location', '$training_level_required', '$type')
+        insert into dbevents (name, date, startTime, endTime, restricted_signup, description, capacity, completed, location, type)
+        values ('$name', '$date', '$startTime', '$endTime', $restricted, '$description', $capacity, '$completed', '$location', '$type')
     ";
     $result = mysqli_query($connection, $query);
     if (!$result) {
@@ -628,6 +628,7 @@ function update_event($eventID, $eventDetails)
     $startTime = $eventDetails["start-time"];
     #$restricted = $eventDetails["restricted"];
     $endTime = $eventDetails["end-time"];
+    $type = $eventDetails["type"];
     $description = $eventDetails["description"];
     $capacity = $eventDetails["capacity"];
     #$completed = $eventDetails["completed"];
@@ -645,7 +646,7 @@ function update_event($eventID, $eventDetails)
     #    where id='$eventID'
     #";
     $query = "
-        update dbevents set id='$id', name='$name', date='$date', startTime='$startTime', endTime='$endTime', description='$description', location='$location', capacity=$capacity
+        update dbevents set id='$id', name='$name', date='$date', startTime='$startTime', endTime='$endTime', type='$type', description='$description', location='$location', capacity=$capacity
         where id='$eventID'
     ";
     $result = mysqli_query($connection, $query);
@@ -994,6 +995,36 @@ function update_animal2($animal)
     mysqli_commit($connection);
     mysqli_close($connection);
     return $id;
+}
+
+function get_event_date_by_id($event_id)
+{
+    require_once('dbinfo.php');
+
+    $connection = connect();
+
+    if (!$connection) {
+        return null;
+    }
+
+    $query = "SELECT date FROM dbevents WHERE id = ?";
+    $stmt = mysqli_prepare($connection, $query);
+
+    if (!$stmt) {
+        mysqli_close($connection);
+        return null;
+    }
+
+    mysqli_stmt_bind_param($stmt, "i", $event_id);
+    mysqli_stmt_execute($stmt);
+
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_assoc($result);
+
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+
+    return $row ? $row['date'] : null;
 }
 
 //There was a question mark followed by a > here

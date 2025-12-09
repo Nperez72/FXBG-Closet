@@ -58,19 +58,16 @@ if (date('m', strtotime($calendarEnd . ' +1 day')) == date('m', $first)) {
         <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="css/theme-toggle.css">
         <?php require('universal.inc'); ?>
-        <?php require('header.php'); ?>
         <script src="js/calendar.js"></script>
         <title>Fredericksburg SPCA | Events Calendar</title>
         <style>
             .happy-toast { 
                 margin: 0 1rem 1rem 1rem; 
             }
-            body {
-                font-family: 'Quicksand', sans-serif;
-            }
         </style>
     </head>
     <body>
+        <?php require('header.php'); ?>
         <div id="month-jumper-wrapper" class="hidden">
             <form id="month-jumper">
                 <p>Choose a month to jump to</p>
@@ -104,7 +101,7 @@ if (date('m', strtotime($calendarEnd . ' +1 day')) == date('m', $first)) {
         <main class="calendar-view">
             <h1 class='calendar-header' style="background: var(--main-color, #e8c4b8); height: 75px;">
                 <img id="previous-month-button" src="images/arrow-back.png" data-month="<?php echo date("Y-m", $previousMonth); ?>">
-                <span id="calendar-heading-month" style="font-weight: 700; font-size: 36px;">Appointments - <?php echo date('F Y', $month); ?></span>
+                <span id="calendar-heading-month" style="font-weight: 700; font-size: 36px;">Events - <?php echo date('F Y', $month); ?></span>
                 <img id="next-month-button" src="images/arrow-forward.png" data-month="<?php echo date("Y-m", $nextMonth); ?>">
             </h1>
             <!-- <input type="date" id="month-jumper" value="<?php echo date('Y-m-d', $month); ?>" min="2023-01-01"> -->
@@ -160,10 +157,10 @@ if (date('m', strtotime($calendarEnd . ' +1 day')) == date('m', $first)) {
                                     $backgroundCol = 'var(--main-color, #e8c4b8)'; // default color
 
                                     if (is_archived($info['id'])) { // archived event
-                                        if ($_SESSION['access_level'] < 2) {
+                                        if ($_SESSION['access_level'] < 4) {
                                             continue; // users cannot see archived events
                                         }
-                                        $backgroundCol = 'var(--inactive-background-color, #f4ede9)'; //TODO
+                                        $backgroundCol = '#c4bab7ff'; //TODO
                                     } elseif (check_if_signed_up($info['id'], $_SESSION['_id'])) {// user is signed-up for event
                                         $backgroundCol = 'var(--accent-color, #d4af37)';
                                     }
@@ -204,7 +201,7 @@ if (date('m', strtotime($calendarEnd . ' +1 day')) == date('m', $first)) {
                 <span style="font-size: 25px;">
                     Signed-Up
                 </span>
-            <i class="fa-solid fa-circle" style="color: var(--inactive-background-color, #f4ede9)"> </i>
+            <i class="fa-solid fa-circle" style="color: #c4bab7ff"> </i>
                 <span style="font-size: 25px;">
                     Archived Event
                 </span>

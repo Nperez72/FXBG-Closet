@@ -10,8 +10,8 @@ function add_supply_request($item_type, $quantity, $description, $date_submitted
         return false;
     }
 
-    $query = "INSERT INTO dbsupplies (item_type, quantity, description, date_submitted) 
-              VALUES (?, ?, ?, ?)";
+    $query = "INSERT INTO dbsupplies (item_type, quantity, description, date_submitted, status, reserve_status) 
+              VALUES (?, ?, ?, ?, 'pending', 'unreserved')";
 
     $stmt = mysqli_prepare($connection, $query);
 
@@ -56,4 +56,91 @@ function get_all_supply_requests()
     mysqli_close($connection);
 
     return $supplies;
+}
+
+function toggle_supply_status($supply_id, $new_status)
+{
+    require_once('dbinfo.php');
+
+    $connection = connect();
+
+    if (!$connection) {
+        return false;
+    }
+
+    $query = "UPDATE dbsupplies SET status = ? WHERE supply_id = ?";
+
+    $stmt = mysqli_prepare($connection, $query);
+
+    if (!$stmt) {
+        mysqli_close($connection);
+        return false;
+    }
+
+    mysqli_stmt_bind_param($stmt, "si", $new_status, $supply_id);
+
+    $result = mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+
+    return $result;
+}
+
+function toggle_reserve_status($supply_id, $new_reserve_status)
+{
+    require_once('dbinfo.php');
+
+    $connection = connect();
+
+    if (!$connection) {
+        return false;
+    }
+
+    $query = "UPDATE dbsupplies SET reserve_status = ? WHERE supply_id = ?";
+
+    $stmt = mysqli_prepare($connection, $query);
+
+    if (!$stmt) {
+        mysqli_close($connection);
+        return false;
+    }
+
+    mysqli_stmt_bind_param($stmt, "si", $new_reserve_status, $supply_id);
+
+    $result = mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+
+    return $result;
+}
+
+function update_supply_quantity($supply_id, $quantity)
+{
+    require_once('dbinfo.php');
+
+    $connection = connect();
+
+    if (!$connection) {
+        return false;
+    }
+
+    $query = "UPDATE dbsupplies SET quantity = ? WHERE supply_id = ?";
+
+    $stmt = mysqli_prepare($connection, $query);
+
+    if (!$stmt) {
+        mysqli_close($connection);
+        return false;
+    }
+
+    mysqli_stmt_bind_param($stmt, "ii", $quantity, $supply_id);
+
+    $result = mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+
+    return $result;
 }

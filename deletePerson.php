@@ -32,7 +32,7 @@ if (isset($_SESSION['_id'])) {
     $loggedIn = true;
     // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
     $accessLevel = $_SESSION['access_level'];
-    $isAdmin = $accessLevel >= 2;
+    $isAdmin = $accessLevel >= 5;
     $userID = $_SESSION['_id'];
 } else {
     header('Location: login.php');

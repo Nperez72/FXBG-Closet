@@ -7,7 +7,7 @@ include_once "database/dbDiscussionReplies.php";
 include_once "database/dbDiscussions.php";
 
 // Ensure the user is authorized
-if (!isset($_SESSION['_id']) || $_SESSION['access_level'] < 3) {
+if (!isset($_SESSION['_id']) || $_SESSION['access_level'] < 4) {
     die("Unauthorized access.");
 }
 

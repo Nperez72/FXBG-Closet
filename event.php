@@ -17,11 +17,30 @@ if (isset($args["id"])) {
     die();
 }
 
+include_once('database/dbPersons.php');
+$access_level = $_SESSION['access_level'];
+if ($access_level == 3) {
+    if (!isset($_SESSION['person_id'])) {
+        header('Location: login.php');
+        die();
+    }
+    $personID = $_SESSION['person_id'];
+}
+    $user = retrieve_person($_SESSION['_id']);
+
     include_once('database/dbEvents.php');
+    require_once('database/dbEventCoordinators.php');
 
     // We need to check for a bad ID here before we query the db
     // otherwise we may be vulnerable to SQL injection(!)
     $event_info = fetch_event_by_id($id);
+    // Get an array of coordinators assigned to this event
+    $coordinator_ids = get_event_coordinators($id);
+    $isAssignedCoordinator = false;
+if (isset($_SESSION['person_id']) && is_array($coordinator_ids)) {
+    $isAssignedCoordinator = in_array($_SESSION['person_id'], $coordinator_ids);
+}
+
 if ($event_info == null) {
     // TODO: Need to create error page for no event found
     // header('Location: calendar.php');
@@ -31,10 +50,12 @@ if ($event_info == null) {
     die();
 }
 
-    include_once('database/dbPersons.php');
-    $access_level = $_SESSION['access_level'];
-    $user = retrieve_person($_SESSION['_id']);
-    $active = $user->get_status() == 'Active';
+require_once('database/dbEventReports.php');
+// Fetch the report for this event
+$existingReport = fetch_event_report($event_info['id']);
+$reportButtonText = $existingReport ? "View/Edit Event Report" : "Complete Event Report";
+
+    //$active = $user->get_status() == 'Active';
 
     ini_set("display_errors", 1);
     error_reporting(E_ALL);
@@ -129,10 +150,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Check if Get request from user is from an organization member
         // (volunteer, admin/super admin)
         if ($request_type == 'add self' && $access_level >= 1) {
-            if (!$active) {
+            /* if (!$active) {
                 echo 'forbidden';
                 die();
-            }
+            } */
             $volunteerID = $args['selected_id'];
             $person = retrieve_person($volunteerID);
             $name = $person->get_first_name() . ' ' . $person->get_last_name();
@@ -179,7 +200,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ?>
     <title>Fredericksburg SPCA | View Event: <?php echo $event_info['name'] ?></title>
     <link rel="stylesheet" href="css/event.css" type="text/css" />
-    <?php if ($access_level >= 2) : ?>
+    <?php if ($access_level >= 3) : ?>
         <script src="js/event.js"></script>
     <?php endif ?>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -236,19 +257,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $event_date = date('l, F j, Y', strtotime($event_info['date']));
             $event_startTime = time24hto12h($event_info['startTime']);
             $event_endTime = time24hto12h($event_info['endTime']);
+            $event_type = $event_info['type'];
             $event_description = $event_info['description'];
             $event_location = $event_info['location'];
             $event_capacity = $event_info['capacity'];
-            $event_training_level = $event_info['training_level_required'];
+            $event_volunteer_coordinator = $event_info['volunteer_coordinator'] ?? null;
             require_once('include/time.php');
         ?>
 
         <!-- Event Information Table -->
         <h2 style="font-size: 2.25em; font-weight: 700; color: black;">
             <?php echo htmlspecialchars_decode($event_name); ?>
-            <?php if ($access_level >= 2) : ?>
+            <?php if (($access_level >= 4) || (($access_level == 3) && $isAssignedCoordinator)) : ?>
                 <a href="editEvent.php?id=<?= $id ?>" title="Edit Event" class="edit-icon">
                     <i class="fas fa-pencil-alt"></i>
+                </a>
+            <?php endif; ?>
+            <?php if ($access_level >= 4) : ?>
                 <a href="deleteEvent.php?id=<?= $id ?>" title="Delete Event" class="delete-icon" 
                     onclick="return confirmDelete(<?= htmlspecialchars($id) ?>);">
                         <i class="fas fa-trash"></i>
@@ -275,6 +300,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <td class="label">Time</td>
                     <td><?php echo $event_startTime . " - " . $event_endTime; ?></td>
                 </tr>
+                <tr>  
+                    <td class="label">Type</td>
+                    <td><?php echo $event_type; ?></td>
+                </tr>
                 <tr>
                     <td class="label">Location</td>
                     <td>
@@ -293,11 +322,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <td id="description-cell"><?php echo $event_capacity; ?></td>
                 </tr>
                 <tr>
-                    <td class="label">Training Required</td>
-                    <td><?php if ($event_training_level == null) {
-                        $event_training_level = "N/A";
+                    <td class="label">Volunteer Coordinators</td>
+                    <td>
+                        <?php
+                        if (empty($coordinator_ids)) {
+                            echo "None";
+                        } else {
+                            $names = [];
+                            foreach ($coordinator_ids as $coordID) {
+                                $person = updated_retrieve_person($coordID);
+                                if ($person) {
+                                    $names[] = htmlspecialchars($person->get_full_name());
+                                }
+                            }
+                            echo implode("<br>", $names);
                         }
-                        echo $event_training_level; ?></td>
+                        ?>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -306,7 +347,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="action-buttons">
 
             <!--@@@ Check-In and Check-Out Buttons by Thomas -->
-            <?php if (can_check_in($user->get_id(), $event_info)) : ?>
+            <?php if (($user != false) and can_check_in($user->get_id(), $event_info)) : ?>
                 <form method="POST" action="">
                     <input type="hidden" name="checking_in" value="1">
                     <input type="hidden" name="personID" value="<?php echo $user->get_id(); ?>">
@@ -317,7 +358,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </form>
             <?php endif ?>
 
-            <?php if (can_check_out($user->get_id(), $event_info)) : ?>
+            <?php if (($user != false) and can_check_out($user->get_id(), $event_info)) : ?>
                 <form method="POST" action="">
                     <input type="hidden" name="checking_out" value="1">
                     <input type="hidden" name="personID" value="<?php echo $user->get_id(); ?>">
@@ -336,11 +377,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php endif ?>
             <?php endif*/ ?>
 
-            <?php if ($access_level >= 2) : ?>
-                <a href="viewEventSignUps.php?id=<?php echo $id; ?>"class = "button signup">View Event Signups</a>
+            <?php if (($access_level >= 4) || (($access_level == 3) && $isAssignedCoordinator)) : ?>
+                <!-- Complete Report Button -->
+                <form method="GET" action="eventReport.php">
+                    <input type="hidden" name="id" value="<?= $event_info['id'] ?>">
+                    <button type="submit" class="button"><?= $reportButtonText ?></button>
+                </form>
 
                 <!-- Archive and Unarchive buttons by Thomas -->
-
                 <?php if (is_archived($event_info['id'])) : ?>
                     <form method="POST" action="" onsubmit="return confirmAction('unarchive')">
                         <input type="hidden" name="unarchiving" value="1">
@@ -383,7 +427,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
         <!-- Confirmation Modals -->
-        <?php if ($access_level >= 2) : ?>
+        <?php if ($access_level >= 3) : ?>
             <div id="delete-confirmation-wrapper" class="modal hidden">
                 <div class="modal-content">
                     <p>Are you sure you want to delete this event?</p>

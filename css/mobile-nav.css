@@ -282,12 +282,10 @@
   }
 }
 
-/* Smooth scrolling for the more menu */
 .mobile-more-menu {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Safe area padding for notched devices */
 @supports (padding: max(0px)) {
   .mobile-bottom-nav {
     padding-bottom: max(8px, env(safe-area-inset-bottom));
