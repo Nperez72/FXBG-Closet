@@ -16,7 +16,7 @@ if (!isset($_SESSION['_id'])) {
     redirect("login.php");
 }
 
-$allowed_access_levels = [1, 2, 3];
+$allowed_access_levels = [1, 2, 3, 4];
 if (!in_array($_SESSION['access_level'], $allowed_access_levels)) {
     redirect('index.php');
 }

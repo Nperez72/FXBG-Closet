@@ -270,14 +270,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php echo htmlspecialchars_decode($event_name); ?>
             <?php if (($access_level >= 4) || (($access_level == 3) && $isAssignedCoordinator)) : ?>
                 <a href="editEvent.php?id=<?= $id ?>" title="Edit Event" class="edit-icon">
-                    <i class="fas fa-pencil-alt"></i>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                        viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z"/>
+                        <path d="M20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 
+                                0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z"/>
+                    </svg>
                 </a>
             <?php endif; ?>
             <?php if ($access_level >= 4) : ?>
-                <a href="deleteEvent.php?id=<?= $id ?>" title="Delete Event" class="delete-icon" 
-                    onclick="return confirmDelete(<?= htmlspecialchars($id) ?>);">
-                        <i class="fas fa-trash"></i>
-                </a>
+                <a href="deleteEvent.php?id=<?= $id ?>" title="Delete Event"
+                    class="delete-icon" onclick="return confirmDelete(<?= htmlspecialchars($id) ?>);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                            viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M9 3v1H4v2h16V4h-5V3H9z"/>
+                            <path d="M10 8v10h2V8h-2zm4 0v10h2V8h-2z"/>
+                            <path d="M7 8v10a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V8H7z"/>
+                        </svg>
+                    </a>
             <?php endif; ?>
         </h2>
 

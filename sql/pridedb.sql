@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 09, 2025 at 03:17 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: Dec 09, 2025 at 10:23 PM
+-- Server version: 8.0.43-34
+-- PHP Version: 8.2.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `pridedb`
+-- Database: `dbmixgoqrdd3m5`
 --
 
 -- --------------------------------------------------------
@@ -28,10 +28,10 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `dbaccounts` (
-  `username` varchar(256) NOT NULL,
-  `email` varchar(256) DEFAULT NULL,
-  `password` text NOT NULL,
-  `type` int(11) NOT NULL
+  `username` varchar(256) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(256) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `password` text COLLATE utf8mb4_general_ci NOT NULL,
+  `type` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -39,10 +39,10 @@ CREATE TABLE `dbaccounts` (
 --
 
 INSERT INTO `dbaccounts` (`username`, `email`, `password`, `type`) VALUES
-('admin', 'admin@example.com', '$2y$10$3VG4XS1am7XIB4hlCnmOSut3dQFELyo.e0DCge8sQ0yqD932DNLyq', 2),
-('coordinator', NULL, '$2y$10$5M4vOQnvVzmBPFvBV7y6XePx/62JYtktoZtNKruDdBRFA5PvtDPrS', 1),
+('admin', 'admin@example.com', '$2y$10$Xj8p6RadWuneKU6S15.QFuMkAggNB.XJs07kjimn3CJGP2CQJEtYy', 2),
+('coordinator', NULL, '$2y$10$Bv2Up1AQDwH3robD6otr9OE1g3uvRZteQCDsANHnlgtGoYRbYNOpe', 1),
 ('vmsroot', 'rootadmin@example.com', '$2y$10$azSckAKgmDvY5stYh5iXtuOpADqsCHZX.3q9QW8uZHVXk.9BSYO3W', 2),
-('volunteer', NULL, '$2y$10$uRS4b4Ye/HxLip.9WUncnuu3a9qqxc8lkD2uL6vpl9epjwgkdC8AG', 0);
+('volunteer', NULL, '$2y$10$AuYl820q8r4whb.AuqqnaecN68mfhZE/TIrN6vVZwX6AHTEBSu3uO', 0);
 
 -- --------------------------------------------------------
 
@@ -96,8 +96,8 @@ INSERT INTO `dbarchived_volunteers` (`id`, `start_date`, `first_name`, `last_nam
 --
 
 CREATE TABLE `dbclosetinventory` (
-  `item_name` varchar(12) NOT NULL,
-  `quantity` int(11) NOT NULL
+  `item_name` varchar(12) COLLATE utf8mb4_general_ci NOT NULL,
+  `quantity` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -117,11 +117,11 @@ INSERT INTO `dbclosetinventory` (`item_name`, `quantity`) VALUES
 --
 
 CREATE TABLE `dbclosetuse` (
-  `user_first_name` varchar(24) NOT NULL,
-  `user_last_name` varchar(24) NOT NULL,
+  `user_first_name` varchar(24) COLLATE utf8mb4_general_ci NOT NULL,
+  `user_last_name` varchar(24) COLLATE utf8mb4_general_ci NOT NULL,
   `use_date` date NOT NULL,
-  `item_type` varchar(12) NOT NULL,
-  `quantity_taken` int(11) NOT NULL
+  `item_type` varchar(12) COLLATE utf8mb4_general_ci NOT NULL,
+  `quantity_taken` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -160,13 +160,21 @@ INSERT INTO `dbdiscussions` (`author_id`, `title`, `body`, `time`) VALUES
 CREATE TABLE `dbeventmedia` (
   `media_id` int NOT NULL,
   `activity_id` int NOT NULL,
-  `file_name` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `file_format` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `alternate_name` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `file_name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `file_format` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `alternate_name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `time_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `dbeventmedia`
+--
+
+INSERT INTO `dbeventmedia` (`media_id`, `activity_id`, `file_name`, `type`, `file_format`, `description`, `alternate_name`, `time_created`) VALUES
+(1, 1, 'goat.jpg', 'image/jpeg', 'jpg', NULL, 'activity_1_2025-12-09_goat_90c807dbfc9b.jpg', '2025-11-27 00:00:00'),
+(2, 1, 'tiger.png', 'image/png', 'png', NULL, 'activity_1_2025-12-09_tiger_9e4f02c88466.png', '2025-11-27 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -176,9 +184,9 @@ CREATE TABLE `dbeventmedia` (
 
 CREATE TABLE `dbeventpersons` (
   `eventID` int NOT NULL,
-  `userID` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `position` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `notes` text COLLATE utf8mb4_unicode_ci NOT NULL
+  `userID` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `position` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -198,59 +206,53 @@ INSERT INTO `dbeventpersons` (`eventID`, `userID`, `position`, `notes`) VALUES
 --
 
 CREATE TABLE `dbevents` (
-  `id` int NOT NULL PRIMARY KEY,
-  `name` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `date` char(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `startTime` char(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `endTime` char(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` int NOT NULL,
+  `name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `date` char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `startTime` char(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `endTime` char(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `capacity` int NOT NULL,
-  `completed` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `completed` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `restricted_signup` tinyint(1) NOT NULL,
-  `location` text DEFAULT NULL,
-  `type` text NOT NULL,
-  `volunteer_coordinator` int(11) DEFAULT NULL
+  `location` text COLLATE utf8mb4_unicode_ci,
+  `type` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `volunteer_coordinator` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `dbevents`
 --
 
-INSERT INTO `dbevents` (`id`, `name`, `date`, `startTime`, `endTime`, `description`, `capacity`, `completed`, `restricted_signup`, `location`, `type`) VALUES
-(112, 'DOGGIE WALKIES', '2025-04-30', '13:00', '15:00', 'walking the doggies in the woods', 20, 'yes', 0, 'Miami, USA', 'blah'),
-(117, 'Color Test', '2025-11-11', '13:00', '14:00', 'Testing the colors in the calendar', 12, 'yes', 0, '', 'Test'),
-(118, 'Halloween Event', '2025-10-31', '18:00', '20:30', 'It is halloween!!', 50, 'no', 0, 'Fredericksburg, VA', 'Holiday'),
-(119, 'party :)', '2026-01-14', '01:00', '01:01', 'dancin', 1, 'no', 0, 'my house', 'party :)'),
-(120, 'SDLFjkafs', '2025-09-10', '12:00', '14:00', 'j;aksdfj', 99999, 'no', 0, 'asdf;j', 'sadj'),
-(121, 'Whikey Valor Tasting', '2025-09-24', '15:00', '18:00', 'Come have a taste of fine barrel aged whiskey with fellow Vets.', 25, 'no', 0, 'Old Silk Mill', 'Tasting'),
-(122, 'Program5', '2025-12-01', '13:00', '14:00', 'Use Case Event', 77, 'no', 0, 'UMW', 'Group'),
-(123, 'Ethans Birthday Party', '2025-12-11', '07:30', '19:30', 'Ethan is going to eat my cake.', 211, 'no', 0, 'Eagle 225', 'Womxns Program'),
-(124, 'Example event', '2025-09-11', '12:00', '14:00', 'This is a test event', 42, 'no', 0, 'UMW', 'A test'),
-(125, 'Pet Adoption', '2025-09-13', '11:00', '17:00', 'Pet Adoption', 50, 'no', 0, 'Fredericksburg, Virginia', 'Pet Adoption'),
-(126, 'Squirrel Watching', '2025-09-22', '06:00', '09:00', 'Watch the squirrels to make sure they do not eat the bird seed', 6, 'no', 0, '275 Butler Rd, Fredericksburg, VA 22405', 'Squirrel'),
-(127, 'Whoosky Volar Tasting', '2025-09-15', '09:00', '13:00', 'Test Event', 42, 'no', 0, 'House', 'Get-Together'),
-(128, 'Fundraising', '2025-12-01', '13:30', '14:00', 'Use Case Event', 77, 'no', 0, 'UMW', 'Person'),
-(129, 'Test event Woak', '2025-10-31', '15:00', '18:00', 'testing thsi woa', 99, 'no', 0, 'required but not listed', 'not listed as req'),
-(130, 'Class Example', '2025-09-24', '12:00', '14:00', 'This is an example', 10, 'no', 0, 'Farmer', 'Shit storm'),
-(131, 'FXBG Tester', '2025-11-11', '18:00', '20:30', 'First test event!!!!', 100, 'yes', 0, 'UMW Campus', 'Test'),
-(132, 'FXBG Fix', '2025-11-25', '06:00', '07:00', 'Test Desc', 999, 'yes', 0, '', 'Random Stuff'),
-(133, 'Test', '2025-11-10', '18:00', '20:30', 'a', 999, 'no', 0, '', 'a'),
-(134, 'New Test', '2025-11-12', '06:00', '07:00', 'AAA', 999, 'no', 0, '', 'AAA'),
-(135, 'Next Test', '2025-11-14', '18:00', '20:30', 'AAAA', 999, 'no', 0, 'UMW Campus', 'AAA'),
-(137, 'Thanksgiving', '2025-11-27', '16:00', '19:00', 'Description!!!', 50, 'no', 0, 'Fredericksburg, VA', 'Holiday'),
-(138, 'VCTest1', '2025-12-01', '18:00', '20:30', 'First test event!!!!', 400, 'no', 0, '', 'Test'),
-(139, 'VCTest2', '2025-11-30', '06:00', '07:00', 'AAA', 999, 'no', 0, '', 'Test'),
-(140, 'VCTest3', '2025-12-16', '06:00', '07:00', 'AAAA', 999, 'no', 0, '', 'Test'),
-(141, 'VCTest4', '2025-12-02', '18:00', '20:30', 'AAA', 999, 'no', 0, 'UMW Campus', 'Test'),
-(143, 'coords', '2025-12-31', '06:00', '20:30', 'AAA', 999, 'no', 0, '', 'Fundraiser'),
-(144, 'coordTest', '2025-12-24', '06:00', '07:00', 'coord test', 55, 'no', 0, 'Fredericksburg, VA', 'Youth Reading Program'),
-(145, 'noncoords', '2025-12-18', '18:00', '19:00', 'test', 999, 'no', 0, '', 'Youth Program');
-
---
--- AUTO_INCREMENT for table `dbevents`
---
-ALTER TABLE `dbevents`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=146;
+INSERT INTO `dbevents` (`id`, `name`, `date`, `startTime`, `endTime`, `description`, `capacity`, `completed`, `restricted_signup`, `location`, `type`, `volunteer_coordinator`) VALUES
+(112, 'DOGGIE WALKIES', '2025-04-30', '13:00', '15:00', 'walking the doggies in the woods', 20, 'yes', 0, 'Miami, USA', 'blah', NULL),
+(117, 'Color Test', '2025-11-11', '13:00', '14:00', 'Testing the colors in the calendar', 12, 'yes', 0, '', 'Test', NULL),
+(118, 'Halloween Event', '2025-10-31', '18:00', '20:30', 'It is halloween!!', 50, 'no', 0, 'Fredericksburg, VA', 'Holiday', NULL),
+(119, 'party :)', '2026-01-14', '01:00', '01:01', 'dancin', 1, 'no', 0, 'my house', 'party :)', NULL),
+(120, 'SDLFjkafs', '2025-09-10', '12:00', '14:00', 'j;aksdfj', 99999, 'no', 0, 'asdf;j', 'sadj', NULL),
+(121, 'Whikey Valor Tasting', '2025-09-24', '15:00', '18:00', 'Come have a taste of fine barrel aged whiskey with fellow Vets.', 25, 'no', 0, 'Old Silk Mill', 'Tasting', NULL),
+(122, 'Program5', '2025-12-01', '13:00', '14:00', 'Use Case Event', 77, 'no', 0, 'UMW', 'Group', NULL),
+(123, 'Ethans Birthday Party', '2025-12-17', '07:30', '19:30', 'Ethan is going to eat my cake.', 211, 'no', 0, 'Eagle 225', 'Womxns Program', NULL),
+(124, 'Example event', '2025-09-11', '12:00', '14:00', 'This is a test event', 42, 'no', 0, 'UMW', 'A test', NULL),
+(125, 'Pet Adoption', '2025-09-13', '11:00', '17:00', 'Pet Adoption', 50, 'no', 0, 'Fredericksburg, Virginia', 'Pet Adoption', NULL),
+(126, 'Squirrel Watching', '2025-09-22', '06:00', '09:00', 'Watch the squirrels to make sure they do not eat the bird seed', 6, 'no', 0, '275 Butler Rd, Fredericksburg, VA 22405', 'Squirrel', NULL),
+(127, 'Whoosky Volar Tasting', '2025-09-15', '09:00', '13:00', 'Test Event', 42, 'no', 0, 'House', 'Get-Together', NULL),
+(128, 'Fundraising', '2025-12-01', '13:30', '14:00', 'Use Case Event', 77, 'no', 0, 'UMW', 'Person', NULL),
+(129, 'Test event Woak', '2025-10-31', '15:00', '18:00', 'testing thsi woa', 99, 'no', 0, 'required but not listed', 'not listed as req', NULL),
+(130, 'Class Example', '2025-09-24', '12:00', '14:00', 'This is an example', 10, 'no', 0, 'Farmer', 'Shit storm', NULL),
+(131, 'FXBG Tester', '2025-11-11', '18:00', '20:30', 'First test event!!!!', 100, 'yes', 0, 'UMW Campus', 'Test', NULL),
+(132, 'FXBG Fix', '2025-11-25', '06:00', '07:00', 'Test Desc', 999, 'yes', 0, '', 'Random Stuff', NULL),
+(133, 'Test', '2025-11-10', '18:00', '20:30', 'a', 999, 'no', 0, '', 'a', NULL),
+(134, 'New Test', '2025-11-12', '06:00', '07:00', 'AAA', 999, 'no', 0, '', 'AAA', NULL),
+(135, 'Next Test', '2025-11-14', '18:00', '20:30', 'AAAA', 999, 'no', 0, 'UMW Campus', 'AAA', NULL),
+(137, 'Thanksgiving', '2025-11-27', '16:00', '19:00', 'Description!!!', 50, 'no', 0, 'Fredericksburg, VA', 'Holiday', NULL),
+(138, 'VCTest1', '2025-12-01', '18:00', '20:30', 'First test event!!!!', 400, 'no', 0, '', 'Test', NULL),
+(139, 'VCTest2', '2025-11-30', '06:00', '07:00', 'AAA', 999, 'no', 0, '', 'Test', NULL),
+(140, 'VCTest3', '2025-12-16', '06:00', '07:00', 'AAAA', 999, 'no', 0, '', 'Test', NULL),
+(141, 'VCTest4', '2025-12-02', '18:00', '20:30', 'AAA', 999, 'no', 0, 'UMW Campus', 'Test', NULL),
+(143, 'coords', '2025-12-31', '06:00', '20:30', 'AAA', 999, 'no', 0, '', 'Fundraiser', NULL),
+(144, 'coordTest', '2025-12-24', '06:00', '07:00', 'coord test', 55, 'no', 0, 'Fredericksburg, VA', 'Youth Reading Program', NULL),
+(145, 'noncoords', '2025-12-18', '18:00', '19:00', 'test', 999, 'no', 0, '', 'Youth Program', NULL);
 
 -- --------------------------------------------------------
 
@@ -306,10 +308,8 @@ CREATE TABLE `dbevent_reports` (
 --
 
 INSERT INTO `dbevent_reports` (`id`, `event_id`, `total_attendance`, `age_under_18`, `age_18_24`, `age_25_34`, `age_35_44`, `age_45_54`, `age_55_64`, `age_65_plus`, `ethnicity_american_indian`, `ethnicity_asian`, `ethnicity_black`, `ethnicity_hispanic`, `ethnicity_pacific_islander`, `ethnicity_white`, `event_cost`, `reimbursement_cost`) VALUES
-(1, 119, 20, 10, 0, 5, 0, 5, 0, 0, 2, 2, 2, 2, 2, 10, 90.50, 85.00),
-(2, 128, 25, 1, 1, 1, 1, 1, 20, 0, 0, 5, 5, 5, 5, 5, 800.00, 0.00),
-(3, 138, 100, 25, 25, 0, 25, 0, 20, 5, 5, 20, 20, 20, 25, 10, 90.00, 0.00),
-(4, 118, 40, 35, 2, 3, 0, 0, 0, 0, 5, 10, 10, 10, 5, 0, 1000.00, 0.00);
+(1, 118, 100, 90, 10, 0, 0, 0, 0, 0, 10, 20, 20, 10, 20, 20, 500.00, 50.55),
+(2, 128, 75, 5, 5, 20, 20, 15, 10, 0, 10, 10, 10, 15, 15, 15, 100.00, 0.00);
 
 -- --------------------------------------------------------
 
@@ -343,8 +343,8 @@ INSERT INTO `dbfinanciallogs` (`id`, `reporter_id`, `event_id not null`, `date`,
 --
 
 CREATE TABLE `dbgroups` (
-  `group_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `color_level` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL
+  `group_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `color_level` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -358,16 +358,45 @@ INSERT INTO `dbgroups` (`group_name`, `color_level`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `dbinteractiondemographics`
+--
+
+CREATE TABLE `dbinteractiondemographics` (
+  `id` int NOT NULL,
+  `activity_id` int NOT NULL,
+  `age_0_12` int DEFAULT '0',
+  `age_13_17` int DEFAULT '0',
+  `age_18_24` int DEFAULT '0',
+  `age_25_54` int DEFAULT '0',
+  `age_55_plus` int DEFAULT '0',
+  `ethnicity_white` int DEFAULT '0',
+  `ethnicity_black` int DEFAULT '0',
+  `ethnicity_hispanic` int DEFAULT '0',
+  `ethnicity_asian` int DEFAULT '0',
+  `ethnicity_native` int DEFAULT '0',
+  `ethnicity_other` int DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `dbinteractiondemographics`
+--
+
+INSERT INTO `dbinteractiondemographics` (`id`, `activity_id`, `age_0_12`, `age_13_17`, `age_18_24`, `age_25_54`, `age_55_plus`, `ethnicity_white`, `ethnicity_black`, `ethnicity_hispanic`, `ethnicity_asian`, `ethnicity_native`, `ethnicity_other`) VALUES
+(1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `dbmessages`
 --
 
 CREATE TABLE `dbmessages` (
   `id` int NOT NULL,
-  `senderID` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `recipientID` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `time` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `senderID` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `recipientID` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `time` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `wasRead` tinyint(1) NOT NULL DEFAULT '0',
   `prioritylevel` tinyint NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -646,10 +675,10 @@ INSERT INTO `dbmessages` (`id`, `senderID`, `recipientID`, `title`, `body`, `tim
 --
 
 CREATE TABLE `dbpendingsignups` (
-  `username` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `eventname` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `role` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `notes` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
+  `username` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `eventname` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notes` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -669,7 +698,7 @@ INSERT INTO `dbpendingsignups` (`username`, `eventname`, `role`, `notes`) VALUES
 --
 
 CREATE TABLE `dbpersonhours` (
-  `personID` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `personID` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `eventID` int NOT NULL,
   `start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `end_time` timestamp NULL DEFAULT NULL
@@ -692,7 +721,7 @@ INSERT INTO `dbpersonhours` (`personID`, `eventID`, `start_time`, `end_time`) VA
 CREATE TABLE `dbpersons` (
   `person_id` int NOT NULL,
   `id` varchar(256) NOT NULL,
-  `role_type` int(11) NOT NULL,
+  `role_type` int NOT NULL,
   `role_name` varchar(256) DEFAULT NULL,
   `start_date` text,
   `first_name` text NOT NULL,
@@ -770,7 +799,7 @@ CREATE TABLE `dbshifts` (
   `startTime` time NOT NULL,
   `endTime` time DEFAULT NULL,
   `totalHours` decimal(5,2) DEFAULT NULL,
-  `description` text COLLATE utf8mb4_general_ci
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -809,13 +838,13 @@ INSERT INTO `dbshifts` (`shift_id`, `person_id`, `date`, `startTime`, `endTime`,
 --
 
 CREATE TABLE `dbsupplies` (
-  `supply_id` int(11) NOT NULL,
-  `item_type` varchar(100) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `description` text NOT NULL,
+  `supply_id` int NOT NULL,
+  `item_type` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `quantity` int NOT NULL,
+  `description` text COLLATE utf8mb4_general_ci NOT NULL,
   `date_submitted` date NOT NULL,
-  `status` varchar(20) NOT NULL DEFAULT 'pending',
-  `reserve_status` varchar(20) NOT NULL DEFAULT 'unreserved'
+  `status` varchar(20) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'pending',
+  `reserve_status` varchar(20) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'unreserved'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -825,7 +854,6 @@ CREATE TABLE `dbsupplies` (
 INSERT INTO `dbsupplies` (`supply_id`, `item_type`, `quantity`, `description`, `date_submitted`, `status`, `reserve_status`) VALUES
 (1, 'flyers', 20, 'Fun and colorful!', '2025-11-03', 'pending', 'reserved');
 
-
 -- --------------------------------------------------------
 
 --
@@ -833,39 +861,21 @@ INSERT INTO `dbsupplies` (`supply_id`, `item_type`, `quantity`, `description`, `
 --
 
 CREATE TABLE `dbvolunteeractivity` (
-  `activity_id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `role` varchar(50) NOT NULL,
+  `activity_id` int NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `role` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `date` date NOT NULL,
   `hours` decimal(4,2) NOT NULL,
   `event_id` int NOT NULL,
-  `email` VARCHAR(255) NULL DEFAULT NULL,
-  PRIMARY KEY (`activity_id`),
-  FOREIGN KEY (`event_id`) REFERENCES `dbevents`(`id`) ON DELETE CASCADE
+  `email` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `dbinteractiondemographics`
+-- Dumping data for table `dbvolunteeractivity`
 --
-CREATE TABLE `dbinteractiondemographics` (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    activity_id INT NOT NULL,
-    age_0_12 INT DEFAULT 0,
-    age_13_17 INT DEFAULT 0,
-    age_18_24 INT DEFAULT 0,
-    age_25_54 INT DEFAULT 0,
-    age_55_plus INT DEFAULT 0,
-    ethnicity_white INT DEFAULT 0,
-    ethnicity_black INT DEFAULT 0,
-    ethnicity_hispanic INT DEFAULT 0,
-    ethnicity_asian INT DEFAULT 0,
-    ethnicity_native INT DEFAULT 0,
-    ethnicity_other INT DEFAULT 0,
-    FOREIGN KEY (activity_id) REFERENCES dbvolunteeractivity(activity_id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `dbvolunteeractivity` (`activity_id`, `name`, `role`, `date`, `hours`, `event_id`, `email`) VALUES
+(1, 'Test Name', 'volunteer', '2025-11-27', 3.00, 137, 'test@mail.com');
 
 -- --------------------------------------------------------
 
@@ -930,8 +940,8 @@ INSERT INTO `monthly_hours_snapshot` (`id`, `person_id`, `month_year`, `hours`) 
 --
 
 CREATE TABLE `user_groups` (
-  `user_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `group_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `user_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `group_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -980,12 +990,12 @@ ALTER TABLE `dbeventpersons`
   ADD KEY `FKpersonID` (`userID`);
 
 --
--- Indexes for table `dbfinanciallogs`
+-- Indexes for table `dbevents`
 --
-ALTER TABLE `dbfinanciallogs`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `dbfinanciallogs_ibfk_1` (`reporter_id`),
-  ADD KEY `dbfinanciallogs_ibfk_2` (`event_id not null`);
+ALTER TABLE `dbevents`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `dbevent_coordinators`
 --
 ALTER TABLE `dbevent_coordinators`
@@ -1000,10 +1010,25 @@ ALTER TABLE `dbevent_reports`
   ADD UNIQUE KEY `unique_event_report` (`event_id`);
 
 --
+-- Indexes for table `dbfinanciallogs`
+--
+ALTER TABLE `dbfinanciallogs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `dbfinanciallogs_ibfk_1` (`reporter_id`),
+  ADD KEY `dbfinanciallogs_ibfk_2` (`event_id not null`);
+
+--
 -- Indexes for table `dbgroups`
 --
 ALTER TABLE `dbgroups`
   ADD PRIMARY KEY (`group_name`);
+
+--
+-- Indexes for table `dbinteractiondemographics`
+--
+ALTER TABLE `dbinteractiondemographics`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `activity_id` (`activity_id`);
 
 --
 -- Indexes for table `dbmessages`
@@ -1037,6 +1062,13 @@ ALTER TABLE `dbsupplies`
   ADD PRIMARY KEY (`supply_id`);
 
 --
+-- Indexes for table `dbvolunteeractivity`
+--
+ALTER TABLE `dbvolunteeractivity`
+  ADD PRIMARY KEY (`activity_id`),
+  ADD KEY `event_id` (`event_id`);
+
+--
 -- Indexes for table `discussion_replies`
 --
 ALTER TABLE `discussion_replies`
@@ -1065,13 +1097,31 @@ ALTER TABLE `user_groups`
 -- AUTO_INCREMENT for table `dbeventmedia`
 --
 ALTER TABLE `dbeventmedia`
-  MODIFY `media_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `media_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `dbevents`
+--
+ALTER TABLE `dbevents`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=146;
+
+--
+-- AUTO_INCREMENT for table `dbevent_reports`
+--
+ALTER TABLE `dbevent_reports`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `dbfinanciallogs`
 --
 ALTER TABLE `dbfinanciallogs`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `dbinteractiondemographics`
+--
+ALTER TABLE `dbinteractiondemographics`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `dbmessages`
@@ -1083,21 +1133,25 @@ ALTER TABLE `dbmessages`
 -- AUTO_INCREMENT for table `dbpersons`
 --
 ALTER TABLE `dbpersons`
-  MODIFY `person_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `person_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `dbshifts`
 --
 ALTER TABLE `dbshifts`
-  MODIFY `shift_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `shift_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `dbsupplies`
 --
-ALTER TABLE `dbvolunteeractivity`
-  MODIFY `activity_id` int NOT NULL AUTO_INCREMENT;
 ALTER TABLE `dbsupplies`
-  MODIFY `supply_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `supply_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `dbvolunteeractivity`
+--
+ALTER TABLE `dbvolunteeractivity`
+  MODIFY `activity_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `discussion_replies`
@@ -1121,6 +1175,18 @@ ALTER TABLE `monthly_hours_snapshot`
 ALTER TABLE `dbfinanciallogs`
   ADD CONSTRAINT `dbfinanciallogs_ibfk_1` FOREIGN KEY (`reporter_id`) REFERENCES `dbpersons` (`person_id`),
   ADD CONSTRAINT `dbfinanciallogs_ibfk_2` FOREIGN KEY (`event_id not null`) REFERENCES `dbevents` (`id`);
+
+--
+-- Constraints for table `dbinteractiondemographics`
+--
+ALTER TABLE `dbinteractiondemographics`
+  ADD CONSTRAINT `dbinteractiondemographics_ibfk_1` FOREIGN KEY (`activity_id`) REFERENCES `dbvolunteeractivity` (`activity_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `dbvolunteeractivity`
+--
+ALTER TABLE `dbvolunteeractivity`
+  ADD CONSTRAINT `dbvolunteeractivity_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `dbevents` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
