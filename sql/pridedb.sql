@@ -198,7 +198,7 @@ INSERT INTO `dbeventpersons` (`eventID`, `userID`, `position`, `notes`) VALUES
 --
 
 CREATE TABLE `dbevents` (
-  `id` int NOT NULL,
+  `id` int NOT NULL PRIMARY KEY,
   `name` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` char(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `startTime` char(5) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -245,6 +245,12 @@ INSERT INTO `dbevents` (`id`, `name`, `date`, `startTime`, `endTime`, `descripti
 (143, 'coords', '2025-12-31', '06:00', '20:30', 'AAA', 999, 'no', 0, '', 'Fundraiser'),
 (144, 'coordTest', '2025-12-24', '06:00', '07:00', 'coord test', 55, 'no', 0, 'Fredericksburg, VA', 'Youth Reading Program'),
 (145, 'noncoords', '2025-12-18', '18:00', '19:00', 'test', 999, 'no', 0, '', 'Youth Program');
+
+--
+-- AUTO_INCREMENT for table `dbevents`
+--
+ALTER TABLE `dbevents`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=146;
 
 -- --------------------------------------------------------
 
@@ -819,19 +825,6 @@ CREATE TABLE `dbsupplies` (
 INSERT INTO `dbsupplies` (`supply_id`, `item_type`, `quantity`, `description`, `date_submitted`, `status`, `reserve_status`) VALUES
 (1, 'flyers', 20, 'Fun and colorful!', '2025-11-03', 'pending', 'reserved');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `dbsupplies`
---
-
-CREATE TABLE `dbsupplies` (
-  `supply_id` int NOT NULL,
-  `item_type` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `quantity` int NOT NULL,
-  `description` text COLLATE utf8mb4_general_ci NOT NULL,
-  `date_submitted` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -848,7 +841,7 @@ CREATE TABLE `dbvolunteeractivity` (
   `event_id` int NOT NULL,
   `email` VARCHAR(255) NULL DEFAULT NULL,
   PRIMARY KEY (`activity_id`),
-  FOREIGN KEY (`event_id`) REFERENCES `dbevents`(`event_id`) ON DELETE CASCADE
+  FOREIGN KEY (`event_id`) REFERENCES `dbevents`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -987,12 +980,6 @@ ALTER TABLE `dbeventpersons`
   ADD KEY `FKpersonID` (`userID`);
 
 --
--- Indexes for table `dbevents`
---
-ALTER TABLE `dbevents`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `dbfinanciallogs`
 --
 ALTER TABLE `dbfinanciallogs`
@@ -1050,12 +1037,6 @@ ALTER TABLE `dbsupplies`
   ADD PRIMARY KEY (`supply_id`);
 
 --
--- Indexes for table `dbvolunteeractivity`
---
-ALTER TABLE `dbsupplies`
-  ADD PRIMARY KEY (`supply_id`);
-
---
 -- Indexes for table `discussion_replies`
 --
 ALTER TABLE `discussion_replies`
@@ -1087,17 +1068,10 @@ ALTER TABLE `dbeventmedia`
   MODIFY `media_id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `dbevents`
---
-ALTER TABLE `dbevents`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
-
---
 -- AUTO_INCREMENT for table `dbfinanciallogs`
 --
 ALTER TABLE `dbfinanciallogs`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
 
 --
 -- AUTO_INCREMENT for table `dbmessages`
