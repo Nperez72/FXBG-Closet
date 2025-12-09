@@ -91,7 +91,13 @@ $allCoordinators = array_merge($boardMembers, $coordinators);
     </style>
 </head>
 <body>
-<header class="hero-header">
+<header class="hero-header" style="
+        min-height: 120px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0 !important;
+        margin: 0 !important;">
     <div class="center-header">
         <h1>Select Your Identity</h1>
     </div>
@@ -124,7 +130,7 @@ $allCoordinators = array_merge($boardMembers, $coordinators);
             </div>
         </div>
     </div>
-    <div class="info-section">
+    <div class="info-section" style="padding-bottom: 20px;">
         <div class="blue-div"></div>
         <p class="info-text">
             Use this tool to select your name and gain access to your specific privileges.
