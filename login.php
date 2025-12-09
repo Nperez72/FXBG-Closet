@@ -247,7 +247,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <title>FXBG Pride Volunteer System | Log In</title>
 </head>
 
-<body>
+<body style="padding-top: 0 !important;">
   <!-- Theme Toggle Button -->
   <button class="theme-toggle login-theme-toggle" aria-label="Toggle theme" title="Toggle dark/light mode">
     <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

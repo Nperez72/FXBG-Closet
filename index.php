@@ -787,15 +787,6 @@ if (isset($_SESSION['_id'])) {
         </div>
     </div>
 
-        <div class="content-box">
-            <div class="small-text">Log transactions.</div>
-            <div class="large-text">Financial Log</div>
-            <button class="circle-arrow-button" onclick="window.location.href='createFinancialLog.php'">
-                <span class="button-text">Go</span>
-                <div class="circle">&gt;</div>
-            </button>
-        </div>
-
     </div>
 
       <!-- <div class="content-box">
@@ -841,6 +832,16 @@ if (isset($_SESSION['_id'])) {
             <div class="background-image"></div>
             <div class="large-text-sub">View Material Requests</div>
             <div class="graph-text">Review submitted requests for needed materials.</div>
+            <button class="arrow-button">→</button>
+        </div>
+
+        <div class="content-box-test" onclick="window.location.href='createFinancialLog.php'">
+            <div class="icon-overlay">
+                <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Calendar Icon">
+            </div>
+            <div class="background-image"></div>
+            <div class="large-text-sub">Financial Log</div>
+            <div class="graph-text">Log transactions.</div>
             <button class="arrow-button">→</button>
         </div>
 

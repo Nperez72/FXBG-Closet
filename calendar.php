@@ -195,13 +195,9 @@ if (date('m', strtotime($calendarEnd . ' +1 day')) == date('m', $first)) {
             <p></p>
             <i class="fa-solid fa-circle" style="color: var(--main-color, #e8c4b8)"> </i>
                 <span style="font-size: 25px;">
-                    Open Event
+                    Event
                 </span>
             <i class="fa-solid fa-circle" style="color: var(--accent-color, #d4af37)"> </i>
-                <span style="font-size: 25px;">
-                    Signed-Up
-                </span>
-            <i class="fa-solid fa-circle" style="color: #c4bab7ff"> </i>
                 <span style="font-size: 25px;">
                     Archived Event
                 </span>
