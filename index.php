@@ -787,6 +787,17 @@ if (isset($_SESSION['_id'])) {
         </div>
     </div>
 
+        <div class="content-box">
+            <div class="small-text">Log transactions.</div>
+            <div class="large-text">Financial Log</div>
+            <button class="circle-arrow-button" onclick="window.location.href='createFinancialLog.php'">
+                <span class="button-text">Go</span>
+                <div class="circle">&gt;</div>
+            </button>
+        </div>
+
+    </div>
+
       <!-- <div class="content-box">
           <div class="small-text">Our team makes this all possible.</div>
         <div class="large-text">My Group</div>
