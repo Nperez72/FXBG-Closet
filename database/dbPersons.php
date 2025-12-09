@@ -182,7 +182,6 @@ function retrieve_personid_by_name($name)
         $persons[] = $result_row['person_id'];
     }
     return $persons[0];
-
 }
 
 // Name is first concat with last name. Example 'James Jones'

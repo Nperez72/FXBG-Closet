@@ -1,7 +1,9 @@
 <?php
+
 include_once('dbinfo.php');
 
-function add_financial_log($log) {
+function add_financial_log($log)
+{
     $connection = connect();
     if (!$connection) {
         echo "<script>console.log('Failed to connect to the database');</script>";
